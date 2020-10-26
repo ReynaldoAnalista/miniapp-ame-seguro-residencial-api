@@ -9,7 +9,7 @@ const TYPES = {
     HealthController: 'HealthController',
     Controller: 'Controller',
     ApiServer: 'ApiServer',
-    SecretsManager: 'SecretsManager',
+    Secrets: 'Secrets',
     AuthTokenService:'AuthTokenService',
     VoucherRepository: 'VoucherRepository'
 

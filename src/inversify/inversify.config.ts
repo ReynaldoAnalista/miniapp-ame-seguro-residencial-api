@@ -7,6 +7,7 @@ import {ApiServer} from '../server/ApiServer';
 import {ServerConfig} from '../configs/ServerConfig';
 import Axios, {AxiosInstance} from 'axios';
 import {ParameterStore} from "../configs/ParameterStore";
+import {Secrets} from "../configs/Secrets";
 
 export const iocContainer = new Container()
 
@@ -18,6 +19,7 @@ export const initDependencies = () => {
     iocContainer.bind<BlindGuardianConfig>(TYPES.BlindGuardianConfig).to(BlindGuardianConfig).inSingletonScope()
     iocContainer.bind<ServerConfig>(TYPES.ServerConfig).to(ServerConfig).inSingletonScope()
     iocContainer.bind<ParameterStore>(TYPES.ParameterStore).to(ParameterStore).inSingletonScope()
+    iocContainer.bind<Secrets>(TYPES.Secrets).to(Secrets).inSingletonScope()
 
 
     /* Initialize Clients */

@@ -1,8 +1,9 @@
 import {inject, injectable} from "inversify";
 import {getLogger} from "../../../server/Logger";
 import {TYPES} from "../../../inversify/inversify.types";
-import {ParameterStore} from "../../../configs/ParameterStore";
+import {Secrets} from "../../../configs/Secrets";
 import axios from "axios";
+import qs from 'qs'
 
 import {AuthToken} from "../model/AuthToken";
 
@@ -17,86 +18,59 @@ AWS.config.update({
 export class AuthTokenService {
 
     constructor(
-        @inject(TYPES.ParameterStore)
-        private parameterStore: ParameterStore,
+        @inject(TYPES.Secrets)
+        private secrets: Secrets,
     ) {
     }
 
+    async retrieveConfig(configName:string) : Promise<String> {
+        if(!configName) {
+            try {
+                const configValue = await this.secrets.get(configName)
+                if(!configValue) {
+                    log.debug("There is no value to this config")
+                }
+                return configValue
+            } catch( err ) {
+                log.error("Take error on trying to retrieve config")
+                log.error(err)
+            }
+        }
+        log.error("Retrieving config with no configName")
+        throw "Retrieving config with no configName"
+    }
+
     async retrieveAuthorization(): Promise<string | undefined> {
-
         log.debug('AuthTokenService: retrieveAuthorization')
-
         try{
-
-            const authorization = Buffer.from(`${await this.retrieveClientId()}:${await this.retrieveClientSecret()}`, 'utf8').toString('base64')
+            let clientId = await this.retrieveConfig('CLIENT_ID')
+            let clientSecret = await this.retrieveConfig('CLIENT_SECRET')
+            let clientScope = await this.retrieveConfig('CLIENT_SCOPE')
+            const authorization = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64')
             let config ={
                 headers:    {
                     'Authorization': `Basic ${authorization}`,
-                    "Content-Type":"application/json"
-                }};
-
-            let body = {
-                        "customerId" : await this.retrieveCustomerId(),
-                        "customerSiteId" : await this.retrieveCustomerSiteId()
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             };
-
+            let body = qs.stringify({
+                'grant_type': 'client_credentials',
+                'scope': clientScope
+            })
             log.debug('retrieveAuthorization')
-
-            let result = new AuthToken();
-            let url = await this.parameterStore.getSecretValue('URL')
-
+            let result:AuthToken = new AuthToken();
+            let url = await this.secrets.get('URL')
              await axios.post(`${url}distributor-authorizations`,body,config)
                     .then((res) => {
                         console.log("RESPONSE RECEIVED: ", res.data);
-                        result = res.data;
+                        result = AuthToken.fromObject(res.data);
                     })
                     .catch((err) => {
                         console.log("AXIOS ERROR: ", err);
                     });
-
-            return result.token;
+            return result.access_token;
         }catch(err){
             return 'Erro ao tentar buscar um token para autenticação';
         }
-    }
-
-    async retrieveClientId() {
-
-        let clientId = process.env.CLIENT_ID || await this.parameterStore.getSecretValue('CLIENT_ID');
-
-        if (!clientId) {
-            clientId = process.env.AWS_ACCESS_KEY_ID;
-        }
-        return clientId
-    }
-    async retrieveClientSecret() {
-        let client_secret = process.env.CLIENT_SECRET || await this.parameterStore.getSecretValue('CLIENT_SECRET')
-        if (!client_secret) {
-            client_secret = process.env.AWS_SECRET_ACCESS_KEY;
-        }
-
-        return client_secret;
-    }
-
-    async retrieveCustomerId() {
-
-        let customerId = process.env.CUSTOMER_ID || await this.parameterStore.getSecretValue('CUSTOMER_ID');
-
-        if (!customerId) {
-            log.debug('Ocorreu um erro ao tentar acessar o CUSTOMER_ID')
-            return Promise.resolve({})
-        }
-        return customerId
-    }
-
-    async retrieveCustomerSiteId() {
-
-        let customerSiteId = process.env.CUSTOMER_SITE_ID || await this.parameterStore.getSecretValue('CUSTOMER_SITE_ID');
-
-        if (!customerSiteId) {
-            log.debug('Ocorreu um erro ao tentar acessar o CUSTOMER_SITE_ID')
-            return Promise.resolve({})
-        }
-        return customerSiteId
     }
 }

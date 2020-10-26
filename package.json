@@ -51,6 +51,7 @@
     "newrelic": "^6.7.0",
     "node-redis-warlock": "^0.2.0",
     "nodemon": "^2.0.4",
+    "qs": "^6.9.4",
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "snakecase-keys": "^3.1.2",

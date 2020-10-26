@@ -1,6 +1,9 @@
 export class AuthToken {
-    token?: string
-    expiresIn?: number
+    access_token?: string
+    token_type?: string
+    scope?: string
+    jti?: string
+    expires_in?: number
 
 
     static fromObject(source: any): AuthToken {

@@ -25,14 +25,14 @@ export class RequestService {
         let config = {
             headers: {
                 "Content-Type":"application/json",
-                "client_id":  await this.authTokenService.retrieveClientId(),
+                // "client_id":  await this.authTokenService.retrieveClientId(),
                 "access_token": tokenAccess
             }
         }
         const url = await this.parameterStore.getSecretValue('URL');
 
         let result = await axios.get(`${url}${path}longitude=${long}&latitude=${lat}`,config)
-            
+
         return result.data;
     }
 
@@ -43,7 +43,7 @@ export class RequestService {
         let config = {
             headers: {
                 "Content-Type":"application/json",
-                "client_id":  await this.authTokenService.retrieveClientId(),
+                // "client_id":  await this.authTokenService.retrieveClientId(),
                 "access_token": tokenAccess
             }
         }
@@ -61,7 +61,7 @@ export class RequestService {
         let config = {
             headers: {
                 "Content-Type":"application/json",
-                "client_id":  await this.authTokenService.retrieveClientId(),
+                // "client_id":  await this.authTokenService.retrieveClientId(),
                 "access_token": tokenAccess
             }
         }
@@ -69,7 +69,7 @@ export class RequestService {
         const url = await this.parameterStore.getSecretValue('URL');
 
         let result = await axios.post(`${url}vouchers`, body, config)
-        
+
         return result.data;
     }
 
@@ -80,13 +80,13 @@ export class RequestService {
         let config = {
             headers: {
                 "Content-Type":"application/json",
-                "client_id":  await this.authTokenService.retrieveClientId(),
+                // "client_id":  await this.authTokenService.retrieveClientId(),
                 "access_token": tokenAccess
             }
         }
 
         const url = await this.parameterStore.getSecretValue('URL');
-        
+
         let result = await axios.get(`${url}vouchers?code=${code}`, config)
 
         return result.data;
@@ -100,7 +100,7 @@ export class RequestService {
         let config = {
             headers: {
                 "Content-Type":"application/json",
-                "client_id":  await this.authTokenService.retrieveClientId(),
+                // "client_id":  await this.authTokenService.retrieveClientId(),
                 "access_token": tokenAccess
             }
         }
