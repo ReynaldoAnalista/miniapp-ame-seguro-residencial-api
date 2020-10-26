@@ -6,29 +6,15 @@ import { iocContainer } from './inversify/inversify.config';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthTokenController } from './modules/authToken/controllers/AuthTokenController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { CancellationController } from './modules/cancel/controllers/CancellationController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthController } from './modules/default/controllers/HealthController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PaymentController } from './modules/payment/controllers/PaymentController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PriceController } from './modules/price/controllers/PriceController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { TransactionsController } from './modules/transactions/controllers/TransactionsController';
+import { PlanController } from './modules/plan/controllers/PlanController';
 import { expressAuthentication } from './middleware/authentication';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "AmeNotification": {
-        "dataType": "refObject",
-        "properties": {
-            "signedPayment": { "dataType": "string", "required": true },
-        },
-        "additionalProperties": true,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -60,31 +46,6 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.retrieveAuthorization.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.delete('/miniapp-ame-seguro-residencial-api/v1/cancellation/cancellation/:voucherCode',
-        function(request: any, response: any, next: any) {
-            const args = {
-                voucherCode: { "in": "path", "name": "voucherCode", "required": true, "dataType": "string" },
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller: any = iocContainer.get<CancellationController>(CancellationController);
-            if (typeof controller['setStatus'] === 'function') {
-                controller.setStatus(undefined);
-            }
-
-
-            const promise = controller.cancelVoucher.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -136,10 +97,10 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.post('/miniapp-ame-seguro-residencial-api/v1/payment/consume',
+    app.get('/miniapp-ame-seguro-residencial-api/v1/plans/:zipCode',
         function(request: any, response: any, next: any) {
             const args = {
-                ameNotification: { "in": "body", "name": "ameNotification", "required": true, "ref": "AmeNotification" },
+                zipCode: { "in": "path", "name": "zipCode", "required": true, "dataType": "string" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -151,119 +112,19 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<PaymentController>(PaymentController);
+            const controller: any = iocContainer.get<PlanController>(PlanController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
 
 
-            const promise = controller.consumeVouchers.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/miniapp-ame-seguro-residencial-api/v1/prices/retrieve/:long/:lat',
-        function(request: any, response: any, next: any) {
-            const args = {
-                long: { "in": "path", "name": "long", "required": true, "dataType": "string" },
-                lat: { "in": "path", "name": "lat", "required": true, "dataType": "string" },
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller: any = iocContainer.get<PriceController>(PriceController);
-            if (typeof controller['setStatus'] === 'function') {
-                controller.setStatus(undefined);
-            }
-
-
-            const promise = controller.retrievePrice.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/miniapp-ame-seguro-residencial-api/v1/transactions/:ddd/:phone',
-        authenticateMiddleware([{ "jwt": [] }]),
-        function(request: any, response: any, next: any) {
-            const args = {
-                ddd: { "in": "path", "name": "ddd", "required": true, "dataType": "string" },
-                phone: { "in": "path", "name": "phone", "required": true, "dataType": "string" },
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller: any = iocContainer.get<TransactionsController>(TransactionsController);
-            if (typeof controller['setStatus'] === 'function') {
-                controller.setStatus(undefined);
-            }
-
-
-            const promise = controller.retrieveTransactions.apply(controller, validatedArgs as any);
+            const promise = controller.retrievePlans.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
-        return (request: any, _response: any, next: any) => {
-            let responded = 0;
-            let success = false;
-
-            const succeed = function(user: any) {
-                if (!success) {
-                    success = true;
-                    responded++;
-                    request['user'] = user;
-                    next();
-                }
-            }
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            const fail = function(error: any) {
-                responded++;
-                if (responded == security.length && !success) {
-                    error.status = error.status || 401;
-                    next(error)
-                }
-            }
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            for (const secMethod of security) {
-                if (Object.keys(secMethod).length > 1) {
-                    let promises: Promise<any>[] = [];
-
-                    for (const name in secMethod) {
-                        promises.push(expressAuthentication(request, name, secMethod[name]));
-                    }
-
-                    Promise.all(promises)
-                        .then((users) => { succeed(users[0]); })
-                        .catch(fail);
-                } else {
-                    for (const name in secMethod) {
-                        expressAuthentication(request, name, secMethod[name])
-                            .then(succeed)
-                            .catch(fail);
-                    }
-                }
-            }
-        }
-    }
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 

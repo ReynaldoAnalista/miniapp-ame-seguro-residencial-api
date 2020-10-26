@@ -5,21 +5,7 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {
-			"AmeNotification": {
-				"properties": {
-					"signedPayment": {
-						"type": "string",
-						"description": "Pagamento assinado"
-					}
-				},
-				"required": [
-					"signedPayment"
-				],
-				"type": "object",
-				"additionalProperties": true
-			}
-		},
+		"schemas": {},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -50,42 +36,6 @@
 				"description": "Busca o token necessario para acesso a api do parceiro",
 				"security": [],
 				"parameters": []
-			}
-		},
-		"/v1/cancellation/cancellation/{voucherCode}": {
-			"delete": {
-				"operationId": "CancelVoucher",
-				"responses": {
-					"204": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Canceled"
-					},
-					"422": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotCanceled"
-					}
-				},
-				"description": "Cancela um voucher pelo seu código",
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "voucherCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		},
 		"/health": {
@@ -129,45 +79,37 @@
 				"parameters": []
 			}
 		},
-		"/v1/payment/consume": {
-			"post": {
-				"operationId": "ConsumeVouchers",
+		"/health/test": {
+			"get": {
+				"operationId": "Test",
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"secrets": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"secrets"
+									],
 									"type": "object"
 								}
 							}
 						},
-						"description": "Consumed"
-					},
-					"203": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Error"
+						"description": "Ok"
 					}
 				},
-				"description": "Consome venda e transmite para api do parceiro",
 				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/AmeNotification"
-							}
-						}
-					}
-				}
+				"parameters": []
 			}
 		},
-		"/v1/prices/retrieve/{long}/{lat}": {
+		"/v1/plans": {
 			"get": {
-				"operationId": "RetrievePrice",
+				"operationId": "RetrievePlans",
 				"responses": {
 					"200": {
 						"content": {
@@ -187,68 +129,8 @@
 						"description": "NotFound"
 					}
 				},
-				"description": "Busca lista de preços por coordenadas(Longitude e latitude)",
 				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "long",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "lat",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/v1/transactions/{ddd}/{phone}": {
-			"get": {
-				"operationId": "RetrieveTransactions",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					}
-				},
-				"description": "Busca de transações por telefone",
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "ddd",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "phone",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
+				"parameters": []
 			}
 		}
 	},

@@ -1,112 +1,62 @@
 import axios from "axios";
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../../inversify/inversify.types";
-import {ParameterStore} from "../../../configs/ParameterStore";
+import {Secrets} from "../../../configs/Secrets";
 import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
+import {End} from "aws-sdk/clients/s3";
 
-const log = getLogger("AuthTokenService")
+const log = getLogger("RequestService")
+
+enum Methods {
+    GET = "GET",
+    POST = "POST",
+    DELETE = "DELETE",
+    PUT = "PUT",
+}
+
+enum Endpoints {
+    URL_PLANS = 'URL_PLANS',
+    URL_AUTHORIZATION = 'URL_AUTHORIZATION',
+    URL_SALE = 'URL_SALE',
+}
 
 @injectable()
 export class RequestService {
 
     constructor(
-        @inject(TYPES.ParameterStore)
-        private parameterStore: ParameterStore,
+        @inject(TYPES.Secrets)
+        private secrets: Secrets,
         @inject(TYPES.AuthTokenService)
         private authTokenService: AuthTokenService
     ) {
     }
 
-    async webRequestCreatePrice(path: string, long: string, lat: string, tokenAccess: string | undefined) {
+    METHODS = Methods
+    ENDPOINTS = Endpoints
 
-        log.debug("RequestService: webRequestCreatePrice")
+    async makeRequest(url:Endpoints, method:Methods, body: object | null, queryString?: string ) {
 
-        let config = {
-            headers: {
-                "Content-Type":"application/json",
-                // "client_id":  await this.authTokenService.retrieveClientId(),
-                "access_token": tokenAccess
-            }
-        }
-        const url = await this.parameterStore.getSecretValue('URL');
+        log.debug(`Call to make a ${method} on ${url}`)
 
-        let result = await axios.get(`${url}${path}longitude=${long}&latitude=${lat}`,config)
+        const apiUrl = await this.secrets.get(url)
+        const token = await this.authTokenService.retrieveAuthorization()
 
-        return result.data;
-    }
-
-    async webRequestCreateTransactions(path: string, ddd: string, phone:string, tokenAccess: string | undefined) {
-
-        log.debug("RequestService: webRequestCreateTransactions")
+        log.debug(`Making ${method} to ${apiUrl}`)
 
         let config = {
+            method: method,
+            url: apiUrl + queryString,
             headers: {
                 "Content-Type":"application/json",
-                // "client_id":  await this.authTokenService.retrieveClientId(),
-                "access_token": tokenAccess
-            }
-        }
-        const url = await this.parameterStore.getSecretValue('URL');
-
-        let result = await axios.get(`${url}${path}consumer-phone-ddd=${ddd}&consumer-phone=${phone}`,config)
-
-        return result.data;
-    }
-
-    async webRequestCreatePayment(body: object, tokenAccess: string | undefined) {
-
-        log.debug("RequestService: webRequestCreatePayment")
-
-        let config = {
-            headers: {
-                "Content-Type":"application/json",
-                // "client_id":  await this.authTokenService.retrieveClientId(),
-                "access_token": tokenAccess
-            }
+                "Authorization": `Bearer ${token}`
+            },
+            data: JSON.stringify(body)
         }
 
-        const url = await this.parameterStore.getSecretValue('URL');
+        let result = await axios(config)
 
-        let result = await axios.post(`${url}vouchers`, body, config)
-
-        return result.data;
-    }
-
-    async webRequestCreateVouchers(code: string, tokenAccess: string | undefined) {
-
-        log.debug("RequestService: webRequestCreateVouchers")
-
-        let config = {
-            headers: {
-                "Content-Type":"application/json",
-                // "client_id":  await this.authTokenService.retrieveClientId(),
-                "access_token": tokenAccess
-            }
-        }
-
-        const url = await this.parameterStore.getSecretValue('URL');
-
-        let result = await axios.get(`${url}vouchers?code=${code}`, config)
-
-        return result.data;
-    }
-
-
-    async webRequestCancelVoucher(path: string,  voucherCode: string, tokenAccess: string | undefined) {
-
-        log.debug("RequestService: webRequestCancelVoucher")
-
-        let config = {
-            headers: {
-                "Content-Type":"application/json",
-                // "client_id":  await this.authTokenService.retrieveClientId(),
-                "access_token": tokenAccess
-            }
-        }
-        const url = await this.parameterStore.getSecretValue('URL');
-
-        let result = await axios.delete(`${url}${path}${voucherCode}`,config)
+        log.debug("Request Successfully")
 
         return result.data;
     }
