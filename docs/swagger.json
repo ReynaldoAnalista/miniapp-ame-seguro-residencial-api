@@ -1,0 +1,260 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"AmeNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "miniapp-ame-seguro-residencial-api",
+		"version": "1.0.0",
+		"license": {
+			"name": "MIT"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/v1/auth/token": {
+			"get": {
+				"operationId": "RetrieveAuthorization",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					}
+				},
+				"description": "Busca o token necessario para acesso a api do parceiro",
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/cancellation/cancellation/{voucherCode}": {
+			"delete": {
+				"operationId": "CancelVoucher",
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Canceled"
+					},
+					"422": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotCanceled"
+					}
+				},
+				"description": "Cancela um voucher pelo seu código",
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "voucherCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/health": {
+			"get": {
+				"operationId": "Health",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"startup": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"commitDate": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"commitHash": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"commitHash",
+										"commitDate",
+										"startup",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/payment/consume": {
+			"post": {
+				"operationId": "ConsumeVouchers",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Consumed"
+					},
+					"203": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Error"
+					}
+				},
+				"description": "Consome venda e transmite para api do parceiro",
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AmeNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/prices/retrieve/{long}/{lat}": {
+			"get": {
+				"operationId": "RetrievePrice",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"description": "Busca lista de preços por coordenadas(Longitude e latitude)",
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "long",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "lat",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/transactions/{ddd}/{phone}": {
+			"get": {
+				"operationId": "RetrieveTransactions",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					}
+				},
+				"description": "Busca de transações por telefone",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "ddd",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "phone",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "https://miniapps.dev.amedigital.com/miniapp-ame-seguro-residencial-api"
+		}
+	]
+}

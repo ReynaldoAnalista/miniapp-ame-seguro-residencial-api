@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1578420480543" clover="3.2.0">
+  <project timestamp="1578420480543" name="All files">
+    <metrics statements="103" coveredstatements="99" conditionals="11" coveredconditionals="11" methods="48" coveredmethods="44" elements="162" coveredelements="154" complexity="0" loc="103" ncloc="103" packages="10" files="11" classes="11"/>
+    <package name="clients">
+      <metrics statements="12" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="4"/>
+      <file name="HttpClientImpl.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/HttpClientImpl.ts">
+        <metrics statements="12" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="4"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.auth">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="AuthenticationClient.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/auth/AuthenticationClient.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="7" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.auth.request">
+      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="AuthenticationRequest.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/auth/request/AuthenticationRequest.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.auth.response">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="AuthenticationResponse.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/auth/response/AuthenticationResponse.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.payment">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="PaymentClient.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/payment/PaymentClient.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.payment.request">
+      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="PaymentRequest.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/payment/request/PaymentRequest.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="clients.payment.response">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <file name="PaymentResponse.ts" path="/home/catarino/Calindra/super-app-bff/src/clients/payment/response/PaymentResponse.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.auth">
+      <metrics statements="13" coveredstatements="13" conditionals="5" coveredconditionals="5" methods="5" coveredmethods="5"/>
+      <file name="AuthenticationService.ts" path="/home/catarino/Calindra/super-app-bff/src/services/auth/AuthenticationService.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="5" coveredconditionals="5" methods="5" coveredmethods="5"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="6" type="cond" truecount="5" falsecount="0"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.payment">
+      <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
+      <file name="PaymentService.ts" path="/home/catarino/Calindra/super-app-bff/src/services/payment/PaymentService.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="5" type="cond" truecount="6" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="vo">
+      <metrics statements="24" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="13"/>
+      <file name="AuthenticationVO.ts" path="/home/catarino/Calindra/super-app-bff/src/vo/AuthenticationVO.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+      </file>
+      <file name="PaymentVO.ts" path="/home/catarino/Calindra/super-app-bff/src/vo/PaymentVO.ts">
+        <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

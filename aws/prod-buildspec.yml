@@ -1,0 +1,64 @@
+version: 0.2
+
+env:
+  variables:
+    GIT_REPO: "https://github.com/AmeDigital/miniapp-ame-seguro-residencial-api.git"
+    BRANCH_NAME: "master"
+    IMAGE_REPO_NAME: "miniapp-ame-seguro-residencial-api"
+    AWS_ACCOUNT_ID: "355315421281"
+    CONTAINER_NAME: "miniapp-prd-seguro-residencial"
+    BASE_DIRECTORY: "miniapp-ame-seguro-residencial-api"
+    PORT: 8080
+
+phases:
+  install:
+    commands:
+
+      # Start daemon docker Thread
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email)
+
+      # Storing Git credentials in .netrc file in order to be able to login in git
+      - echo "machine github.com" >> ~/.netrc
+      - echo "login $GIT_USER" >> ~/.netrc
+      - echo "password $GIT_PASS" >> ~/.netrc
+
+      # Clone the branch
+      - rm -rf $BASE_DIRECTORY
+      - git clone -b $BRANCH_NAME $GIT_REPO
+      - cd $BASE_DIRECTORY
+
+  build:
+    commands:
+      # Fetch the current tags related to the current branch
+      #- git fetch --tags
+      # Get the last tag created
+      - mkdir -p ~/.ssh
+      - echo "$PRIVATE_KEY_CONTENT" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+
+      - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+
+      - IMAGE_TAG="latest"
+      - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+
+      - echo Building the Docker image...
+      - COMMIT_HASH=`git log --oneline | awk -F" " '{print $1; exit}'`
+      - docker build --build-arg COMMIT_HASH=$COMMIT_HASH --build-arg port=$PORT --no-cache -t $IMAGE_REPO_NAME:$IMAGE_TAG -f ./docker/Dockerfile-prod .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE_URI
+
+      - docker push "$IMAGE_URI"
+      - echo [{\"name\":\"$CONTAINER_NAME\"\,\"imageUri\":\"$IMAGE_URI\"}]  >> images.json
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
+  base-directory: $BASE_DIRECTORY

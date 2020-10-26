@@ -1,0 +1,24 @@
+{
+    "server": {
+        "port": 8080,
+        "context": "/miniapp-ame-seguro-residencial-api"
+    },
+    "blindGuardian": {
+        "url": "https://miniapps.amedigital.com/blind-guardian",
+        "authPath": "/v1/o/auth"
+    },
+    "miniAppManager": {
+        "url": "https://miniapps.amedigital.com/miniapp-manager-api",
+        "miniAppsPath": "/o/mini-apps"
+    },
+    "payment": {
+        "url": "https://miniapps.amedigital.com/payment-api",
+        "authorizePath": "/o/payments/authorize"
+    },
+    "state": {
+        "url": "https://miniapps.amedigital.com/share-api/share"
+    },
+    "event": {
+        "url": "https://miniapps.amedigital.com/sandman/v1/p/events"
+    }
+}

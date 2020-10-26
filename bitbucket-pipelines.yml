@@ -1,0 +1,37 @@
+image: node:12.18.3
+pipelines:
+  default:
+    - step: &tests
+        name: Run Tests
+        script:
+          - test -f ./package-lock.json && echo "Remova o package-lock.json e use o yarn" && exit 1
+          - yarn && yarn test
+    - step: &syncGithub
+        name: Sync with github
+        script:
+          - set +e # para ignorar erros, por exemplo em casos em que a branch nao exista
+          - git fetch --unshallow
+          - set -e # para dar erro no build se o repositorio nao existir no github
+          - git remote add github git@github.com:AmeDigital/$BITBUCKET_REPO_SLUG.git
+          - set +e # para ignorar erros, por exemplo em casos em que a branch nao exista
+          - git pull github $BITBUCKET_BRANCH
+          - set -e # para dar erro no build se nao der para dar push
+          - git push github $BITBUCKET_BRANCH:$BITBUCKET_BRANCH
+          - git push origin $BITBUCKET_BRANCH:$BITBUCKET_BRANCH
+  branches:
+    '**':
+      #- step: *tests
+      - step: *syncGithub
+    'develop':
+      #- step: *tests
+      - step:
+          name: Develop Docker Image
+          image: atlassian/pipelines-awscli:latest
+          script:
+            - docker build --build-arg PROFILE=dev -t ${ECR_REPOSITORY}:development -f docker/Dockerfile-dev .
+            - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
+            - docker push ${ECR_REPOSITORY}:development
+          services:
+            - docker
+      - step: *syncGithub
+

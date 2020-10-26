@@ -1,0 +1,22 @@
+{
+    "swagger": {
+        "specVersion": 3,
+        "outputDirectory": "./docs",
+        "entryFile": "./src/app.ts",
+        "yaml": false,
+        "host": "miniapps.dev.amedigital.com",
+        "basePath": "/miniapp-ame-seguro-residencial-api"
+    },
+    "routes": {
+        "basePath": "/miniapp-ame-seguro-residencial-api",
+        "entryFile": "./src/app.ts",
+        "outputDirectory": "./docs",
+        "routesDir": "./src/",
+        "middleware": "express",
+        "authenticationModule": "./src/middleware/authentication.ts",
+        "controllerPathGlobs": [
+            "./src/**/*Controller.ts"
+        ],
+        "iocModule": "./src/inversify/inversify.config.ts"
+    }
+}

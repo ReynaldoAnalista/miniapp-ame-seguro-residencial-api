@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  description: |
+    Essa é a especificação do BFF do [Ame Digital RN](https://bitbucket.org/smartsolutionteam/amedigital-rn).
+  version: "1.0.0"
+  title: Super App BFF
+servers:
+  - url: 'https://miniapps.amedigital.com/super-app-bff'
+  - url: 'https://miniapps.dev.amedigital.com/super-app-bff'
+  - url: 'https://miniapps.hml.amedigital.com/super-app-bff'
+tags:
+  - name: Auth
+    description: Endpoint de autenticação
+  - name: Pagamentos
+    description: Endpoint para pagamento
+  - name: Mini App
+    description: Todos endpoints relacionados a mini apps
+  - name: Compartilhamento
+    description: Chamadas para gerir compartilhamento de mini app
+  - name: Eventos
+    description: Event Store
+paths:
+  /v1/events:
+    put:
+      tags:
+        - Eventos
+      summary: Salva evento de usuario
+      operationId: event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: {}
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: "Bearer <jwt>"
+      responses:
+        401:
+          description: erro ao ler credenciais de autorização
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+        403:
+          description: credenciais enviadas nao possuem acesso
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 403, message: "string"}
+        500:
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+        201:
+          description: estado criado com sucesso
+          content:
+            application/json:
+              schema:
+                example: {id: "string"}
+
+  /v1/shares:
+    post:
+      tags:
+        - Compartilhamento
+      summary: Gera estado de mini app para compartilhamento
+      operationId: share
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: {}
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: "Bearer <jwt>"
+      responses:
+        401:
+          description: erro ao ler credenciais de autorização
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+        403:
+          description: credenciais enviadas nao possuem acesso
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 403, message: "string"}
+        500:
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+        201:
+          description: estado criado com sucesso
+          content:
+            application/json:
+              schema:
+                example: {id: "string"}
+  /v1/shares/:id:
+    get:
+      tags:
+        - Compartilhamento
+      summary: Retorna estado por id
+      operationId: getShareableState
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        401:
+          description: erro ao ler credenciais de autorização
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+        403:
+          description: credenciais enviadas nao possuem acesso
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 403, message: "string"}
+        500:
+          description: Erro interno
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+        200:
+          description: sucesso na recuperação de estado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareRequest'
+
+  /v1/auth:
+    post:
+      tags:
+        - Auth
+      summary: Autentica e gera JWT
+      operationId: auth
+      responses:
+        401:
+          description: Credenciais Inválidas
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+        500:
+          description: Erro interno generico
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+        200:
+          description: Autenticação com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: "Basic <base64>"
+
+  /v1/mini-apps:
+    get:
+      tags:
+        - Mini App
+      summary: Busca mini apps ativos
+      operationId: getMiniApps
+      responses:
+        200:
+          description: Mini Apps visiveis no super app
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  miniApps:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MiniApp'
+        500:
+          description: Erro de integracao
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+
+  /v1/mini-apps/:walletToken/token:
+    post:
+      tags:
+        - Mini App
+      summary: Endpoint para geracao de Token do Mini App
+      operationId: createMiniAppToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MiniAppTokenRequest'
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+            example: "Bearer <jwt>"
+      responses:
+        200:
+          description: Token gerado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MiniAppTokenResponse'
+        403:
+          description: Token não tem permissão para essa ação
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 403, message: "string"}
+        401:
+          description: Token expirado
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 401, message: "string"}
+        500:
+          description: Erro generico
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+  /v1/payments:
+    post:
+      tags:
+        - Pagamentos
+      summary: Endpoint para autorização de pagamento
+      operationId: paymentAuthorize
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        200:
+          description: pagamento autorizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        500:
+          description: Erro generico
+          content:
+            application/json:
+              schema:
+                example: {httpStatusCode: 500, message: "string"}
+components:
+  schemas:
+    ShareRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        state:
+          type: object
+    PaymentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        qrCodeLink:
+          type: string
+        deepLink:
+          type: string
+    PaymentRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+        cashBackAmount:
+          type: number
+        walletToken:
+          type: string
+        callbackUrl:
+          type: string
+        customPayload:
+          type: object
+        items:
+          type: array
+          items:
+            type: object
+    MiniAppTokenRequest:
+      type: object
+      properties:
+        token:
+          type: string
+    MiniAppTokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        customerId:
+          type: string
+        documentType:
+          type: string
+        documentNumber:
+          type: string
+        slug:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+    AuthenticationResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+    MiniApp:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+        publicKey:
+          type: string
+        slug:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        featureToggleKey:
+          type: string
+        acceptCashback:
+          type: boolean
+        visible:
+          type: boolean
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        revisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Revision'
+        organization:
+          $ref: '#/components/schemas/Organization'
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+        weight:
+          type: integer
+    Revision:
+      type: object
+      properties:
+        version:
+          type: string
+        url:
+          type: string
+        createdAt:
+          type: number
+        updatedAt:
+          type: number
+        status:
+          type: string
+          enum:
+            - PUBLISHED
+            - RETIRED
+            - DRAFT
+            - REJECTED
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        owner:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+  responses:
+    FindMiniApp:
+      description: Resposta na requisicao da busca de mini apps
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MiniApp'
+    Payment:
+      description: Resposta de autorizacao de pagamento
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentResponse'
+    MiniAppToken:
+      description: Resposta na criacao de mini app token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MiniAppTokenResponse'

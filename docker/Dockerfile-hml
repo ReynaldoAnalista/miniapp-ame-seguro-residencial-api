@@ -1,0 +1,21 @@
+FROM node:12-alpine
+
+ARG COMMIT_HASH
+RUN mkdir -p /home/node/app/node_modules && mkdir -p /home/node/app/config && chown -R node:node /home/node/app
+WORKDIR /home/node/app
+COPY tsoa.json .
+COPY package.json .
+COPY yarn.lock .
+COPY tsconfig.json .
+COPY config/homolog.json ./config/homolog.json
+COPY src src
+
+RUN chown -R node:node /home/node/app
+USER node
+RUN yarn && yarn build
+EXPOSE 8080
+ENV NODE_ENV=homolog
+ENV DEBUG=miniapp-ame-seguro-residencial-api:*
+ENV TZ=America/Sao_Paulo
+ENV COMMIT_HASH=$COMMIT_HASH
+CMD ["node", "dist/app.js"]

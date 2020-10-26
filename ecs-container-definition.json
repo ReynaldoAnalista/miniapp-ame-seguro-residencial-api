@@ -1,0 +1,47 @@
+{
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/miniapp-ame-seguro-residencial-api-tsk-definition",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "memory": 4096,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "APPLICATION_NAME",
+          "value": "miniapp-ame-seguro-residencial-api"
+        }
+      ],
+      "name": "miniapp-ame-seguro-residencial-api-container",
+      "image": "010984114721.dkr.ecr.us-east-1.amazonaws.com/miniapp-ame-seguro-residencial-api:development",
+      "secrets": [
+      {
+        "name": "AWS_ACCESS_KEY_ID",
+        "valueFrom": "arn:aws:secretsmanager:us-east-1:010984114721:secret:prod/ame_miniapps/aws_access_key_id"
+      },
+      {
+        "name": "AWS_SECRET_ACCESS_KEY",
+        "valueFrom": "arn:aws:secretsmanager:us-east-1:010984114721:secret:prod/ame_miniapps/aws_secret_access_key"
+      }]
+    }
+  ],
+  "executionRoleArn": "arn:aws:iam::010984114721:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::010984114721:role/ecsTaskExecutionRole",
+  "family": "miniapp-ame-seguro-residencial-api-tsk-definition",
+
+  "cpu": "1024",
+  "memory": "4096"
+}
