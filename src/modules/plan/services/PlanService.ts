@@ -29,12 +29,15 @@ export class PlanService {
     ) {
         log.debug("retrievePlanList");
         try {
-            let result: Plan[] = await this.requestService.makeRequest(
+            let result: object[] = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.URL_PLANS,
                 this.requestService.METHODS.GET,
                 null,
                 `?contrato=${contract}&ocupacao=${occupation}&imovel=${property}&construcao=${construction}&cep=${zipCode}&comissao=${commission}`
             )
+            if(result && result.length){
+                result = result.map(item => Plan.fromObject(item))
+            }
             return result
         } catch (err) {
             console.log('Ocorreu um erro ao tentar buscar os preços.');

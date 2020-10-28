@@ -107,7 +107,7 @@
 				"parameters": []
 			}
 		},
-		"/v1/plans": {
+		"/v1/plans/{zipCode}": {
 			"get": {
 				"operationId": "RetrievePlans",
 				"responses": {
@@ -130,7 +130,16 @@
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "path",
+						"name": "zipCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},
