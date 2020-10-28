@@ -5,10 +5,10 @@
         "entryFile": "./src/app.ts",
         "yaml": false,
         "host": "miniapps.dev.amedigital.com",
-        "basePath": "/miniapp-ame-seguro-residencial-api"
+        "basePath": "/ame-seguro-residencial"
     },
     "routes": {
-        "basePath": "/miniapp-ame-seguro-residencial-api",
+        "basePath": "/ame-seguro-residencial",
         "entryFile": "./src/app.ts",
         "outputDirectory": "./docs",
         "routesDir": "./src/",
