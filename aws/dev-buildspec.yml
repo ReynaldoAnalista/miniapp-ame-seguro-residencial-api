@@ -4,9 +4,9 @@ env:
   variables:
     GIT_REPO: "https://github.com/AmeDigital/miniapp-ame-seguro-residencial-api.git"
     BRANCH_NAME: "develop"
-    IMAGE_REPO_NAME: "ame-seguro-residencial-api"
+    IMAGE_REPO_NAME: "miniapps-seguro-residencial-api"
     AWS_ACCOUNT_ID: "355315421281"
-    CONTAINER_NAME: "miniapps-dev-ame-seguro-residencial"
+    CONTAINER_NAME: "miniapps-dev-seguro-residencial"
     BASE_DIRECTORY: "miniapp-ame-seguro-residencial-api"
     PORT: 8080
 
