@@ -17,10 +17,10 @@ export class PlanController {
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Get("/{zipCode}")
-    public async retrievePlans(@Path() zipCode: string) {
+    @Get("/{zipCode}/{buildType}")
+    public async retrievePlans(@Path() zipCode: string, @Path() buildType: string) {
         logger.debug(`Plans request starting for zipCode=${zipCode}`);
-        const result: any = await this.planService.retrievePlanList("123", "1", "1", "1", zipCode, "10")
+        const result: any = await this.planService.retrievePlanList(buildType, zipCode)
         if (result.length === 0) {
             throw new ApiError("Nothing to show", 404, `Plans not found`)
         }

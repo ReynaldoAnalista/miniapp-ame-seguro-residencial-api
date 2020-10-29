@@ -21,12 +21,8 @@ export class PlanService {
     }
 
     async retrievePlanList(
-        contract: string,
-        occupation: string,
         property: string,
-        construction: string,
         zipCode: string,
-        commission: string
     ) {
         log.debug("retrievePlanList");
         try {
@@ -34,7 +30,7 @@ export class PlanService {
                 this.requestService.ENDPOINTS.URL_PLANS,
                 this.requestService.METHODS.GET,
                 null,
-                `?contrato=${contract}&ocupacao=${occupation}&imovel=${property}&construcao=${construction}&cep=${zipCode}&comissao=${commission}`
+                `?contrato=6588&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=10`
             )
             if(result && result.length){
                 result = result.map(item => Plan.fromObject(item))
