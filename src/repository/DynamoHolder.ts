@@ -12,11 +12,13 @@ let dynamoDocClient: AWS.DynamoDB.DocumentClient;
 @injectable()
 export class DynamoHolder {
 
+    clientPromise: any
+
     constructor(
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
-        (async () => {
+        this.clientPromise = (async () => {
             let serviceConfigOptions: ServiceConfigurationOptions = {
                 region: "us-east-1",
                 accessKeyId: process.env.AWS_ACCESS_KEY_ID || await this.parameterStore.getSecretValue('AWS_ACCESS_KEY_ID'),
@@ -36,7 +38,8 @@ export class DynamoHolder {
         return dynamo;
     }
 
-    getDynamoDocClient(): AWS.DynamoDB.DocumentClient {
+    async getDynamoDocClient(): Promise<AWS.DynamoDB.DocumentClient> {
+        await this.clientPromise;
         return dynamoDocClient;
     }
 

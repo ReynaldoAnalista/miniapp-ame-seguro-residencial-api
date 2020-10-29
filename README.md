@@ -43,6 +43,10 @@ Para rodar os testes automaticamente
 Para rodar somente um arquivo de teste  
 `yarn test -- --watchAll PaymentService`
 
+```
+aws dynamodb create-table --cli-input-json file://aws/dynamo/plan.json --endpoint-url http://localhost:8000/
+```
+
 ## Todo
 
 1) Automatizar a substituição do context path nos docker files dentro da pasta docker

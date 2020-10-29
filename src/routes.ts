@@ -15,23 +15,6 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "Proposal": {
-        "dataType": "refObject",
-        "properties": {
-            "comission": { "dataType": "double" },
-            "planId": { "dataType": "string" },
-            "name": { "dataType": "string" },
-            "document": { "dataType": "string" },
-            "gender": { "dataType": "string" },
-            "birthData": { "dataType": "string" },
-            "phone": { "dataType": "string" },
-            "mail": { "dataType": "string" },
-            "startDate": { "dataType": "string" },
-            "property": { "dataType": "any" },
-        },
-        "additionalProperties": true,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -143,7 +126,7 @@ export function RegisterRoutes(app: express.Express) {
     app.post('/ame-seguro-residencial/v1/plans/sendProposal',
         function(request: any, response: any, next: any) {
             const args = {
-                proposal: { "in": "body", "name": "proposal", "required": true, "ref": "Proposal" },
+                proposal: { "in": "body", "name": "proposal", "required": true, "dataType": "any" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

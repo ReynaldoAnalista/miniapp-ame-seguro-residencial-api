@@ -16,7 +16,7 @@ export class PlanRepository {
 
     async create(proposal: Proposal): Promise<Proposal> {
         console.log('gravando', TABLE)
-        let dynamoDocClient = this.dynamoHolder.getDynamoDocClient();
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName:  TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();
         return proposal
@@ -29,13 +29,14 @@ export class PlanRepository {
                 "email": email
             }
         };
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
 
-        let result = await this.dynamoHolder.getDynamoDocClient().get(params).promise();
+        let result = await dynamoDocClient.get(params).promise();
         return result.Item as Proposal
     }
 
     async update(proposal: Proposal) {
-        let dynamoDocClient = this.dynamoHolder.getDynamoDocClient();
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {
             TableName: TABLE,
             Item: proposal
