@@ -5,6 +5,7 @@ import {AuthTokenService} from "../../authToken/services/AuthTokenService";
 import {AuthToken} from "../../authToken/model/AuthToken";
 import {RequestService} from "../../authToken/services/RequestService";
 import {Plan} from "../model/Plan";
+import {Proposal} from "../model/Proposal";
 
 const log = getLogger("PlanService")
 
@@ -40,7 +41,22 @@ export class PlanService {
             }
             return result
         } catch (err) {
-            console.log('Ocorreu um erro ao tentar buscar os preços.');
+            log.error('Ocorreu um erro ao tentar buscar os preços.');
+            return [];
+        }
+    }
+
+    async sendProposal(proposal:Proposal) {
+        log.debug("sendProposal");
+        try {
+            let result = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.URL_PLANS,
+                this.requestService.METHODS.POST,
+                proposal
+            )
+            return result
+        } catch (err) {
+            log.error('Ocorreu um erro ao tentar buscar os preços.');
             return [];
         }
     }

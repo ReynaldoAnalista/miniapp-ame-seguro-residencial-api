@@ -1,8 +1,9 @@
 import {inject, injectable} from "inversify"
 import {PlanService} from "../services/PlanService"
-import {Get, Path, Route, SuccessResponse, Response} from "tsoa"
+import {Get, Path, Route, SuccessResponse, Response, Post, Body} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
+import {Proposal} from "../model/Proposal";
 
 const logger = getLogger("PlanController")
 
@@ -25,5 +26,15 @@ export class PlanController {
         }
         logger.debug("Plans request ended")
         return result
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sendProposal")
+    public async sendProposal(@Body() proposal: Proposal) {
+        logger.debug(`Sending Proposal`);
+        const proposalResponse: any = await this.planService.sendProposal(proposal)
+        logger.debug("Proposal sent")
+        return proposalResponse
     }
 }
