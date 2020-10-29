@@ -17,7 +17,7 @@ RUN yarn && yarn build
 EXPOSE 8080
 ENV NODE_ENV=homolog
 ENV DYNAMODB_ENV=hml
-ENV DEBUG=miniapp-ame-seguro-residencial:*
+ENV DEBUG=ame-seguro-residencial:*
 ENV TZ=America/Sao_Paulo
 ENV COMMIT_HASH=$COMMIT_HASH
 CMD ["node", "dist/app.js"]
