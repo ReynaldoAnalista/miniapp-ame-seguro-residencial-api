@@ -15,6 +15,7 @@ export class PlanRepository {
     ) { }
 
     async create(proposal: Proposal): Promise<Proposal> {
+        console.log('gravando', TABLE)
         let dynamoDocClient = this.dynamoHolder.getDynamoDocClient();
         let params = {TableName:  TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();

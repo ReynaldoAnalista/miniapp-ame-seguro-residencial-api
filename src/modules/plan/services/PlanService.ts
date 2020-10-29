@@ -20,7 +20,7 @@ export class PlanService {
         @inject("RequestService")
         private requestService: RequestService,
 
-        @inject(PlanRepository)
+        @inject("PlanRepository")
         private planRepository: PlanRepository
     ) {
     }

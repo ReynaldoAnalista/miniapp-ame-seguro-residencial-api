@@ -114,10 +114,11 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/ame-seguro-residencial/v1/plans/:zipCode',
+    app.get('/ame-seguro-residencial/v1/plans/:zipCode/:buildType',
         function(request: any, response: any, next: any) {
             const args = {
                 zipCode: { "in": "path", "name": "zipCode", "required": true, "dataType": "string" },
+                buildType: { "in": "path", "name": "buildType", "required": true, "dataType": "string" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
