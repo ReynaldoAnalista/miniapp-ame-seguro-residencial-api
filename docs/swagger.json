@@ -5,11 +5,60 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"Proposal": {
+				"properties": {
+					"comission": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"planId": {
+						"type": "string",
+						"nullable": true
+					},
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"document": {
+						"type": "string",
+						"nullable": true
+					},
+					"gender": {
+						"type": "string",
+						"nullable": true
+					},
+					"birthData": {
+						"type": "string",
+						"nullable": true
+					},
+					"phone": {
+						"type": "string",
+						"nullable": true
+					},
+					"mail": {
+						"type": "string",
+						"nullable": true
+					},
+					"startDate": {
+						"type": "string",
+						"nullable": true
+					},
+					"property": {
+						"additionalProperties": true,
+						"type": "object",
+						"nullable": true
+					}
+				},
+				"type": "object",
+				"additionalProperties": true
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "miniapp-ame-seguro-residencial-api",
+		"title": "ame-seguro-residencial",
 		"version": "1.0.0",
 		"license": {
 			"name": "MIT"
@@ -141,11 +190,46 @@
 					}
 				]
 			}
+		},
+		"/v1/plans/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Proposal"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"servers": [
 		{
-			"url": "https://miniapps.dev.amedigital.com/miniapp-ame-seguro-residencial-api"
+			"url": "https://miniapps.dev.amedigital.com/ame-seguro-residencial"
 		}
 	]
 }
