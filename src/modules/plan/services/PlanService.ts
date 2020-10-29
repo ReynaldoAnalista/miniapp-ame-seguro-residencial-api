@@ -7,6 +7,9 @@ import { RequestService } from "../../authToken/services/RequestService";
 import { Plan } from "../model/Plan";
 import { Proposal } from "../model/Proposal";
 import { PlanRepository } from "../repository/PlanRepository";
+import { AmeNotification } from "../model/AmeNotification";
+import { ParameterStore } from "../../../configs/ParameterStore";
+import * as jwt from 'jsonwebtoken';
 
 const log = getLogger("PlanService")
 
@@ -21,7 +24,10 @@ export class PlanService {
         private requestService: RequestService,
 
         @inject("PlanRepository")
-        private planRepository: PlanRepository
+        private planRepository: PlanRepository,
+
+        @inject(TYPES.ParameterStore)
+        private parameterStore: ParameterStore
     ) {
     }
 
@@ -47,10 +53,27 @@ export class PlanService {
         }
     }
 
-    async sendProposal(proposal: Proposal): Promise<Proposal> {
-        log.debug("sendProposal %j", proposal);
+    async verifyPayment(signedPayment: string): Promise<any> {
+        const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
+        return new Promise((resolve, reject) => {
+            jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
+                if (err) {
+                    reject(new Error(`Signed payment: ${err.message}`))
+                } else {
+                    resolve(decoded)
+                }
+            });
+        })
+    }
+
+    async sendProposal(ameNotification: AmeNotification): Promise<Proposal> {
+        let amePayment = await this.verifyPayment(ameNotification.signedPayment);
+        // colocando na raiz para servir de chave no DynamoDB
+        amePayment.email = amePayment.attributes?.customPayload?.userData?.email
+
+        log.debug("sendProposal %j", amePayment);
         try {
-            return await this.planRepository.create(proposal)
+            return await this.planRepository.create(amePayment)
             // let result = await this.requestService.makeRequest(
             //     this.requestService.ENDPOINTS.URL_PLANS,
             //     this.requestService.METHODS.POST,

@@ -33,9 +33,6 @@ export class PlanController {
     @Post("/sendProposal")
     public async sendProposal(@Body() proposal: any) {
         logger.info('Sending Proposal %j', proposal);
-
-        // colocando na raiz para servir de chave no DynamoDB
-        proposal.email = proposal.attributes?.customPayload?.userData?.email
         const proposalResponse: any = await this.planService.sendProposal(proposal)
         logger.debug("Proposal sent %j", proposal)
         return proposalResponse
