@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify"
 import {PlanService} from "../services/PlanService"
-import {Get, Path, Route, SuccessResponse, Response, Post, Body} from "tsoa"
+import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
 import {Proposal} from "../model/Proposal";
@@ -36,5 +36,14 @@ export class PlanController {
         const proposalResponse: any = await this.planService.sendProposal(proposal)
         logger.debug("Proposal sent %j", proposal)
         return proposalResponse
+    }
+
+    @Get("/proposal")
+    @Security("jwt", ["list_proposal"])
+    public async listProposal() {
+        logger.info('Listando proposal')
+        const proposal = await this.planService.listProposal()
+        logger.info('Retornando proposals %j', proposal.length)
+        return proposal
     }
 }

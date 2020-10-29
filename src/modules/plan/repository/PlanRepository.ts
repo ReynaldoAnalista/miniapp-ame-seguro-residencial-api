@@ -45,4 +45,16 @@ export class PlanRepository {
         return proposal
     }
 
+    async listProposal() {
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+        let scanResult = await dynamoDocClient.scan({
+            TableName: TABLE,
+            FilterExpression: 'attribute_exists(email)'
+        }).promise()
+        if (scanResult.Count && scanResult.Items && scanResult.Items.length)
+            return scanResult.Items as Proposal[]
+        else
+            return []
+    }
+
 }

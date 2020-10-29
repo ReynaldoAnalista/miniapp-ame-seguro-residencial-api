@@ -85,4 +85,8 @@ export class PlanService {
             throw err;
         }
     }
+
+    async listProposal() {
+        return this.planRepository.listProposal()
+    }
 }
