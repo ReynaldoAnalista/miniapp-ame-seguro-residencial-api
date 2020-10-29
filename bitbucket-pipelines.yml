@@ -9,19 +9,12 @@ pipelines:
     - step: &syncGithub
         name: Sync with github
         script:
-          - set +e # para ignorar erros, por exemplo em casos em que a branch nao exista
-          - git fetch --unshallow
-          - set -e # para dar erro no build se o repositorio nao existir no github
+          - git fetch --unshallow || true # para ignorar erros, por exemplo em casos em que a branch nao exista
           - git remote add github git@github.com:AmeDigital/$BITBUCKET_REPO_SLUG.git
-          - set +e # para ignorar erros, por exemplo em casos em que a branch nao exista
-          - git pull github $BITBUCKET_BRANCH
-          - set -e # para dar erro no build se nao der para dar push
+          - git pull github $BITBUCKET_BRANCH || true # para ignorar erros, por exemplo em casos em que a branch nao exista
           - git push github $BITBUCKET_BRANCH:$BITBUCKET_BRANCH
           - git push origin $BITBUCKET_BRANCH:$BITBUCKET_BRANCH
   branches:
     '**':
-      #- step: *tests
       - step: *syncGithub
-    'develop':
-      - step: *syncGithub
-
+    
