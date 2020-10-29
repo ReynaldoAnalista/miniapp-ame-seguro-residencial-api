@@ -23,15 +23,5 @@ pipelines:
       #- step: *tests
       - step: *syncGithub
     'develop':
-      #- step: *tests
-      - step:
-          name: Develop Docker Image
-          image: atlassian/pipelines-awscli:latest
-          script:
-            - docker build --build-arg PROFILE=dev -t ${ECR_REPOSITORY}:development -f docker/Dockerfile-dev .
-            - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
-            - docker push ${ECR_REPOSITORY}:development
-          services:
-            - docker
       - step: *syncGithub
 
