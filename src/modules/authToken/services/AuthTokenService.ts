@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
 import {getLogger} from "../../../server/Logger";
 import {TYPES} from "../../../inversify/inversify.types";
-import {Secrets} from "../../../configs/Secrets";
+import {ParameterStore} from "../../../configs/ParameterStore";
 import axios from "axios";
 import qs from 'qs'
 
@@ -18,7 +18,7 @@ AWS.config.update({
 export class AuthTokenService {
 
     constructor(
-        @inject(TYPES.Secrets) private secrets: Secrets
+        @inject(TYPES.ParameterStore) private parameterStore: ParameterStore
     ) {
     }
 
@@ -26,7 +26,7 @@ export class AuthTokenService {
         log.debug(`Searching for config: ${configName}`)
         if (configName) {
             try {
-                const configValue = await this.secrets.get(configName)
+                const configValue = await this.parameterStore.getSecretValue(configName)
                 if (!configValue) {
                     log.debug("There is no value to this config")
                 }
@@ -60,7 +60,7 @@ export class AuthTokenService {
             })
             log.debug('Trying to authorizate')
             let result: AuthToken = new AuthToken();
-            let url = await this.secrets.get('URL_AUTHORIZATION')
+            let url = await this.parameterStore.getSecretValue('URL_AUTHORIZATION')
             await axios.post(url, body, config)
                 .then((res) => {
                     log.debug("AUTHORIZED");
