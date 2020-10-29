@@ -12,7 +12,7 @@ export class Secrets {
             // Load the AWS SDK
             var AWS = require('aws-sdk'),
                 region = "us-east-1",
-                secretName = "dev/ame-seguro-residencial/api",
+                secretName = "miniapps-dev-seguro-residencial-api",
                 secret,
                 decodedBinarySecret;
 

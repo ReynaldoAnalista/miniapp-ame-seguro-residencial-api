@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
 import {Get, Route} from "tsoa";
 import {TYPES} from "../../../inversify/inversify.types";
-import {Secrets} from "../../../configs/Secrets";
+import {ParameterStore} from "../../../configs/ParameterStore";
 
 const fs = require('fs')
 const path = require('path')
@@ -12,8 +12,8 @@ export class HealthController {
     private startupDate: Date
 
     constructor(
-        @inject(TYPES.Secrets)
-        private secrets: Secrets
+        @inject(TYPES.ParameterStore)
+        private parameterStore: ParameterStore
     ) {
         this.startupDate = new Date()
     }
@@ -31,7 +31,7 @@ export class HealthController {
     @Get('/test')
     public async test() {
         return {
-            secrets: await this.secrets.getAllSecrets()
+            secrets: await this.parameterStore.getSecretValue('URL_AUTHORIZATION')
         }
     }
 

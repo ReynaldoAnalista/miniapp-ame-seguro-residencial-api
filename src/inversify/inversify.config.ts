@@ -8,6 +8,7 @@ import {ServerConfig} from '../configs/ServerConfig';
 import Axios, {AxiosInstance} from 'axios';
 import {ParameterStore} from "../configs/ParameterStore";
 import {Secrets} from "../configs/Secrets";
+import { DynamoHolder } from '../repository/DynamoHolder';
 
 export const iocContainer = new Container()
 
@@ -20,6 +21,7 @@ export const initDependencies = () => {
     iocContainer.bind<ServerConfig>(TYPES.ServerConfig).to(ServerConfig).inSingletonScope()
     iocContainer.bind<ParameterStore>(TYPES.ParameterStore).to(ParameterStore).inSingletonScope()
     iocContainer.bind<Secrets>(TYPES.Secrets).to(Secrets).inSingletonScope()
+    iocContainer.bind(TYPES.DynamoHolder).to(DynamoHolder).inSingletonScope()
 
 
     /* Initialize Clients */
@@ -39,7 +41,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/plan/services")
 
     /* Initialize Repositories */
-    //bindSingleton("../modules/default/repository")
+    bindSingleton("../modules/plan/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 
