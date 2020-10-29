@@ -31,7 +31,7 @@ export class PlanController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
-    public async sendProposal(@Body() proposal: Proposal) {
+    public async sendProposal(@Body() proposal: any) {
         logger.debug(`Sending Proposal`);
         const proposalResponse: any = await this.planService.sendProposal(proposal)
         logger.debug("Proposal sent")
