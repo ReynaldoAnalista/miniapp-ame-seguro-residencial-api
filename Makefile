@@ -12,13 +12,13 @@ commithash:
 
 build:
 	clear
-	@echo '=========== Building miniapp-ame-seguro-residencial-api ==========='
+	@echo '=========== Building ame-seguro-residencial ==========='
 	yarn
 
 runserver: build	commithash
-	@echo '=========== Starting miniapp-ame-seguro-residencial-api ==========='
-	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='miniapp-ame-seguro-residencial-api' DEBUG=miniapp-ame-seguro-residencial-api:* yarn run dev
+	@echo '=========== Starting ame-seguro-residencial ==========='
+	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn run dev
 
 debugserver: build	commithash
-	@echo '=========== Starting miniapp-ame-seguro-residencial-api ==========='
-	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='miniapp-ame-seguro-residencial-api' DEBUG=miniapp-ame-seguro-residencial-api:* yarn run debug
+	@echo '=========== Starting ame-seguro-residencial ==========='
+	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn run debug

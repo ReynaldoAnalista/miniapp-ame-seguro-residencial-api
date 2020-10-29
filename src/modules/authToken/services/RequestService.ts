@@ -1,7 +1,7 @@
 import axios from "axios";
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../../inversify/inversify.types";
-import {Secrets} from "../../../configs/Secrets";
+import {ParameterStore} from "../../../configs/ParameterStore";
 import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
 import {End} from "aws-sdk/clients/s3";
@@ -25,8 +25,8 @@ enum Endpoints {
 export class RequestService {
 
     constructor(
-        @inject(TYPES.Secrets)
-        private secrets: Secrets,
+        @inject(TYPES.ParameterStore)
+        private parameterStore: ParameterStore,
         @inject(TYPES.AuthTokenService)
         private authTokenService: AuthTokenService
     ) {
@@ -39,7 +39,7 @@ export class RequestService {
 
         log.debug(`Call to make a ${method} on ${url}`)
 
-        const apiUrl = await this.secrets.get(url)
+        const apiUrl = await this.parameterStore.getSecretValue(url)
         const token = await this.authTokenService.retrieveAuthorization()
 
         log.debug(`Making ${method} to ${apiUrl}`)

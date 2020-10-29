@@ -11,7 +11,8 @@ const TYPES = {
     ApiServer: 'ApiServer',
     Secrets: 'Secrets',
     AuthTokenService:'AuthTokenService',
-    VoucherRepository: 'VoucherRepository'
+    VoucherRepository: 'VoucherRepository',
+    DynamoHolder: 'DynamoHolder',
 
 }
 
