@@ -1,11 +1,12 @@
-import {inject, injectable} from "inversify";
-import {getLogger} from "../../../server/Logger";
-import {TYPES} from "../../../inversify/inversify.types";
-import {AuthTokenService} from "../../authToken/services/AuthTokenService";
-import {AuthToken} from "../../authToken/model/AuthToken";
-import {RequestService} from "../../authToken/services/RequestService";
-import {Plan} from "../model/Plan";
-import {Proposal} from "../model/Proposal";
+import { inject, injectable } from "inversify";
+import { getLogger } from "../../../server/Logger";
+import { TYPES } from "../../../inversify/inversify.types";
+import { AuthTokenService } from "../../authToken/services/AuthTokenService";
+import { AuthToken } from "../../authToken/model/AuthToken";
+import { RequestService } from "../../authToken/services/RequestService";
+import { Plan } from "../model/Plan";
+import { Proposal } from "../model/Proposal";
+import { PlanRepository } from "../repository/PlanRepository";
 
 const log = getLogger("PlanService")
 
@@ -15,8 +16,12 @@ export class PlanService {
     constructor(
         @inject("AuthTokenService")
         private authTokenService: AuthTokenService,
+
         @inject("RequestService")
         private requestService: RequestService,
+
+        @inject(PlanRepository)
+        private planRepository: PlanRepository
     ) {
     }
 
@@ -32,7 +37,7 @@ export class PlanService {
                 null,
                 `?contrato=6588&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=10`
             )
-            if(result && result.length){
+            if (result && result.length) {
                 result = result.map(item => Plan.fromObject(item))
             }
             return result
@@ -42,18 +47,19 @@ export class PlanService {
         }
     }
 
-    async sendProposal(proposal:Proposal) {
-        log.debug("sendProposal");
+    async sendProposal(proposal: Proposal): Promise<Proposal> {
+        log.debug("sendProposal %j", proposal);
         try {
-            let result = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.URL_PLANS,
-                this.requestService.METHODS.POST,
-                proposal
-            )
-            return result
+            return await this.planRepository.create(proposal)
+            // let result = await this.requestService.makeRequest(
+            //     this.requestService.ENDPOINTS.URL_PLANS,
+            //     this.requestService.METHODS.POST,
+            //     proposal
+            // )
+            // return result
         } catch (err) {
-            log.error('Ocorreu um erro ao tentar buscar os preços.');
-            return [];
+            log.error(`Ocorreu um erro ao cadastrar a proposta %j`, { data: err?.response?.data, message: err.message });
+            throw err;
         }
     }
 }

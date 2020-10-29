@@ -6,6 +6,7 @@ COPY tsoa.json .
 COPY package.json .
 COPY yarn.lock .
 COPY tsconfig.json .
+COPY newrelic.js .
 COPY config/development.json ./config/development.json
 COPY src src
 
