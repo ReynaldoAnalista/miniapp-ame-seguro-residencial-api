@@ -3,7 +3,6 @@ import {PlanService} from "../services/PlanService"
 import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
-import {Proposal} from "../model/Proposal";
 
 const logger = getLogger("PlanController")
 

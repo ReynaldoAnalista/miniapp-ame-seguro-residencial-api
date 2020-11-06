@@ -1,8 +1,7 @@
-import { injectable, inject } from "inversify";
+import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
-import { Proposal } from "../model/Proposal";
 
-const TABLE          = `${process.env.DYNAMODB_ENV}_seguro_residencial`;
+const TABLE = `${process.env.DYNAMODB_ENV}_seguro_residencial`;
 
 @injectable()
 export class PlanRepository {
@@ -12,19 +11,20 @@ export class PlanRepository {
     constructor(
         @inject("DynamoHolder")
         private dynamoHolder: DynamoHolder
-    ) { }
+    ) {
+    }
 
-    async create(proposal: Proposal): Promise<Proposal> {
+    async create(proposal: any) {
         console.log('gravando', TABLE)
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-        let params = {TableName:  TABLE, Item: proposal};
+        let params = {TableName: TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();
         return proposal
     }
 
-    async findByEmail(email: string): Promise<Proposal> {
+    async findByEmail(email: string) {
         let params = {
-            TableName : TABLE,
+            TableName: TABLE,
             Key: {
                 "email": email
             }
@@ -32,10 +32,10 @@ export class PlanRepository {
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
 
         let result = await dynamoDocClient.get(params).promise();
-        return result.Item as Proposal
+        return result.Item
     }
 
-    async update(proposal: Proposal) {
+    async update(proposal) {
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {
             TableName: TABLE,
@@ -52,7 +52,7 @@ export class PlanRepository {
             FilterExpression: 'attribute_exists(email)'
         }).promise()
         if (scanResult.Count && scanResult.Items && scanResult.Items.length)
-            return scanResult.Items as Proposal[]
+            return scanResult.Items
         else
             return []
     }

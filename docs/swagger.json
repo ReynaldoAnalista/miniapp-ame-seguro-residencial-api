@@ -5,56 +5,7 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {
-			"Proposal": {
-				"properties": {
-					"comission": {
-						"type": "number",
-						"format": "double",
-						"nullable": true
-					},
-					"planId": {
-						"type": "string",
-						"nullable": true
-					},
-					"name": {
-						"type": "string",
-						"nullable": true
-					},
-					"document": {
-						"type": "string",
-						"nullable": true
-					},
-					"gender": {
-						"type": "string",
-						"nullable": true
-					},
-					"birthData": {
-						"type": "string",
-						"nullable": true
-					},
-					"phone": {
-						"type": "string",
-						"nullable": true
-					},
-					"mail": {
-						"type": "string",
-						"nullable": true
-					},
-					"startDate": {
-						"type": "string",
-						"nullable": true
-					},
-					"property": {
-						"additionalProperties": true,
-						"type": "object",
-						"nullable": true
-					}
-				},
-				"type": "object",
-				"additionalProperties": true
-			}
-		},
+		"schemas": {},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -199,41 +150,6 @@
 				]
 			}
 		},
-		"/v1/plans/zipcode/{zipCode}": {
-			"get": {
-				"operationId": "ConsultZipcode",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "zipCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/v1/plans/sendProposal": {
 			"post": {
 				"operationId": "SendProposal",
@@ -278,7 +194,8 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Proposal"
+										"additionalProperties": true,
+										"type": "object"
 									},
 									"type": "array"
 								}
@@ -295,6 +212,41 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/v1/zipcode/{zipCode}": {
+			"get": {
+				"operationId": "ConsultZipcode",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "zipCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},
