@@ -17,23 +17,6 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "Proposal": {
-        "dataType": "refObject",
-        "properties": {
-            "comission": { "dataType": "double" },
-            "planId": { "dataType": "string" },
-            "name": { "dataType": "string" },
-            "document": { "dataType": "string" },
-            "gender": { "dataType": "string" },
-            "birthData": { "dataType": "string" },
-            "phone": { "dataType": "string" },
-            "mail": { "dataType": "string" },
-            "startDate": { "dataType": "string" },
-            "property": { "dataType": "any" },
-        },
-        "additionalProperties": true,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
