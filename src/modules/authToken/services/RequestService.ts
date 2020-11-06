@@ -17,6 +17,7 @@ enum Methods {
 
 enum Endpoints {
     URL_PLANS = 'URL_PLANS',
+    URL_ZIPCODE = 'URL_ZIPCODE',
     URL_AUTHORIZATION = 'URL_AUTHORIZATION',
     URL_SALE = 'URL_SALE',
 }

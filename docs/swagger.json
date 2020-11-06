@@ -156,9 +156,52 @@
 				"parameters": []
 			}
 		},
-		"/v1/plans/{zipCode}": {
+		"/v1/plans/{zipCode}/{buildType}": {
 			"get": {
 				"operationId": "RetrievePlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "zipCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "buildType",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/plans/zipcode/{zipCode}": {
+			"get": {
+				"operationId": "ConsultZipcode",
 				"responses": {
 					"200": {
 						"content": {
@@ -219,11 +262,39 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Proposal"
+								"type": "object"
 							}
 						}
 					}
 				}
+			}
+		},
+		"/v1/plans/proposal": {
+			"get": {
+				"operationId": "ListProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Proposal"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
+				"parameters": []
 			}
 		}
 	},

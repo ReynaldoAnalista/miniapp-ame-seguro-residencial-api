@@ -9,12 +9,31 @@ import { AuthTokenController } from './modules/authToken/controllers/AuthTokenCo
 import { HealthController } from './modules/default/controllers/HealthController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PlanController } from './modules/plan/controllers/PlanController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ZipCodeController } from './modules/plan/controllers/ZipCodeController';
 import { expressAuthentication } from './middleware/authentication';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "Proposal": {
+        "dataType": "refObject",
+        "properties": {
+            "comission": { "dataType": "double" },
+            "planId": { "dataType": "string" },
+            "name": { "dataType": "string" },
+            "document": { "dataType": "string" },
+            "gender": { "dataType": "string" },
+            "birthData": { "dataType": "string" },
+            "phone": { "dataType": "string" },
+            "mail": { "dataType": "string" },
+            "startDate": { "dataType": "string" },
+            "property": { "dataType": "any" },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -148,9 +167,106 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/ame-seguro-residencial/v1/plans/proposal',
+        authenticateMiddleware([{ "jwt": ["list_proposal"] }]),
+        function(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<PlanController>(PlanController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.listProposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/ame-seguro-residencial/v1/zipcode/:zipCode',
+        function(request: any, response: any, next: any) {
+            const args = {
+                zipCode: { "in": "path", "name": "zipCode", "required": true, "dataType": "string" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<ZipCodeController>(ZipCodeController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.consultZipcode.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
+    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
+        return (request: any, _response: any, next: any) => {
+            let responded = 0;
+            let success = false;
+
+            const succeed = function(user: any) {
+                if (!success) {
+                    success = true;
+                    responded++;
+                    request['user'] = user;
+                    next();
+                }
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            const fail = function(error: any) {
+                responded++;
+                if (responded == security.length && !success) {
+                    error.status = error.status || 401;
+                    next(error)
+                }
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            for (const secMethod of security) {
+                if (Object.keys(secMethod).length > 1) {
+                    let promises: Promise<any>[] = [];
+
+                    for (const name in secMethod) {
+                        promises.push(expressAuthentication(request, name, secMethod[name]));
+                    }
+
+                    Promise.all(promises)
+                        .then((users) => { succeed(users[0]); })
+                        .catch(fail);
+                } else {
+                    for (const name in secMethod) {
+                        expressAuthentication(request, name, secMethod[name])
+                            .then(succeed)
+                            .catch(fail);
+                    }
+                }
+            }
+        }
+    }
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 

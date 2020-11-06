@@ -31,6 +31,22 @@ export class PlanService {
     ) {
     }
 
+    async consultZipcode(zipcode: string) {
+        log.debug("consultZipcode")
+        try {
+            let result: object[] = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.URL_ZIPCODE,
+                this.requestService.METHODS.GET,
+                null,
+                `/${zipcode}`
+            )
+            return result
+        } catch (err) {
+            log.error(`Ocorreu um erro ao tentar buscar o cep ${zipcode}`);
+            return null;
+        }
+    }
+
     async retrievePlanList(
         property: string,
         zipCode: string,
@@ -41,7 +57,7 @@ export class PlanService {
                 this.requestService.ENDPOINTS.URL_PLANS,
                 this.requestService.METHODS.GET,
                 null,
-                `?contrato=6588&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=10`
+                `?contrato=10537&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=40&comissaoCorretor=10`
             )
             if (result && result.length) {
                 result = result.map(item => Plan.fromObject(item))
