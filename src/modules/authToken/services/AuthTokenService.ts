@@ -51,7 +51,8 @@ export class AuthTokenService {
             let config = {
                 headers: {
                     'Authorization': `Basic ${authorization}`,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'User-Agent': ''
                 }
             };
             let body = qs.stringify({

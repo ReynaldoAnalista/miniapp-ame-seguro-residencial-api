@@ -193,11 +193,8 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"additionalProperties": true,
-										"type": "object"
-									},
-									"type": "array"
+									"additionalProperties": true,
+									"type": "object"
 								}
 							}
 						},

@@ -4,9 +4,13 @@ import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
-import {End} from "aws-sdk/clients/s3";
+import curlirize from 'axios-curlirize'
 
 const log = getLogger("RequestService")
+
+if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
+    curlirize(axios)
+}
 
 enum Methods {
     GET = "GET",

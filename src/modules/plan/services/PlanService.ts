@@ -38,6 +38,7 @@ export class PlanService {
             return result
         } catch (err) {
             log.error(`Ocorreu um erro ao tentar buscar o cep ${zipcode}`);
+            log.error(err)
             return null;
         }
     }
@@ -50,6 +51,7 @@ export class PlanService {
         const contractNumber = await this.parameterStore.getSecretValue('CONTRACT_NUMBER')
         const ameComission = await this.parameterStore.getSecretValue('AME_COMISSION')
         const brokerComission = await this.parameterStore.getSecretValue('BROKER_COMISSION')
+        zipCode = zipCode.replace(/\D/g, '')
         const qs = `?contrato=${contractNumber}&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=${ameComission}&comissaoCorretor=${brokerComission}`
         try {
             let result: object[] = await this.requestService.makeRequest(
@@ -61,6 +63,7 @@ export class PlanService {
             return result
         } catch (err) {
             log.error('Ocorreu um erro ao tentar buscar os preços.');
+            log.error(err)
             return [];
         }
     }
@@ -82,16 +85,23 @@ export class PlanService {
         let amePayment = await this.verifyPayment(ameNotification.signedPayment);
         // colocando na raiz para servir de chave no DynamoDB
         amePayment.email = amePayment.attributes?.customPayload?.userData?.email
-
-        log.debug("sendProposal %j", amePayment);
+        let proposal = amePayment.attributes?.customPayload?.proposal
+        log.debug("sendProposal %j", proposal);
+        const saveInDynamoDB = true
+        const sendToPrevisul = true
+        let result
         try {
-            return await this.planRepository.create(amePayment)
-            // let result = await this.requestService.makeRequest(
-            //     this.requestService.ENDPOINTS.URL_PLANS,
-            //     this.requestService.METHODS.POST,
-            //     proposal
-            // )
-            // return result
+            if (saveInDynamoDB) {
+                result = await this.planRepository.create(amePayment)
+            }
+            if (sendToPrevisul) {
+                result = await this.requestService.makeRequest(
+                    this.requestService.ENDPOINTS.URL_PLANS,
+                    this.requestService.METHODS.POST,
+                    proposal
+                )
+            }
+            return result
         } catch (err) {
             log.error(`Ocorreu um erro ao cadastrar a proposta %j`, {data: err?.response?.data, message: err.message});
             throw err;
