@@ -11,13 +11,13 @@
     ],
     "operationType": "DEBIT",
     "name": "Compra on-line",
-    "title": "Ame Server",
-    "description": "Ame Server",
+    "title": "Seguro Residencial",
+    "description": "Plano R$ 120.000 / Roubo",
+    "amount": 54565,
     "status": "AUTHORIZED",
     "type": "PAYMENT",
     "currency": "BRL",
     "cashType": "CASH",
-    "amount": 9,
     "amountRefunded": 0,
     "splits": [
         {
@@ -43,32 +43,35 @@
         "cashbackAmountValue": 0,
         "transactionChangedCallbackUrl": "https://miniapps.dev.amedigital.com/notification-api/v1/notification/fc66b0a5-d890-4105-ab28-758a28215ab5",
         "customPayload": {
-            "dataToUseVoucher": {
-                "userType": "DISTRIBUIDOR",
-                "products": [
-                    {
-                        "codeProduct": "0110035",
-                        "priceProduct": 98.99,
-                        "quantity": 3
+            "isFrom": "mini-app-ame-seguro-residencial",
+            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/plans/sendProposal",
+            "proposal": {
+                "contratoId": 11703,
+                "corretorId": 6218,
+                "comissao": 40,
+                "comissaoCorretor": 10,
+                "planoId": "117030721",
+                "nome": "Marcelo Madeira",
+                "cpf": "09548913763",
+                "sexo": "F",
+                "dataNascimento": "1982-01-16",
+                "telefone": "21979734886",
+                "email": "marcelo@calindra.com.br",
+                "dataInicioVigencia": "2020-11-10",
+                "imovel": {
+                    "tipo": "2",
+                    "ocupacao": 1,
+                    "construcao": 1,
+                    "endereco": {
+                        "cep": "11380310",
+                        "numero": "50",
+                        "complemento": null
                     }
-                ],
-                "consumer": {
-                    "cellphoneConsumer": {
-                        "areaCode": "11",
-                        "number": "999999999"
-                    },
-                    "nameConsumer": "João de Deus",
-                    "documentTypeConsumer": "CPF",
-                    "documentConsumer": "83606026030",
-                    "emailConsumer": " john.doe@provider.com"
                 },
-                "amount": 296.97,
-                "paymentMethod": "CARTAO_DE_CREDITO",
-                "couponCode": "99999",
-                "couponDiscount": "999",
-                "location": {
-                    "latitude": -23.955039523854254,
-                    "longitude":-46.358553229394545
+                "pagamento": {
+                    "tipo": "AME",
+                    "dataVencimento": "2020-12-09",
+                    "numeroParcelas": 1
                 }
             }
         },
