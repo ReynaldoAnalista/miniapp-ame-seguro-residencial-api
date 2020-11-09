@@ -32,9 +32,14 @@ export class PlanController {
     @Post("/sendProposal")
     public async sendProposal(@Body() proposal: any) {
         logger.info('Sending Proposal %j', proposal);
-        const proposalResponse: any = await this.planService.sendProposal(proposal)
-        logger.debug("Proposal sent %j", proposal)
-        return proposalResponse
+        try {
+            const proposalResponse: any = await this.planService.sendProposal(proposal)
+            logger.debug("Proposal sent %j", proposal)
+            return proposalResponse
+        } catch (e) {
+            throw new ApiError("Plans not sent", 500, `Plans not sent`)
+            logger.error(e)
+        }
     }
 
     @Get("/proposal")

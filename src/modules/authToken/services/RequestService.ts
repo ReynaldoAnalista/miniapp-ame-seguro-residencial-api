@@ -8,9 +8,9 @@ import curlirize from 'axios-curlirize'
 
 const log = getLogger("RequestService")
 
-if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
-    curlirize(axios)
-}
+// if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
+//     curlirize(axios)
+// }
 
 enum Methods {
     GET = "GET",
@@ -51,7 +51,7 @@ export class RequestService {
 
         let config = {
             method: method,
-            url: apiUrl + queryString,
+            url: apiUrl + (queryString ? queryString : ''),
             headers: {
                 "Content-Type":"application/json",
                 "Authorization": `Bearer ${token}`

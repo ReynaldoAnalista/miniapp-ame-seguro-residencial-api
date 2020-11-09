@@ -87,20 +87,19 @@ export class PlanService {
         amePayment.email = amePayment.attributes?.customPayload?.userData?.email
         let proposal = amePayment.attributes?.customPayload?.proposal
         log.debug("sendProposal %j", proposal);
-        const saveInDynamoDB = true
-        const sendToPrevisul = true
         let result
         try {
-            if (saveInDynamoDB) {
-                result = await this.planRepository.create(amePayment)
-            }
-            if (sendToPrevisul) {
-                result = await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_PLANS,
-                    this.requestService.METHODS.POST,
-                    proposal
-                )
-            }
+            result = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.URL_SALE,
+                this.requestService.METHODS.POST,
+                proposal
+            )
+            // result example:
+            // {"guid":"6d59795e-cc81-45b6-9cb4-b00baa72836a","protocolo":"0007091120000003191"}
+            await this.planRepository.create({
+                email: amePayment.attributes?.customPayload?.userData?.email,
+                proposalResponse: result
+            })
             return result
         } catch (err) {
             log.error(`Ocorreu um erro ao cadastrar a proposta %j`, {data: err?.response?.data, message: err.message});
