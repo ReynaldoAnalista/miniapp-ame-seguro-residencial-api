@@ -108,13 +108,13 @@ export class PlanService {
         try {
             // result example:
             // {"guid":"6d59795e-cc81-45b6-9cb4-b00baa72836a","protocolo":"0007091120000003191"}
-            await this.planRepository.create({
-                email: amePayment.id,
-                proposalResponse: result,
-                payment: amePayment,
-                attempt: attempt,
-                error: {message: error?.message}
-            })
+            // await this.planRepository.create({
+            //     email: amePayment.id,
+            //     proposalResponse: result,
+            //     payment: amePayment,
+            //     attempt: attempt,
+            //     error: {message: error?.message}
+            // })
             if (attempt > 2) {
                 throw error
             }
