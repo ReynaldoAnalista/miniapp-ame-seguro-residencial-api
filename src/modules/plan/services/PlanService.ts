@@ -96,7 +96,7 @@ export class PlanService {
                     this.requestService.METHODS.POST,
                     proposal
                 )
-                attempt++
+                break;
             } catch(e) {
                 attempt++
                 await this.delay(3000)
