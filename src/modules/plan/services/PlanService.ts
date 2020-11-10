@@ -115,6 +115,9 @@ export class PlanService {
                 attempt: attempt,
                 error: {message: error?.message}
             })
+            if (attempt > 2) {
+                throw error
+            }
             return result
         } catch (err) {
             log.error(`Ocorreu um erro ao cadastrar a proposta %j`, {data: err?.response?.data, message: err.message});
