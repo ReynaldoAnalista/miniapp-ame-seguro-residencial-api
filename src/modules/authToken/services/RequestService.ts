@@ -64,6 +64,7 @@ export class RequestService {
         log.debug("Request Successfully")
 
         log.debug(result.headers)
+        log.debug(result.data)
 
         return result.data;
     }
