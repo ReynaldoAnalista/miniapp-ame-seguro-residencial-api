@@ -113,7 +113,7 @@ export class PlanService {
                 proposalResponse: result,
                 payment: amePayment,
                 attempt: attempt,
-                error: {message: error.message}
+                error: {message: error?.message}
             })
             return result
         } catch (err) {
