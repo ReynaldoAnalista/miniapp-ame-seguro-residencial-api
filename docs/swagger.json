@@ -88,13 +88,68 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"secrets": {
+										"CLIENT_ID": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"CLIENT_SECRET": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"CLIENT_SCOPE": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"URL_AUTHORIZATION": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"URL_ZIPCODE": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"URL_PLANS": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"URL_SALE": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"CONTRACT_NUMBER": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"BROKER_NUMBER": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"AME_COMISSION": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"BROKER_COMISSION": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"CALINDRA_JWT_SECRET": {
 											"additionalProperties": true,
 											"type": "object"
 										}
 									},
 									"required": [
-										"secrets"
+										"CALINDRA_JWT_SECRET",
+										"BROKER_COMISSION",
+										"AME_COMISSION",
+										"BROKER_NUMBER",
+										"CONTRACT_NUMBER",
+										"URL_SALE",
+										"URL_PLANS",
+										"URL_ZIPCODE",
+										"URL_AUTHORIZATION",
+										"CLIENT_SCOPE",
+										"CLIENT_SECRET",
+										"CLIENT_ID"
 									],
 									"type": "object"
 								}
