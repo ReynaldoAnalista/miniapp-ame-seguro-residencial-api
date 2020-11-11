@@ -9,7 +9,7 @@ import curlirize from 'axios-curlirize'
 const log = getLogger("RequestService");
 
 // if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
-    curlirize(axios);
+//     curlirize(axios);
 // }
 
 enum Methods {
@@ -62,9 +62,9 @@ export class RequestService {
         let result = await axios(config)
 
         log.debug("Request Successfully")
-
-        log.debug(result.headers)
-        log.debug(result.data)
+        if(result.headers && result.headers['x-b3-traceid']){
+            log.debug(`Trace ID: ${result.headers['x-b3-traceid']}`)
+        }
 
         return result.data;
     }

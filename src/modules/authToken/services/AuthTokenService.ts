@@ -7,6 +7,7 @@ import qs from 'qs'
 
 import {AuthToken} from "../model/AuthToken";
 
+const cache = require('memory-cache')
 const AWS = require('aws-sdk')
 const log = getLogger("AuthTokenService")
 
@@ -43,6 +44,12 @@ export class AuthTokenService {
 
     async retrieveAuthorization(): Promise<string | undefined> {
         log.debug('Starting Authorization')
+        const TOKEN_CACHE = 'TOKENCACHE'
+        if (cache.get(TOKEN_CACHE)) {
+            log.debug('Authorization Token by Cache')
+            return cache.get(TOKEN_CACHE)
+        }
+        log.debug('Authorization Token expired, requesting another one.')
         try {
             let clientId = await this.retrieveConfig('CLIENT_ID')
             let clientSecret = await this.retrieveConfig('CLIENT_SECRET')
@@ -71,6 +78,7 @@ export class AuthTokenService {
                     log.error("ERROR ON AUTHORIZING");
                     log.error("AXIOS ERROR: ", err);
                 });
+            cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
             return result.access_token;
         } catch (err) {
             return 'Erro ao tentar buscar um token para autenticação';
