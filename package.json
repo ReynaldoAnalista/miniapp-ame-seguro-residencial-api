@@ -48,6 +48,7 @@
     "express": "^4.17.1",
     "inversify": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
+    "memory-cache": "^0.2.0",
     "moment": "^2.25.3",
     "newrelic": "^6.7.0",
     "node-redis-warlock": "^0.2.0",
