@@ -6,10 +6,10 @@ import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
 import curlirize from 'axios-curlirize'
 
-const log = getLogger("RequestService")
+const log = getLogger("RequestService");
 
 // if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
-//     curlirize(axios)
+    curlirize(axios);
 // }
 
 enum Methods {
@@ -62,6 +62,9 @@ export class RequestService {
         let result = await axios(config)
 
         log.debug("Request Successfully")
+
+        log.debug(result.headers)
+        log.debug(result.data)
 
         return result.data;
     }

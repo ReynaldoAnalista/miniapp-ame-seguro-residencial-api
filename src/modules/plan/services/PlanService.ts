@@ -87,19 +87,37 @@ export class PlanService {
         amePayment.email = amePayment.attributes?.customPayload?.userData?.email
         let proposal = amePayment.attributes?.customPayload?.proposal
         log.debug("sendProposal %j", proposal);
-        let result
+        let result, error
+        let attempt = 1
+        while(attempt <= 2) {
+            try {
+                result = await this.requestService.makeRequest(
+                    this.requestService.ENDPOINTS.URL_SALE,
+                    this.requestService.METHODS.POST,
+                    proposal
+                )
+                break;
+            } catch(e) {
+                attempt++
+                await this.delay(3000)
+                error = e
+                log.warn(`Error %j`, e)
+            }
+        }
+
         try {
-            result = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.URL_SALE,
-                this.requestService.METHODS.POST,
-                proposal
-            )
             // result example:
             // {"guid":"6d59795e-cc81-45b6-9cb4-b00baa72836a","protocolo":"0007091120000003191"}
-            await this.planRepository.create({
-                email: amePayment.attributes?.customPayload?.userData?.email,
-                proposalResponse: result
-            })
+            // await this.planRepository.create({
+            //     email: amePayment.id,
+            //     proposalResponse: result,
+            //     payment: amePayment,
+            //     attempt: attempt,
+            //     error: {message: error?.message}
+            // })
+            if (attempt > 2) {
+                throw error
+            }
             return result
         } catch (err) {
             log.error(`Ocorreu um erro ao cadastrar a proposta %j`, {data: err?.response?.data, message: err.message});
@@ -109,5 +127,13 @@ export class PlanService {
 
     async listProposal() {
         return this.planRepository.listProposal()
+    }
+
+    delay(ms) {
+        return new Promise((resolve) => { 
+            setTimeout(() => {
+                resolve()
+            }, ms)
+        })
     }
 }
