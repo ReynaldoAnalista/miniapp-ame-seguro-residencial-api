@@ -68,7 +68,7 @@ export class PlanService {
         }
     }
 
-    private async verifyPayment(signedPayment: string): Promise<any> {
+    async verifyPayment(signedPayment: string): Promise<any> {
         const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         return new Promise((resolve, reject) => {
             jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
@@ -81,80 +81,48 @@ export class PlanService {
         })
     }
 
-    private async sendProposalToPrevisul(payload: any) {
-        let attempts = 3;
-        let result = null;
-        while (attempts) {
-            log.debug(`There are ${attempts} attempts left`)
-            try {
-                result = await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_SALE,
-                    this.requestService.METHODS.POST,
-                    payload
-                );
-                log.info('Success proposal sent')
-                attempts = 0
-            } catch (e) {
-                result = null
-                log.error(`Error %j`, e)
-                await this.delay(3000);
-            }
-            attempts--
-        }
-        if (result) {
-            return result
-        }
-        throw "Proposal do not be sent"
-    }
-
-    private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
-        await this.planRepository.create({
-            email: id,
-            success: true,
-            proposalProtocol,
-            proposal
-        })
-    }
-
-    private async saveProposalSentFail(id: string, proposal: any, error: any) {
-        await this.planRepository.create({
-            email: id,
-            success: false,
-            proposal,
-            error: error
-        })
-    }
-
     async sendProposal(ameNotification: AmeNotification) {
         let amePayment = await this.verifyPayment(ameNotification.signedPayment);
         // colocando na raiz para servir de chave no DynamoDB
         amePayment.email = amePayment.attributes?.customPayload?.userData?.email
         let proposal = amePayment.attributes?.customPayload?.proposal
-        let proposalProtocol
+        log.debug("sendProposal %j", proposal);
+        let result, error
+        let attempt = 1
+        while(attempt <= 2) {
+            try {
+                result = await this.requestService.makeRequest(
+                    this.requestService.ENDPOINTS.URL_SALE,
+                    this.requestService.METHODS.POST,
+                    proposal
+                )
+                break;
+            } catch(e) {
+                attempt++
+                await this.delay(3000)
+                error = e
+                log.warn(`Error %j`, e)
+            }
+        }
+
         try {
-            proposalProtocol = await this.sendProposalToPrevisul(proposal)
-        } catch (e) {
-            log.error(e)
-            try{
-                this.saveProposalSentFail(amePayment.id, proposal, e.toString())
-            } catch (e) {
-                log.error('Error on save proposalSentFailResult')
-                log.debug(e)
+            // result example:
+            // {"guid":"6d59795e-cc81-45b6-9cb4-b00baa72836a","protocolo":"0007091120000003191"}
+            // await this.planRepository.create({
+            //     email: amePayment.id,
+            //     proposalResponse: result,
+            //     payment: amePayment,
+            //     attempt: attempt,
+            //     error: {message: error?.message}
+            // })
+            if (attempt > 2) {
+                throw error
             }
+            return result
+        } catch (err) {
+            log.error(`Ocorreu um erro ao cadastrar a proposta %j`, {data: err?.response?.data, message: err.message});
+            throw err;
         }
-
-        if (proposalProtocol) {
-            try{
-                this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
-            } catch (e) {
-                log.error('Error on save proposalSentSuccessResult')
-                log.debug(e)
-            }
-            return proposalProtocol
-        }
-
-        log.error('Proposal dont be sent, error on sending')
-        throw 'Proposal dont be sent, error on sending'
     }
 
     async listProposal() {
@@ -162,7 +130,7 @@ export class PlanService {
     }
 
     delay(ms) {
-        return new Promise((resolve) => {
+        return new Promise((resolve) => { 
             setTimeout(() => {
                 resolve()
             }, ms)
