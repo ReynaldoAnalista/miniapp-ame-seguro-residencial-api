@@ -84,6 +84,7 @@ export class PlanService {
     private async sendProposalToPrevisul(payload: any) {
         let attempts = 3;
         let result = null;
+        let error
         while (attempts) {
             log.debug(`There are ${attempts} attempts left`)
             try {
@@ -98,13 +99,14 @@ export class PlanService {
                 result = null
                 log.error(`Error %j`, e)
                 await this.delay(3000);
+                error = e
             }
             attempts--
         }
         if (result) {
             return result
         }
-        throw "Proposal do not be sent"
+        throw `Proposal do not be sent, try ${3 - attempts} times; ${error.toString()}`
     }
 
     private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
@@ -126,12 +128,23 @@ export class PlanService {
     }
 
     async sendProposal(ameNotification: AmeNotification) {
-        let amePayment = await this.verifyPayment(ameNotification.signedPayment);
-        // colocando na raiz para servir de chave no DynamoDB
-        amePayment.email = amePayment.attributes?.customPayload?.userData?.email
-        let proposal = amePayment.attributes?.customPayload?.proposal
         let proposalProtocol
+        let proposal
+        let amePayment = await this.verifyPayment(ameNotification.signedPayment);
         try {
+            // colocando na raiz para servir de chave no DynamoDB
+            amePayment.email = amePayment.id
+            proposal = amePayment.attributes?.customPayload?.proposal
+            let installments = amePayment.splits?.map(i => i.installments).filter(i => i)
+            let installmentsInfo
+            if (installments.length) {
+                installmentsInfo = parseInt(`${installments[0]}`)
+            } else {
+                installmentsInfo = 1
+            }
+            if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
+                proposal.pagamento.numeroParcelas = installmentsInfo
+            }
             proposalProtocol = await this.sendProposalToPrevisul(proposal)
         } catch (e) {
             log.error(e)
@@ -142,7 +155,6 @@ export class PlanService {
                 log.debug(e)
             }
         }
-
         if (proposalProtocol) {
             try{
                 this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
