@@ -85,21 +85,11 @@ export class PlanService {
         let amePayment = await this.verifyPayment(ameNotification.signedPayment);
         // colocando na raiz para servir de chave no DynamoDB
         amePayment.email = amePayment.attributes?.customPayload?.userData?.email
-        let installments = amePayment.splits.map(i => i.installments).filter(i => i)
-        let installmentsInfo
-        if (installments.length) {
-            installmentsInfo = installments[0]
-        } else {
-            installmentsInfo = 1
-        }
         let proposal = amePayment.attributes?.customPayload?.proposal
-        if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
-            proposal.pagamento.numeroParcelas = installmentsInfo
-        }
         log.debug("sendProposal %j", proposal);
         let result, error
         let attempt = 1
-        while (attempt <= 2) {
+        while(attempt <= 2) {
             try {
                 result = await this.requestService.makeRequest(
                     this.requestService.ENDPOINTS.URL_SALE,
@@ -107,7 +97,7 @@ export class PlanService {
                     proposal
                 )
                 break;
-            } catch (e) {
+            } catch(e) {
                 attempt++
                 await this.delay(3000)
                 error = e
@@ -140,7 +130,7 @@ export class PlanService {
     }
 
     delay(ms) {
-        return new Promise((resolve) => {
+        return new Promise((resolve) => { 
             setTimeout(() => {
                 resolve()
             }, ms)
