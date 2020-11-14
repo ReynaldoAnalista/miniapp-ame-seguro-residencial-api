@@ -97,8 +97,8 @@ export class PlanService {
                 attempts = 0
             } catch (e) {
                 result = null
-                log.error('Erro ao enviar a proposta')
-                log.error(e)
+                log.debug('Erro ao enviar a proposta')
+                log.debug(e)
                 await this.delay(3000);
                 error = e
             }
