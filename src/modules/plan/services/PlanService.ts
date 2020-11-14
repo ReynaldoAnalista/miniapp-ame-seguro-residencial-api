@@ -85,7 +85,7 @@ export class PlanService {
         let attempts = 3;
         let result = null;
         let error
-        while (attempts) {
+        while (attempts > 0) {
             log.debug(`There are ${attempts} attempts left`)
             try {
                 result = await this.requestService.makeRequest(
@@ -95,9 +95,10 @@ export class PlanService {
                 );
                 log.info('Success proposal sent')
                 attempts = 0
+                break;
             } catch (e) {
                 result = null
-                log.debug('Erro ao enviar a proposta')
+                log.debug('Erro ao enviar a proposta %j', e.response?.headers)
                 log.debug(e)
                 await this.delay(3000);
                 error = e
