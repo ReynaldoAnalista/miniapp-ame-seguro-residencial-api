@@ -1,7 +1,10 @@
 import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
+import {getLogger} from "../../../server/Logger";
 
 const TABLE = `${process.env.DYNAMODB_ENV}_seguro_residencial`;
+
+const log = getLogger("PlanRepository")
 
 @injectable()
 export class PlanRepository {
@@ -15,7 +18,7 @@ export class PlanRepository {
     }
 
     async create(proposal: any) {
-        console.log('gravando', TABLE)
+        log.debug('TRYING TO WRITE ON', TABLE)
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName: TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();
