@@ -8,9 +8,9 @@ import curlirize from 'axios-curlirize'
 
 const log = getLogger("RequestService");
 
-// if(process.env.NODE_ENV === 'hml' || process.env.NODE_ENV === 'dev'){
-//     curlirize(axios);
-// }
+if(process.env.NODE_ENV === 'homolog' || process.env.NODE_ENV === 'development'){
+    curlirize(axios);
+}
 
 enum Methods {
     GET = "GET",
