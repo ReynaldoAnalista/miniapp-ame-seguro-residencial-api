@@ -50,7 +50,7 @@ export class PlanService {
                     attempts--
                 } else {
                     log.debug(`Error when retrive zipcode: ${zipcode}`);
-                    log.debug(`Status Code: ${err.response?.status}`)
+                    log.debug(`Status Code: ${status}`)
                     log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
                     attempts = 0
                     return null;
@@ -117,7 +117,8 @@ export class PlanService {
         let attempts = 3;
         let result = null;
         let error
-        while (attempts) {
+        let trace
+        do {
             log.debug(`There are ${attempts} attempts left`)
             try {
                 result = await this.requestService.makeRequest(
@@ -128,17 +129,31 @@ export class PlanService {
                 log.info('Success proposal sent')
                 attempts = 0
             } catch (e) {
-                result = null
-                log.error(`Error %j`, e)
-                await this.delay(3000);
-                error = e
+                const status = e.response?.status
+                if (status === 401) {
+                    log.debug('Not authorized, next attempt.');
+                    await this.authTokenService.retrieveAuthorization(true)
+                    if(attempts === 1){
+                        log.debug('Authentication Token error');
+                    }
+                    attempts--
+                } else {
+                    result = null
+                    log.debug(`Error %j`, e)
+                    error = e
+                    log.debug('Error when trying to send proposal');
+                    log.debug(`Status Code: ${status}`)
+                    log.debug(`x-b3-traceid: ${e.response?.headers['x-b3-traceid']}`)
+                    trace = e.response?.headers['x-b3-traceid']
+                    await this.delay(15);
+                }
             }
             attempts--
-        }
+        } while (attempts)
         if (result) {
             return result
         }
-        throw `Proposal do not be sent, try ${3 - attempts} times; ${error.toString()}`
+        throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
 
     private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
@@ -205,11 +220,12 @@ export class PlanService {
         return this.planRepository.listProposal()
     }
 
-    delay(ms) {
+    delay(seconds) {
+        log.debug(`Awaiting for ${seconds} seconds`)
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
-            }, ms)
+            }, seconds * 1000)
         })
     }
 }
