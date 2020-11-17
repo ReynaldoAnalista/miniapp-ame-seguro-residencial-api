@@ -28,19 +28,35 @@ export class PlanService {
 
     async consultZipcode(zipcode: string) {
         log.debug("consultZipcode")
-        try {
-            let result: object[] = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.URL_ZIPCODE,
-                this.requestService.METHODS.GET,
-                null,
-                `/${zipcode}`
-            )
-            return result
-        } catch (err) {
-            log.error(`Ocorreu um erro ao tentar buscar o cep ${zipcode}`);
-            log.error(err)
-            return null;
-        }
+        let attempts = 2
+        do {
+            try {
+                let result: object[] = await this.requestService.makeRequest(
+                    this.requestService.ENDPOINTS.URL_ZIPCODE,
+                    this.requestService.METHODS.GET,
+                    null,
+                    `/${zipcode}`
+                )
+                attempts = 0
+                return result
+            } catch (err) {
+                const status = err.response?.status
+                if (status === 401) {
+                    log.debug('Not authorized, next attempt.');
+                    await this.authTokenService.retrieveAuthorization(true)
+                    if(attempts === 1){
+                        log.debug('Authentication Token error');
+                    }
+                    attempts--
+                } else {
+                    log.debug(`Error when retrive zipcode: ${zipcode}`);
+                    log.debug(`Status Code: ${status}`)
+                    log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
+                    attempts = 0
+                    return null;
+                }
+            }
+        } while(attempts)
     }
 
     async retrievePlanList(
@@ -53,19 +69,35 @@ export class PlanService {
         const brokerComission = await this.parameterStore.getSecretValue('BROKER_COMISSION')
         zipCode = zipCode.replace(/\D/g, '')
         const qs = `?contrato=${contractNumber}&ocupacao=1&imovel=${property}&construcao=1&cep=${zipCode}&comissao=${ameComission}&comissaoCorretor=${brokerComission}`
-        try {
-            let result: object[] = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.URL_PLANS,
-                this.requestService.METHODS.GET,
-                null,
-                qs
-            )
-            return result
-        } catch (err) {
-            log.error('Ocorreu um erro ao tentar buscar os preços.');
-            log.error(err)
-            return [];
-        }
+        let attempts = 2
+        do {
+            try {
+                let result: object[] = await this.requestService.makeRequest(
+                    this.requestService.ENDPOINTS.URL_PLANS,
+                    this.requestService.METHODS.GET,
+                    null,
+                    qs
+                )
+                attempts = 0
+                return result
+            } catch (err) {
+                const status = err.response?.status
+                if (status === 401) {
+                    log.debug('Not authorized, next attempt.');
+                    await this.authTokenService.retrieveAuthorization(true)
+                    if(attempts === 1){
+                        log.debug('Authentication Token error');
+                    }
+                    attempts--
+                } else {
+                    log.debug('Error on retrive plans');
+                    log.debug(`Status Code: ${err.response?.status}`)
+                    log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
+                    attempts = 0
+                    return [];
+                }
+            }
+        } while (attempts)
     }
 
     private async verifyPayment(signedPayment: string): Promise<any> {
@@ -85,7 +117,8 @@ export class PlanService {
         let attempts = 3;
         let result = null;
         let error
-        while (attempts > 0) {
+        let trace
+        do {
             log.debug(`There are ${attempts} attempts left`)
             try {
                 result = await this.requestService.makeRequest(
@@ -95,20 +128,32 @@ export class PlanService {
                 );
                 log.info('Success proposal sent')
                 attempts = 0
-                break;
             } catch (e) {
-                result = null
-                log.debug('Erro ao enviar a proposta %j', e.response?.headers)
-                log.debug(e)
-                await this.delay(3000);
-                error = e
+                const status = e.response?.status
+                if (status === 401) {
+                    log.debug('Not authorized, next attempt.');
+                    await this.authTokenService.retrieveAuthorization(true)
+                    if(attempts === 1){
+                        log.debug('Authentication Token error');
+                    }
+                    attempts--
+                } else {
+                    result = null
+                    log.debug(`Error %j`, e)
+                    error = e
+                    log.debug('Error when trying to send proposal');
+                    log.debug(`Status Code: ${status}`)
+                    log.debug(`x-b3-traceid: ${e.response?.headers['x-b3-traceid']}`)
+                    trace = e.response?.headers['x-b3-traceid']
+                    await this.delay(15);
+                }
             }
             attempts--
-        }
+        } while (attempts)
         if (result) {
             return result
         }
-        throw `Proposal do not be sent, try ${3 - attempts} times; ${error.toString()}`
+        throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
 
     private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
@@ -149,25 +194,25 @@ export class PlanService {
             }
             proposalProtocol = await this.sendProposalToPrevisul(proposal)
         } catch (e) {
-            log.error(e)
-            try{
+            log.debug(e)
+            try {
                 this.saveProposalSentFail(amePayment.id, proposal, e.toString())
             } catch (e) {
-                log.error('Error on save proposalSentFailResult')
+                log.debug('Error on save proposalSentFailResult')
                 log.debug(e)
             }
         }
         if (proposalProtocol) {
-            try{
+            try {
                 this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
             } catch (e) {
-                log.error('Error on save proposalSentSuccessResult')
+                log.debug('Error on save proposalSentSuccessResult')
                 log.debug(e)
             }
             return proposalProtocol
         }
 
-        log.error('Proposal dont be sent, error on sending')
+        log.debug('Proposal dont be sent, error on sending')
         throw 'Proposal dont be sent, error on sending'
     }
 
@@ -175,11 +220,12 @@ export class PlanService {
         return this.planRepository.listProposal()
     }
 
-    delay(ms) {
+    delay(seconds) {
+        log.debug(`Awaiting for ${seconds} seconds`)
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
-            }, ms)
+            }, seconds * 1000)
         })
     }
 }

@@ -42,9 +42,13 @@ export class AuthTokenService {
         throw "Retrieving config with no configName"
     }
 
-    async retrieveAuthorization(): Promise<string | undefined> {
+    async retrieveAuthorization(resetCache = false): Promise<string | undefined> {
         log.debug('Starting Authorization')
         const TOKEN_CACHE = 'TOKENCACHE'
+        if(resetCache){
+            log.debug('Clearing Token from cache')
+            cache.del(TOKEN_CACHE)
+        }
         if (cache.get(TOKEN_CACHE)) {
             log.debug('Authorization Token by Cache')
             return cache.get(TOKEN_CACHE)
