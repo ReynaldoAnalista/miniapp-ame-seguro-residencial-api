@@ -46,6 +46,7 @@ export class PlanService {
                     await this.authTokenService.retrieveAuthorization(true)
                     if(attempts === 1){
                         log.debug('Authentication Token error');
+                        throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
                     attempts--
                 } else {
@@ -87,6 +88,7 @@ export class PlanService {
                     await this.authTokenService.retrieveAuthorization(true)
                     if(attempts === 1){
                         log.debug('Authentication Token error');
+                        throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
                     attempts--
                 } else {
