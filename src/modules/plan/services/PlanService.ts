@@ -53,7 +53,7 @@ export class PlanService {
                     log.debug(`Status Code: ${status}`)
                     log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
                     attempts = 0
-                    return null;
+                    throw {error: 'Error when retrive zipcode', status: status, trace:err.response?.headers['x-b3-traceid']}
                 }
             }
         } while(attempts)
@@ -94,7 +94,7 @@ export class PlanService {
                     log.debug(`Status Code: ${err.response?.status}`)
                     log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
                     attempts = 0
-                    return [];
+                    throw {error: 'Error on retrive plans', status: err.response?.status, trace:err.response?.headers['x-b3-traceid']}
                 }
             }
         } while (attempts)
