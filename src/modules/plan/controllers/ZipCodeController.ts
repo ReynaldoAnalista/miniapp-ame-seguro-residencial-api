@@ -19,11 +19,15 @@ export class ZipCodeController {
     @Get("/{zipCode}")
     public async consultZipcode(@Path() zipCode: string) {
         logger.debug(`Consult for zipCode=${zipCode}`);
-        const result: any = await this.planService.consultZipcode(zipCode)
-        if (!result) {
-            throw new ApiError("Nothing to show", 404, `Zipcode not found`)
+        try {
+            const result: any = await this.planService.consultZipcode(zipCode)
+            if (!result) {
+                throw new ApiError("Nothing to show", 404, `Zipcode not found`)
+            }
+            logger.debug("zipcode request ended")
+            return result
+        } catch (e) {
+            throw new ApiError("Error on retrieve zipcode", 404, JSON.stringify({trace: e.trace, apiStatus: e.status}))
         }
-        logger.debug("zipcode request ended")
-        return result
     }
 }
