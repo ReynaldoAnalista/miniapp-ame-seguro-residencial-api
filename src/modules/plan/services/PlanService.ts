@@ -48,7 +48,7 @@ export class PlanService {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
-                    attempts--
+                    attempts = attempts - 1
                 } else {
                     log.debug(`Error when retrive zipcode: ${zipcode}`);
                     log.debug(`Status Code: ${status}`)
@@ -57,7 +57,7 @@ export class PlanService {
                     throw {error: 'Error when retrive zipcode', status: status, trace:err.response?.headers['x-b3-traceid']}
                 }
             }
-        } while(attempts)
+        } while(attempts > 0)
     }
 
     async retrievePlanList(
@@ -90,7 +90,7 @@ export class PlanService {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
-                    attempts--
+                    attempts = attempts - 1
                 } else {
                     log.debug('Error on retrive plans');
                     log.debug(`Status Code: ${err.response?.status}`)
@@ -99,7 +99,7 @@ export class PlanService {
                     throw {error: 'Error on retrive plans', status: err.response?.status, trace:err.response?.headers['x-b3-traceid']}
                 }
             }
-        } while (attempts)
+        } while (attempts > 0)
     }
 
     private async verifyPayment(signedPayment: string): Promise<any> {
@@ -138,7 +138,7 @@ export class PlanService {
                     if(attempts === 1){
                         log.debug('Authentication Token error');
                     }
-                    attempts--
+                    attempts = attempts - 1
                 } else {
                     result = null
                     log.debug(`Error %j`, e)
@@ -150,8 +150,8 @@ export class PlanService {
                     await this.delay(15);
                 }
             }
-            attempts--
-        } while (attempts)
+            attempts = attempts - 1
+        } while (attempts > 0)
         if (result) {
             return result
         }
