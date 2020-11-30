@@ -156,23 +156,35 @@ export class PlanService {
     }
 
     private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
-        console.log("saveProposalSentSuccess.start")
-        await this.planRepository.create({
-            email: id,
-            success: true,
-            proposalProtocol,
-            proposal
-        })
+        log.debug("saveProposalSentSuccess")
+        try {
+            await this.planRepository.create({
+                email: id,
+                success: true,
+                proposalProtocol,
+                proposal
+            })
+            log.debug("saveProposalSentSuccess:success")
+        } catch (e) {
+            log.debug("saveProposalSentSuccess:Fail")
+            log.debug(e.message)
+        }
     }
 
     private async saveProposalSentFail(id: string, proposal: any, error: any) {
-        console.log("saveProposalSentFail.start")
-        await this.planRepository.create({
-            email: id,
-            success: false,
-            proposal,
-            error: error
-        })
+        log.debug("saveProposalSentFail")
+        try {
+            await this.planRepository.create({
+                email: id,
+                success: false,
+                proposal,
+                error: error
+            })
+            log.debug("saveProposalSentFail:success")
+        } catch (e) {
+            log.debug("saveProposalSentFail:Fail")
+            log.debug(e.message)
+        }
     }
 
     async sendProposal(ameNotification: AmeNotification) {
