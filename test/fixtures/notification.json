@@ -1,39 +1,39 @@
 {
-  "id": "13a4fec9-c5a4-4dbb-a37a-ec31350c8663",
+  "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",
   "date": [
     2020,
-    8,
-    1,
-    15,
-    22,
-    55,
-    448944000
+    11,
+    30,
+    17,
+    32,
+    30,
+    934391000
   ],
   "operationType": "DEBIT",
   "name": "Compra on-line",
-  "title": "Ame Server",
-  "description": "Ame Server",
+  "title": "Seguro Residencial",
+  "description": "Proteção Essencial",
   "status": "AUTHORIZED",
   "type": "PAYMENT",
   "currency": "BRL",
   "cashType": "CASH",
-  "amount": 9,
+  "amount": 14488,
   "amountRefunded": 0,
   "splits": [
     {
-      "id": "cef061f2-c610-45a0-a6c9-c0529e97d1d3",
+      "id": "02101354-cbf5-49d0-af03-203b0385797a",
       "date": [
         2020,
-        8,
-        1,
-        15,
-        22,
-        55,
-        449276000
+        11,
+        30,
+        17,
+        32,
+        30,
+        934406000
       ],
       "status": "AUTHORIZED",
       "cashType": "CASH",
-      "amount": 9,
+      "amount": 14488,
       "installments": null,
       "cardMasked": null,
       "cardBrand": null
@@ -41,52 +41,65 @@
   ],
   "attributes": {
     "cashbackAmountValue": 0,
-    "transactionChangedCallbackUrl": "https://miniapps.dev.amedigital.com/notification-api/v1/notification/fc66b0a5-d890-4105-ab28-758a28215ab5",
+    "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/c8848f6a-40c0-4388-af9e-4d53ec3e9019",
+    "items": [
+      {
+        "description": "Proteção Essencial",
+        "amount": 14488,
+        "quantity": 1
+      }
+    ],
     "customPayload": {
+      "isFrom": "mini-app-ame-seguro-residencial",
+      "clientCallbackUrl": "https://649a8d572b3e.ngrok.io/ame-seguro-residencial/v1/plans/sendProposal",
       "proposal": {
         "contratoId": 11703,
         "corretorId": 6218,
         "comissao": 0,
         "comissaoCorretor": 0,
-        "planoId": 117030711,
+        "planoId": "117030111",
         "nome": "Marcelo Madeira",
         "cpf": "09548913763",
         "sexo": "F",
         "dataNascimento": "1982-01-16",
         "telefone": "21979734886",
-        "email": "mmadeiramatos@gmail.com",
-        "dataInicioVigencia": "2020-11-28",
+        "email": "marcelo@calindra.com.br",
+        "dataInicioVigencia": "2020-12-01",
         "imovel": {
-          "tipo": "2",
+          "tipo": "1",
           "ocupacao": 1,
           "construcao": 1,
           "endereco": {
-            "cep": "22260005",
-            "numero": "100",
-            "complemento": "Ap 306",
-            "logradouro": "Rua Nelson Mandela",
-            "bairro": "Botafogo",
-            "estado": "RJ",
-            "cidade": "Rio de Janeiro"
+            "cep": "11380310",
+            "numero": "50",
+            "logradouro": "Rua São Jorge",
+            "complemento": "",
+            "bairro": "Jardim Independência",
+            "estado": "SP",
+            "cidade": "São Vicente"
           }
         },
         "pagamento": {
           "tipo": "AME",
-          "dataVencimento": "2021-11-28",
+          "dataVencimento": "2020-12-30",
           "numeroParcelas": 1
         }
-      }
+      },
+      "workspaceUrl": "https://miniapps.hml.amedigital.com/workspace/user/mmadeiramatos/gmail.com/OrderDetails.html?data=eyJwdWJsaWNLZXkiOiJjODg0OGY2YS00MGMwLTQzODgtYWY5ZS00ZDUzZWMzZTkwMTkiLCJzbHVnIjoiYW1lLXNlZ3Vyby1yZXNpZGVuY2lhbCIsInRpdGxlIjoiU2VndXJvIFJlc2lkZW5jaWFsIn0=&devmode=true&cid=QVdTQUxCPVV3MXphOEt6L3R6dk5MOUVZdEw0S25QSWlBRWdDSFg1SHFJVlFQMzBuU0owcUg5dCttOUZTZk9rdDRoMG4xSkpSU3M3N0hOY0k3bkFMdEVaTmZTYjJlRm1UdGhhNThhWXE3am9UdEkxTVVjNFFtVTZRYkFUTjd0eU9hWW8=",
+      "miniAppId": "3981"
     },
     "paymentOnce": false,
     "origin": "MINIAPP",
     "miniApp": {
-      "id": "mini-app-colossus",
+      "id": "ame-seguro-residencial",
       "hasOrderDetails": false
     },
-    "orderId": "6bd6f0ca-4d35-45f1-ae7e-79ce59835a29"
+    "orderId": "de102460-3679-4b1c-8ee8-d4e21a33be8c"
   },
   "operationReference": null,
   "peer": null,
-  "debitWalletId": "f81a74dc-b97f-4cbc-b720-f7b93e952423",
-  "nsu": "855375449300"
+  "nsu": "063150934412",
+  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
+  "iat": 1606757555,
+  "exp": 1606771955
 }
