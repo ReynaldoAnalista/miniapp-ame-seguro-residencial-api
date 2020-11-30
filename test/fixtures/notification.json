@@ -1,87 +1,92 @@
 {
-    "id": "13a4fec9-c5a4-4dbb-a37a-ec31350c8663",
-    "date": [
+  "id": "13a4fec9-c5a4-4dbb-a37a-ec31350c8663",
+  "date": [
+    2020,
+    8,
+    1,
+    15,
+    22,
+    55,
+    448944000
+  ],
+  "operationType": "DEBIT",
+  "name": "Compra on-line",
+  "title": "Ame Server",
+  "description": "Ame Server",
+  "status": "AUTHORIZED",
+  "type": "PAYMENT",
+  "currency": "BRL",
+  "cashType": "CASH",
+  "amount": 9,
+  "amountRefunded": 0,
+  "splits": [
+    {
+      "id": "cef061f2-c610-45a0-a6c9-c0529e97d1d3",
+      "date": [
         2020,
         8,
         1,
         15,
         22,
         55,
-        448944000
-    ],
-    "operationType": "DEBIT",
-    "name": "Compra on-line",
-    "title": "Ame Server",
-    "description": "Ame Server",
-    "status": "AUTHORIZED",
-    "type": "PAYMENT",
-    "currency": "BRL",
-    "cashType": "CASH",
-    "amount": 9,
-    "amountRefunded": 0,
-    "splits": [
-        {
-            "id": "cef061f2-c610-45a0-a6c9-c0529e97d1d3",
-            "date": [
-                2020,
-                8,
-                1,
-                15,
-                22,
-                55,
-                449276000
-            ],
-            "status": "AUTHORIZED",
-            "cashType": "CASH",
-            "amount": 9,
-            "installments": null,
-            "cardMasked": null,
-            "cardBrand": null
+        449276000
+      ],
+      "status": "AUTHORIZED",
+      "cashType": "CASH",
+      "amount": 9,
+      "installments": null,
+      "cardMasked": null,
+      "cardBrand": null
+    }
+  ],
+  "attributes": {
+    "cashbackAmountValue": 0,
+    "transactionChangedCallbackUrl": "https://miniapps.dev.amedigital.com/notification-api/v1/notification/fc66b0a5-d890-4105-ab28-758a28215ab5",
+    "customPayload": {
+      "proposal": {
+        "contratoId": 11703,
+        "corretorId": 6218,
+        "comissao": 0,
+        "comissaoCorretor": 0,
+        "planoId": 117030711,
+        "nome": "Marcelo Madeira",
+        "cpf": "09548913763",
+        "sexo": "F",
+        "dataNascimento": "1982-01-16",
+        "telefone": "21979734886",
+        "email": "mmadeiramatos@gmail.com",
+        "dataInicioVigencia": "2020-11-28",
+        "imovel": {
+          "tipo": "2",
+          "ocupacao": 1,
+          "construcao": 1,
+          "endereco": {
+            "cep": "22260005",
+            "numero": "100",
+            "complemento": "Ap 306",
+            "logradouro": "Rua Nelson Mandela",
+            "bairro": "Botafogo",
+            "estado": "RJ",
+            "cidade": "Rio de Janeiro"
+          }
+        },
+        "pagamento": {
+          "tipo": "AME",
+          "dataVencimento": "2021-11-28",
+          "numeroParcelas": 1
         }
-    ],
-    "attributes": {
-        "cashbackAmountValue": 0,
-        "transactionChangedCallbackUrl": "https://miniapps.dev.amedigital.com/notification-api/v1/notification/fc66b0a5-d890-4105-ab28-758a28215ab5",
-        "customPayload": {
-            "dataToUseVoucher": {
-                "userType": "DISTRIBUIDOR",
-                "products": [
-                    {
-                        "codeProduct": "0110035",
-                        "priceProduct": 98.99,
-                        "quantity": 3
-                    }
-                ],
-                "consumer": {
-                    "cellphoneConsumer": {
-                        "areaCode": "11",
-                        "number": "999999999"
-                    },
-                    "nameConsumer": "João de Deus",
-                    "documentTypeConsumer": "CPF",
-                    "documentConsumer": "83606026030",
-                    "emailConsumer": " john.doe@provider.com"
-                },
-                "amount": 296.97,
-                "paymentMethod": "CARTAO_DE_CREDITO",
-                "couponCode": "99999",
-                "couponDiscount": "999",
-                "location": {
-                    "latitude": -23.955039523854254,
-                    "longitude":-46.358553229394545
-                }
-            }
-        },
-        "paymentOnce": false,
-        "origin": "MINIAPP",
-        "miniApp": {
-            "id": "mini-app-colossus",
-            "hasOrderDetails": false
-        },
-        "orderId": "6bd6f0ca-4d35-45f1-ae7e-79ce59835a29"
+      }
     },
-    "operationReference": null,
-    "peer": null,
-    "debitWalletId": "f81a74dc-b97f-4cbc-b720-f7b93e952423",
-    "nsu": "855375449300"
+    "paymentOnce": false,
+    "origin": "MINIAPP",
+    "miniApp": {
+      "id": "mini-app-colossus",
+      "hasOrderDetails": false
+    },
+    "orderId": "6bd6f0ca-4d35-45f1-ae7e-79ce59835a29"
+  },
+  "operationReference": null,
+  "peer": null,
+  "debitWalletId": "f81a74dc-b97f-4cbc-b720-f7b93e952423",
+  "nsu": "855375449300"
 }
