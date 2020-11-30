@@ -102,7 +102,7 @@ export class PlanService {
         } while (attempts > 0)
     }
 
-    private async verifyPayment(signedPayment: string): Promise<any> {
+    async verifyPayment(signedPayment: string): Promise<any> {
         const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         return new Promise((resolve, reject) => {
             jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
@@ -159,21 +159,35 @@ export class PlanService {
     }
 
     private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
-        await this.planRepository.create({
-            email: id,
-            success: true,
-            proposalProtocol,
-            proposal
-        })
+        log.debug("saveProposalSentSuccess")
+        try {
+            await this.planRepository.create({
+                email: id,
+                success: true,
+                proposalProtocol,
+                proposal
+            })
+            log.debug("saveProposalSentSuccess:success")
+        } catch (e) {
+            log.debug("saveProposalSentSuccess:Fail")
+            log.debug(e.message)
+        }
     }
 
     private async saveProposalSentFail(id: string, proposal: any, error: any) {
-        await this.planRepository.create({
-            email: id,
-            success: false,
-            proposal,
-            error: error
-        })
+        log.debug("saveProposalSentFail")
+        try {
+            await this.planRepository.create({
+                email: id,
+                success: false,
+                proposal,
+                error: error
+            })
+            log.debug("saveProposalSentFail:success")
+        } catch (e) {
+            log.debug("saveProposalSentFail:Fail")
+            log.debug(e.message)
+        }
     }
 
     async sendProposal(ameNotification: AmeNotification) {
@@ -198,19 +212,22 @@ export class PlanService {
         } catch (e) {
             log.debug(e)
             try {
-                this.saveProposalSentFail(amePayment.id, proposal, e.toString())
+                await this.saveProposalSentFail(amePayment.id, proposal, e.toString())
             } catch (e) {
                 log.debug('Error on save proposalSentFailResult')
                 log.debug(e)
             }
         }
         if (proposalProtocol) {
+            log.debug('Proposal Exists')
             try {
-                this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
+                await this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
             } catch (e) {
                 log.debug('Error on save proposalSentSuccessResult')
                 log.debug(e)
             }
+            log.debug('Returning Protocol')
+            log.debug(proposalProtocol)
             return proposalProtocol
         }
 

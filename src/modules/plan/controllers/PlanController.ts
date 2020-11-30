@@ -40,8 +40,8 @@ export class PlanController {
             logger.debug("Proposal sent %j", proposal)
             return proposalResponse
         } catch (e) {
+            logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
-            logger.error(e)
         }
     }
 
