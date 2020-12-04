@@ -15,7 +15,6 @@ import {RequestService} from "../../../../src/modules/authToken/services/Request
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
 
-const BASE_URL = 'http://localhost:8080/v1/zipcode'
 
 initDependencies()
 jest.setTimeout(10000)
@@ -76,16 +75,18 @@ describe("PlanService", () => {
         expect(proposalProtocol.protocolo).toBeDefined()
     })
 
-     it.only("Validando o Cep ", async () => {
-        const cep = "30000-000"
-
-         let response = await Axios.get(`${BASE_URL}/${cep}`, {
-                headers: {
-                Accept: 'application/json'
-            },
-        }).then(res => res.data).catch(err => err)
-
-        expect(response).toBe(true);
+     it("Validando o Cep ", async () => {
+         const cep = "21331250"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
+     })
+    
+      it("Validando o Cep incompleto", async () => {
+         const cep = "2600"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
     })
 
 
