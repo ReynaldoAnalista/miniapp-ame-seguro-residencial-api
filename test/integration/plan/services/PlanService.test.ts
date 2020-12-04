@@ -87,6 +87,13 @@ describe("PlanService", () => {
          let address = await planService.consultZipcode(cep) 
          console.log('Address:'+ JSON.stringify(address))
         expect(address).toBeDefined();
+      })
+    
+    it("Validando o Cep incorreto", async () => {
+         const cep = "agagag"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
     })
 
 
