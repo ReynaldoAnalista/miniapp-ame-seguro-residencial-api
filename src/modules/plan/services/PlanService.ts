@@ -8,6 +8,7 @@ import {PlanRepository} from "../repository/PlanRepository";
 import {AmeNotification} from "../model/AmeNotification";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import * as jwt from 'jsonwebtoken';
+import {Plan} from "inversify/dts/planning/plan";
 
 const log = getLogger("PlanService")
 
@@ -44,7 +45,7 @@ export class PlanService {
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
                     await this.authTokenService.retrieveAuthorization(true)
-                    if(attempts === 1){
+                    if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
@@ -54,10 +55,14 @@ export class PlanService {
                     log.debug(`Status Code: ${status}`)
                     log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
                     attempts = 0
-                    throw {error: 'Error when retrive zipcode', status: status, trace:err.response?.headers['x-b3-traceid']}
+                    throw {
+                        error: 'Error when retrive zipcode',
+                        status: status,
+                        trace: err.response?.headers['x-b3-traceid']
+                    }
                 }
             }
-        } while(attempts > 0)
+        } while (attempts > 0)
     }
 
     async retrievePlanList(
@@ -86,7 +91,7 @@ export class PlanService {
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
                     await this.authTokenService.retrieveAuthorization(true)
-                    if(attempts === 1){
+                    if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
                     }
@@ -96,13 +101,17 @@ export class PlanService {
                     log.debug(`Status Code: ${err.response?.status}`)
                     log.debug(`x-b3-traceid: ${err.response?.headers['x-b3-traceid']}`)
                     attempts = 0
-                    throw {error: 'Error on retrive plans', status: err.response?.status, trace:err.response?.headers['x-b3-traceid']}
+                    throw {
+                        error: 'Error on retrive plans',
+                        status: err.response?.status,
+                        trace: err.response?.headers['x-b3-traceid']
+                    }
                 }
             }
         } while (attempts > 0)
     }
 
-    async verifyPayment(signedPayment: string): Promise<any> {
+    async unsignPayment(signedPayment: string): Promise<any> {
         const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         return new Promise((resolve, reject) => {
             jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
@@ -115,8 +124,8 @@ export class PlanService {
         })
     }
 
-    private async sendProposalToPrevisul(payload: any) {
-        let attempts = 3;
+    async sendProposalToPrevisul(proposal: any) {
+        let attempts = 2;
         let result = null;
         let error
         let trace
@@ -126,7 +135,7 @@ export class PlanService {
                 result = await this.requestService.makeRequest(
                     this.requestService.ENDPOINTS.URL_SALE,
                     this.requestService.METHODS.POST,
-                    payload
+                    proposal
                 );
                 log.info('Success proposal sent')
                 attempts = 0
@@ -135,7 +144,7 @@ export class PlanService {
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
                     await this.authTokenService.retrieveAuthorization(true)
-                    if(attempts === 1){
+                    if (attempts === 1) {
                         log.debug('Authentication Token error');
                     }
                     attempts = attempts - 1
@@ -147,7 +156,7 @@ export class PlanService {
                     log.debug(`Status Code: ${status}`)
                     log.debug(`x-b3-traceid: ${e.response?.headers['x-b3-traceid']}`)
                     trace = e.response?.headers['x-b3-traceid']
-                    await this.delay(15);
+                    await this.delay(2);
                 }
             }
             attempts = attempts - 1
@@ -158,14 +167,54 @@ export class PlanService {
         throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
 
-    private async saveProposalSentSuccess(id: string, proposal: any, proposalProtocol: any) {
-        log.debug("saveProposalSentSuccess")
+    static getDate = () => {
+        const now = new Date()
+        return {
+            year: now.getUTCFullYear(),
+            month: now.getUTCMonth(),
+            day: now.getUTCDate(),
+            hour: now.getUTCHours(),
+            minutes: now.getUTCMinutes(),
+            timestamp: now.getTime()
+        }
+    }
+
+    static detachProposal(amePayment) {
+        if (amePayment.attributes?.customPayload?.proposal) {
+            let proposal = Object.assign({}, amePayment.attributes?.customPayload?.proposal)
+            if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
+                proposal.pagamento.numeroParcelas = PlanService.processInstallments(amePayment)
+            }
+            return proposal
+        } else {
+            throw "The payment has not a proposal inside"
+        }
+    }
+
+    async saveProposalSent(id: any, proposal: any) {
+        log.debug("saveProposal")
         try {
             await this.planRepository.create({
                 email: id,
+                proposal,
+                transactionDateTime: PlanService.getDate()
+            })
+            log.debug("saveProposal:success")
+            return true
+        } catch (e) {
+            log.debug("saveProposal:Fail")
+            throw `Error on saving proposal:${e.message}`
+        }
+    }
+
+    async saveProposalProtocol(id: any, proposalProtocol: any) {
+        log.debug("saveProposalSentSuccess")
+        try {
+            await this.planRepository.create({
+                email: id + "_success",
                 success: true,
                 proposalProtocol,
-                proposal
+                transactionDateTime: PlanService.getDate()
             })
             log.debug("saveProposalSentSuccess:success")
         } catch (e) {
@@ -174,14 +223,14 @@ export class PlanService {
         }
     }
 
-    private async saveProposalSentFail(id: string, proposal: any, error: any) {
+    async saveProposalSentFail(id: string, error: any) {
         log.debug("saveProposalSentFail")
         try {
             await this.planRepository.create({
-                email: id,
+                email: id + "_fail",
                 success: false,
-                proposal,
-                error: error
+                error: error,
+                transactionDateTime: PlanService.getDate()
             })
             log.debug("saveProposalSentFail:success")
         } catch (e) {
@@ -190,49 +239,45 @@ export class PlanService {
         }
     }
 
-    async sendProposal(ameNotification: AmeNotification) {
+    static processInstallments(amePayment: any) {
+        let installments = amePayment.splits?.map(i => i.installments).filter(i => i)
+        let installmentsInfo
+        if (installments.length) {
+            installmentsInfo = parseInt(`${installments[0]}`)
+        } else {
+            installmentsInfo = 1
+        }
+        return installmentsInfo
+    }
+
+    async sendProposal(proposal: any) {
         let proposalProtocol
-        let proposal
-        let amePayment = await this.verifyPayment(ameNotification.signedPayment);
         try {
-            // colocando na raiz para servir de chave no DynamoDB
-            amePayment.email = amePayment.id
-            proposal = amePayment.attributes?.customPayload?.proposal
-            let installments = amePayment.splits?.map(i => i.installments).filter(i => i)
-            let installmentsInfo
-            if (installments.length) {
-                installmentsInfo = parseInt(`${installments[0]}`)
-            } else {
-                installmentsInfo = 1
-            }
-            if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
-                proposal.pagamento.numeroParcelas = installmentsInfo
-            }
-            proposalProtocol = await this.sendProposalToPrevisul(proposal)
+            proposalProtocol = this.sendProposalToPrevisul(proposal)
         } catch (e) {
+            log.debug("Error on sending proposal to previsul")
             log.debug(e)
-            try {
-                await this.saveProposalSentFail(amePayment.id, proposal, e.toString())
-            } catch (e) {
-                log.debug('Error on save proposalSentFailResult')
-                log.debug(e)
-            }
         }
         if (proposalProtocol) {
-            log.debug('Proposal Exists')
-            try {
-                await this.saveProposalSentSuccess(amePayment.id, proposal, proposalProtocol)
-            } catch (e) {
-                log.debug('Error on save proposalSentSuccessResult')
-                log.debug(e)
-            }
-            log.debug('Returning Protocol')
-            log.debug(proposalProtocol)
             return proposalProtocol
         }
-
         log.debug('Proposal dont be sent, error on sending')
         throw 'Proposal dont be sent, error on sending'
+    }
+
+    async processProposal(signedPayment: string) {
+        let proposalProtocol: any
+        const unsignedPayment = await this.unsignPayment(signedPayment)
+        const proposal = PlanService.detachProposal(unsignedPayment)
+        await this.saveProposalSent(unsignedPayment.id, proposal)
+        try {
+            proposalProtocol = await this.sendProposal(proposal)
+            await this.saveProposalProtocol(unsignedPayment.id, proposalProtocol)
+        } catch (e) {
+            await this.saveProposalSentFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+        }
+        log.debug("Proposal sent %j", unsignedPayment.id)
+        return proposalProtocol
     }
 
     async listProposal() {

@@ -3,6 +3,7 @@ import {PlanService} from "../services/PlanService"
 import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
+import {AmeNotification} from "../model/AmeNotification";
 
 const logger = getLogger("PlanController")
 
@@ -19,7 +20,7 @@ export class PlanController {
     @Get("/{zipCode}/{buildType}")
     public async retrievePlans(@Path() zipCode: string, @Path() buildType: string) {
         logger.debug(`Plans request starting for zipCode=${zipCode}`);
-        try{
+        try {
             const result: any = await this.planService.retrievePlanList(buildType, zipCode)
             if (result.length === 0) {
                 throw new ApiError("Nothing to show", 404, `Plans not found`)
@@ -33,12 +34,10 @@ export class PlanController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
-    public async sendProposal(@Body() proposal: any) {
-        logger.info('Sending Proposal %j', proposal);
+    public async sendProposal(@Body() signedPayment: AmeNotification) {
+        logger.info('Sending Proposal %j', signedPayment);
         try {
-            const proposalResponse: any = await this.planService.sendProposal(proposal)
-            logger.debug("Proposal sent %j", proposal)
-            return proposalResponse
+            return await this.planService.processProposal(signedPayment.signedPayment)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
