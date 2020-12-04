@@ -8,11 +8,14 @@ import path from "path";
 import util from "util";
 import fs from "fs";
 import nock from 'nock'
+import Axios from "axios";
 
 import {RequestService} from "../../../../src/modules/authToken/services/RequestService";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
+
+const BASE_URL = 'http://localhost:8080/v1/zipcode'
 
 initDependencies()
 jest.setTimeout(10000)
@@ -72,5 +75,18 @@ describe("PlanService", () => {
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.protocolo).toBeDefined()
     })
+
+     it.only("Validando o Cep ", async () => {
+        const cep = "30000-000"
+
+         let response = await Axios.get(`${BASE_URL}/${cep}`, {
+                headers: {
+                Accept: 'application/json'
+            },
+        }).then(res => res.data).catch(err => err)
+
+        expect(response).toBe(true);
+    })
+
 
 })
