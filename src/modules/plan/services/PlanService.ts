@@ -265,19 +265,27 @@ export class PlanService {
         throw 'Proposal dont be sent, error on sending'
     }
 
+    checkPrice(): boolean {
+        return true
+    }
+
     async processProposal(signedPayment: string) {
         let proposalProtocol: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
-        await this.saveProposalSent(unsignedPayment.id, proposal)
-        try {
-            proposalProtocol = await this.sendProposal(proposal)
-            await this.saveProposalProtocol(unsignedPayment.id, proposalProtocol)
-        } catch (e) {
-            await this.saveProposalSentFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+        if (this.checkPrice()) {
+            await this.saveProposalSent(unsignedPayment.id, proposal)
+            try {
+                proposalProtocol = await this.sendProposal(proposal)
+                await this.saveProposalProtocol(unsignedPayment.id, proposalProtocol)
+            } catch (e) {
+                await this.saveProposalSentFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+            }
+            log.debug("Proposal sent %j", unsignedPayment.id)
+            return proposalProtocol
+        } else {
+            throw 'Price not match'
         }
-        log.debug("Proposal sent %j", unsignedPayment.id)
-        return proposalProtocol
     }
 
     async listProposal() {
