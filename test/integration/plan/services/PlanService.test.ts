@@ -75,7 +75,7 @@ describe("PlanService", () => {
         expect(proposalProtocol.protocolo).toBeDefined()
     })
 
-     it("Validando o Cep ", async () => {
+     it("Validando o Cep", async () => {
          const cep = "21331250"
          let address = await planService.consultZipcode(cep) 
          console.log('Address:'+ JSON.stringify(address))
