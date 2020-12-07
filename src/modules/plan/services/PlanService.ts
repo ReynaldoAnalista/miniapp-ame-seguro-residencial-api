@@ -275,7 +275,7 @@ export class PlanService {
         let proposalProtocol: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
-        if (this.checkPrice(unsignedPayment.amount, proposal.planId, proposal.imovel?.construcao, proposal.imovel?.cep)) {
+        if (this.checkPrice(unsignedPayment.amount, proposal.planId, proposal.imovel?.construcao, proposal.imovel?.endereco.cep)) {
             await this.saveProposalSent(unsignedPayment.id, proposal)
             try {
                 proposalProtocol = await this.sendProposal(proposal)
