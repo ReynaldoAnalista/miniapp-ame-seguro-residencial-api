@@ -253,13 +253,17 @@ export class PlanService {
     }
 
     async checkPrice(price: string, planId: string, buildType: string, zipcode: string): Promise<boolean> {
-        let checkPlan = false
-        const planList  = await this.retrievePlanList(buildType, zipcode)
-        const selectedPlan = planList ? planList.find((p) => p["id"] === planId &&  p["amount"] === price) : undefined
+        log.debug(`Checking Price from: value=${price} planId=${planId}`)
+        const planList = await this.retrievePlanList(buildType, zipcode)
+        const selectedPlan = planList?.find((p) => p["id"] === planId)
+
         if (selectedPlan) {
-          checkPlan = true
+            const priceChecked = `${price}` === `${(selectedPlan['premio'] * 100)}`
+            log.debug(`Price Check Result: ${priceChecked}`)
+            return priceChecked
         }
-        return checkPlan
+        log.debug(`Price Check not Match`)
+        return false
     }
 
 
@@ -267,15 +271,21 @@ export class PlanService {
         let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
-        await this.saveProposalSent(unsignedPayment.id, proposal)
-        try {
-            proposalResponse = await this.sendProposalToPrevisul(proposal)
-            await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
-        } catch (e) {
-            await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+        if (await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)) {
+            log.debug('Price Match')
+            await this.saveProposalSent(unsignedPayment.id, proposal)
+            try {
+                proposalResponse = await this.sendProposalToPrevisul(proposal)
+                await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
+            } catch (e) {
+                await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+            }
+            log.debug("Proposal sent %j", unsignedPayment.id)
+            return proposalResponse
+        } else {
+            log.debug('Price not Match')
+            throw 'Price not match'
         }
-        log.debug("Proposal sent %j", unsignedPayment.id)
-        return proposalResponse
     }
 
     async listProposal() {
