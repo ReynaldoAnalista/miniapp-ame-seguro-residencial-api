@@ -265,9 +265,14 @@ export class PlanService {
         throw 'Proposal dont be sent, error on sending'
     }
 
-    checkPrice(price: string, planId: string, buildType: string, zipcode: string): boolean {
-        this.retrievePlanList(price, planId)
-        return true
+    async checkPrice(price: string, planId: string, buildType: string, zipcode: string): Promise<boolean> {
+        let checkPlan = false
+        const planList  = await this.retrievePlanList(buildType, zipcode)
+        const selectedPlan = planList ? planList.find((p) => p["id"] === planId &&  p["amount"] === price) : undefined
+        if (selectedPlan) {
+          checkPlan = true
+        }
+        return checkPlan
     }
 
 
@@ -275,7 +280,8 @@ export class PlanService {
         let proposalProtocol: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
-        if (this.checkPrice(unsignedPayment.amount, proposal.planId, proposal.imovel?.construcao, proposal.imovel?.endereco.cep)) {
+        const checkPlanPrice = this.checkPrice(unsignedPayment.amount, proposal.planId, proposal.imovel?.construcao, proposal.imovel?.endereco.cep)
+        if (checkPlanPrice) {
             await this.saveProposalSent(unsignedPayment.id, proposal)
             try {
                 proposalProtocol = await this.sendProposal(proposal)

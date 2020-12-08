@@ -5,7 +5,21 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"AmeNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			}
+		},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -233,7 +247,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object"
+								"$ref": "#/components/schemas/AmeNotification"
 							}
 						}
 					}
