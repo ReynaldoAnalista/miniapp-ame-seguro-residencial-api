@@ -113,7 +113,6 @@ export class PlanService {
 
     async unsignPayment(signedPayment: string): Promise<any> {
         const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        console.log(secret)
         return new Promise((resolve, reject) => {
             jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
                 if (err) {
@@ -253,19 +252,40 @@ export class PlanService {
         return installmentsInfo
     }
 
+    async checkPrice(price: string, planId: string, buildType: string, zipcode: string): Promise<boolean> {
+        log.debug(`Checking Price from: value=${price} planId=${planId}`)
+        const planList = await this.retrievePlanList(buildType, zipcode)
+        const selectedPlan = planList?.find((p) => p["id"] === planId)
+
+        if (selectedPlan) {
+            const priceChecked = `${price}` === `${(selectedPlan['premio'] * 100)}`
+            log.debug(`Price Check Result: ${priceChecked}`)
+            return priceChecked
+        }
+        log.debug(`Price Check not Match`)
+        return false
+    }
+
+
     async processProposal(signedPayment: string) {
         let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
-        await this.saveProposalSent(unsignedPayment.id, proposal)
-        try {
-            proposalResponse = await this.sendProposalToPrevisul(proposal)
-            await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
-        } catch (e) {
-            await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+        if (await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)) {
+            log.debug('Price Match')
+            await this.saveProposalSent(unsignedPayment.id, proposal)
+            try {
+                proposalResponse = await this.sendProposalToPrevisul(proposal)
+                await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
+            } catch (e) {
+                await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+            }
+            log.debug("Proposal sent %j", unsignedPayment.id)
+            return proposalResponse
+        } else {
+            log.debug('Price not Match')
+            throw 'Price not match'
         }
-        log.debug("Proposal sent %j", unsignedPayment.id)
-        return proposalResponse
     }
 
     async listProposal() {
