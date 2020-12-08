@@ -32,12 +32,12 @@ export class PlanService {
         let attempts = 2
         do {
             try {
-                let result: object[] = await this.requestService.makeRequest(
+                let result: object[] = (await this.requestService.makeRequest(
                     this.requestService.ENDPOINTS.URL_ZIPCODE,
                     this.requestService.METHODS.GET,
                     null,
                     `/${zipcode}`
-                )
+                ))['data']
                 attempts = 0
                 return result
             } catch (err) {
@@ -78,12 +78,12 @@ export class PlanService {
         let attempts = 2
         do {
             try {
-                let result: object[] = await this.requestService.makeRequest(
+                let result: object[] = (await this.requestService.makeRequest(
                     this.requestService.ENDPOINTS.URL_PLANS,
                     this.requestService.METHODS.GET,
                     null,
                     qs
-                )
+                ))['data']
                 attempts = 0
                 return result
             } catch (err) {
@@ -113,6 +113,7 @@ export class PlanService {
 
     async unsignPayment(signedPayment: string): Promise<any> {
         const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
+        console.log(secret)
         return new Promise((resolve, reject) => {
             jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
                 if (err) {
@@ -132,11 +133,13 @@ export class PlanService {
         do {
             log.debug(`There are ${attempts} attempts left`)
             try {
-                result = await this.requestService.makeRequest(
+                const response = await this.requestService.makeRequest(
                     this.requestService.ENDPOINTS.URL_SALE,
                     this.requestService.METHODS.POST,
                     proposal
                 );
+                result = response.data
+                trace = response?.headers['x-b3-traceid']
                 log.info('Success proposal sent')
                 attempts = 0
             } catch (e) {
@@ -162,7 +165,7 @@ export class PlanService {
             attempts = attempts - 1
         } while (attempts > 0)
         if (result) {
-            return result
+            return {result, trace}
         }
         throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
@@ -207,13 +210,13 @@ export class PlanService {
         }
     }
 
-    async saveProposalProtocol(id: any, proposalProtocol: any) {
+    async saveProposalResponse(id: any, proposalResponse: any) {
         log.debug("saveProposalSentSuccess")
         try {
             await this.planRepository.create({
                 email: id + "_success",
                 success: true,
-                proposalProtocol,
+                proposalResponse,
                 transactionDateTime: PlanService.getDate()
             })
             log.debug("saveProposalSentSuccess:success")
@@ -223,7 +226,7 @@ export class PlanService {
         }
     }
 
-    async saveProposalSentFail(id: string, error: any) {
+    async saveProposalFail(id: string, error: any) {
         log.debug("saveProposalSentFail")
         try {
             await this.planRepository.create({
@@ -250,34 +253,19 @@ export class PlanService {
         return installmentsInfo
     }
 
-    async sendProposal(proposal: any) {
-        let proposalProtocol
-        try {
-            proposalProtocol = this.sendProposalToPrevisul(proposal)
-        } catch (e) {
-            log.debug("Error on sending proposal to previsul")
-            log.debug(e)
-        }
-        if (proposalProtocol) {
-            return proposalProtocol
-        }
-        log.debug('Proposal dont be sent, error on sending')
-        throw 'Proposal dont be sent, error on sending'
-    }
-
     async processProposal(signedPayment: string) {
-        let proposalProtocol: any
+        let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
         try {
-            proposalProtocol = await this.sendProposal(proposal)
-            await this.saveProposalProtocol(unsignedPayment.id, proposalProtocol)
+            proposalResponse = await this.sendProposalToPrevisul(proposal)
+            await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
         } catch (e) {
-            await this.saveProposalSentFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
+            await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
         }
         log.debug("Proposal sent %j", unsignedPayment.id)
-        return proposalProtocol
+        return proposalResponse
     }
 
     async listProposal() {

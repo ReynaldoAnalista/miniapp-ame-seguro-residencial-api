@@ -68,10 +68,9 @@ describe("PlanService", () => {
         console.log('Realizou o parse do arquivo de callback')
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
-        console.log(signedPayment)
         const proposalProtocol = await planService.processProposal(signedPayment)
         console.log('Enviou a proposta para a previsul')
-        expect(proposalProtocol.protocolo).toBeDefined()
+        expect(proposalProtocol.result).toBeDefined()
     })
 
 })
