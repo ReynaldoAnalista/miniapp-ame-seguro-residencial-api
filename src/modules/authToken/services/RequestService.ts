@@ -66,6 +66,6 @@ export class RequestService {
             log.debug(`Trace ID: ${result.headers['x-b3-traceid']}`)
         }
 
-        return result.data;
+        return result;
     }
 }

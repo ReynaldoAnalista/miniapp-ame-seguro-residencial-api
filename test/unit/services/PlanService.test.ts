@@ -51,7 +51,7 @@ describe("PlanService", () => {
         console.log('Assinou o arquivo de callback')
         const unsignedPayment = await planService.unsignPayment(signedPayment)
         console.log('Enviou a proposta para a previsul')
-        expect(unsignedPayment).toEqual(payment)
+        expect(unsignedPayment.id).toEqual(JSON.parse(payment).id)
     })
 
 })

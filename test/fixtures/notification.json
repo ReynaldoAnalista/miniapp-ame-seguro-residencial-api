@@ -99,7 +99,5 @@
   "operationReference": null,
   "peer": null,
   "nsu": "063150934412",
-  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
-  "iat": 1606757555,
-  "exp": 1606771955
+  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89"
 }
