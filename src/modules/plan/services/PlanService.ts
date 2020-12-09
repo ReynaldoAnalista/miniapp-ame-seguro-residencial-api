@@ -173,10 +173,11 @@ export class PlanService {
         const now = new Date()
         return {
             year: now.getUTCFullYear(),
-            month: now.getUTCMonth(),
+            month: now.getUTCMonth() + 1,
             day: now.getUTCDate(),
             hour: now.getUTCHours(),
             minutes: now.getUTCMinutes(),
+            humanDate: `${now.getUTCDate()}/${now.getUTCMonth() + 1}/${now.getUTCFullYear()} ${now.getUTCHours()}:${now.getUTCMinutes()}`,
             timestamp: now.getTime()
         }
     }
