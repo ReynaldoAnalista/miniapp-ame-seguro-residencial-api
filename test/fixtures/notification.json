@@ -17,7 +17,7 @@
   "type": "PAYMENT",
   "currency": "BRL",
   "cashType": "CASH",
-  "amount": 14488,
+  "amount": 14424,
   "amountRefunded": 0,
   "splits": [
     {
@@ -33,7 +33,7 @@
       ],
       "status": "AUTHORIZED",
       "cashType": "CASH",
-      "amount": 14488,
+      "amount": 14424,
       "installments": null,
       "cardMasked": null,
       "cardBrand": null
@@ -45,7 +45,7 @@
     "items": [
       {
         "description": "Proteção Essencial",
-        "amount": 14488,
+        "amount": 14424,
         "quantity": 1
       }
     ],
