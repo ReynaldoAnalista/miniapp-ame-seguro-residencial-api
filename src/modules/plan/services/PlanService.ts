@@ -253,18 +253,24 @@ export class PlanService {
         return installmentsInfo
     }
 
-    async checkPrice(price: string, planId: string, buildType: string, zipcode: string): Promise<boolean> {
-        log.debug(`Checking Price from: value=${price} planId=${planId}`)
-        const planList = await this.retrievePlanList(buildType, zipcode)
-        const selectedPlan = planList?.find((p) => p["id"] === planId)
-
-        if (selectedPlan) {
-            const priceChecked = `${price}` === `${(selectedPlan['premio'] * 100)}`
-            log.debug(`Price Check Result: ${priceChecked}`)
-            return priceChecked
+    async checkPrice(price: number, planId: string, buildType: string, zipcode: string): Promise<object> {
+        try {
+            log.debug(`Checking Price from: value=${price} planId=${planId}`)
+            const planList = await this.retrievePlanList(buildType, zipcode)
+            const selectedPlan = planList?.find((p) => p["id"] === planId)
+            if (selectedPlan) {
+                log.debug(`Real price of plan is ${selectedPlan['premio']}`)
+                const realPrice = selectedPlan['premio'] * 100
+                const priceChecked = `${price}` === `${(realPrice)}`
+                log.debug(`Price Check Result: ${priceChecked}`)
+                return {checked: priceChecked, reason: {price, realPrice}}
+            }
+            log.debug(`Price Check not Match`)
+            return {checked: false, reason: 'Plan not found'}
+        } catch (e) {
+            return {checked: false, reason: 'Error on price validation', error: e.toString()}
         }
-        log.debug(`Price Check not Match`)
-        return false
+
     }
 
 
@@ -273,7 +279,8 @@ export class PlanService {
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
-        if (await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)) {
+        const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)
+        if (checkPriceResult['checked']) {
             log.debug('Price Match')
             try {
                 proposalResponse = await this.sendProposalToPrevisul(proposal)
@@ -285,7 +292,7 @@ export class PlanService {
             return proposalResponse
         } else {
             log.debug('Price not Match')
-            await this.saveProposalFail(unsignedPayment.id, 'Price not match')
+            await this.saveProposalFail(unsignedPayment.id, checkPriceResult)
             throw 'Price not match'
         }
     }

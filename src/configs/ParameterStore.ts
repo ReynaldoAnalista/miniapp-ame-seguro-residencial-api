@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { injectable } from "inversify";
 import { getLogger } from "../server/Logger";
 
-const logger = getLogger("ParameterStore")
+const log = getLogger("ParameterStore")
 
 let paramsPromise
 
@@ -14,10 +14,10 @@ if (configJsonOnEnv) {
     try {
         paramsPromise = Promise.resolve(JSON.parse(configJsonOnEnv))
     } catch (e) {
-        console.log('Erro ao ler a variavel de ambiente SF_CONF\nO valor deve conter um json valido\n', e.message)
+        log.debug('Erro ao ler a variavel de ambiente SF_CONF\nO valor deve conter um json valido\n', e.message)
     }
 } else {
-    console.log(`Sem a variavel de ambiente SF_CONF, lendo configuracao do Parameter Store...`)
+    log.debug(`Sem a variavel de ambiente SF_CONF, lendo configuracao do Parameter Store...`)
     const AWS = require('aws-sdk')
 
     AWS.config.update({
@@ -26,7 +26,7 @@ if (configJsonOnEnv) {
 
     const PARAMETER_STORE_NAME = `${process.env.APPLICATION_NAME}-${process.env.NODE_ENV}`
 
-    console.log("PARAMETER_STORE_NAME", PARAMETER_STORE_NAME)
+    log.debug("PARAMETER_STORE_NAME", PARAMETER_STORE_NAME)
     const parameterStore = new AWS.SSM()
     paramsPromise = new Promise((resolve, reject) => {
         parameterStore.getParameter({
@@ -35,7 +35,7 @@ if (configJsonOnEnv) {
         }, (err, data) => {
             if (err) {
                 //return reject(err)
-                logger.warn(`PARAMETER_STORE_NAME ${PARAMETER_STORE_NAME} nao foi encontrado`)
+                log.warn(`PARAMETER_STORE_NAME ${PARAMETER_STORE_NAME} nao foi encontrado`)
                 return resolve()
             }
             return resolve(JSON.parse(data.Parameter.Value))
