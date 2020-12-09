@@ -272,9 +272,9 @@ export class PlanService {
         let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
+        await this.saveProposalSent(unsignedPayment.id, proposal)
         if (await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)) {
             log.debug('Price Match')
-            await this.saveProposalSent(unsignedPayment.id, proposal)
             try {
                 proposalResponse = await this.sendProposalToPrevisul(proposal)
                 await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
@@ -285,6 +285,7 @@ export class PlanService {
             return proposalResponse
         } else {
             log.debug('Price not Match')
+            await this.saveProposalFail(unsignedPayment.id, 'Price not match')
             throw 'Price not match'
         }
     }
