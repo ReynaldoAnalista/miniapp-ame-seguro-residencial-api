@@ -1,6 +1,6 @@
 {
   "name": "ame-seguro-residencial",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "repository": "https://bitbucket.org/smartsolutionteam/miniapp-ame-seguro-residencial-api",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "@types/redis": "^2.8.21",
     "dotenv": "^8.2.0",
     "jest": "^24.9.0",
-    "nock": "^12.0.3",
+    "nock": "^13.0.5",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4"

@@ -19,6 +19,10 @@ runserver: build	commithash
 	@echo '=========== Starting ame-seguro-residencial ==========='
 	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn run dev
 
+runtest:
+	@echo '=========== Testing ame-seguro-residencial ==========='
+	APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn test PlanService
+
 debugserver: build	commithash
 	@echo '=========== Starting ame-seguro-residencial ==========='
 	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn run debug
