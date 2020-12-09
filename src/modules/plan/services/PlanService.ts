@@ -9,6 +9,7 @@ import {AmeNotification} from "../model/AmeNotification";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import * as jwt from 'jsonwebtoken';
 import {Plan} from "inversify/dts/planning/plan";
+import Plans from "./Plans";
 
 const log = getLogger("PlanService")
 
@@ -253,11 +254,10 @@ export class PlanService {
         return installmentsInfo
     }
 
-    async checkPrice(price: number, planId: string, buildType: string, zipcode: string): Promise<object> {
+    async checkPrice(price: number, planId: string): Promise<object> {
         try {
             log.debug(`Checking Price from: value=${price} planId=${planId}`)
-            const planList = await this.retrievePlanList(buildType, zipcode)
-            const selectedPlan = planList?.find((p) => p["id"] === planId)
+            const selectedPlan = Plans?.find((p) => p["id"] === planId)
             if (selectedPlan) {
                 log.debug(`Real price of plan is ${selectedPlan['premio']}`)
                 const realPrice = selectedPlan['premio'] * 100
@@ -270,16 +270,14 @@ export class PlanService {
         } catch (e) {
             return {checked: false, reason: 'Error on price validation', error: e.toString()}
         }
-
     }
-
 
     async processProposal(signedPayment: string) {
         let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
         const proposal = PlanService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
-        const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId, proposal.imovel?.construcao, proposal.imovel?.endereco?.cep)
+        const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId)
         if (checkPriceResult['checked']) {
             log.debug('Price Match')
             try {
