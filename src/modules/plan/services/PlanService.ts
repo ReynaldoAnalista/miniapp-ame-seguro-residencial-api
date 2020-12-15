@@ -299,6 +299,40 @@ export class PlanService {
         return this.planRepository.listProposal()
     }
 
+    async proposalReport() {
+        const proposalList = await this.planRepository.listProposal()
+        return proposalList.filter(x => x.transactionDateTime).map(proposal => {
+            if (proposal.proposal) {
+                proposal.success_response = proposalList.find(y => y.email === (proposal.email + '_success'))
+                proposal.error_response = proposalList.find(y => y.email === (proposal.email + '_error'))
+                return proposal
+            }
+            return null
+        })
+            .filter(x => x) // Removing empty results
+            .sort((a, b) => a?.transactionDateTime?.timestamp - b?.transactionDateTime?.timestamp)
+            .map(response => {
+                let outputObject = {
+                    nome: response?.proposal?.nome,
+                    email: response?.proposal?.email,
+                    planoId: response?.proposal?.planoId,
+                    numeroParcelas: response?.proposal?.pagamento?.numeroParcelas,
+                    dataVencimento: response?.proposal?.pagamento?.dataVencimento,
+                    dataInicioVigencia: response?.proposal?.dataInicioVigencia,
+                    horarioServidor: response?.transactionDateTime?.humanDate
+                }
+                if (response?.success_response) {
+                    outputObject['enviadoPrevisul'] = 'S';
+                    outputObject['PrevisulProtocolo'] = response?.success_response?.proposalResponse?.result?.protocolo;
+                    outputObject['b2skyLog'] = response?.success_response?.proposalResponse?.trace;
+                }
+                if (response?.error_response) {
+                    outputObject['enviadoPrevisul'] = 'N';
+                }
+                return outputObject
+            })
+    }
+
     delay(seconds) {
         log.debug(`Awaiting for ${seconds} seconds`)
         return new Promise((resolve) => {
