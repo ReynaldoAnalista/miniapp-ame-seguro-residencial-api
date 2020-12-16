@@ -23,7 +23,7 @@ export class PlanController {
         const response = (<any>request).res;
         response.contentType('text/plain');
         response
-            .send(await this.planService.proposalReport())
+            .send((await this.planService.proposalReport()).join('\n'))
             .end();
     }
 
