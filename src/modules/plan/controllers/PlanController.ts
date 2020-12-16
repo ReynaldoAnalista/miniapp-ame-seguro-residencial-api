@@ -57,11 +57,6 @@ export class PlanController {
     @Security("jwt", ["list_proposal"])
     public async proposalReport() {
         logger.info('Relatório de vendas')
-        const proposalReport = await this.planService.proposalReport()
-        let response = 'Nome;Email;ID Plano;Parcelamento;Vencimento;Início Vigência; Horário Servidor'
-        response += proposalReport.map(p => {
-            return `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor}`
-        }).join('\n')
-        return response
+        return await this.planService.proposalReport()
     }
 }
