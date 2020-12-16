@@ -343,9 +343,7 @@ export class PlanService {
                     return outputObject
                 })
 
-            response.concat(proposalReport.map(p => {
-                return `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}`
-            }))
+            response = response.concat(proposalReport.map(p => `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}`))
 
         } catch (error) {
             log.error(error)
