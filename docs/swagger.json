@@ -176,6 +176,31 @@
 				"parameters": []
 			}
 		},
+		"/v1/plans/proposal-report": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/v1/plans/{zipCode}/{buildType}": {
 			"get": {
 				"operationId": "RetrievePlans",
@@ -264,31 +289,6 @@
 								"schema": {
 									"additionalProperties": true,
 									"type": "object"
-								}
-							}
-						},
-						"description": "Ok"
-					}
-				},
-				"security": [
-					{
-						"jwt": [
-							"list_proposal"
-						]
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/v1/plans/proposal/report": {
-			"get": {
-				"operationId": "ProposalReport",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
 								}
 							}
 						},

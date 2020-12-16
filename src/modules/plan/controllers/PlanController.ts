@@ -16,6 +16,14 @@ export class PlanController {
     }
 
     @Response(404, 'NotFound')
+    @Get("/proposal-report")
+    @Security("jwt", ["list_proposal"])
+    public async proposalReport() {
+        logger.info('Relatório de vendas')
+        return await this.planService.proposalReport()
+    }
+
+    @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Get("/{zipCode}/{buildType}")
     public async retrievePlans(@Path() zipCode: string, @Path() buildType: string) {
@@ -53,10 +61,4 @@ export class PlanController {
         return proposal
     }
 
-    @Get("/proposal/report")
-    @Security("jwt", ["list_proposal"])
-    public async proposalReport() {
-        logger.info('Relatório de vendas')
-        return await this.planService.proposalReport()
-    }
 }
