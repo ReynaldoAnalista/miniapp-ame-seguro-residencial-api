@@ -299,10 +299,10 @@ export class PlanService {
         return this.planRepository.listProposal()
     }
 
-    async proposalReport() {
+    async proposalReport(): Promise<Array<string>> {
         const proposalList = await this.planRepository.listProposal()
         let proposalReport: Array<any>
-        let response = 'Nome;Email;ID Plano;Parcelas;Vencimento;Início Vigência;Horário Servidor;Enviado Previsul;Protocolo Previsul;B2SkyTrace\n'
+        let response = ['Nome;Email;ID Plano;Parcelas;Vencimento;Início Vigência;Horário Servidor;Enviado Previsul;Protocolo Previsul;B2SkyTrace']
         try {
             proposalReport = proposalList.filter(x => x.transactionDateTime).map(proposal => {
                 if (proposal.proposal) {
@@ -343,13 +343,13 @@ export class PlanService {
                     return outputObject
                 })
 
-            response += proposalReport.map(p => {
+            response.concat(proposalReport.map(p => {
                 return `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}\n`
-            }).join('\n')
+            }))
 
         } catch (error) {
             log.error(error)
-            response += "Error on build report"
+            response.push("Error on build report")
         }
         return response
     }
