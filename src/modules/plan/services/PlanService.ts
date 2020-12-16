@@ -299,6 +299,59 @@ export class PlanService {
         return this.planRepository.listProposal()
     }
 
+    async proposalReport(): Promise<Array<string>> {
+        const proposalList = await this.planRepository.listProposal()
+        let proposalReport: Array<any>
+        let response = ['Nome;Email;ID Plano;Parcelas;Vencimento;Início Vigência;Horário Servidor;Enviado Previsul;Protocolo Previsul;B2SkyTrace']
+        try {
+            proposalReport = proposalList.filter(x => x.transactionDateTime).map(proposal => {
+                if (proposal.proposal) {
+                    proposal.success_response = proposalList.find(y => y.email === (proposal.email + '_success'))
+                    proposal.error_response = proposalList.find(y => y.email === (proposal.email + '_error'))
+                    return proposal
+                }
+                return null
+            })
+                .filter(x => x) // Removing empty results
+                .sort((a, b) => a?.transactionDateTime?.timestamp - b?.transactionDateTime?.timestamp)
+                .map(response => {
+                    let outputObject = {
+                        nome: response?.proposal?.nome,
+                        email: response?.proposal?.email,
+                        planoId: response?.proposal?.planoId,
+                        numeroParcelas: response?.proposal?.pagamento?.numeroParcelas,
+                        dataVencimento: response?.proposal?.pagamento?.dataVencimento,
+                        dataInicioVigencia: response?.proposal?.dataInicioVigencia,
+                        horarioServidor: response?.transactionDateTime?.humanDate,
+                        enviadoPrevisul: '',
+                        PrevisulProtocolo: '',
+                        b2skyLog: '',
+                    }
+
+                    if (response?.success_response) {
+                        outputObject.enviadoPrevisul = 'S';
+                        outputObject.PrevisulProtocolo = response?.success_response?.proposalResponse?.result?.protocolo;
+                        outputObject.b2skyLog = response?.success_response?.proposalResponse?.trace;
+                    } else {
+                        log.debug("Dont have success response")
+                    }
+                    if (response?.error_response) {
+                        outputObject['enviadoPrevisul'] = 'N';
+                    } else {
+                        log.debug("Dont have error response")
+                    }
+                    return outputObject
+                })
+
+            response = response.concat(proposalReport.map(p => `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}`))
+
+        } catch (error) {
+            log.error(error)
+            response.push("Error on build report")
+        }
+        return response
+    }
+
     delay(seconds) {
         log.debug(`Awaiting for ${seconds} seconds`)
         return new Promise((resolve) => {

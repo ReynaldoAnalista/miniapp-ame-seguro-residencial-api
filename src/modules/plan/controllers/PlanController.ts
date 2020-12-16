@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify"
 import {PlanService} from "../services/PlanService"
-import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
+import {Get, Path, Route, SuccessResponse, Response, Request, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
 import {AmeNotification} from "../model/AmeNotification";
@@ -13,6 +13,18 @@ export class PlanController {
     constructor(
         @inject("PlanService") private planService: PlanService,
     ) {
+    }
+
+    @Response(404, 'NotFound')
+    @Get("/proposal-report")
+    @Security("jwt", ["list_proposal"])
+    public async proposalReport(@Request() request) {
+        logger.info('Relatório de vendas')
+        const response = (<any>request).res;
+        response.contentType('text/plain');
+        response
+            .send((await this.planService.proposalReport()).join('\n'))
+            .end();
     }
 
     @Response(404, 'NotFound')
@@ -52,4 +64,5 @@ export class PlanController {
         logger.info('Retornando proposals %j', proposal.length)
         return proposal
     }
+
 }

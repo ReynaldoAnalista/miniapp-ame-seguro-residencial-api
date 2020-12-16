@@ -24,7 +24,7 @@
 	},
 	"info": {
 		"title": "ame-seguro-residencial",
-		"version": "1.0.0",
+		"version": "1.1.0",
 		"license": {
 			"name": "MIT"
 		}
@@ -170,6 +170,31 @@
 							}
 						},
 						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/plans/proposal-report": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
 					}
 				},
 				"security": [],
