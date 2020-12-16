@@ -344,7 +344,7 @@ export class PlanService {
                 })
 
             response.concat(proposalReport.map(p => {
-                return `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}\n`
+                return `${p.nome};${p.email};${p.planoId};${p.numeroParcelas};${p.dataVencimento};${p.dataVencimento};${p.horarioServidor};${p.enviadoPrevisul};${p.PrevisulProtocolo};${p.b2skyLog}`
             }))
 
         } catch (error) {
