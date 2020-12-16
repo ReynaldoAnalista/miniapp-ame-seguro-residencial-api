@@ -54,4 +54,9 @@ describe("PlanService", () => {
         expect(unsignedPayment.id).toEqual(JSON.parse(payment).id)
     })
 
+    it("Testando o relatório de vendas", async () => {
+        const result = await planService.proposalReport()
+        expect(result.length).toBeGreaterThan(0)
+    })
+
 })
