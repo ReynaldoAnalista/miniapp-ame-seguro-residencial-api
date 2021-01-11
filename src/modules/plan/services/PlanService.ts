@@ -189,6 +189,9 @@ export class PlanService {
             if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
                 proposal.pagamento.numeroParcelas = PlanService.processInstallments(amePayment)
             }
+            if (proposal.pagamento) {
+                proposal.pagamento.nsu = PlanService.detatchNSU(amePayment)
+            }
             return proposal
         } else {
             throw "The payment has not a proposal inside"
@@ -241,6 +244,10 @@ export class PlanService {
             log.debug("saveProposalSentFail:Fail")
             log.debug(e.message)
         }
+    }
+
+    static detatchNSU(amePayment: any) {
+        return amePayment.nsu || ""
     }
 
     static processInstallments(amePayment: any) {
