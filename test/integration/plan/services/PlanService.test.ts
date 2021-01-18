@@ -8,11 +8,13 @@ import path from "path";
 import util from "util";
 import fs from "fs";
 import nock from 'nock'
+import Axios from "axios";
 
 import {RequestService} from "../../../../src/modules/authToken/services/RequestService";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
+
 
 initDependencies()
 jest.setTimeout(10000)
@@ -72,5 +74,27 @@ describe("PlanService", () => {
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.result).toBeDefined()
     })
+
+     it("Validando o Cep", async () => {
+         const cep = "21331250"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
+     })
+    
+      it("Validando o Cep incompleto", async () => {
+         const cep = "2600"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
+      })
+    
+    it("Validando o Cep incorreto", async () => {
+         const cep = "agagag"
+         let address = await planService.consultZipcode(cep) 
+         console.log('Address:'+ JSON.stringify(address))
+        expect(address).toBeDefined();
+    })
+
 
 })
