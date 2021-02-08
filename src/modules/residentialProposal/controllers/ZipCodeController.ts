@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify"
-import {PlanService} from "../services/PlanService"
+import {ResidentialProposalService} from "../services/ResidentialProposalService"
 import {Get, Path, Route, SuccessResponse, Response} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
@@ -10,7 +10,7 @@ const logger = getLogger("ZipCodeController")
 @injectable()
 export class ZipCodeController {
     constructor(
-        @inject("PlanService") private planService: PlanService,
+        @inject("PlanService") private planService: ResidentialProposalService,
     ) {
     }
 

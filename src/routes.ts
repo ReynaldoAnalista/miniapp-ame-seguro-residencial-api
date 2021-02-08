@@ -8,16 +8,26 @@ import { AuthTokenController } from './modules/authToken/controllers/AuthTokenCo
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthController } from './modules/default/controllers/HealthController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PlanController } from './modules/plan/controllers/PlanController';
+import { ResidentialProposalController } from './modules/residentialProposal/controllers/ResidentialProposalController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { ZipCodeController } from './modules/plan/controllers/ZipCodeController';
+import { ZipCodeController } from './modules/residentialProposal/controllers/ZipCodeController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SmartphoneProposalController } from './modules/smartphoneProposal/controllers/SmartphoneProposalController';
 import { expressAuthentication } from './middleware/authentication';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "AmeNotification": {
+    "ResidentialProposalNotification": {
+        "dataType": "refObject",
+        "properties": {
+            "signedPayment": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SmartphoneProposalNotification": {
         "dataType": "refObject",
         "properties": {
             "signedPayment": { "dataType": "string", "required": true },
@@ -108,8 +118,10 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/ame-seguro-residencial/v1/plans/proposal-report',
+        authenticateMiddleware([{ "jwt": ["list_proposal"] }]),
         function(request: any, response: any, next: any) {
             const args = {
+                request: { "in": "request", "name": "request", "required": true, "dataType": "object" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -121,7 +133,7 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<PlanController>(PlanController);
+            const controller: any = iocContainer.get<ResidentialProposalController>(ResidentialProposalController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
@@ -147,7 +159,7 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<PlanController>(PlanController);
+            const controller: any = iocContainer.get<ResidentialProposalController>(ResidentialProposalController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
@@ -160,7 +172,7 @@ export function RegisterRoutes(app: express.Express) {
     app.post('/ame-seguro-residencial/v1/plans/sendProposal',
         function(request: any, response: any, next: any) {
             const args = {
-                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "ref": "AmeNotification" },
+                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "ref": "ResidentialProposalNotification" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -172,7 +184,7 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<PlanController>(PlanController);
+            const controller: any = iocContainer.get<ResidentialProposalController>(ResidentialProposalController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
@@ -197,7 +209,7 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<PlanController>(PlanController);
+            const controller: any = iocContainer.get<ResidentialProposalController>(ResidentialProposalController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
@@ -229,6 +241,31 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.consultZipcode.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/plans/sendProposal',
+        function(request: any, response: any, next: any) {
+            const args = {
+                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "ref": "SmartphoneProposalNotification" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<SmartphoneProposalController>(SmartphoneProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.sendProposal.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

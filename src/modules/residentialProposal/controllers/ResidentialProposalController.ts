@@ -1,17 +1,17 @@
 import {inject, injectable} from "inversify"
-import {PlanService} from "../services/PlanService"
+import {ResidentialProposalService} from "../services/ResidentialProposalService"
 import {Get, Path, Route, SuccessResponse, Response, Request, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
-import {AmeNotification} from "../model/AmeNotification";
+import {ResidentialProposalNotification} from "../model/ResidentialProposalNotification";
 
 const logger = getLogger("PlanController")
 
 @Route('/v1/plans')
 @injectable()
-export class PlanController {
+export class ResidentialProposalController {
     constructor(
-        @inject("PlanService") private planService: PlanService,
+        @inject("PlanService") private planService: ResidentialProposalService,
     ) {
     }
 
@@ -46,7 +46,7 @@ export class PlanController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
-    public async sendProposal(@Body() signedPayment: AmeNotification) {
+    public async sendProposal(@Body() signedPayment: ResidentialProposalNotification) {
         logger.info('Sending Proposal %j', signedPayment);
         try {
             return await this.planService.processProposal(signedPayment.signedPayment)

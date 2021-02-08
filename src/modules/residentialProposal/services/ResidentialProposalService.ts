@@ -2,19 +2,16 @@ import {inject, injectable} from "inversify";
 import {getLogger} from "../../../server/Logger";
 import {TYPES} from "../../../inversify/inversify.types";
 import {AuthTokenService} from "../../authToken/services/AuthTokenService";
-import {AuthToken} from "../../authToken/model/AuthToken";
 import {RequestService} from "../../authToken/services/RequestService";
-import {PlanRepository} from "../repository/PlanRepository";
-import {AmeNotification} from "../model/AmeNotification";
+import {ResidentialProposalRepository} from "../repository/ResidentialProposalRepository";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import * as jwt from 'jsonwebtoken';
-import {Plan} from "inversify/dts/planning/plan";
 import Plans from "./Plans";
 
 const log = getLogger("PlanService")
 
 @injectable()
-export class PlanService {
+export class ResidentialProposalService {
 
     constructor(
         @inject("AuthTokenService")
@@ -22,7 +19,7 @@ export class PlanService {
         @inject("RequestService")
         private requestService: RequestService,
         @inject("PlanRepository")
-        private planRepository: PlanRepository,
+        private planRepository: ResidentialProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
@@ -187,10 +184,10 @@ export class PlanService {
         if (amePayment.attributes?.customPayload?.proposal) {
             let proposal = Object.assign({}, amePayment.attributes?.customPayload?.proposal)
             if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
-                proposal.pagamento.numeroParcelas = PlanService.processInstallments(amePayment)
+                proposal.pagamento.numeroParcelas = ResidentialProposalService.processInstallments(amePayment)
             }
             if (proposal.pagamento) {
-                proposal.pagamento.nsu = PlanService.detatchNSU(amePayment)
+                proposal.pagamento.nsu = ResidentialProposalService.detatchNSU(amePayment)
             }
             return proposal
         } else {
@@ -204,7 +201,7 @@ export class PlanService {
             await this.planRepository.create({
                 email: id,
                 proposal,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposal:success")
             return true
@@ -221,7 +218,7 @@ export class PlanService {
                 email: id + "_success",
                 success: true,
                 proposalResponse,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposalSentSuccess:success")
         } catch (e) {
@@ -237,7 +234,7 @@ export class PlanService {
                 email: id + "_fail",
                 success: false,
                 error: error,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposalSentFail:success")
         } catch (e) {
@@ -282,7 +279,7 @@ export class PlanService {
     async processProposal(signedPayment: string) {
         let proposalResponse: any
         const unsignedPayment = await this.unsignPayment(signedPayment)
-        const proposal = PlanService.detachProposal(unsignedPayment)
+        const proposal = ResidentialProposalService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
         const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId)
         if (checkPriceResult['checked']) {

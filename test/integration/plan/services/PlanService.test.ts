@@ -1,6 +1,6 @@
 import {initDependencies, iocContainer} from "../../../../src/inversify/inversify.config";
-import {PlanRepository} from "../../../../src/modules/plan/repository/PlanRepository";
-import {PlanService} from "../../../../src/modules/plan/services/PlanService";
+import {ResidentialProposalRepository} from "../../../../src/modules/residentialProposal/repository/PlanRepository";
+import {ResidentialProposalService} from "../../../../src/modules/residentialProposal/services/PlanService";
 import {ParameterStore} from "../../../../src/configs/ParameterStore";
 import jwt from "jsonwebtoken";
 
@@ -21,8 +21,8 @@ jest.setTimeout(10000)
 
 describe("PlanService", () => {
 
-    let planRepository: PlanRepository
-    let planService: PlanService
+    let planRepository: ResidentialProposalRepository
+    let planService: ResidentialProposalService
     let parameterStore: ParameterStore
     let requestService: RequestService
 
@@ -77,21 +77,21 @@ describe("PlanService", () => {
 
      it("Validando o Cep", async () => {
          const cep = "21331250"
-         let address = await planService.consultZipcode(cep) 
+         let address = await planService.consultZipcode(cep)
          console.log('Address:'+ JSON.stringify(address))
         expect(address).toBeDefined();
      })
-    
+
       it("Validando o Cep incompleto", async () => {
          const cep = "2600"
-         let address = await planService.consultZipcode(cep) 
+         let address = await planService.consultZipcode(cep)
          console.log('Address:'+ JSON.stringify(address))
         expect(address).toBeDefined();
       })
-    
+
     it("Validando o Cep incorreto", async () => {
          const cep = "agagag"
-         let address = await planService.consultZipcode(cep) 
+         let address = await planService.consultZipcode(cep)
          console.log('Address:'+ JSON.stringify(address))
         expect(address).toBeDefined();
     })

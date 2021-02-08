@@ -1,11 +1,11 @@
 import { initDependencies, iocContainer } from "../../../../src/inversify/inversify.config";
-import { PlanRepository } from "../../../../src/modules/plan/repository/PlanRepository";
+import { ResidentialProposalRepository } from "../../../../src/modules/residentialProposal/repository/PlanRepository";
 
 initDependencies()
 
 describe("PlanRepository", () => {
 
-    let planRepository: PlanRepository
+    let planRepository: ResidentialProposalRepository
 
     beforeEach(async () => {
         planRepository = iocContainer.get("PlanRepository")

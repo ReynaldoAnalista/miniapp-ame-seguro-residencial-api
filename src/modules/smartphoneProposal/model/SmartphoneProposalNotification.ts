@@ -1,4 +1,4 @@
-export interface AmeNotification {
+export interface SmartphoneProposalNotification {
     /**
      * Pagamento assinado
      */

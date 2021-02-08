@@ -2,12 +2,12 @@ import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
 import {getLogger} from "../../../server/Logger";
 
-const TABLE = `${process.env.DYNAMODB_ENV}_seguro_residencial`;
+const TABLE = `${process.env.DYNAMODB_ENV}_seguro_celular_compras`;
 
 const log = getLogger("PlanRepository")
 
 @injectable()
-export class PlanRepository {
+export class SmartphoneProposalRepository {
 
     static TABLE = TABLE
 
@@ -18,18 +18,19 @@ export class PlanRepository {
     }
 
     async create(proposal: any) {
-        log.debug('TRYING TO WRITE ON', TABLE)
+        log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName: TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();
+        log.debug('REGISTER WROTE ON', TABLE);
         return proposal
     }
 
-    async findByEmail(email: string) {
+    async findByID(id: string) {
         let params = {
             TableName: TABLE,
             Key: {
-                "email": email
+                "id": id
             }
         };
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
@@ -52,7 +53,7 @@ export class PlanRepository {
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let scanResult = await dynamoDocClient.scan({
             TableName: TABLE,
-            FilterExpression: 'attribute_exists(email)'
+            FilterExpression: 'attribute_exists(id)'
         }).promise()
         if (scanResult.Count && scanResult.Items && scanResult.Items.length)
             return scanResult.Items
