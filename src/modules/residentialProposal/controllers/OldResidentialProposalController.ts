@@ -5,7 +5,7 @@ import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
 import {ResidentialProposalNotification} from "../model/ResidentialProposalNotification";
 
-const logger = getLogger("PlanController")
+const logger = getLogger("OldResidentialProposalController")
 
 @Route('/v1/plans')
 @injectable()

@@ -5,7 +5,7 @@ import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
 import {SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 
-const logger = getLogger("PlanController")
+const logger = getLogger("SmartphoneProposalController")
 
 @Route('/v1/smartphone')
 @injectable()

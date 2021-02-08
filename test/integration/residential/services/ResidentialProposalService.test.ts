@@ -72,7 +72,7 @@ describe("ResidentialProposalService", () => {
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
         console.log('Enviou a proposta para a previsul')
-        expect(proposalProtocol).toBeDefined()
+        expect(proposalProtocol.result).toBeDefined()
     })
 
 })

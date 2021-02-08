@@ -7,7 +7,7 @@ import {SmartphoneProposalRepository} from "../repository/SmartphoneProposalRepo
 import {SmartphoneProposalResponseRepository} from "../repository/SmartphoneProposalResponseRepository";
 import {ParameterStore} from "../../../configs/ParameterStore";
 
-const log = getLogger("PlanService")
+const log = getLogger("SmartphoneProposalService")
 
 @injectable()
 export class SmartphoneProposalService {

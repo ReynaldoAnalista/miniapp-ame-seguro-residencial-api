@@ -8,7 +8,7 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import * as jwt from 'jsonwebtoken';
 import Plans from "./Plans";
 
-const log = getLogger("PlanService")
+const log = getLogger("ResidentialProposalService")
 
 @injectable()
 export class ResidentialProposalService {

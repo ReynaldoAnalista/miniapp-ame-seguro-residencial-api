@@ -11,7 +11,7 @@ describe("ResidentialProposalRepository", () => {
         residentialProposalRepository = iocContainer.get("ResidentialProposalRepository")
     })
 
-    it("salva e le um plano", async () => {
+    it("Saves and Reads a proposal", async () => {
         let proposal: any = {
             email: 'dev@gmail.com'
         }

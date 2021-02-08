@@ -4,7 +4,7 @@ import {getLogger} from "../../../server/Logger";
 
 const TABLE = `${process.env.DYNAMODB_ENV}_seguro_celular_compras`;
 
-const log = getLogger("PlanRepository")
+const log = getLogger("SmartphoneProposalRepository")
 
 @injectable()
 export class SmartphoneProposalRepository {
