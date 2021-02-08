@@ -1,6 +1,6 @@
 import {initDependencies, iocContainer} from "../../../../src/inversify/inversify.config";
-import {ResidentialProposalRepository} from "../../../../src/modules/residentialProposal/repository/PlanRepository";
-import {ResidentialProposalService} from "../../../../src/modules/residentialProposal/services/PlanService";
+import {ResidentialProposalRepository} from "../../../../src/modules/residentialProposal/repository/ResidentialProposalRepository";
+import {ResidentialProposalService} from "../../../../src/modules/residentialProposal/services/ResidentialProposalService";
 import {ParameterStore} from "../../../../src/configs/ParameterStore";
 import jwt from "jsonwebtoken";
 
@@ -62,7 +62,7 @@ describe("PlanService", () => {
     // })
 
     it("Recebe o plano e envia para a previsul", async () => {
-        const payment = await readFile(path.resolve(__dirname, "../../../fixtures/notification.json"), "utf-8")
+        const payment = await readFile(path.resolve(__dirname, "../../../fixtures/residentialNotification.json"), "utf-8")
         console.log('Leu o arquivo de callback')
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         console.log('Buscou o secret na AWS')

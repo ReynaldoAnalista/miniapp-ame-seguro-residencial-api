@@ -7,7 +7,7 @@ import {SmartphoneProposalNotification} from "../model/SmartphoneProposalNotific
 
 const logger = getLogger("PlanController")
 
-@Route('/v1/plans')
+@Route('/v1/smartphone')
 @injectable()
 export class SmartphoneProposalController {
     constructor(

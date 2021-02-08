@@ -1,0 +1,73 @@
+{
+  "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",
+  "date": [
+    2020,
+    11,
+    30,
+    17,
+    32,
+    30,
+    934391000
+  ],
+  "operationType": "DEBIT",
+  "name": "Compra on-line",
+  "title": "Seguro Residencial",
+  "description": "Proteção Essencial",
+  "status": "AUTHORIZED",
+  "type": "PAYMENT",
+  "currency": "BRL",
+  "cashType": "CASH",
+  "amount": 14488,
+  "amountRefunded": 0,
+  "splits": [
+    {
+      "id": "02101354-cbf5-49d0-af03-203b0385797a",
+      "date": [
+        2020,
+        11,
+        30,
+        17,
+        32,
+        30,
+        934406000
+      ],
+      "status": "AUTHORIZED",
+      "cashType": "CASH",
+      "amount": 14488,
+      "installments": null,
+      "cardMasked": null,
+      "cardBrand": null
+    }
+  ],
+  "attributes": {
+    "cashbackAmountValue": 0,
+    "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/c8848f6a-40c0-4388-af9e-4d53ec3e9019",
+    "items": [
+      {
+        "description": "Proteção Essencial",
+        "amount": 14488,
+        "quantity": 1
+      }
+    ],
+    "customPayload": {
+      "isFrom": "mini-app-ame-seguro-residencial",
+      "clientCallbackUrl": "https://649a8d572b3e.ngrok.io/ame-seguro-residencial/v1/plans/sendProposal",
+      "proposal": {
+
+      },
+      "workspaceUrl": "https://miniapps.hml.amedigital.com/workspace/user/mmadeiramatos/gmail.com/OrderDetails.html?data=eyJwdWJsaWNLZXkiOiJjODg0OGY2YS00MGMwLTQzODgtYWY5ZS00ZDUzZWMzZTkwMTkiLCJzbHVnIjoiYW1lLXNlZ3Vyby1yZXNpZGVuY2lhbCIsInRpdGxlIjoiU2VndXJvIFJlc2lkZW5jaWFsIn0=&devmode=true&cid=QVdTQUxCPVV3MXphOEt6L3R6dk5MOUVZdEw0S25QSWlBRWdDSFg1SHFJVlFQMzBuU0owcUg5dCttOUZTZk9rdDRoMG4xSkpSU3M3N0hOY0k3bkFMdEVaTmZTYjJlRm1UdGhhNThhWXE3am9UdEkxTVVjNFFtVTZRYkFUTjd0eU9hWW8=",
+      "miniAppId": "3981"
+    },
+    "paymentOnce": false,
+    "origin": "MINIAPP",
+    "miniApp": {
+      "id": "ame-seguro-residencial",
+      "hasOrderDetails": false
+    },
+    "orderId": "de102460-3679-4b1c-8ee8-d4e21a33be8c"
+  },
+  "operationReference": null,
+  "peer": null,
+  "nsu": "063150934412",
+  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89"
+}

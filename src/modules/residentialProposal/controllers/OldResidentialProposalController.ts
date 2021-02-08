@@ -7,7 +7,7 @@ import {ResidentialProposalNotification} from "../model/ResidentialProposalNotif
 
 const logger = getLogger("PlanController")
 
-@Route('/v1/residential')
+@Route('/v1/plans')
 @injectable()
 export class ResidentialProposalController {
     constructor(
