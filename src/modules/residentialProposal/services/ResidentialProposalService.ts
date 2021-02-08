@@ -264,7 +264,7 @@ export class ResidentialProposalService {
             const selectedPlan = Plans?.find((p) => p["id"] === planId)
             if (selectedPlan) {
                 log.debug(`Real price of plan is ${selectedPlan['premio']}`)
-                const realPrice = selectedPlan['premio'] * 100
+                const realPrice = Math.round(selectedPlan['premio'] * 100)
                 const priceChecked = `${price}` === `${(realPrice)}`
                 log.debug(`Price Check Result: ${priceChecked}`)
                 return {checked: priceChecked, reason: {price, realPrice}}
