@@ -10,7 +10,7 @@ const logger = getLogger("ZipCodeController")
 @injectable()
 export class ZipCodeController {
     constructor(
-        @inject("PlanService") private planService: ResidentialProposalService,
+        @inject("ResidentialProposalService") private residentialProposalService: ResidentialProposalService,
     ) {
     }
 
@@ -20,7 +20,7 @@ export class ZipCodeController {
     public async consultZipcode(@Path() zipCode: string) {
         logger.debug(`Consult for zipCode=${zipCode}`);
         try {
-            const result: any = await this.planService.consultZipcode(zipCode)
+            const result: any = await this.residentialProposalService.consultZipcode(zipCode)
             if (!result) {
                 throw new ApiError("Nothing to show", 404, `Zipcode not found`)
             }

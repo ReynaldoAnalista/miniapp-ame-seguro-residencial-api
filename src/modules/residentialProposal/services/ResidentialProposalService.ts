@@ -18,7 +18,7 @@ export class ResidentialProposalService {
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
-        @inject("PlanRepository")
+        @inject("ResidentialProposalRepository")
         private planRepository: ResidentialProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore

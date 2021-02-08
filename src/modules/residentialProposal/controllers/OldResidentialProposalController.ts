@@ -9,9 +9,9 @@ const logger = getLogger("PlanController")
 
 @Route('/v1/plans')
 @injectable()
-export class ResidentialProposalController {
+export class OldResidentialProposalController {
     constructor(
-        @inject("PlanService") private planService: ResidentialProposalService,
+        @inject("ResidentialProposalService") private residentialProposalService: ResidentialProposalService,
     ) {
     }
 
@@ -23,7 +23,7 @@ export class ResidentialProposalController {
         const response = (<any>request).res;
         response.contentType('text/plain');
         response
-            .send((await this.planService.proposalReport()).join('\n'))
+            .send((await this.residentialProposalService.proposalReport()).join('\n'))
             .end();
     }
 
@@ -33,7 +33,7 @@ export class ResidentialProposalController {
     public async retrievePlans(@Path() zipCode: string, @Path() buildType: string) {
         logger.debug(`Plans request starting for zipCode=${zipCode}`);
         try {
-            const result: any = await this.planService.retrievePlanList(buildType, zipCode)
+            const result: any = await this.residentialProposalService.retrievePlanList(buildType, zipCode)
             if (result.length === 0) {
                 throw new ApiError("Nothing to show", 404, `Plans not found`)
             }
@@ -49,7 +49,7 @@ export class ResidentialProposalController {
     public async sendProposal(@Body() signedPayment: ResidentialProposalNotification) {
         logger.info('Sending Proposal %j', signedPayment);
         try {
-            return await this.planService.processProposal(signedPayment.signedPayment)
+            return await this.residentialProposalService.processProposal(signedPayment.signedPayment)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
@@ -60,7 +60,7 @@ export class ResidentialProposalController {
     @Security("jwt", ["list_proposal"])
     public async listProposal() {
         logger.info('Listando proposal')
-        const proposal = await this.planService.listProposal()
+        const proposal = await this.residentialProposalService.listProposal()
         logger.info('Retornando proposals %j', proposal.length)
         return proposal
     }

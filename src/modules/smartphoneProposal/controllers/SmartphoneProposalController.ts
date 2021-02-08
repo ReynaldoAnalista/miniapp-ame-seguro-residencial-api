@@ -11,7 +11,7 @@ const logger = getLogger("PlanController")
 @injectable()
 export class SmartphoneProposalController {
     constructor(
-        @inject("PlanService") private planService: SmartphoneProposalService,
+        @inject("SmartphoneProposalService") private planService: SmartphoneProposalService,
     ) {
     }
 

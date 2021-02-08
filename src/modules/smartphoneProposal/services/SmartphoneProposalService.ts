@@ -5,10 +5,7 @@ import {AuthTokenService} from "../../authToken/services/AuthTokenService";
 import {RequestService} from "../../authToken/services/RequestService";
 import {SmartphoneProposalRepository} from "../repository/SmartphoneProposalRepository";
 import {SmartphoneProposalResponseRepository} from "../repository/SmartphoneProposalResponseRepository";
-import {SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import {ParameterStore} from "../../../configs/ParameterStore";
-import * as jwt from 'jsonwebtoken';
-import {Plan} from "inversify/dts/planning/plan";
 
 const log = getLogger("PlanService")
 
@@ -20,9 +17,9 @@ export class SmartphoneProposalService {
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
-        @inject("PlanRepository")
+        @inject("SmartphoneProposalRepository")
         private planRepository: SmartphoneProposalRepository,
-        @inject("ResponseRepository")
+        @inject("SmartphoneProposalResponseRepository")
         private responseRepository: SmartphoneProposalResponseRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore

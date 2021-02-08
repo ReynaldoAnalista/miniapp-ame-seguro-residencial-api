@@ -8,7 +8,7 @@ describe("ResidentialProposalRepository", () => {
     let residentialProposalRepository: ResidentialProposalRepository
 
     beforeEach(async () => {
-        residentialProposalRepository = iocContainer.get("PlanRepository")
+        residentialProposalRepository = iocContainer.get("ResidentialProposalRepository")
     })
 
     it("salva e le um plano", async () => {

@@ -12,16 +12,16 @@ const sign = util.promisify(jwt.sign)
 initDependencies()
 jest.setTimeout(10000)
 
-describe("PlanService", () => {
+describe("SmartphoneProposalService", () => {
 
     let smartphoneProposalService: SmartphoneProposalService
 
     beforeAll(async () => {
-        smartphoneProposalService = iocContainer.get("PlanService")
+        smartphoneProposalService = iocContainer.get("SmartphoneProposalService")
     })
 
     it("Recebe o plano e envia para a DigiBee", async () => {
-        const payment = await readFile(path.resolve(__dirname, "../../../fixtures/notification.json"), "utf-8")
+        const payment = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")
         console.log('Leu o arquivo de callback')
         const paymentObject = JSON.parse(payment)
         console.log('Realizou o parse do arquivo de callback')

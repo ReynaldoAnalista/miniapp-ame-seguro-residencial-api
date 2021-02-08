@@ -19,16 +19,16 @@ const sign = util.promisify(jwt.sign)
 initDependencies()
 jest.setTimeout(10000)
 
-describe("PlanService", () => {
+describe("ResidentialProposalService", () => {
 
-    let planRepository: ResidentialProposalRepository
-    let planService: ResidentialProposalService
+    let residentialProposalRepository: ResidentialProposalRepository
+    let residentialProposalService: ResidentialProposalService
     let parameterStore: ParameterStore
     let requestService: RequestService
 
     beforeAll(async () => {
-        planRepository = iocContainer.get("PlanRepository")
-        planService = iocContainer.get("PlanService")
+        residentialProposalRepository = iocContainer.get("ResidentialProposalRepository")
+        residentialProposalService = iocContainer.get("ResidentialProposalService")
         parameterStore = iocContainer.get("ParameterStore")
         requestService = iocContainer.get("RequestService")
     })
@@ -57,7 +57,7 @@ describe("PlanService", () => {
     //     console.log("payment: " + payment)
     //     let signedPayment = await sign(JSON.parse(payment), await parameterStore.getSecretValue("CALINDRA_JWT_SECRET"))
     //     console.log("SignedPayment: " + signedPayment)
-    //     const proposalProtocol = await planService.sendProposal({signedPayment})
+    //     const proposalProtocol = await residentialProposalService.sendProposal({signedPayment})
     //     expect(proposalProtocol.protocol).toBe(protocolNumber)
     // })
 
@@ -70,31 +70,9 @@ describe("PlanService", () => {
         console.log('Realizou o parse do arquivo de callback')
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
-        const proposalProtocol = await planService.processProposal(signedPayment)
+        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
         console.log('Enviou a proposta para a previsul')
-        expect(proposalProtocol.result).toBeDefined()
+        expect(proposalProtocol).toBeDefined()
     })
-
-     it("Validando o Cep", async () => {
-         const cep = "21331250"
-         let address = await planService.consultZipcode(cep)
-         console.log('Address:'+ JSON.stringify(address))
-        expect(address).toBeDefined();
-     })
-
-      it("Validando o Cep incompleto", async () => {
-         const cep = "2600"
-         let address = await planService.consultZipcode(cep)
-         console.log('Address:'+ JSON.stringify(address))
-        expect(address).toBeDefined();
-      })
-
-    it("Validando o Cep incorreto", async () => {
-         const cep = "agagag"
-         let address = await planService.consultZipcode(cep)
-         console.log('Address:'+ JSON.stringify(address))
-        expect(address).toBeDefined();
-    })
-
 
 })
