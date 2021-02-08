@@ -1,6 +1,7 @@
 import {initDependencies, iocContainer} from "../../../../src/inversify/inversify.config";
 import {SmartphoneProposalService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalService";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
 
 import path from "path";
 import util from "util";
@@ -10,7 +11,7 @@ const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
 
 initDependencies()
-jest.setTimeout(10000)
+jest.setTimeout(20000)
 
 describe("SmartphoneProposalService", () => {
 
@@ -25,6 +26,7 @@ describe("SmartphoneProposalService", () => {
         console.log('Leu o arquivo de callback')
         const paymentObject = JSON.parse(payment)
         console.log('Realizou o parse do arquivo de callback')
+        paymentObject.id = uuidv4()
         await smartphoneProposalService.saveProposal(paymentObject)
         console.log('Salvou o arquivo da proposta')
         const proposalResponse = await smartphoneProposalService.sendProposal(paymentObject)

@@ -41,9 +41,10 @@ export class SmartphoneProposalService {
         let result
         try {
             const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.URL_SALE,
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_SALE,
                 this.requestService.METHODS.POST,
-                proposal
+                proposal,
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_AUTHORIZATION
             );
             result = response.data
             log.info('Success proposal sent')

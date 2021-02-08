@@ -20,10 +20,12 @@ enum Methods {
 }
 
 enum Endpoints {
-    URL_PLANS = 'SMARTPHONE_URL_PLANS',
-    URL_ZIPCODE = 'SMARTPHONE_URL_ZIPCODE',
-    URL_AUTHORIZATION = 'SMARTPHONE_URL_AUTHORIZATION',
-    URL_SALE = 'SMARTPHONE_URL_SALE',
+    RESIDENTIAL_URL_PLANS = 'URL_PLANS',
+    RESIDENTIAL_URL_ZIPCODE = 'URL_ZIPCODE',
+    RESIDENTIAL_URL_AUTHORIZATION = 'URL_AUTHORIZATION',
+    RESIDENTIAL_URL_SALE = 'URL_SALE',
+    SMARTPHONE_URL_AUTHORIZATION = 'SMARTPHONE_URL_AUTHORIZATION',
+    SMARTPHONE_URL_SALE = 'SMARTPHONE_URL_SALE',
 }
 
 @injectable()
@@ -40,7 +42,7 @@ export class RequestService {
     METHODS = Methods
     ENDPOINTS = Endpoints
 
-    async makeRequest(url:Endpoints, method:Methods, body: object | null, queryString?: string ) {
+    async makeRequest(url:Endpoints, method:Methods, body: object | null, authenticationUrl?: string, queryString?: string ) {
 
         log.debug(`Call to make a ${method} on ${url}`)
 

@@ -3,6 +3,8 @@ import {ResidentialProposalRepository} from "../../../../src/modules/residential
 import {ResidentialProposalService} from "../../../../src/modules/residentialProposal/services/ResidentialProposalService";
 import {ParameterStore} from "../../../../src/configs/ParameterStore";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
+import { generate } from 'gerador-validador-cpf';
 
 import path from "path";
 import util from "util";
@@ -17,7 +19,7 @@ const sign = util.promisify(jwt.sign)
 
 
 initDependencies()
-jest.setTimeout(10000)
+jest.setTimeout(20000)
 
 describe("ResidentialProposalService", () => {
 
@@ -68,6 +70,8 @@ describe("ResidentialProposalService", () => {
         console.log('Buscou o secret na AWS')
         const paymentObject = JSON.parse(payment)
         console.log('Realizou o parse do arquivo de callback')
+        paymentObject.id = uuidv4()
+        paymentObject.attributes.customPayload.proposal.cpf = generate()
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)

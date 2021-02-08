@@ -31,9 +31,10 @@ export class ResidentialProposalService {
         do {
             try {
                 let result: object[] = (await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_ZIPCODE,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_ZIPCODE,
                     this.requestService.METHODS.GET,
                     null,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION,
                     `/${zipcode}`
                 ))['data']
                 attempts = 0
@@ -77,9 +78,10 @@ export class ResidentialProposalService {
         do {
             try {
                 let result: object[] = (await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_PLANS,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_PLANS,
                     this.requestService.METHODS.GET,
                     null,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION,
                     qs
                 ))['data']
                 attempts = 0
@@ -131,9 +133,10 @@ export class ResidentialProposalService {
             log.debug(`There are ${attempts} attempts left`)
             try {
                 const response = await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_SALE,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_SALE,
                     this.requestService.METHODS.POST,
-                    proposal
+                    proposal,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION
                 );
                 result = response.data
                 trace = response?.headers['x-b3-traceid']
