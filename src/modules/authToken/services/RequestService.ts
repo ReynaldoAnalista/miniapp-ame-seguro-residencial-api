@@ -19,6 +19,11 @@ enum Methods {
     PUT = "PUT",
 }
 
+enum Tenants {
+    SMARTPHONE = "SMARTPHONE",
+    RESIDENTIAL = "RESIDENTIAL"
+}
+
 enum Endpoints {
     RESIDENTIAL_URL_PLANS = 'URL_PLANS',
     RESIDENTIAL_URL_ZIPCODE = 'URL_ZIPCODE',
@@ -41,23 +46,35 @@ export class RequestService {
 
     METHODS = Methods
     ENDPOINTS = Endpoints
+    TENANTS = Tenants
 
-    async makeRequest(url:Endpoints, method:Methods, body: object | null, authenticationUrl?: string, queryString?: string ) {
+    async makeRequest(url:Endpoints, method:Methods, body: object | null, tenant: string, queryString?: string ) {
 
         log.debug(`Call to make a ${method} on ${url}`)
-
         const apiUrl = await this.parameterStore.getSecretValue(url)
-        const token = await this.authTokenService.retrieveAuthorization()
+        const token = await this.authTokenService.retrieveAuthorization(tenant)
 
         log.debug(`Making ${method} to ${apiUrl}`)
+
+        let headers
+        if(tenant === 'SMARTPHONE'){
+            headers = {
+                "Content-Type":"application/json",
+                "Authorization": token,
+                "apikey": await this.parameterStore.getSecretValue('SMARTPHONE_API_KEY')
+            }
+        }
+        if(tenant === 'RESIDENTIAL') {
+            headers = {
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
 
         let config = {
             method: method,
             url: apiUrl + (queryString ? queryString : ''),
-            headers: {
-                "Content-Type":"application/json",
-                "Authorization": `Bearer ${token}`
-            },
+            headers,
             data: JSON.stringify(body)
         }
 

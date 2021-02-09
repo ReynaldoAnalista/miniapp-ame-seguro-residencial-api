@@ -1,7 +1,7 @@
 import {initDependencies, iocContainer} from "../../../../src/inversify/inversify.config";
 import {SmartphoneProposalService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalService";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 import path from "path";
 import util from "util";
@@ -27,13 +27,16 @@ describe("SmartphoneProposalService", () => {
         const paymentObject = JSON.parse(payment)
         console.log('Realizou o parse do arquivo de callback')
         paymentObject.id = uuidv4()
+        paymentObject.attributes.customPayload.customerId = uuidv4()
         await smartphoneProposalService.saveProposal(paymentObject)
         console.log('Salvou o arquivo da proposta')
         const proposalResponse = await smartphoneProposalService.sendProposal(paymentObject)
         console.log('Enviou a proposta para a digibee')
         await smartphoneProposalService.saveProposalResponse(proposalResponse)
         console.log('Salvou a resposta da digibee')
-        expect(proposalResponse).toBeDefined()
+        await smartphoneProposalService.saveSoldProposal(paymentObject, proposalResponse, SmartphoneProposalService.TENANT.SMARTPHONE)
+        console.log('Salvou a compra')
+        expect(proposalResponse.success).toEqual(true)
     })
 
 })

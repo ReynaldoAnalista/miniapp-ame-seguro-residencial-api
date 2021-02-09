@@ -7,6 +7,8 @@ import {ResidentialProposalRepository} from "../repository/ResidentialProposalRe
 import {ParameterStore} from "../../../configs/ParameterStore";
 import * as jwt from 'jsonwebtoken';
 import Plans from "./Plans";
+import {SmartphoneSoldProposal} from "../../smartphoneProposal/model/SmartphoneSoldProposal";
+import {ResidentialSoldProposalRepository} from "../repository/ResidentialSoldProposalRepository";
 
 const log = getLogger("ResidentialProposalService")
 
@@ -18,8 +20,10 @@ export class ResidentialProposalService {
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
+        @inject("ResidentialSoldProposalRepository")
+        private residentialSoldProposalRepository: ResidentialSoldProposalRepository,
         @inject("ResidentialProposalRepository")
-        private planRepository: ResidentialProposalRepository,
+        private residentialProposalRepository: ResidentialProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
@@ -34,7 +38,7 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_ZIPCODE,
                     this.requestService.METHODS.GET,
                     null,
-                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION,
+                    this.requestService.TENANTS.RESIDENTIAL,
                     `/${zipcode}`
                 ))['data']
                 attempts = 0
@@ -43,7 +47,7 @@ export class ResidentialProposalService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -81,7 +85,7 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_PLANS,
                     this.requestService.METHODS.GET,
                     null,
-                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION,
+                    this.requestService.TENANTS.RESIDENTIAL,
                     qs
                 ))['data']
                 attempts = 0
@@ -90,7 +94,7 @@ export class ResidentialProposalService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -127,6 +131,7 @@ export class ResidentialProposalService {
     async sendProposalToPrevisul(proposal: any) {
         let attempts = 2;
         let result = null;
+        let success = false
         let error
         let trace
         do {
@@ -136,17 +141,18 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_SALE,
                     this.requestService.METHODS.POST,
                     proposal,
-                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_AUTHORIZATION
+                    this.requestService.TENANTS.RESIDENTIAL
                 );
                 result = response.data
                 trace = response?.headers['x-b3-traceid']
+                success = true
                 log.info('Success proposal sent')
                 attempts = 0
             } catch (e) {
                 const status = e.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                     }
@@ -165,7 +171,7 @@ export class ResidentialProposalService {
             attempts = attempts - 1
         } while (attempts > 0)
         if (result) {
-            return {result, trace}
+            return {result, trace, success}
         }
         throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
@@ -201,7 +207,7 @@ export class ResidentialProposalService {
     async saveProposalSent(id: any, proposal: any) {
         log.debug("saveProposal")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id,
                 proposal,
                 transactionDateTime: ResidentialProposalService.getDate()
@@ -217,7 +223,7 @@ export class ResidentialProposalService {
     async saveProposalResponse(id: any, proposalResponse: any) {
         log.debug("saveProposalSentSuccess")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id + "_success",
                 success: true,
                 proposalResponse,
@@ -233,7 +239,7 @@ export class ResidentialProposalService {
     async saveProposalFail(id: string, error: any) {
         log.debug("saveProposalSentFail")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id + "_fail",
                 success: false,
                 error: error,
@@ -303,11 +309,11 @@ export class ResidentialProposalService {
     }
 
     async listProposal() {
-        return this.planRepository.listProposal()
+        return this.residentialProposalRepository.listProposal()
     }
 
     async proposalReport(): Promise<Array<string>> {
-        const proposalList = await this.planRepository.listProposal()
+        const proposalList = await this.residentialProposalRepository.listProposal()
         let proposalReport: Array<any>
         let response = ['Nome;Email;ID Plano;Parcelas;Vencimento;Início Vigência;Horário Servidor;Enviado Previsul;Protocolo Previsul;B2SkyTrace']
         try {
@@ -357,6 +363,19 @@ export class ResidentialProposalService {
             response.push("Error on build report")
         }
         return response
+    }
+
+    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+        log.debug("saveSoldProposal")
+        this.residentialSoldProposalRepository.create({
+            customerId: proposal.attributes.customPayload.proposal.customerId,
+            order: proposal.id,
+            tenant: tenant,
+            createdAt: new Date().toISOString(),
+            success: response.success,
+            partnerResponse: response,
+            receivedPaymentNotification: proposal
+        } as SmartphoneSoldProposal)
     }
 
     delay(seconds) {

@@ -6,6 +6,8 @@ import {RequestService} from "../../authToken/services/RequestService";
 import {SmartphoneProposalRepository} from "../repository/SmartphoneProposalRepository";
 import {SmartphoneProposalResponseRepository} from "../repository/SmartphoneProposalResponseRepository";
 import {ParameterStore} from "../../../configs/ParameterStore";
+import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
+import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -18,7 +20,9 @@ export class SmartphoneProposalService {
         @inject("RequestService")
         private requestService: RequestService,
         @inject("SmartphoneProposalRepository")
-        private planRepository: SmartphoneProposalRepository,
+        private smartphoneProposalRepository: SmartphoneProposalRepository,
+        @inject("SmartphoneSoldProposalRepository")
+        private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
         @inject("SmartphoneProposalResponseRepository")
         private responseRepository: SmartphoneProposalResponseRepository,
         @inject(TYPES.ParameterStore)
@@ -26,10 +30,15 @@ export class SmartphoneProposalService {
     ) {
     }
 
+    static TENANT = {
+        SMARTPHONE: 'SMARTPHONE',
+        RESIDENTIAL: 'RESIDENTIAL'
+    }
+
     async saveProposal(proposal: any): Promise<void> {
         log.debug('Saving proposal to DynamoDB')
         try {
-            await this.planRepository.create(proposal)
+            await this.smartphoneProposalRepository.create(proposal)
         } catch (e) {
             log.error(e)
             throw "Erro ao criar registro no Dynamo DB"
@@ -44,14 +53,15 @@ export class SmartphoneProposalService {
                 this.requestService.ENDPOINTS.SMARTPHONE_URL_SALE,
                 this.requestService.METHODS.POST,
                 proposal,
-                this.requestService.ENDPOINTS.SMARTPHONE_URL_AUTHORIZATION
+                this.requestService.TENANTS.SMARTPHONE
             );
-            result = response.data
+            result = {success: true, content: response.data}
             log.info('Success proposal sent')
         } catch (e) {
             const status = e.response?.status
-            result = null
-            log.debug(`Error %j`, e)
+            const statusText = e.response?.statusText
+            result = {success: false, status: status, message: statusText}
+            log.error(`Error %j`, statusText)
             log.debug('Error when trying to send proposal');
             log.debug(`Status Code: ${status}`)
         }
@@ -70,8 +80,21 @@ export class SmartphoneProposalService {
         }
     }
 
+    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+        log.debug("saveSoldProposal")
+        this.smartphoneSoldProposalRepository.create({
+            customerId: proposal.attributes.customPayload.customerId,
+            order: proposal.id,
+            tenant: tenant,
+            createdAt: new Date().toISOString(),
+            success: response.success,
+            partnerResponse: response,
+            receivedPaymentNotification: proposal
+        } as SmartphoneSoldProposal)
+    }
+
     processProposalResponse(proposal: any): any {
-        if(proposal.body?.id){
+        if (proposal.body?.id) {
             proposal.id = proposal.body.id
             return proposal
         } else {

@@ -12,15 +12,15 @@ export class AuthTokenController {
         @inject("AuthTokenService") private authTokenService: AuthTokenService,
     ) {
     }
-    /**
-     * Busca o token necessario para acesso a api do parceiro
-     */
-    @SuccessResponse("200", "Retrieved")
-    @Get('/token')
-    public async retrieveAuthorization(): Promise<any> {
-        log.debug('AuthTokenController: retrieveAuthorization')
-        return await this.authTokenService.retrieveAuthorization();
-    }
+    // /**
+    //  * Busca o token necessario para acesso a api do parceiro
+    //  */
+    // @SuccessResponse("200", "Retrieved")
+    // @Get('/token')
+    // public async retrieveAuthorization(tenant: string): Promise<any> {
+    //     log.debug('AuthTokenController: retrieveAuthorization')
+    //     return await this.authTokenService.retrieveAuthorization(tenant);
+    // }
 
 
 }

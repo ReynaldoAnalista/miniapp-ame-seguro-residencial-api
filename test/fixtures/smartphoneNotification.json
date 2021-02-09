@@ -51,6 +51,7 @@
     ],
     "customPayload": {
       "isFrom": "mini-app-ame-seguro-residencial",
+      "customerId": "",
       "clientCallbackUrl": "https://649a8d572b3e.ngrok.io/ame-seguro-residencial/v1/plans/sendProposal",
       "proposal": {
 

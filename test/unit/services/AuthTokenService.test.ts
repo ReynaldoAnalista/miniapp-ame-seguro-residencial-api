@@ -20,7 +20,7 @@ describe("AuthTokenService", () => {
     })
 
     it("should do the auth", async () => {
-        let res = await authTokenService.retrieveAuthorization()
+        let res = await authTokenService.retrieveAuthorization('SMARTPHONE')
         // console.log(res)
     })
 })

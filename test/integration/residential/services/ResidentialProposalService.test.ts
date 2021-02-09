@@ -13,6 +13,7 @@ import nock from 'nock'
 import Axios from "axios";
 
 import {RequestService} from "../../../../src/modules/authToken/services/RequestService";
+import {SmartphoneProposalService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalService";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -72,9 +73,11 @@ describe("ResidentialProposalService", () => {
         console.log('Realizou o parse do arquivo de callback')
         paymentObject.id = uuidv4()
         paymentObject.attributes.customPayload.proposal.cpf = generate()
+        paymentObject.attributes.customPayload.proposal.customerId = uuidv4()
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
+        await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, SmartphoneProposalService.TENANT.RESIDENTIAL)
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.result).toBeDefined()
     })
