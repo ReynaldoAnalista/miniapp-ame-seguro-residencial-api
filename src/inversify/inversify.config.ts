@@ -29,6 +29,7 @@ export const initDependencies = () => {
     /* Initialize Controllers */
     bindControllers("../modules/default/controllers")
     bindControllers("../modules/authToken/controllers")
+    bindControllers("../modules/hub/controllers")
     bindControllers("../modules/residentialProposal/controllers")
     bindControllers("../modules/smartphoneProposal/controllers")
 
@@ -36,6 +37,7 @@ export const initDependencies = () => {
     iocContainer.bind<ApiServer>(TYPES.ApiServer).to(ApiServer).inSingletonScope()
     bindSingleton("../modules/default/services")
     bindSingleton("../modules/authToken/services")
+    bindSingleton("../modules/hub/services")
     bindSingleton("../modules/residentialProposal/services")
     bindSingleton("../modules/smartphoneProposal/services")
 

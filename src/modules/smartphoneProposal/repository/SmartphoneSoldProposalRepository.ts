@@ -27,17 +27,35 @@ export class SmartphoneSoldProposalRepository {
         return soldProposal
     }
 
-    async findByCustomerId(id: string) {
+    async findAllFromCustomer(customerId: string) {
+        log.debug(`Searching for plans from customerId = ${customerId}`)
         let params = {
             TableName: TABLE,
-            Key: {
-                "customerId": id
+            KeyConditionExpression: "customerId = :customerId",
+            ExpressionAttributeValues: {
+                ":customerId": customerId
             }
         };
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-        let result = await dynamoDocClient.get(params).promise();
-        if (!result.Item) throw new Error("not found")
-        return result.Item
+        let result = await dynamoDocClient.query(params).promise();
+        if (!result.Items?.length) throw new Error("not found")
+        return result.Items.filter(x => x.tenant === 'SMARTPHONE')
+    }
+
+    /**
+     * Este método é utilizado apenas durante os testes
+     * @param customerId
+     */
+    async emptyAllFromCustomer(customerId: string) {
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+        let params = {
+            TableName: TABLE,
+            Key: {
+                "customerId": customerId,
+                "tenant": "RESIDENTIAL"
+            }
+        };
+        await dynamoDocClient.delete(params).promise();
     }
 
 }
