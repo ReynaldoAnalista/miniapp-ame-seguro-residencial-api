@@ -368,7 +368,7 @@ export class ResidentialProposalService {
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
-        this.residentialSoldProposalRepository.create({
+        await this.residentialSoldProposalRepository.create({
             customerId: proposal.attributes.customPayload.proposal.customerId,
             order: proposal.id,
             tenant: tenant,

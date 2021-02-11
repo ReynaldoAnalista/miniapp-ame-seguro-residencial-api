@@ -2,6 +2,7 @@ import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
 import {getLogger} from "../../../server/Logger";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
+import {Tenants} from "../../default/model/Tenants";
 
 const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`;
 
@@ -38,7 +39,7 @@ export class SmartphoneSoldProposalRepository {
         };
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let result = await dynamoDocClient.query(params).promise();
-        return result.Items?.filter(x => x.tenant === 'SMARTPHONE')
+        return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE)
     }
 
     /**

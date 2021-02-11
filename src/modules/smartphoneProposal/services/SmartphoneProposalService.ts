@@ -78,7 +78,7 @@ export class SmartphoneProposalService {
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
-        this.smartphoneSoldProposalRepository.create({
+        await this.smartphoneSoldProposalRepository.create({
             customerId: proposal.attributes.customPayload.customerId,
             order: proposal.id,
             tenant: tenant,
