@@ -6,6 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 import path from "path";
 import util from "util";
 import fs from "fs";
+import {Tenants} from "../../../../src/modules/default/model/Tenants";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -34,7 +35,7 @@ describe("SmartphoneProposalService", () => {
         console.log('Enviou a proposta para a digibee')
         await smartphoneProposalService.saveProposalResponse(proposalResponse)
         console.log('Salvou a resposta da digibee')
-        await smartphoneProposalService.saveSoldProposal(paymentObject, proposalResponse, SmartphoneProposalService.TENANT.SMARTPHONE)
+        await smartphoneProposalService.saveSoldProposal(paymentObject, proposalResponse, Tenants.SMARTPHONE)
         console.log('Salvou a compra')
         expect(proposalResponse.success).toEqual(true)
     })

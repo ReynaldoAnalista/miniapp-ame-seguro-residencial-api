@@ -8,6 +8,7 @@ import {SmartphoneProposalResponseRepository} from "../repository/SmartphoneProp
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
+import {Tenants} from "../../default/model/Tenants";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -30,11 +31,6 @@ export class SmartphoneProposalService {
     ) {
     }
 
-    static TENANT = {
-        SMARTPHONE: 'SMARTPHONE',
-        RESIDENTIAL: 'RESIDENTIAL'
-    }
-
     async saveProposal(proposal: any): Promise<void> {
         log.debug('Saving proposal to DynamoDB')
         try {
@@ -53,7 +49,7 @@ export class SmartphoneProposalService {
                 this.requestService.ENDPOINTS.SMARTPHONE_URL_SALE,
                 this.requestService.METHODS.POST,
                 proposal,
-                this.requestService.TENANTS.SMARTPHONE
+                Tenants.SMARTPHONE
             );
             result = {success: true, content: response.data}
             log.info('Success proposal sent')

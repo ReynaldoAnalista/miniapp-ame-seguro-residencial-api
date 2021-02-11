@@ -14,6 +14,7 @@ import Axios from "axios";
 
 import {RequestService} from "../../../../src/modules/authToken/services/RequestService";
 import {SmartphoneProposalService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalService";
+import {Tenants} from "../../../../src/modules/default/model/Tenants";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -77,7 +78,7 @@ describe("ResidentialProposalService", () => {
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
-        await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, SmartphoneProposalService.TENANT.RESIDENTIAL)
+        await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.result).toBeDefined()
     })

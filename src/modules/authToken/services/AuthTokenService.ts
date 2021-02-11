@@ -6,6 +6,7 @@ import axios from "axios";
 import qs from 'qs'
 
 import {AuthToken} from "../model/AuthToken";
+import {Tenants} from "../../default/model/Tenants";
 
 const cache = require('memory-cache')
 const AWS = require('aws-sdk')
@@ -58,7 +59,7 @@ export class AuthTokenService {
         log.debug('Authorization Token expired, requesting another one.')
         try {
 
-            if (tenant === 'RESIDENTIAL') {
+            if (tenant === Tenants.RESIDENTIAL) {
                 log.debug('Trying to authorizate on ' + AUTH_URL)
                 let clientId = await this.retrieveConfig('CLIENT_ID')
                 let clientSecret = await this.retrieveConfig('CLIENT_SECRET')
@@ -92,7 +93,7 @@ export class AuthTokenService {
 
             }
 
-            if (tenant === 'SMARTPHONE') {
+            if (tenant === Tenants.SMARTPHONE) {
                 log.debug('Trying to authorizate on ' + AUTH_URL)
                 const API_KEY = await this.parameterStore.getSecretValue('SMARTPHONE_API_KEY')
                 let config = {

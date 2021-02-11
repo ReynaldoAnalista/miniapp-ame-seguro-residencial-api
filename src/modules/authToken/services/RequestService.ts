@@ -4,6 +4,7 @@ import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
+import {Tenants} from "../../default/model/Tenants";
 import curlirize from 'axios-curlirize'
 
 const log = getLogger("RequestService");
@@ -17,11 +18,6 @@ enum Methods {
     POST = "POST",
     DELETE = "DELETE",
     PUT = "PUT",
-}
-
-enum Tenants {
-    SMARTPHONE = "SMARTPHONE",
-    RESIDENTIAL = "RESIDENTIAL"
 }
 
 enum Endpoints {
@@ -46,7 +42,6 @@ export class RequestService {
 
     METHODS = Methods
     ENDPOINTS = Endpoints
-    TENANTS = Tenants
 
     async makeRequest(url:Endpoints, method:Methods, body: object | null, tenant: string, queryString?: string ) {
 
@@ -57,14 +52,14 @@ export class RequestService {
         log.debug(`Making ${method} to ${apiUrl}`)
 
         let headers
-        if(tenant === 'SMARTPHONE'){
+        if(tenant === Tenants.SMARTPHONE){
             headers = {
                 "Content-Type":"application/json",
                 "Authorization": token,
                 "apikey": await this.parameterStore.getSecretValue('SMARTPHONE_API_KEY')
             }
         }
-        if(tenant === 'RESIDENTIAL') {
+        if(tenant === Tenants.RESIDENTIAL) {
             headers = {
                 "Content-Type":"application/json",
                 "Authorization": `Bearer ${token}`

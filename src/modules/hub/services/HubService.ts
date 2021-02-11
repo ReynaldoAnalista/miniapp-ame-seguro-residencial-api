@@ -36,11 +36,10 @@ export class HubService {
 
     /**
      * Este método é utilizado apenas para testes
-     * @param customerId
      */
-    async deleteAllPlansFromCustomer(customerId: string) {
-        log.debug("deleteAllPlansFromCustomer")
-        await this.residentialSoldProposalRepository.emptyAllFromCustomer(customerId)
-        await this.smartphoneSoldProposalRepository.emptyAllFromCustomer(customerId)
+    async deleteOrderFromCustomer(customerId: string, order: string) {
+        log.debug("deleteOrderFromCustomer")
+        await this.residentialSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
+        await this.smartphoneSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
     }
 }

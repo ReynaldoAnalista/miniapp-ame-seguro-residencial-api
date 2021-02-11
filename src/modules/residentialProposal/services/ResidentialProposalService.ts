@@ -9,6 +9,7 @@ import * as jwt from 'jsonwebtoken';
 import Plans from "./Plans";
 import {SmartphoneSoldProposal} from "../../smartphoneProposal/model/SmartphoneSoldProposal";
 import {ResidentialSoldProposalRepository} from "../repository/ResidentialSoldProposalRepository";
+import {Tenants} from "../../default/model/Tenants";
 
 const log = getLogger("ResidentialProposalService")
 
@@ -38,7 +39,7 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_ZIPCODE,
                     this.requestService.METHODS.GET,
                     null,
-                    this.requestService.TENANTS.RESIDENTIAL,
+                    Tenants.RESIDENTIAL,
                     `/${zipcode}`
                 ))['data']
                 attempts = 0
@@ -47,7 +48,7 @@ export class ResidentialProposalService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -85,7 +86,7 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_PLANS,
                     this.requestService.METHODS.GET,
                     null,
-                    this.requestService.TENANTS.RESIDENTIAL,
+                    Tenants.RESIDENTIAL,
                     qs
                 ))['data']
                 attempts = 0
@@ -94,7 +95,7 @@ export class ResidentialProposalService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -141,7 +142,7 @@ export class ResidentialProposalService {
                     this.requestService.ENDPOINTS.RESIDENTIAL_URL_SALE,
                     this.requestService.METHODS.POST,
                     proposal,
-                    this.requestService.TENANTS.RESIDENTIAL
+                    Tenants.RESIDENTIAL
                 );
                 result = response.data
                 trace = response?.headers['x-b3-traceid']
@@ -152,7 +153,7 @@ export class ResidentialProposalService {
                 const status = e.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization('RESIDENTIAL', true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                     }

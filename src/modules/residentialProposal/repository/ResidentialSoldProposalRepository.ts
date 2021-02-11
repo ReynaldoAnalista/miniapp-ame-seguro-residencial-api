@@ -2,6 +2,7 @@ import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
 import {getLogger} from "../../../server/Logger";
 import {ResidentialSoldProposal} from "../model/ResidentialSoldProposal";
+import {Tenants} from "../../default/model/Tenants";
 
 const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`;
 
@@ -38,22 +39,21 @@ export class ResidentialSoldProposalRepository {
         };
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let result = await dynamoDocClient.query(params).promise();
-        if (!result.Items?.length) throw new Error("not found")
-        return result.Items.filter(x => x.tenant === 'RESIDENTIAL')
+        return result.Items?.filter(x => x.tenant === Tenants.RESIDENTIAL)
     }
 
     /**
      * Este método é utilizado apenas durante os testes
-     * @param customerId
      */
-    async emptyAllFromCustomer(customerId: string) {
+    async deleteByCustomerAndOrder(customerId: string, order: string) {
+        log.debug(`Deleting customerId=${customerId} AND order=${order}`)
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {
             TableName: TABLE,
             Key: {
                 "customerId": customerId,
-                // "tenant": "RESIDENTIAL"
-            }
+                "order": order
+            },
         };
         await dynamoDocClient.delete(params).promise();
     }
