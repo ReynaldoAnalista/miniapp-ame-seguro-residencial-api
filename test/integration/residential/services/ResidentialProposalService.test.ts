@@ -9,16 +9,13 @@ import { generate } from 'gerador-validador-cpf';
 import path from "path";
 import util from "util";
 import fs from "fs";
-import nock from 'nock'
-import Axios from "axios";
 
 import {RequestService} from "../../../../src/modules/authToken/services/RequestService";
-import {SmartphoneProposalService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalService";
 import {Tenants} from "../../../../src/modules/default/model/Tenants";
+import {ResidentialSoldProposalRepository} from "../../../../src/modules/residentialProposal/repository/ResidentialSoldProposalRepository";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
-
 
 initDependencies()
 jest.setTimeout(20000)
@@ -27,43 +24,22 @@ describe("ResidentialProposalService", () => {
 
     let residentialProposalRepository: ResidentialProposalRepository
     let residentialProposalService: ResidentialProposalService
+    let residentialSoldProposalRepository: ResidentialSoldProposalRepository
     let parameterStore: ParameterStore
     let requestService: RequestService
+
+    let customerId: string
+    let orderId: string
 
     beforeAll(async () => {
         residentialProposalRepository = iocContainer.get("ResidentialProposalRepository")
         residentialProposalService = iocContainer.get("ResidentialProposalService")
+        residentialSoldProposalRepository = iocContainer.get("ResidentialSoldProposalRepository")
         parameterStore = iocContainer.get("ParameterStore")
         requestService = iocContainer.get("RequestService")
+        customerId = uuidv4()
+        orderId = uuidv4()
     })
-
-    beforeEach(async () => {
-        nock.cleanAll()
-    })
-
-    afterAll( async () => {
-        nock.cleanAll()
-        iocContainer.unbindAll()
-    })
-
-    // it.only("Recebe o plano e mocka previsul", async () => {
-    //     const protocolNumber = '1367123'
-    //     nock("http://gateway.b2skyhmg.com")
-    //         .post("/hub-previsul/residencial/propostas")
-    //         .reply(200, {id: '2323', protocol: protocolNumber})
-    //         .persist()
-    //     nock("http://gateway.b2skyhmg.com")
-    //         .post("/hub-previsul/oauth/token")
-    //         .reply(200, {access_token: '123'})
-    //         .persist()
-    //
-    //     const payment = await readFile(path.resolve(__dirname, "../../../fixtures/notification.json"), "utf-8")
-    //     console.log("payment: " + payment)
-    //     let signedPayment = await sign(JSON.parse(payment), await parameterStore.getSecretValue("CALINDRA_JWT_SECRET"))
-    //     console.log("SignedPayment: " + signedPayment)
-    //     const proposalProtocol = await residentialProposalService.sendProposal({signedPayment})
-    //     expect(proposalProtocol.protocol).toBe(protocolNumber)
-    // })
 
     it("Recebe o plano e envia para a previsul", async () => {
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/residentialNotification.json"), "utf-8")
@@ -72,15 +48,20 @@ describe("ResidentialProposalService", () => {
         console.log('Buscou o secret na AWS')
         const paymentObject = JSON.parse(payment)
         console.log('Realizou o parse do arquivo de callback')
-        paymentObject.id = uuidv4()
+        paymentObject.id = orderId
         paymentObject.attributes.customPayload.proposal.cpf = generate()
-        paymentObject.attributes.customPayload.proposal.customerId = uuidv4()
+        paymentObject.attributes.customPayload.proposal.customerId = customerId
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
         await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.result).toBeDefined()
+    })
+
+    afterAll( async () => {
+        await residentialSoldProposalRepository.deleteByCustomerAndOrder(customerId, orderId)
+        iocContainer.unbindAll()
     })
 
 })

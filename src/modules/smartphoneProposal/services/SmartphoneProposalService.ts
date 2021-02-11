@@ -31,6 +31,19 @@ export class SmartphoneProposalService {
     ) {
     }
 
+    async processProposal(signedPayment: string) {
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        await this.saveProposal(unsignedPayment)
+        console.log('Salvou o arquivo da proposta')
+        const proposalResponse = await this.sendProposal(unsignedPayment)
+        console.log('Enviou a proposta para a digibee')
+        await this.saveProposalResponse(proposalResponse)
+        console.log('Salvou a resposta da digibee')
+        await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.SMARTPHONE)
+        console.log('Salvou a compra')
+        return proposalResponse
+    }
+
     async saveProposal(proposal: any): Promise<void> {
         log.debug('Saving proposal to DynamoDB')
         try {

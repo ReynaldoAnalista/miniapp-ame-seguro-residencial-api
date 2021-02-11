@@ -5,7 +5,6 @@ import {AuthTokenService} from "../../authToken/services/AuthTokenService";
 import {RequestService} from "../../authToken/services/RequestService";
 import {ResidentialProposalRepository} from "../repository/ResidentialProposalRepository";
 import {ParameterStore} from "../../../configs/ParameterStore";
-import * as jwt from 'jsonwebtoken';
 import Plans from "./Plans";
 import {SmartphoneSoldProposal} from "../../smartphoneProposal/model/SmartphoneSoldProposal";
 import {ResidentialSoldProposalRepository} from "../repository/ResidentialSoldProposalRepository";
@@ -114,19 +113,6 @@ export class ResidentialProposalService {
                 }
             }
         } while (attempts > 0)
-    }
-
-    async unsignPayment(signedPayment: string): Promise<any> {
-        const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        return new Promise((resolve, reject) => {
-            jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
-                if (err) {
-                    reject(new Error(`Signed payment: ${err.message}`))
-                } else {
-                    resolve(decoded)
-                }
-            });
-        })
     }
 
     async sendProposalToPrevisul(proposal: any) {
@@ -288,7 +274,7 @@ export class ResidentialProposalService {
 
     async processProposal(signedPayment: string) {
         let proposalResponse: any
-        const unsignedPayment = await this.unsignPayment(signedPayment)
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const proposal = ResidentialProposalService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
         const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId)

@@ -4,6 +4,7 @@ import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import axios from "axios";
 import qs from 'qs'
+import * as jwt from 'jsonwebtoken';
 
 import {AuthToken} from "../model/AuthToken";
 import {Tenants} from "../../default/model/Tenants";
@@ -124,5 +125,18 @@ export class AuthTokenService {
         } catch (err) {
             return 'Erro ao tentar buscar um token para autenticação';
         }
+    }
+
+    async unsignNotification(signedPayment: string): Promise<any> {
+        const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
+        return new Promise((resolve, reject) => {
+            jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
+                if (err) {
+                    reject(new Error(`Signed payment: ${err.message}`))
+                } else {
+                    resolve(decoded)
+                }
+            });
+        })
     }
 }
