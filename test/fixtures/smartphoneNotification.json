@@ -54,7 +54,80 @@
       "customerId": "",
       "clientCallbackUrl": "https://649a8d572b3e.ngrok.io/ame-seguro-residencial/v1/plans/sendProposal",
       "proposal": {
-
+        "policy_data": {
+          "mother_policy_number": "6944000861071",
+          "start_valid_document": "02012018",
+          "end_valid_document": "02012019",
+          "key_contract_certificate_number": 27394794
+        },
+        "polcyholder_data": {
+          "corporate_name_policyholder_name": "JOSE DA SILVA",
+          "type_of_legal_person": "J",
+          "cnpj_cpf": "45663397710",
+          "address_data": {
+            "type_of_street": "01",
+            "street": "Teixeira de Freitas",
+            "number": "121",
+            "complement": "",
+            "district": "Centro",
+            "city": "Valenca",
+            "zip_code": 45400000,
+            "federal_unit": "BA"
+          }
+        },
+        "insured_data": {
+          "insured_name": "EDEMILSON CONCEICAO ALELUIA",
+          "type_of_legal_person": "F",
+          "cnpj_cpf": "47156984523",
+          "date_of_birth": "12051996",
+          "gender": "M",
+          "address_data": {
+            "type_of_street": "01",
+            "street": "COQUEIROS RUA A CASA",
+            "number": "1",
+            "complement": "",
+            "district": "Tento",
+            "city": "Valenca",
+            "zip_code": 45400000,
+            "federal_unit": "BA"
+          }
+        },
+        "variable_policy_data": {
+          "proposal_number": 20536270000,
+          "insurance_certificate_number": "10220180000",
+          "proposal_date": "01222018",
+          "policy_commission": 62.00,
+          "policy_cost": 00.00
+        },
+        "portable_equipment_risk_data": {
+          "cpf_cnpj_by_risk": 47156984523,
+          "risk_description": "CELULAR LG K10 PRO 5.7",
+          "product_description": "CELULAR LG K10 PRO 5.7",
+          "manufacturer_code": 1,
+          "manufacturer_name": "LG CELULAR SP",
+          "model_description": 1,
+          "equipment_type": 1,
+          "equipment_value": 999.90,
+          "invoice_number": 1258745698,
+          "invoice_date": "10222018",
+          "device_serial_code": "fke782521dd"
+        },
+        "coverage_data": {
+          "policy_item_number": 2053627,
+          "coverage_code": 447,
+          "insured_amount": 999.90,
+          "liquid_prize": 116.40
+        },
+        "charge_type_data": {
+          "type_of_collection_manager": "TA",
+          "payment_plan_code": 723,
+          "payment_manager_code": 99990164,
+          "document_type": "CGC",
+          "document_number": "13850516000177",
+          "number_of_installments": 1,
+          "first_installment_value": 249.97,
+          "maturity_of_first_installment": "28032018"
+        }
       },
       "workspaceUrl": "https://miniapps.hml.amedigital.com/workspace/user/mmadeiramatos/gmail.com/OrderDetails.html?data=eyJwdWJsaWNLZXkiOiJjODg0OGY2YS00MGMwLTQzODgtYWY5ZS00ZDUzZWMzZTkwMTkiLCJzbHVnIjoiYW1lLXNlZ3Vyby1yZXNpZGVuY2lhbCIsInRpdGxlIjoiU2VndXJvIFJlc2lkZW5jaWFsIn0=&devmode=true&cid=QVdTQUxCPVV3MXphOEt6L3R6dk5MOUVZdEw0S25QSWlBRWdDSFg1SHFJVlFQMzBuU0owcUg5dCttOUZTZk9rdDRoMG4xSkpSU3M3N0hOY0k3bkFMdEVaTmZTYjJlRm1UdGhhNThhWXE3am9UdEkxTVVjNFFtVTZRYkFUTjd0eU9hWW8=",
       "miniAppId": "3981"
