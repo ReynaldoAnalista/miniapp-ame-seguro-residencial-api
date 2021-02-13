@@ -21,8 +21,7 @@ export class SmartphoneProposalController {
     public async sendProposal(@Body() signedPayment: SmartphoneProposalNotification) {
         logger.info('Sending Proposal %j', signedPayment);
         try {
-            await this.planService.saveProposal(signedPayment.signedPayment)
-            const proposalResponse = await this.planService.sendProposal(signedPayment.signedPayment)
+            const proposalResponse = await this.planService.processProposal(signedPayment.signedPayment)
             await this.planService.saveProposalResponse(proposalResponse)
         } catch (e) {
             logger.error(e.message)
