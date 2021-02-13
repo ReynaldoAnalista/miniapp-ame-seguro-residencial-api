@@ -6,7 +6,20 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"AmeNotification": {
+			"ResidentialProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"SmartphoneProposalNotification": {
 				"properties": {
 					"signedPayment": {
 						"type": "string",
@@ -180,15 +193,11 @@
 			"get": {
 				"operationId": "ProposalReport",
 				"responses": {
-					"200": {
+					"204": {
 						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
+							"application/json": {}
 						},
-						"description": "Ok"
+						"description": "No content"
 					},
 					"404": {
 						"content": {
@@ -197,7 +206,13 @@
 						"description": "NotFound"
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -250,12 +265,7 @@
 				"responses": {
 					"200": {
 						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
+							"application/json": {}
 						},
 						"description": "Retrieved"
 					},
@@ -272,7 +282,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AmeNotification"
+								"$ref": "#/components/schemas/SmartphoneProposalNotification"
 							}
 						}
 					}

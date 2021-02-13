@@ -23,25 +23,27 @@ export const initDependencies = () => {
     iocContainer.bind<Secrets>(TYPES.Secrets).to(Secrets).inSingletonScope()
     iocContainer.bind(TYPES.DynamoHolder).to(DynamoHolder).inSingletonScope()
 
-
     /* Initialize Clients */
     iocContainer.bind<AxiosInstance>(TYPES.AxiosInstance).toConstantValue(axios)
 
     /* Initialize Controllers */
     bindControllers("../modules/default/controllers")
     bindControllers("../modules/authToken/controllers")
-    bindControllers("../modules/plan/controllers")
-
-
+    bindControllers("../modules/hub/controllers")
+    bindControllers("../modules/residentialProposal/controllers")
+    bindControllers("../modules/smartphoneProposal/controllers")
 
     /* Initialize Services */
     iocContainer.bind<ApiServer>(TYPES.ApiServer).to(ApiServer).inSingletonScope()
     bindSingleton("../modules/default/services")
     bindSingleton("../modules/authToken/services")
-    bindSingleton("../modules/plan/services")
+    bindSingleton("../modules/hub/services")
+    bindSingleton("../modules/residentialProposal/services")
+    bindSingleton("../modules/smartphoneProposal/services")
 
     /* Initialize Repositories */
-    bindSingleton("../modules/plan/repository")
+    bindSingleton("../modules/residentialProposal/repository")
+    bindSingleton("../modules/smartphoneProposal/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

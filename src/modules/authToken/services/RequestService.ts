@@ -4,6 +4,7 @@ import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {AuthTokenService} from "./AuthTokenService";
 import {getLogger} from "../../../server/Logger";
+import {Tenants} from "../../default/model/Tenants";
 import curlirize from 'axios-curlirize'
 
 const log = getLogger("RequestService");
@@ -20,10 +21,12 @@ enum Methods {
 }
 
 enum Endpoints {
-    URL_PLANS = 'URL_PLANS',
-    URL_ZIPCODE = 'URL_ZIPCODE',
-    URL_AUTHORIZATION = 'URL_AUTHORIZATION',
-    URL_SALE = 'URL_SALE',
+    RESIDENTIAL_URL_PLANS = 'URL_PLANS',
+    RESIDENTIAL_URL_ZIPCODE = 'URL_ZIPCODE',
+    RESIDENTIAL_URL_AUTHORIZATION = 'URL_AUTHORIZATION',
+    RESIDENTIAL_URL_SALE = 'URL_SALE',
+    SMARTPHONE_URL_AUTHORIZATION = 'SMARTPHONE_URL_AUTHORIZATION',
+    SMARTPHONE_URL_SALE = 'SMARTPHONE_URL_SALE',
 }
 
 @injectable()
@@ -40,22 +43,33 @@ export class RequestService {
     METHODS = Methods
     ENDPOINTS = Endpoints
 
-    async makeRequest(url:Endpoints, method:Methods, body: object | null, queryString?: string ) {
+    async makeRequest(url:Endpoints, method:Methods, body: object | null, tenant: string, queryString?: string ) {
 
         log.debug(`Call to make a ${method} on ${url}`)
-
         const apiUrl = await this.parameterStore.getSecretValue(url)
-        const token = await this.authTokenService.retrieveAuthorization()
+        const token = await this.authTokenService.retrieveAuthorization(tenant)
 
         log.debug(`Making ${method} to ${apiUrl}`)
+
+        let headers
+        if(tenant === Tenants.SMARTPHONE){
+            headers = {
+                "Content-Type":"application/json",
+                "Authorization": token,
+                "apikey": await this.parameterStore.getSecretValue('SMARTPHONE_API_KEY')
+            }
+        }
+        if(tenant === Tenants.RESIDENTIAL) {
+            headers = {
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
 
         let config = {
             method: method,
             url: apiUrl + (queryString ? queryString : ''),
-            headers: {
-                "Content-Type":"application/json",
-                "Authorization": `Bearer ${token}`
-            },
+            headers,
             data: JSON.stringify(body)
         }
 

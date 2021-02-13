@@ -2,27 +2,28 @@ import {inject, injectable} from "inversify";
 import {getLogger} from "../../../server/Logger";
 import {TYPES} from "../../../inversify/inversify.types";
 import {AuthTokenService} from "../../authToken/services/AuthTokenService";
-import {AuthToken} from "../../authToken/model/AuthToken";
 import {RequestService} from "../../authToken/services/RequestService";
-import {PlanRepository} from "../repository/PlanRepository";
-import {AmeNotification} from "../model/AmeNotification";
+import {ResidentialProposalRepository} from "../repository/ResidentialProposalRepository";
 import {ParameterStore} from "../../../configs/ParameterStore";
-import * as jwt from 'jsonwebtoken';
-import {Plan} from "inversify/dts/planning/plan";
 import Plans from "./Plans";
+import {SmartphoneSoldProposal} from "../../smartphoneProposal/model/SmartphoneSoldProposal";
+import {ResidentialSoldProposalRepository} from "../repository/ResidentialSoldProposalRepository";
+import {Tenants} from "../../default/model/Tenants";
 
-const log = getLogger("PlanService")
+const log = getLogger("ResidentialProposalService")
 
 @injectable()
-export class PlanService {
+export class ResidentialProposalService {
 
     constructor(
         @inject("AuthTokenService")
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
-        @inject("PlanRepository")
-        private planRepository: PlanRepository,
+        @inject("ResidentialSoldProposalRepository")
+        private residentialSoldProposalRepository: ResidentialSoldProposalRepository,
+        @inject("ResidentialProposalRepository")
+        private residentialProposalRepository: ResidentialProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
@@ -34,9 +35,10 @@ export class PlanService {
         do {
             try {
                 let result: object[] = (await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_ZIPCODE,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_ZIPCODE,
                     this.requestService.METHODS.GET,
                     null,
+                    Tenants.RESIDENTIAL,
                     `/${zipcode}`
                 ))['data']
                 attempts = 0
@@ -45,7 +47,7 @@ export class PlanService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -80,9 +82,10 @@ export class PlanService {
         do {
             try {
                 let result: object[] = (await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_PLANS,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_PLANS,
                     this.requestService.METHODS.GET,
                     null,
+                    Tenants.RESIDENTIAL,
                     qs
                 ))['data']
                 attempts = 0
@@ -91,7 +94,7 @@ export class PlanService {
                 const status = err.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                         throw {error: 'Authentication Error', status: status, trace: 'All authorization attempts fail'}
@@ -112,41 +115,31 @@ export class PlanService {
         } while (attempts > 0)
     }
 
-    async unsignPayment(signedPayment: string): Promise<any> {
-        const secret = await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        return new Promise((resolve, reject) => {
-            jwt.verify(signedPayment, secret, function (err: any, decoded: any) {
-                if (err) {
-                    reject(new Error(`Signed payment: ${err.message}`))
-                } else {
-                    resolve(decoded)
-                }
-            });
-        })
-    }
-
     async sendProposalToPrevisul(proposal: any) {
         let attempts = 2;
         let result = null;
+        let success = false
         let error
         let trace
         do {
             log.debug(`There are ${attempts} attempts left`)
             try {
                 const response = await this.requestService.makeRequest(
-                    this.requestService.ENDPOINTS.URL_SALE,
+                    this.requestService.ENDPOINTS.RESIDENTIAL_URL_SALE,
                     this.requestService.METHODS.POST,
-                    proposal
+                    proposal,
+                    Tenants.RESIDENTIAL
                 );
                 result = response.data
                 trace = response?.headers['x-b3-traceid']
+                success = true
                 log.info('Success proposal sent')
                 attempts = 0
             } catch (e) {
                 const status = e.response?.status
                 if (status === 401) {
                     log.debug('Not authorized, next attempt.');
-                    await this.authTokenService.retrieveAuthorization(true)
+                    await this.authTokenService.retrieveAuthorization(Tenants.RESIDENTIAL, true)
                     if (attempts === 1) {
                         log.debug('Authentication Token error');
                     }
@@ -165,7 +158,7 @@ export class PlanService {
             attempts = attempts - 1
         } while (attempts > 0)
         if (result) {
-            return {result, trace}
+            return {result, trace, success}
         }
         throw `Proposal do not be sent, try ${3 - attempts} times; trace-id:${trace} ${error.toString()}`
     }
@@ -187,10 +180,10 @@ export class PlanService {
         if (amePayment.attributes?.customPayload?.proposal) {
             let proposal = Object.assign({}, amePayment.attributes?.customPayload?.proposal)
             if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
-                proposal.pagamento.numeroParcelas = PlanService.processInstallments(amePayment)
+                proposal.pagamento.numeroParcelas = ResidentialProposalService.processInstallments(amePayment)
             }
             if (proposal.pagamento) {
-                proposal.pagamento.nsu = PlanService.detatchNSU(amePayment)
+                proposal.pagamento.nsu = ResidentialProposalService.detatchNSU(amePayment)
             }
             return proposal
         } else {
@@ -201,10 +194,10 @@ export class PlanService {
     async saveProposalSent(id: any, proposal: any) {
         log.debug("saveProposal")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id,
                 proposal,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposal:success")
             return true
@@ -217,11 +210,11 @@ export class PlanService {
     async saveProposalResponse(id: any, proposalResponse: any) {
         log.debug("saveProposalSentSuccess")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id + "_success",
                 success: true,
                 proposalResponse,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposalSentSuccess:success")
         } catch (e) {
@@ -233,11 +226,11 @@ export class PlanService {
     async saveProposalFail(id: string, error: any) {
         log.debug("saveProposalSentFail")
         try {
-            await this.planRepository.create({
+            await this.residentialProposalRepository.create({
                 email: id + "_fail",
                 success: false,
                 error: error,
-                transactionDateTime: PlanService.getDate()
+                transactionDateTime: ResidentialProposalService.getDate()
             })
             log.debug("saveProposalSentFail:success")
         } catch (e) {
@@ -281,8 +274,8 @@ export class PlanService {
 
     async processProposal(signedPayment: string) {
         let proposalResponse: any
-        const unsignedPayment = await this.unsignPayment(signedPayment)
-        const proposal = PlanService.detachProposal(unsignedPayment)
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        const proposal = ResidentialProposalService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
         const checkPriceResult = await this.checkPrice(unsignedPayment.amount, proposal.planoId)
         if (checkPriceResult['checked']) {
@@ -303,11 +296,11 @@ export class PlanService {
     }
 
     async listProposal() {
-        return this.planRepository.listProposal()
+        return this.residentialProposalRepository.listProposal()
     }
 
     async proposalReport(): Promise<Array<string>> {
-        const proposalList = await this.planRepository.listProposal()
+        const proposalList = await this.residentialProposalRepository.listProposal()
         let proposalReport: Array<any>
         let response = ['Nome;Email;ID Plano;Parcelas;Vencimento;Início Vigência;Horário Servidor;Enviado Previsul;Protocolo Previsul;B2SkyTrace']
         try {
@@ -357,6 +350,19 @@ export class PlanService {
             response.push("Error on build report")
         }
         return response
+    }
+
+    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+        log.debug("saveSoldProposal")
+        await this.residentialSoldProposalRepository.create({
+            customerId: proposal.attributes.customPayload.proposal.customerId,
+            order: proposal.id,
+            tenant: tenant,
+            createdAt: new Date().toISOString(),
+            success: response.success,
+            partnerResponse: response,
+            receivedPaymentNotification: proposal
+        } as SmartphoneSoldProposal)
     }
 
     delay(seconds) {

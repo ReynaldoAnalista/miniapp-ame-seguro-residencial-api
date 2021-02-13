@@ -21,7 +21,7 @@ runserver: build	commithash
 
 runtest:
 	@echo '=========== Testing ame-seguro-residencial ==========='
-	APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn test PlanService
+	APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn test --watch
 
 debugserver: build	commithash
 	@echo '=========== Starting ame-seguro-residencial ==========='
