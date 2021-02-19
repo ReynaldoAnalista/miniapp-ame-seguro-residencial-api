@@ -46,15 +46,15 @@ export interface CoverageData {
 
 export class SmartphoneProposalUtils {
     static generateProposal(unsignedProposal) {
-        if(unsignedProposal?.attributes?.customPayload?.proposal){
+        if (unsignedProposal?.attributes?.customPayload?.proposal) {
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
             proposal.policy_data = this.generatePolicyData()
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData()
             proposal.charge_type_data = this.generateChargeData()
-            unsignedProposal.attributes.customPayload.proposal = proposal
-            return unsignedProposal
+            return proposal
         }
+        return null
     }
 
     static generatePolicyData() {
