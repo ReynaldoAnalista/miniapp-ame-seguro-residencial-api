@@ -9,6 +9,7 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
 import {Tenants} from "../../default/model/Tenants";
+import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -35,7 +36,8 @@ export class SmartphoneProposalService {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         await this.saveProposal(unsignedPayment)
         console.log('Salvou o arquivo da proposta')
-        const proposalResponse = await this.sendProposal(unsignedPayment)
+        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
+        const proposalResponse = await this.sendProposal(proposal)
         console.log('Enviou a proposta para a digibee')
         await this.saveProposalResponse(proposalResponse)
         console.log('Salvou a resposta da digibee')

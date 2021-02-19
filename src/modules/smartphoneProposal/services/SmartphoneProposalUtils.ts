@@ -45,28 +45,15 @@ export interface CoverageData {
 }
 
 export class SmartphoneProposalUtils {
-    static generateProposal(insuredData: InsuredData, coverageData: CoverageData) {
-        return {
-            // Grupo de informações da ápolice
-            "policy_data": this.generatePolicyData(),
-
-            // Grupo de informações do Tomador
-            "policyholder_data": this.generatePolicyHolderData(),
-
-            // Grupo de informações do Segurado
-            "insured_data": this.generateInsuredData(insuredData),
-
-            // Grupo de informações dos dados da proposta
-            "variable_policy_data": this.generateVariablePolicyData(),
-
-            // Informações dos tipos de risco por equipamento
-            "portable_equipment_risk_data": this.generatePortableEquipmentRiskData(),
-
-            // Informações da cobertura
-            "coverage_data": this.generateCoverageData(coverageData),
-
-            // Informações da cobrança
-            "charge_type_data": this.generateChargeData()
+    static generateProposal(unsignedProposal) {
+        if(unsignedProposal?.attributes?.customPayload?.proposal){
+            let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
+            proposal.policy_data = this.generatePolicyData()
+            proposal.policyholder_data = this.generatePolicyHolderData()
+            proposal.variable_policy_data = this.generateVariablePolicyData()
+            proposal.charge_type_data = this.generateChargeData()
+            unsignedProposal.attributes.customPayload.proposal = proposal
+            return unsignedProposal
         }
     }
 
