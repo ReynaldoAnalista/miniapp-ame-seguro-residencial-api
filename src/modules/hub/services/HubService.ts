@@ -42,4 +42,28 @@ export class HubService {
         await this.residentialSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
         await this.smartphoneSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
     }
+
+    async retrieveConfigs() {
+        return {
+            RESIDENTIAL: {
+                CLIENT_ID: (await this.parameterStore.getSecretValue("CLIENT_ID")),
+                CLIENT_SECRET: (await this.parameterStore.getSecretValue("CLIENT_SECRET")),
+                CLIENT_SCOPE: (await this.parameterStore.getSecretValue("CLIENT_SCOPE")),
+                URL_AUTHORIZATION: (await this.parameterStore.getSecretValue("URL_AUTHORIZATION")),
+                URL_ZIPCODE: (await this.parameterStore.getSecretValue("URL_ZIPCODE")),
+                URL_PLANS: (await this.parameterStore.getSecretValue("URL_PLANS")),
+                URL_SALE: (await this.parameterStore.getSecretValue("URL_SALE")),
+                CONTRACT_NUMBER: (await this.parameterStore.getSecretValue("CONTRACT_NUMBER")),
+                BROKER_NUMBER: (await this.parameterStore.getSecretValue("BROKER_NUMBER")),
+                AME_COMISSION: (await this.parameterStore.getSecretValue("AME_COMISSION")),
+                BROKER_COMISSION: (await this.parameterStore.getSecretValue("BROKER_COMISSION")),
+            },
+            SMARTPHONE: {
+                SMARTPHONE_API_KEY: (await this.parameterStore.getSecretValue("SMARTPHONE_API_KEY")),
+                SMARTPHONE_URL_AUTHORIZATION: (await this.parameterStore.getSecretValue("SMARTPHONE_URL_AUTHORIZATION")),
+                SMARTPHONE_URL_SALE: (await this.parameterStore.getSecretValue("SMARTPHONE_URL_SALE")),
+            },
+            CALINDRA_JWT_SECRET: (await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")),
+        }
+    }
 }
