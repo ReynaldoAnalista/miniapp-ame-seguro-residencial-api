@@ -37,9 +37,15 @@ export class ResidentialSoldProposalRepository {
                 ":customerId": customerId
             }
         };
-        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-        let result = await dynamoDocClient.query(params).promise();
-        return result.Items?.filter(x => x.tenant === Tenants.RESIDENTIAL)
+        try {
+            let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+            let result = await dynamoDocClient.query(params).promise();
+            log.debug('result', result)
+            return result.Items?.filter(x => x.tenant === Tenants.RESIDENTIAL)
+        } catch (e) {
+            log.debug(e.message)
+            return []
+        }
     }
 
     /**
