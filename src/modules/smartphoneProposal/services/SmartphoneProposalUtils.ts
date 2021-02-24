@@ -150,7 +150,7 @@ export class SmartphoneProposalUtils {
         const proposalDate = "02032021";
 
         //Comissão da apólice, informado pela AME
-        const policyCommission = 62.0;
+        const policyCommission = 62;
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
