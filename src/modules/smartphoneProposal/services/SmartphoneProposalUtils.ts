@@ -62,7 +62,7 @@ export class SmartphoneProposalUtils {
         const motherPolicyNumber = "6944000861071";
 
         //
-        const keyContractCertificateNumber = 27394794;
+        const keyContractCertificateNumber = 273947948785785;
 
         // Início da Vigência da apólice
         let toDay = moment(new Date());
@@ -83,7 +83,7 @@ export class SmartphoneProposalUtils {
     static generatePolicyHolderData() {
 
         // Razão Social da AME DIGITAL, a Ame precisa nos passar essa informação
-        const corporateNamePolicyholderName = "AME DIGITAL BRASIL LTDA";
+        const corporateNamePolicyholderName = "AMEDIGITAL";
 
         // Pessoa Física ou Jurídica, Ame precisa nos passar como F ou J
         const typeOfLegalPerson = "J";
@@ -95,9 +95,9 @@ export class SmartphoneProposalUtils {
         const typeOfStreet = "01";
 
         // Endereço da AME
-        const street = "Rua Fidêncio Ramos";
+        const street = "Fidencio Ramos";
         const number = "302";
-        const complement = "Torre B 9º andar";
+        const complement = "";
         const district = "Vila Olímpia";
         const city = "São Paulo";
         const zipCode = 4551010;
@@ -144,13 +144,13 @@ export class SmartphoneProposalUtils {
         const proposalNumber = 20536270000;
 
         //Ainda sem definição
-        const insuranceCertificateNumber = "10220180000";
+        const insuranceCertificateNumber = "102201800";
 
         //Data da proposta do seguro (inicio da vigência), informado pela AME
-        const proposalDate = "01222018";
+        const proposalDate = "02032021";
 
         //Comissão da apólice, informado pela AME
-        const policyCommission = 35;
+        const policyCommission = 62.0;
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
@@ -186,7 +186,7 @@ export class SmartphoneProposalUtils {
         const modelDescription = 1;
 
         // Enviar 2, informado pela AME
-        const equipmentType = 2;
+        const equipmentType = 1;
 
         // Valor do bem, informado pela AME
         const equipmentValue = 999.90;
@@ -195,7 +195,7 @@ export class SmartphoneProposalUtils {
         const invoiceNumber = 1258745698;
 
         // Data da nota fiscal, informado pela AME
-        const invoiceDate = "10222018";
+        const invoiceDate = "10122020";
 
         // IMEI, informado pela AME
         const deviceSerialCode = "fke782521dd";
@@ -231,16 +231,16 @@ export class SmartphoneProposalUtils {
     static generateChargeData() {
 
         // (FIXO DF), informado pela AME
-        const typeOfCollectionManager = "DF";
+        const typeOfCollectionManager = "TA";
 
         // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
         const paymentPlanCode = 723;
 
         // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 99990164;
+        const paymentManagerCode = 99999999;
 
         // CPF ou CGC AME
-        const documentType = "CPF";
+        const documentType = "CGC";
 
         // Número do documento AME
         const documentNumber = "13850516000177";
@@ -252,7 +252,7 @@ export class SmartphoneProposalUtils {
         const firstInstallmentValue = 249.97;
 
         // Dia 28 do mês subsequente, informado pela AME
-        const maturityOfFirstInstallment = "28032018";
+        const maturityOfFirstInstallment = "10042021";
 
         return {
             "type_of_collection_manager": typeOfCollectionManager,
