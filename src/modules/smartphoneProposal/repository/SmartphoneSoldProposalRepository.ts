@@ -37,9 +37,14 @@ export class SmartphoneSoldProposalRepository {
                 ":customerId": customerId
             }
         };
-        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-        let result = await dynamoDocClient.query(params).promise();
-        return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE)
+        try {
+            let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+            let result = await dynamoDocClient.query(params).promise();
+            return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE)
+        } catch (e) {
+            log.debug(e.message)
+            return []
+        }
     }
 
     /**

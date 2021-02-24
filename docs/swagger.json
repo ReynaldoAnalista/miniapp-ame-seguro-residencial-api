@@ -44,27 +44,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/v1/auth/token": {
-			"get": {
-				"operationId": "RetrieveAuthorization",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					}
-				},
-				"description": "Busca o token necessario para acesso a api do parceiro",
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/health": {
 			"get": {
 				"operationId": "Health",
@@ -189,6 +168,41 @@
 				"parameters": []
 			}
 		},
+		"/v1/hub/plans/{customerId}": {
+			"get": {
+				"operationId": "RetrievePlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/plans/proposal-report": {
 			"get": {
 				"operationId": "ProposalReport",
@@ -265,7 +279,12 @@
 				"responses": {
 					"200": {
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
 						},
 						"description": "Retrieved"
 					},
@@ -282,7 +301,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/SmartphoneProposalNotification"
+								"$ref": "#/components/schemas/ResidentialProposalNotification"
 							}
 						}
 					}
@@ -290,6 +309,137 @@
 			}
 		},
 		"/v1/plans/proposal": {
+			"get": {
+				"operationId": "ListProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/v1/residential/proposal-report": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "No content"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/v1/residential/{zipCode}/{buildType}": {
+			"get": {
+				"operationId": "RetrievePlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "zipCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "buildType",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/residential/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ResidentialProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/residential/proposal": {
 			"get": {
 				"operationId": "ListProposal",
 				"responses": {
@@ -348,6 +498,36 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/smartphone/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SmartphoneProposalNotification"
+							}
+						}
+					}
+				}
 			}
 		}
 	},
