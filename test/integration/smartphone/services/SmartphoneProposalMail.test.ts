@@ -23,6 +23,7 @@ describe("SmartphoneProposalMail", () => {
         const mailInfo = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")       
         const JsonMailInfo = JSON.parse(mailInfo)
         console.log(JsonMailInfo);
+        //TODO: Terminar a implementação dos testes
         
         // const proposalEmail = await smartphoneProposalMailService.sendSellingEmail('bikil78950@dxecig.com', JsonMailInfo)        
         // console.log('EmailSent', proposalEmail);        
