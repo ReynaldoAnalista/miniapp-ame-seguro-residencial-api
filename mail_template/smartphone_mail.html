@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .table-head {
+            background: #ffffff; margin:0 auto; max-width:600px; min-width:95px;
+            padding: 0;
+        }
+        .table-body {
+            margin:0 auto; max-width:1000px; min-width:1000px;
+            border-collapse:collapse;
+        }        
+        .table-body thead th{
+            padding: 0;
+            height: 12px;
+            min-width: 1000px;
+            height: 32px;
+            background-color: #FF2D55;
+            border: 1px solid #FF2D55;
+            color: white;
+            padding-left: 7px;
+        }     
+        .table-body thead {
+            text-align: left;
+        }
+        .table-body tbody {
+            border: 1px solid #FF2D55;         
+        }
+        .table-body tbody tr{
+            padding: 15px;         
+            border-bottom: 1px solid #FF2D55;
+        }      
+        .table-body tbody td{         
+            padding-left: 15px;         
+            padding-top: 10px;         
+            padding-bottom: 10px;         
+        }
+        .desc-coverage {
+            background-color: #FE95A9;
+            color: white;
+        }
+    </style>     
+</head>
+<body>
+    <div>
+        <table class="table-head">
+            <tr>
+                <td>
+                    <table width="98%" style="height:30px; margin:10px">
+                        <td style="padding-left:2%">
+                            <img style="height:30px" 
+                                src="https://calindra.tech/ame/email-veus-miniapp/logoame.png"
+                                alt="logo da Ame" />
+                        </td>                        
+                    </table>
+                </td>
+                <td style="padding-left: 35px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <b> CUPOM BILHETE SEGURO</b> </br>
+                                SEGURO DE ROUBO OU FURTO QUALIFICADO </br>
+                                DE ELETRÔNICO PORTÁTIL E QUEBRA ACIDENTAL
+                            </td>
+                        </tr>
+                    </table>                    
+                </td>
+                <tr>
+                    <table class="table-body" style="margin-top: 25px">
+                        <thead>
+                            <th colspan="3">DADOS DO SEGURADO</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="user_name">Nome</label><br>
+                                    @@secury_user_name@@
+                                </td>
+                                <td></td>
+                                <td>
+                                    <label for="user_cpf">CPF</label><br>
+                                    @@secury_user_cpf@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="user_address">Endereco</label><br>
+                                    @@secury_user_address@@
+                                </td>
+                                <td>
+                                    <label for="user_cpf">Número</label><br>
+                                    @@secury_user_number@@
+                                </td>
+                                <td>
+                                    <label for="user_district">Bairro</label><br>
+                                    @@secury_user_district@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="user_city">Cidade</label><br>
+                                    @@secury_user_city@@
+                                </td>
+                                <td>
+                                    <label for="user_uf">Uf</label><br>
+                                    @@secury_user_uf@@
+                                </td>
+                                <td>
+                                    <label for="user_district">CEP</label><br>
+                                    @@secury_user_cep@@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table class="table-body">
+                        <thead>
+                            <th colspan="3">DADOS DO REPRESENTANTE DO SEGURO</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Razão Social</label><br>
+                                    @@social_reazon@@
+                                </td>
+                                <td>
+                                    <label>CNPJ</label><br>
+                                    @@cnpj@@
+                                </td>
+                                <td>
+                                    <label>Cód.SUSEP</label><br>
+                                    @@cod_susep@@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table class="table-body">
+                        <thead>
+                            <th colspan="4">DADOS DA SEGURADORA</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 
+                                    <label for="">Razão Social</label><br>
+                                    @@security_social_reazon@@
+                                 </td>
+                                 <td></td>
+                                 <td>
+                                     <label for="">CPF<br>
+                                        @@security_cpf@@
+                                     </label>
+                                 </td>
+                                 <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Endereço</label><br>
+                                    @@secury_cpf@@
+                                </td>
+                                <td>
+                                    <label for="">Número</label><br>
+                                    @@secury_number@@
+                                </td>
+                                <td>
+                                    <label for="">Bairro</label><br>
+                                    @@secury_street@@
+                                </td>
+                                <td>
+                                    <label for="">CEP</label><br>
+                                    @@secury_cep@@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table class="table-body">
+                        <thead>
+                            <th colspan="2">DADOS DO CORRETOR</th>
+                        </thead>
+                        <tbody>
+                            <td>
+                                <label for="">Corretor</label><br>
+                                @@broker_name@@
+                            </td>
+                            <td>
+                                <label for="">Cód.SUSEP</label><br>
+                                @@broker_susep@@
+                            </td>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table class="table-body">
+                        <thead>
+                            <th colspan="2">DADOS DO SEGURO</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="">Ramo</label><br>
+                                    @@secury_data_branch@@
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">N do Bilhete Individual</label><br>
+                                    @@secury_data_individual_ticket@@
+                                </td>
+                                <td>
+                                    <label for="">Data da emissão</label><br>
+                                    @@secury_data_emission_date@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Início de Vigência do Seguro às 24h do dia</label><br>
+                                    @@initial_surance_term@@
+                                </td>
+                                <td>
+                                    <label for="">Fim de Vigência do Seguro às 24h do dia</label><br>
+                                    @@final_surance_term@@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table class="table-body">
+                        <thead>
+                            <th colspan="5">
+                                COBERTURAS CONTRATADAS
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr class="desc-coverage">
+                                <td>
+                                    <label for="">Descrição</label>
+                                </td>
+                                <td>
+                                    <label for="">Limite Máximo de Indenização <br> (Preço do Produto - R$)</label>
+                                </td>
+                                <td>
+                                    <label for="">P.O.S(*)</label>
+                                </td>
+                                <td>
+                                    <label for="">Prêmio cobertura</label>
+                                </td>
+                                <td>
+                                    <label for="">Carência</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ROUBO / FURTO <br>
+                                    MEDIANTE <br>
+                                    ARROMBAMENTO
+                                </td>
+                                <td>
+                                    @@max_limit_thieft@@
+                                </td>
+                                <td>
+                                    @@pos_thieft@@
+                                </td>
+                                <td>
+                                    @@prize_thieft@@
+                                </td>
+                                <td>
+                                    @@lack_thieft@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    QUEBRA ACIDENTAL
+                                </td>
+                                <td>
+                                    @@max_limit_acidental@@
+                                </td>
+                                <td>
+                                    @@pos_acidental@@
+                                </td>
+                                <td>
+                                    @@prize_acidental@@
+                                </td>
+                                <td>
+                                    @@lack_acidental@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Descrição do produto</label><br>
+                                    @@product_description@@
+                                </td>
+                                <td></td>
+                                <td>
+                                    @@model@@
+                                </td>
+                                <td>
+                                    @@mark@@
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Forma de Pagamento</label><br>
+                                    @@payment_form@@
+                                </td>
+                                <td></td>
+                                <td>@@liquid_prize@@</td>
+                                <td>
+                                    @@iof@@
+                                </td>
+                                <td>
+                                    @@total_prize@@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 15px;" colspan="5">
+                                    Remuneração do Representante de Seguros: no valor de R$ @@secury_value@@ equivalente ao percentual @@secury_percentual@@% <br>
+                                    (de acordo com o prêmio líquido do seguro)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+                <tr>
+                    <table style="height:30px; margin:0 160px; ">
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px 0;">
+                                   <span style="font-size: 12px; font-weight: bold;">(*)P.O.S(Participação Obrigatória do Segurado)</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0;">
+                                    <img src="./img/mapfree_logo.jpg" alt="" style="width: 180px;"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="font-size: 12px;">
+                                        <b>O SEGURO DE ROUBO OU FURTO QUALIFICADO DE ELETRÔNICO PORTÁTIL E QUEBRA ACIDENTAL SOMENTE TERÁ VALIDADE MEDIANTE APRESENTAÇÃO</b> <br>
+                                        <b>DESTE DOCUMENTO EM CONJUNTO COM O BILHETE DE SEGURO, SENDO UMA PARTE INTEGRANTE E INDISSOCIÁVEL DO OUTRO.</b><br>
+                                        SUSEP Superintendência de Seguros Privados Autarquia Federal resposável pela fiscalização, normalização e controle dos mercados de seguro, providência<br>
+                                        complementar aberta, capitalização, resseguro e corretagem de seguros.". <br>
+                                        Em caso dúvidas, entre em contato com as <b>Centrais de Atendimento da Seguradora:</b><br>
+                                        SAC: 0800 772 5832. SAC Deficientes Auditivos e de Fala: 0800 775 5045. Atendimento 24 horas. <br>
+                                        Comunicação de Sinistro: 0800 775 1533 ou 4002 1533 <br>
+                                        Ouvidoria: 0800 775 1079. Ouvidoria Deficientes Auditivos e de Fala:0800 962 7373 Atendimento de 2 a 6 feira, das 8h às 20h, exeto feriados. <br>
+                                        A Ouvidoria poderá ser acionada para atuar na defesa dos direitos dos consumidores, esclarecer e/ou solucionar demandas já tratadas pelos canais <br>
+                                        de atendimentos habituais. <br>
+                                        Telefone gratuito para atendimento ao público SUSEP: 0800 021 8484 <br>
+                                        <b>PROCESSO SUSEP N 15.414.901005/2014-71</b>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>                
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
