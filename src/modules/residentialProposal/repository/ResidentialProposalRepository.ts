@@ -18,7 +18,6 @@ export class ResidentialProposalRepository {
     }
 
     async create(proposal: any) {
-        log.debug('TRYING TO WRITE ON', TABLE)
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName: TABLE, Item: proposal};
         await dynamoDocClient.put(params).promise();

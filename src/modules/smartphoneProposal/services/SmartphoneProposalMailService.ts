@@ -1,21 +1,14 @@
 import {inject, injectable} from "inversify";
 import {SimpleEmail} from "../../default/model/SimpleEmail";
-import * as fs from "fs";
-import * as util from "util";
-import * as path from "path";
-import {getLogger} from "../../../server/Logger";
+import fs from "fs";
+import util from "util";
+import path from "path";
 import { MailSender } from "../../default/services/MailSender";
-import { initDependencies  } from '../../../inversify/inversify.config';
 import { DataToSendMail } from "../model/AmeNotification";
 
-
-const logger = getLogger("MailService")
 const readFile = util.promisify(fs.readFile)
 
 const MAIL_FROM = process.env.MAIL_FROM || 'miniapps@calindra.com.br'
-
-initDependencies()
-
 
 @injectable()
 export class SmartphoneProposalMailService {
@@ -46,10 +39,8 @@ export class SmartphoneProposalMailService {
     //         throw 'Erro ao enviar email de cupom'
     //     }
     // }
-    async sendSellingEmail() {
-        logger.debug('Enviando email de compra', {email: 'dataToSendMail.securityMail'})
-        let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
-        logger.debug(`Obtendo template de email pelo endereço: ${emailTemplate}`)
+    async sendSellingEmail() {        
+        let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')        
         try {
             let template = await readFile(emailTemplate, 'utf-8')
             let body = template
@@ -61,8 +52,7 @@ export class SmartphoneProposalMailService {
             } as SimpleEmail
             await this.send(email)
         } catch (e) {
-            logger.error(`Erro ao enviar email de cupom.`)
-            logger.error(e)
+            console.debug('ERRO ENVIO' , e);            
             throw 'Erro ao enviar email de cupom'
         }
     }
