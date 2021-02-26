@@ -44,8 +44,13 @@ export class HubService {
     }
 
     async retrieveConfigs() {
+        const environment = process.env.DYNAMODB_ENV
+        if (environment === 'prod') {
+            return {RESULT: 'NOTHING TO SEE HERE'}
+        }
         return {
             RESIDENTIAL: {
+                DYNAMO_ENV: environment,
                 CLIENT_ID: (await this.parameterStore.getSecretValue("CLIENT_ID")),
                 CLIENT_SECRET: (await this.parameterStore.getSecretValue("CLIENT_SECRET")),
                 CLIENT_SCOPE: (await this.parameterStore.getSecretValue("CLIENT_SCOPE")),
@@ -64,6 +69,10 @@ export class HubService {
                 SMARTPHONE_URL_SALE: (await this.parameterStore.getSecretValue("SMARTPHONE_URL_SALE")),
             },
             CALINDRA_JWT_SECRET: (await this.parameterStore.getSecretValue("CALINDRA_JWT_SECRET")),
+            EMAIL: {
+                MAIL_ACCESS_KEY_ID: (await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")),
+                MAIL_SECRET_ACCESS_KEY: (await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY"))
+            }
         }
     }
 }
