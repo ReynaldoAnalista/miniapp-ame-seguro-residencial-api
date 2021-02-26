@@ -21,8 +21,7 @@ export class SmartphoneProposalController {
     public async sendProposal(@Body() signedPayment: SmartphoneProposalNotification) {
         logger.info('Sending Proposal %j', signedPayment);
         try {
-            const proposalResponse = await this.planService.processProposal(signedPayment.signedPayment)
-            await this.planService.saveProposalResponse(proposalResponse)
+            return await this.planService.processProposal(signedPayment.signedPayment)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)

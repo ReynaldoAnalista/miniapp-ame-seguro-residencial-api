@@ -87,21 +87,27 @@ export class SmartphoneProposalService {
             log.debug("saveProposalResponse:success")
         } catch (e) {
             log.debug("saveProposalResponse:Fail")
-            log.debug(e.message)
+            log.error(e)
         }
     }
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
-        await this.smartphoneSoldProposalRepository.create({
-            customerId: proposal.attributes.customPayload.customerId,
-            order: proposal.id,
-            tenant: tenant,
-            createdAt: new Date().toISOString(),
-            success: response.success,
-            partnerResponse: response,
-            receivedPaymentNotification: proposal
-        } as SmartphoneSoldProposal)
+        try {
+            await this.smartphoneSoldProposalRepository.create({
+                customerId: proposal.attributes.customPayload.customerId,
+                order: proposal.id,
+                tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
+                partnerResponse: response,
+                receivedPaymentNotification: proposal
+            } as SmartphoneSoldProposal)
+            log.debug("saveSoldProposal:success")
+        } catch (e) {
+            log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
     }
 
     processProposalResponse(proposal: any): any {
