@@ -39,7 +39,7 @@ export class SmartphoneProposalService {
         const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
         const proposalResponse = await this.sendProposal(proposal)
         console.log('Enviou a proposta para a digibee')
-        await this.saveProposalResponse(proposalResponse)
+        await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
         console.log('Salvou a resposta da digibee')
         await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.SMARTPHONE)
         console.log('Salvou a compra')
@@ -80,10 +80,10 @@ export class SmartphoneProposalService {
         return result
     }
 
-    async saveProposalResponse(proposal: any,) {
+    async saveProposalResponse(proposal: any, id: string) {
         log.debug("saveProposalResponse")
         try {
-            await this.responseRepository.create(this.processProposalResponse(proposal))
+            await this.responseRepository.create({id, ...proposal})
             log.debug("saveProposalResponse:success")
         } catch (e) {
             log.debug("saveProposalResponse:Fail")
@@ -110,12 +110,4 @@ export class SmartphoneProposalService {
         }
     }
 
-    processProposalResponse(proposal: any): any {
-        if (proposal.body?.id) {
-            proposal.id = proposal.body.id
-            return proposal
-        } else {
-            throw "Proposal response have not an ID"
-        }
-    }
 }
