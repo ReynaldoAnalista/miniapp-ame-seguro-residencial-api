@@ -61,12 +61,16 @@ export class SmartphoneProposalUtils {
         // Todas as apólices são ligadas à uma apólice mãe única
         const motherPolicyNumber = "6944000861071";
 
-        //
-        const keyContractCertificateNumber = 273947948785785;
 
         // Início da Vigência da apólice
         let toDay = moment(new Date());
         const startValidDocument = toDay.format('ddMMyyyy');
+
+        const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
+
+        // Número único do contrato
+        const keyContractCertificateNumber = `${(new Date()).getTime()}`.padStart(17, preNumber);
+        console.log('keyContractCertificateNumber', keyContractCertificateNumber)
 
         // Fim da Vigência da apólice
         toDay.add(1, "year");
