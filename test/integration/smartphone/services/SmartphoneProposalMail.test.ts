@@ -1,6 +1,6 @@
 import {initDependencies, iocContainer} from "../../../../src/inversify/inversify.config";
-import { SmartphoneProposalMailService } from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalMailService";
-import { DataToSendMail } from "../../../../src/modules/smartphoneProposal/model/DataToSendMail";
+import {SmartphoneProposalMailService} from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalMailService";
+import {DataToSendMail} from "../../../../src/modules/smartphoneProposal/model/DataToSendMail";
 
 import path from "path";
 import util from "util";
@@ -21,25 +21,30 @@ describe("SmartphoneProposalMail", () => {
     })
 
     it("Envia o e-mail para o segurado", async () => {
-        const mailInfo = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")       
-        const JsonMailInfo = formatMailJsonParseInfo(JSON.parse(mailInfo)) 
-        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail('delbert3703@uorak.com', JsonMailInfo)        
-        // expect(proposalResponse.success).toEqual(true)
+        const notification = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")
+        const parsedNotification = JSON.parse(notification)
+        const JsonMailInfo = formatMailJsonParseInfo(parsedNotification.attributes?.customPayload?.proposal)
+        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail(parsedNotification.attributes.customPayload.clientEmail, JsonMailInfo)
+        expect(proposalEmail).toBeDefined()
     })
 
 })
 
-function formatMailJsonParseInfo(MailInfo) {
+function formatMailJsonParseInfo(proposal): DataToSendMail {
 
-    const dataToSendMail: DataToSendMail = {
-        securityName : MailInfo.attributes.customPayload.proposal.insured_data.insured_name,
-        securityUserCpf : MailInfo.attributes.customPayload.proposal.insured_data.cnpj_cpf,
-        securityAddress : MailInfo.attributes.customPayload.proposal.insured_data.address_data.street,
-        securityAddressNumber: MailInfo.attributes.customPayload.proposal.insured_data.address_data.number,
-        securityAddressDistrict: MailInfo.attributes.customPayload.proposal.insured_data.address_data.district,
-        securityAddressCity: MailInfo.attributes.customPayload.proposal.insured_data.address_data.city,
-        securityAddressUf: MailInfo.attributes.customPayload.proposal.insured_data.address_data.federal_unit,        
-        securityDataUserCep: MailInfo.attributes.customPayload.proposal.insured_data.address_data.zip_code,
+    if (!proposal) {
+        throw "Not be able to send a email without proposal"
+    }
+
+    return {
+        securityName: proposal.insured_data.insured_name,
+        securityUserCpf: proposal.insured_data.cnpj_cpf,
+        securityAddress: proposal.insured_data.address_data.street,
+        securityAddressNumber: proposal.insured_data.address_data.number,
+        securityAddressDistrict: proposal.insured_data.address_data.district,
+        securityAddressCity: proposal.insured_data.address_data.city,
+        securityAddressUf: proposal.insured_data.address_data.federal_unit,
+        securityDataUserCep: proposal.insured_data.address_data.zip_code,
 
         SecurityRepresentationSocialReazon: '-',
         SecurityRepresentationCnpj: '-',
@@ -53,26 +58,24 @@ function formatMailJsonParseInfo(MailInfo) {
 
         securyDataBranch: '-',
         securyDataIndividualTicket: '-',
-        securyDataEmissionDate:  '-',
-        securyDataInitialSuranceTerm:  '-',
-        securyDataFinalSuranceTerm:  '-',        
+        securyDataEmissionDate: '-',
+        securyDataInitialSuranceTerm: '-',
+        securyDataFinalSuranceTerm: '-',
 
         maxLimitThieft: '-',
         posThieft: '-',
-        prizeThieft:  '-',
-        lackThieft:  '-',    
-        maxLimitAcidental:  '-',
-        posAcidental:  '-', 
-        prizeAcidental:  '-',
-        lackAcidental:  '-',    
-        productDescription:  MailInfo.attributes.customPayload.proposal.portable_equipment_risk_data.product_description,
+        prizeThieft: '-',
+        lackThieft: '-',
+        maxLimitAcidental: '-',
+        posAcidental: '-',
+        prizeAcidental: '-',
+        lackAcidental: '-',
+        productDescription: proposal.portable_equipment_risk_data.product_description,
         model: '-',
-        mark: '-',        
-        paymentForm: MailInfo.operationType,
-        liquidPrice: MailInfo.amount,
-        iof: '-',    
+        mark: '-',
+        paymentForm: proposal.operationType,
+        liquidPrice: proposal.amount,
+        iof: '-',
         totalPrize: '-'
-    }
-
-    return dataToSendMail;
+    } as DataToSendMail
 }
