@@ -7,6 +7,8 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import {ResidentialProposalRepository} from "../../residentialProposal/repository/ResidentialProposalRepository";
 import {ResidentialSoldProposalRepository} from "../../residentialProposal/repository/ResidentialSoldProposalRepository";
 import {SmartphoneSoldProposalRepository} from "../../smartphoneProposal/repository/SmartphoneSoldProposalRepository";
+import {SmartphoneProposalRepository} from "../../smartphoneProposal/repository/SmartphoneProposalRepository";
+import {SmartphoneProposalResponseRepository} from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
 
 const log = getLogger("ResidentialProposalService")
 
@@ -18,8 +20,14 @@ export class HubService {
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
+        @inject("ResidentialProposalRepository")
+        private residentialProposalRepository: ResidentialProposalRepository,
         @inject("ResidentialSoldProposalRepository")
         private residentialSoldProposalRepository: ResidentialSoldProposalRepository,
+        @inject("SmartphoneProposalRepository")
+        private smartphoneProposalRepository: SmartphoneProposalRepository,
+        @inject("SmartphoneProposalResponseRepository")
+        private smartphoneProposalResponseRepository: SmartphoneProposalResponseRepository,
         @inject("SmartphoneSoldProposalRepository")
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
         @inject(TYPES.ParameterStore)
@@ -74,5 +82,15 @@ export class HubService {
                 MAIL_SECRET_ACCESS_KEY: (await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY"))
             }
         }
+    }
+
+    async checkTable() {
+        const environment = process.env.DYNAMODB_ENV
+        let result = {}
+        result[ResidentialProposalRepository.TABLE] = await this.residentialProposalRepository.checkTable()
+        result[SmartphoneProposalRepository.TABLE] = await this.smartphoneProposalRepository.checkTable()
+        result[SmartphoneProposalResponseRepository.TABLE] = await this.smartphoneProposalResponseRepository.checkTable()
+        result[SmartphoneSoldProposalRepository.TABLE] = await this.smartphoneSoldProposalRepository.checkTable()
+        return result
     }
 }

@@ -41,4 +41,15 @@ export class HubController {
         }
         return {}
     }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get("/tables/{key}")
+    public async checkTables(@Path() key: string) {
+        logger.debug("Checking Tables");
+        if("8ddb6c11-df20-4b5a-a82d-40cd040c9cae" === key) {
+            return await this.hubService.checkTable()
+        }
+        return {}
+    }
 }

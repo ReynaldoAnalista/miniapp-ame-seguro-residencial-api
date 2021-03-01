@@ -1,5 +1,5 @@
 {
-    "TableName": "stag__seguro_celular_compras",
+    "TableName": "stag__seguro_celular_response",
     "KeySchema": [
         {
             "AttributeName": "id",

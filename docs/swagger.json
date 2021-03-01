@@ -238,6 +238,41 @@
 				]
 			}
 		},
+		"/v1/hub/tables/{key}": {
+			"get": {
+				"operationId": "CheckTables",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "key",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/plans/proposal-report": {
 			"get": {
 				"operationId": "ProposalReport",
@@ -541,7 +576,12 @@
 				"responses": {
 					"200": {
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
 						},
 						"description": "Retrieved"
 					},

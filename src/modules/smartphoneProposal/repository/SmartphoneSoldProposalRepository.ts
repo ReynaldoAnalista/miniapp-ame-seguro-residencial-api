@@ -19,6 +19,24 @@ export class SmartphoneSoldProposalRepository {
     ) {
     }
 
+    async checkTable() {
+        log.debug(`Checking table: ${TABLE}`)
+        try {
+            let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+            await dynamoDocClient.get({
+                TableName: TABLE,
+                Key: {
+                    "customerId": "a"
+                }
+            }).promise();
+            return true
+        } catch (e) {
+            log.error(`Table ${TABLE} not exists`)
+            log.error(e)
+        }
+        return false
+    }
+
     async create(soldProposal: SmartphoneSoldProposal) {
         log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
