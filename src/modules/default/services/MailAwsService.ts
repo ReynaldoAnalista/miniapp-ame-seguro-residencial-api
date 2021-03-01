@@ -49,27 +49,38 @@ export class MailAwsService implements MailSender {
         if (!this.accessKeyId) {
             logger.warn('Envio de email nao configurado')
             return Promise.resolve({})
-        }
+        }        
+
+        var date = new Date();
+        var boundary = `----=_Part${ Math.random().toString().substr( 2 ) }`;
+
+        var rawMessage = [
+            `From: "${ email.from }" <${ email.from }>`, // Can be just the email as well without <>
+            `To: ${ email.to }`,
+            `Subject: ${ email.subject }`,
+            `MIME-Version: 1.0`,
+            `Content-Type: multipart/alternative; boundary="${ boundary }"`, // For sending both plaintext & html content
+            // ... you can add more headers here as decribed in https://docs.aws.amazon.com/ses/latest/DeveloperGuide/header-fields.html
+            `\n`,
+            `--${ boundary }`,
+            `Content-Type: text/plain; charset=UTF-8`,
+            `Content-Transfer-Encoding: 7bit`,
+            `\n`,            
+            `--${ boundary }`,
+            `Content-Type: text/html; charset=UTF-8`,
+            `Content-Transfer-Encoding: 7bit`,
+            `\n`,
+            email.body,
+            `\n`,
+            `--${ boundary }--`
+        ]
+        // TODO TERMINAR O RAW EMAIL
+    
+
         let params = {
-            Destination: {
-                ToAddresses: [
-                    email.to
-                ]
-            },
-            Message: {
-                Body: {
-                    Html: {
-                        Charset: "UTF-8",
-                        Data: email.body
-                    },
-                },
-                Subject: {
-                    Charset: 'UTF-8',
-                    Data: email.subject
-                }
-            },
-            Source: email.from
-        };
-        return AWSSES.sendEmail(params).promise()
+            RawMessage: {Data: rawMessage}
+        } 
+
+        return AWSSES.sendRawEmail(params).promise()
     }
 }
