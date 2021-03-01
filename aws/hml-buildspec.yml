@@ -45,7 +45,7 @@ phases:
       - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
 
       - COMMIT_HASH=`git log --oneline | awk -F" " '{print $1; exit}'`
-      - IMAGE_TAG="$COMMIT_HASH"
+      - IMAGE_TAG="$COMMIT_HASH-hml"
       - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
       - IMAGE_URI_LATEST="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest_homolog"
 
