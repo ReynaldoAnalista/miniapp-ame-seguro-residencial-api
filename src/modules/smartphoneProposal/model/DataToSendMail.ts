@@ -1,23 +1,19 @@
 export interface DataToSendMail {
     securityName?: string
-    securityCpf?: string
+    securityUserCpf?: string
     securityAddress?: string
     securityAddressNumber?: string
     securityAddressDistrict?: string
     securityAddressCity?: string
     securityAddressUf?: string
-    securityAddressCep?: string
-    
+    securityDataUserCep?: string
+
     SecurityRepresentationSocialReazon?: string
     SecurityRepresentationCnpj?: string
     SecurityRepresentationCodSusep?: string
 
     securityDataSocialReazon?: string
     securityDataCpf?: string
-    securityDataAdress?: string
-    securityDataNumber?: string
-    securityDataDistrict?: string
-    securityDataCep?: string
     
     brokerName?: string
     brokerCodSusep?: string
@@ -42,10 +38,5 @@ export interface DataToSendMail {
     paymentForm?: string    
     liquidPrice?: string    
     iof?: string    
-    totalPrize?: string    
-    
-    securityValue?: string    
-    securityPercentual?: string        
-    
-    securityMail?: string
+    totalPrize?: string        
 }
