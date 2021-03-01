@@ -1,6 +1,6 @@
 
 // Evitando memory leak nos testes
-if (false && process.env.NEW_RELIC_ENABLED !== 'false') {
+if (process.env.NEW_RELIC_ENABLED !== 'false') {
     require('newrelic');
 }
 
