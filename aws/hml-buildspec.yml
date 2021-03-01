@@ -33,7 +33,7 @@ phases:
       - git clone -b $BRANCH_NAME $GIT_REPO
       - cd $BASE_DIRECTORY
 
-build:
+  build:
     commands:
       # Fetch the current tags related to the current branch
       #- git fetch --tags
