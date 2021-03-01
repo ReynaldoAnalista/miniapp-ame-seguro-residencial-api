@@ -32,7 +32,6 @@ phases:
       - rm -rf $BASE_DIRECTORY
       - git clone -b $BRANCH_NAME $GIT_REPO
       - cd $BASE_DIRECTORY
-
   build:
     commands:
       # Fetch the current tags related to the current branch
@@ -44,15 +43,19 @@ phases:
 
       - ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
 
-      - IMAGE_TAG="latest"
+      - COMMIT_HASH=`git log --oneline | awk -F" " '{print $1; exit}'`
+      - IMAGE_TAG="$COMMIT_HASH"
       - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - IMAGE_URI_LATEST="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest"
 
       - echo Building the Docker image...
-      - COMMIT_HASH=`git log --oneline | awk -F" " '{print $1; exit}'`
       - docker build --build-arg COMMIT_HASH=$COMMIT_HASH --build-arg port=$PORT --no-cache -t $IMAGE_REPO_NAME:$IMAGE_TAG -f ./docker/Dockerfile-prod .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE_URI
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $IMAGE_URI_LATEST
+
 
       - docker push "$IMAGE_URI"
+      - docker push "$IMAGE_URI_LATEST"
       - echo [{\"name\":\"$CONTAINER_NAME\"\,\"imageUri\":\"$IMAGE_URI\"}]  >> images.json
 
   post_build:
