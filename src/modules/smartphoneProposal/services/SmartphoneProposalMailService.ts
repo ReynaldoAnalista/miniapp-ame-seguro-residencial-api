@@ -5,10 +5,13 @@ import util from "util";
 import path from "path";
 import {MailSender} from "../../default/services/MailSender";
 import {DataToSendMail} from "../model/DataToSendMail";
+import {getLogger} from "../../../server/Logger";
 
 const readFile = util.promisify(fs.readFile)
 
 const MAIL_FROM = process.env.MAIL_FROM || 'miniapps@calindra.com.br'
+
+const log = getLogger("SmartphoneProposalMailService")
 
 @injectable()
 export class SmartphoneProposalMailService {
@@ -71,15 +74,15 @@ export class SmartphoneProposalMailService {
                 to: sentMail,
                 body: body
             } as SimpleEmail
-            const emailSent = await this.send(email)
-            return emailSent
+            return await this.send(email)
         } catch (e) {
-            console.debug('ERRO ENVIO', e);
+            log.error('ERRO ENVIO', e);
             throw 'Erro ao enviar email de cupom'
         }
     }
 
     async send(email: SimpleEmail) {
+        log.debug("Sending Email")
         await this.mailSender.send(email)
     }
 }
