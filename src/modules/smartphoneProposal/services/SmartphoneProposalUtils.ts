@@ -1,4 +1,5 @@
 import moment from "moment";
+import {getLogger} from "../../../server/Logger";
 
 /**
  *  Grupo de informações do Segurado
@@ -44,6 +45,8 @@ export interface CoverageData {
     liquidPrize: number
 }
 
+const log = getLogger("SmartphoneProposalUtils")
+
 export class SmartphoneProposalUtils {
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.attributes?.customPayload?.proposal) {
@@ -53,8 +56,10 @@ export class SmartphoneProposalUtils {
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
             proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
-            proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber)
-            proposal.charge_type_data = this.generateChargeData()
+            proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
+            const splits = {...unsignedProposal.splits[0]}
+            const installments = splits.installments ? splits.installments : 1
+            proposal.charge_type_data = this.generateChargeData(installments, splits.amount)
             return proposal
         }
         return null
@@ -73,7 +78,7 @@ export class SmartphoneProposalUtils {
 
         // Número único do contrato
         const keyContractCertificateNumber = contractNumber;
-        console.log('keyContractCertificateNumber', keyContractCertificateNumber)
+        log.debug('keyContractCertificateNumber', keyContractCertificateNumber)
 
         // Fim da Vigência da apólice
         toDay.add(1, "year");
@@ -146,8 +151,7 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateVariablePolicyData(contractNumber) {
-
+    static generateVariablePolicyData(contractNumber, contractValue) {
 
         //Número da proposta a ser gerada pela AME
         const proposalNumber = contractNumber.slice(-14)
@@ -159,7 +163,8 @@ export class SmartphoneProposalUtils {
         const proposalDate = "02032021";
 
         //Comissão da apólice, informado pela AME
-        const policyCommission = 62;
+        const comission = 32
+        const policyCommission = (contractValue / 100) * comission;
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
