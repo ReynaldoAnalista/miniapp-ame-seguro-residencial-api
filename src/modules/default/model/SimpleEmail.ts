@@ -3,4 +3,5 @@ export interface SimpleEmail {
     to: string
     subject: string
     body: string
+    test: boolean
 }
