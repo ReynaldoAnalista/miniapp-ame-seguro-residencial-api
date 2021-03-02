@@ -20,16 +20,13 @@ export class ResidentialSoldProposalRepository {
     }
 
     async create(soldProposal: ResidentialSoldProposal) {
-        log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName: TABLE, Item: soldProposal};
         await dynamoDocClient.put(params).promise();
-        log.debug('REGISTER WROTE ON', TABLE);
         return soldProposal
     }
 
     async findAllFromCustomer(customerId: string) {
-        log.debug(`Searching for plans from customerId = ${customerId}`)
         let params = {
             TableName: TABLE,
             KeyConditionExpression: "customerId = :customerId",
@@ -39,11 +36,9 @@ export class ResidentialSoldProposalRepository {
         };
         try {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-            let result = await dynamoDocClient.query(params).promise();
-            log.debug('result', result)
+            let result = await dynamoDocClient.query(params).promise();            
             return result.Items?.filter(x => x.tenant === Tenants.RESIDENTIAL)
         } catch (e) {
-            log.debug(e.message)
             return []
         }
     }
@@ -52,7 +47,6 @@ export class ResidentialSoldProposalRepository {
      * Este método é utilizado apenas durante os testes
      */
     async deleteByCustomerAndOrder(customerId: string, order: string) {
-        log.debug(`Deleting customerId=${customerId} AND order=${order}`)
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {
             TableName: TABLE,

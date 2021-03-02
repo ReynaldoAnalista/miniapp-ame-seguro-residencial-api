@@ -9,11 +9,15 @@ import Axios, {AxiosInstance} from 'axios';
 import {ParameterStore} from "../configs/ParameterStore";
 import {Secrets} from "../configs/Secrets";
 import { DynamoHolder } from '../repository/DynamoHolder';
+import { MailSender } from '../modules/default/services/MailSender';
+import { MailAwsService } from '../modules/default/services/MailAwsService';
 
 export const iocContainer = new Container()
 
 export const initDependencies = () => {
     const axios = Axios.create({})
+
+    iocContainer.bind<MailSender>("MailSender").to(MailAwsService).inSingletonScope()
 
     /* Initialize Configs */
     iocContainer.bind<AppConfig>(TYPES.AppConfig).to(AppConfig).inSingletonScope();

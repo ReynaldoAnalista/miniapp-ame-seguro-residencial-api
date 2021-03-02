@@ -66,7 +66,6 @@ describe("HubService Consulta proposta smartphone", () => {
         if (customerPlans.smartphonePlans?.length) {
             thePlan = customerPlans.smartphonePlans.find(x => x.order === paymentIdSmartphone)
         }
-        console.log(`PaymentID:${paymentIdSmartphone}, planOrder:${thePlan?.order}`)
         expect(thePlan).toBeDefined()
     })
 

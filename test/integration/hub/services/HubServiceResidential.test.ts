@@ -71,8 +71,7 @@ describe("HubService Consulta proposta residencial", () => {
         let thePlan: any
         if (customerPlans.residentialPlans?.length) {
             thePlan = customerPlans.residentialPlans.find(x => x.order === paymentIdResidential)
-        }
-        console.log(`PaymentID:${paymentIdResidential}, planOrder:${thePlan?.order}`)
+        }        
         expect(thePlan).toBeDefined()
     })
 
