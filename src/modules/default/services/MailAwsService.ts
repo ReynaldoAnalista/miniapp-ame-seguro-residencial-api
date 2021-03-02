@@ -55,9 +55,9 @@ export class MailAwsService implements MailSender {
         let mailFormat = await this.createRawMessage(email);
         let params = {
             RawMessage: {Data: mailFormat}
-        } 
+        }         
 
-        return AWSSES.sendRawEmail(params).promise()
+        // return AWSSES.sendRawEmail(params).promise()
     }
 
     async createRawMessage(email: SimpleEmail) {

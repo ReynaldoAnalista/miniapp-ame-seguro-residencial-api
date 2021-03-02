@@ -5,6 +5,7 @@ import util from "util";
 import path from "path";
 import { MailSender } from "../../default/services/MailSender";
 import { DataToSendMail } from "../model/DataToSendMail";
+import { SmartphoneProposalRepository } from '../repository/SmartphoneProposalRepository'
 
 const readFile = util.promisify(fs.readFile)
 
@@ -15,12 +16,17 @@ export class SmartphoneProposalMailService {
 
     constructor(
         @inject("MailSender")
-        private mailSender: MailSender
+        private mailSender: MailSender,
+        @inject("SmartphoneProposalRepository")
+        private smartphoneProposalRepository: SmartphoneProposalRepository,
     ) {
     }
 
-    async sendSellingEmail(sentMail:string, dataToSendMail: DataToSendMail) {        
+    async sendSellingEmail(pass: string) {        
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
+        let dataTogetPass = await this.smartphoneProposalRepository.findByID(pass)
+        const dataToSendMail =  await this.formatMailJsonParseInfo(dataTogetPass)
+
         try {
             let template = await readFile(emailTemplate, 'utf-8')
             let body = template
@@ -68,7 +74,7 @@ export class SmartphoneProposalMailService {
             let email = { 
                 from: MAIL_FROM,
                 subject: 'Cupom bilhete seguro',
-                to: sentMail,
+                // to: sentMail,
                 body: body
             } as SimpleEmail
             const emailSent = await this.send(email)
@@ -81,5 +87,53 @@ export class SmartphoneProposalMailService {
 
     async send(email: SimpleEmail) {
         await this.mailSender.send(email)
+    }
+
+    async formatMailJsonParseInfo(MailInfo) {
+
+        const dataToSendMail: DataToSendMail = {
+            securityName : MailInfo.attributes.customPayload.proposal.insured_data.insured_name,
+            securityUserCpf : MailInfo.attributes.customPayload.proposal.insured_data.cnpj_cpf,
+            securityAddress : MailInfo.attributes.customPayload.proposal.insured_data.address_data.street,
+            securityAddressNumber: MailInfo.attributes.customPayload.proposal.insured_data.address_data.number,
+            securityAddressDistrict: MailInfo.attributes.customPayload.proposal.insured_data.address_data.district,
+            securityAddressCity: MailInfo.attributes.customPayload.proposal.insured_data.address_data.city,
+            securityAddressUf: MailInfo.attributes.customPayload.proposal.insured_data.address_data.federal_unit,        
+            securityDataUserCep: MailInfo.attributes.customPayload.proposal.insured_data.address_data.zip_code,
+    
+            SecurityRepresentationSocialReazon: '-',
+            SecurityRepresentationCnpj: '-',
+            SecurityRepresentationCodSusep: '-',
+    
+            securityDataSocialReazon: '-',
+            securityDataCpf: '-',
+    
+            brokerName: '-',
+            brokerCodSusep: '-',
+    
+            securyDataBranch: '-',
+            securyDataIndividualTicket: '-',
+            securyDataEmissionDate:  '-',
+            securyDataInitialSuranceTerm:  '-',
+            securyDataFinalSuranceTerm:  '-',        
+    
+            maxLimitThieft: '-',
+            posThieft: '-',
+            prizeThieft:  '-',
+            lackThieft:  '-',    
+            maxLimitAcidental:  '-',
+            posAcidental:  '-', 
+            prizeAcidental:  '-',
+            lackAcidental:  '-',    
+            productDescription:  MailInfo.attributes.customPayload.proposal.portable_equipment_risk_data.product_description,
+            model: '-',
+            mark: '-',        
+            paymentForm: MailInfo.operationType,
+            liquidPrice: MailInfo.amount,
+            iof: '-',    
+            totalPrize: '-'
+        }
+    
+        return dataToSendMail;
     }
 }
