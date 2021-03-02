@@ -16,8 +16,8 @@ describe("SmartphoneProposalMail", () => {
 
     it("Envia o e-mail para o segurado", async () => {
         const pass = 'e37d5ec8-36b9-4391-8d41-d98cdb98aa43'
-        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail(pass)
-        expect(proposalEmail).toEqual(true)
+        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail(pass, true)
+        expect(proposalEmail).toEqual(true) 
     })
 
 })

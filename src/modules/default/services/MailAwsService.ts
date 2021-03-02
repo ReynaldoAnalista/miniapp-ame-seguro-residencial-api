@@ -6,7 +6,7 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import { SimpleEmail } from "../../default/model/SimpleEmail";
 import { MailSender } from "./MailSender";
 
-import fs from "fs";
+// import fs from "fs";
 
 const logger = getLogger("MailService")
 const AWS = require('aws-sdk')
@@ -42,7 +42,7 @@ export class MailAwsService implements MailSender {
 
         this.accessKeyId = accessKeyId
         this.secretAccessKey = secretAccessKey
-
+        
         return new AWS.SES({apiVersion, accessKeyId, secretAccessKey})
     }
 
@@ -56,6 +56,9 @@ export class MailAwsService implements MailSender {
         let params = {
             RawMessage: {Data: mailFormat}
         }         
+
+        if (email.test == true)
+            return false            
 
         return AWSSES.sendRawEmail(params).promise()
     }
@@ -82,17 +85,15 @@ export class MailAwsService implements MailSender {
          alternateEntity.body.push(htmlEntity);         
          mailContent.body.push(alternateEntity);
 
-         var data = fs.readFileSync('./src/files/CG_BILHETE.pdf');
-
-         var attachmentEntity = mimemessage.factory({
-            contentType: 'text/plain',
-            contentTransferEncoding: 'base64',
-            body: data.toString('base64').replace(/([^\0]{76})/g, "$1\n")
-        });
-
-        attachmentEntity.header('Content-Disposition', 'attachment ; filename="CG_BILHETE.pdf"');
-
-        mailContent.body.push(attachmentEntity);
+        //  FOI FEITA A REMOÇÃO DA IMPLEMENTAÇÃO DO ANEXO NO CORPO DO E-MAIL        
+        //  var data = fs.readFileSync('./src/files/CG_BILHETE.pdf');
+        //  var attachmentEntity = mimemessage.factory({
+        //     contentType: 'text/plain',
+        //     contentTransferEncoding: 'base64',
+        //     body: data.toString('base64').replace(/([^\0]{76})/g, "$1\n")
+        // });
+        // attachmentEntity.header('Content-Disposition', 'attachment ; filename="CG_BILHETE.pdf"');
+        // mailContent.body.push(attachmentEntity);
 
         return mailContent.toString()
     }

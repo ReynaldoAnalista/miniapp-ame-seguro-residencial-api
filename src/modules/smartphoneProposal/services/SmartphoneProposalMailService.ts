@@ -22,10 +22,10 @@ export class SmartphoneProposalMailService {
     ) {
     }
 
-    async sendSellingEmail(pass: string) {        
+    async sendSellingEmail(pass: string, istest ?: boolean) {        
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
         let dataTogetPass = await this.smartphoneProposalRepository.findByID(pass)
-        let dataToSendMail =  await this.formatMailJsonParseInfo(dataTogetPass)
+        let dataToSendMail =  await this.formatMailJsonParseInfo(dataTogetPass)        
         try {
             let template = await readFile(emailTemplate, 'utf-8')
             let body = template
@@ -75,7 +75,8 @@ export class SmartphoneProposalMailService {
                 subject: 'Cupom bilhete seguro',
                 // TODO : Descobrir como pegar o e-mail
                 // to: sentMail, 
-                body: body
+                body: body,
+                test: istest
             } as SimpleEmail
             const emailSent = await this.send(email)
             return true
@@ -92,14 +93,14 @@ export class SmartphoneProposalMailService {
     async formatMailJsonParseInfo(MailInfo) {
 
         const dataToSendMail: DataToSendMail = {
-            securityName : MailInfo.attributes.customPayload.proposal.insured_data.insured_name,
-            securityUserCpf : MailInfo.attributes.customPayload.proposal.insured_data.cnpj_cpf,
-            securityAddress : MailInfo.attributes.customPayload.proposal.insured_data.address_data.street,
-            securityAddressNumber: MailInfo.attributes.customPayload.proposal.insured_data.address_data.number,
-            securityAddressDistrict: MailInfo.attributes.customPayload.proposal.insured_data.address_data.district,
-            securityAddressCity: MailInfo.attributes.customPayload.proposal.insured_data.address_data.city,
-            securityAddressUf: MailInfo.attributes.customPayload.proposal.insured_data.address_data.federal_unit,        
-            securityDataUserCep: MailInfo.attributes.customPayload.proposal.insured_data.address_data.zip_code,
+            securityName : MailInfo?.attributes?.customPayload?.proposal.insured_data.insured_name,
+            securityUserCpf : MailInfo?.attributes?.customPayload?.proposal.insured_data.cnpj_cpf,
+            securityAddress : MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.street,
+            securityAddressNumber: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.number,
+            securityAddressDistrict: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.district,
+            securityAddressCity: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.city,
+            securityAddressUf: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.federal_unit,        
+            securityDataUserCep: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.zip_code,
     
             SecurityRepresentationSocialReazon: '-',
             SecurityRepresentationCnpj: '-',
@@ -125,11 +126,11 @@ export class SmartphoneProposalMailService {
             posAcidental:  '-', 
             prizeAcidental:  '-',
             lackAcidental:  '-',    
-            productDescription:  MailInfo.attributes.customPayload.proposal.portable_equipment_risk_data.product_description,
+            productDescription:  MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
             model: '-',
             mark: '-',        
-            paymentForm: MailInfo.operationType,
-            liquidPrice: MailInfo.amount,
+            paymentForm: MailInfo?.operationType,
+            liquidPrice: MailInfo?.amount,
             iof: '-',    
             totalPrize: '-'
         }
