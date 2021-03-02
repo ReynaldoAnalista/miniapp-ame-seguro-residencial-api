@@ -6,6 +6,8 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import { SimpleEmail } from "../../default/model/SimpleEmail";
 import { MailSender } from "./MailSender";
 
+// import fs from "fs";
+
 const logger = getLogger("MailService")
 const AWS = require('aws-sdk')
 AWS.config.update({
@@ -40,7 +42,7 @@ export class MailAwsService implements MailSender {
 
         this.accessKeyId = accessKeyId
         this.secretAccessKey = secretAccessKey
-
+        
         return new AWS.SES({apiVersion, accessKeyId, secretAccessKey})
     }
 
@@ -49,38 +51,50 @@ export class MailAwsService implements MailSender {
         if (!this.accessKeyId) {
             logger.warn('Envio de email nao configurado')
             return Promise.resolve({})
-        }        
-
-        var date = new Date();
-        var boundary = `----=_Part${ Math.random().toString().substr( 2 ) }`;
-
-        var rawMessage = [
-            `From: "${ email.from }" <${ email.from }>`, // Can be just the email as well without <>
-            `To: ${ email.to }`,
-            `Subject: ${ email.subject }`,
-            `MIME-Version: 1.0`,
-            `Content-Type: multipart/alternative; boundary="${ boundary }"`, // For sending both plaintext & html content
-            // ... you can add more headers here as decribed in https://docs.aws.amazon.com/ses/latest/DeveloperGuide/header-fields.html
-            `\n`,
-            `--${ boundary }`,
-            `Content-Type: text/plain; charset=UTF-8`,
-            `Content-Transfer-Encoding: 7bit`,
-            `\n`,            
-            `--${ boundary }`,
-            `Content-Type: text/html; charset=UTF-8`,
-            `Content-Transfer-Encoding: 7bit`,
-            `\n`,
-            email.body,
-            `\n`,
-            `--${ boundary }--`
-        ]
-        // TODO TERMINAR O RAW EMAIL
-    
-
+        }                         
+        let mailFormat = await this.createRawMessage(email);
         let params = {
-            RawMessage: {Data: rawMessage}
-        } 
+            RawMessage: {Data: mailFormat}
+        }         
+
+        if (email.test == true)
+            return false            
 
         return AWSSES.sendRawEmail(params).promise()
+    }
+
+    async createRawMessage(email: SimpleEmail) {
+        
+        var mimemessage = require('mimemessage');
+
+        var mailContent = mimemessage.factory({contentType: 'multipart/mixed',body: []});
+        mailContent.header('From', email.from);
+        mailContent.header('To', email.to);
+        mailContent.header('Subject', email.subject);
+        
+        var alternateEntity = mimemessage.factory({
+            contentType: 'multipart/alternate',
+            body: []
+        });
+
+        var htmlEntity = mimemessage.factory({
+            contentType: 'text/html;charset=utf-8',
+            body:  email.body
+          });
+         
+         alternateEntity.body.push(htmlEntity);         
+         mailContent.body.push(alternateEntity);
+
+        //  FOI FEITA A REMOÇÃO DA IMPLEMENTAÇÃO DO ANEXO NO CORPO DO E-MAIL        
+        //  var data = fs.readFileSync('./src/files/CG_BILHETE.pdf');
+        //  var attachmentEntity = mimemessage.factory({
+        //     contentType: 'text/plain',
+        //     contentTransferEncoding: 'base64',
+        //     body: data.toString('base64').replace(/([^\0]{76})/g, "$1\n")
+        // });
+        // attachmentEntity.header('Content-Disposition', 'attachment ; filename="CG_BILHETE.pdf"');
+        // mailContent.body.push(attachmentEntity);
+
+        return mailContent.toString()
     }
 }
