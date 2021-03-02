@@ -47,34 +47,37 @@ export interface CoverageData {
 export class SmartphoneProposalUtils {
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.attributes?.customPayload?.proposal) {
+            const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
+            const milisseconds = (new Date()).getTime()
+            const contractNumber = `${milisseconds}`.padStart(17, preNumber);
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
-            proposal.policy_data = this.generatePolicyData()
+            proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
-            proposal.variable_policy_data = this.generateVariablePolicyData()
+            proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber)
             proposal.charge_type_data = this.generateChargeData()
             return proposal
         }
         return null
     }
 
-    static generatePolicyData() {
+    static generatePolicyData(contractNumber) {
         // Todas as apólices são ligadas à uma apólice mãe única
-        const motherPolicyNumber = "6944000861071";
+        const motherPolicyNumber = "2716000020171";
 
 
         // Início da Vigência da apólice
         let toDay = moment(new Date());
-        const startValidDocument = toDay.format('ddMMyyyy');
+        const startValidDocument = toDay.format('DDMMYYYY');
 
         const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
 
         // Número único do contrato
-        const keyContractCertificateNumber = `${(new Date()).getTime()}`.padStart(17, preNumber);
+        const keyContractCertificateNumber = contractNumber;
         console.log('keyContractCertificateNumber', keyContractCertificateNumber)
 
         // Fim da Vigência da apólice
         toDay.add(1, "year");
-        const endValidDocument = toDay.format('ddMMyyyy');
+        const endValidDocument = toDay.format('DDMMYYYY');
 
         return {
             "mother_policy_number": motherPolicyNumber,
@@ -143,12 +146,14 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateVariablePolicyData() {
+    static generateVariablePolicyData(contractNumber) {
+
+
         //Número da proposta a ser gerada pela AME
-        const proposalNumber = 20536270000;
+        const proposalNumber = contractNumber.slice(-14)
 
         //Ainda sem definição
-        const insuranceCertificateNumber = "102201800";
+        const insuranceCertificateNumber = contractNumber.slice(-9);
 
         //Data da proposta do seguro (inicio da vigência), informado pela AME
         const proposalDate = "02032021";
@@ -222,7 +227,7 @@ export class SmartphoneProposalUtils {
     static generateCoverageData(coverageData: CoverageData) {
 
         // Informar fixo 01
-        const policyItemNumber = 1;
+        const policyItemNumber = "000001";
 
         return {
             "policy_item_number": policyItemNumber,
@@ -232,28 +237,71 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateChargeData() {
+    static getPaymentPlanCode = (code) => {
+        switch (code) {
+            case 1:
+                return 301;
+
+            case 2:
+                return 302;
+
+            case 3:
+                return 303;
+
+            case 4:
+                return 304;
+
+            case 5:
+                return 1194;
+
+            case 6:
+                return 1195;
+
+            case 7:
+                return 1196;
+
+            case 8:
+                return 1197;
+
+            case 9:
+                return 1198;
+
+            case 10:
+                return 1199;
+
+            case 11:
+                return 1029;
+
+            case 12:
+                return 1183;
+
+            default:
+                return 301
+        }
+    }
+
+    static generateChargeData(installments, firstInstalment) {
 
         // (FIXO DF), informado pela AME
-        const typeOfCollectionManager = "TA";
+        const typeOfCollectionManager = "DF";
 
         // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
-        const paymentPlanCode = 723;
+        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments);
 
         // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 99999999;
+        const paymentManagerCode = 99990638;
 
         // CPF ou CGC AME
         const documentType = "CGC";
 
         // Número do documento AME
-        const documentNumber = "13850516000177";
+        const documentNumber = "32778350000170";
 
         // Quantidade de parcelas, informado pela AME
-        const numberOfInstallments = 1;
+        const numberOfInstallments = installments;
 
         // Valor da primeira parcela, informado pela AME
-        const firstInstallmentValue = 249.97;
+        const firstInstallmentValue = firstInstalment;
 
         // Dia 28 do mês subsequente, informado pela AME
         const maturityOfFirstInstallment = "10042021";
