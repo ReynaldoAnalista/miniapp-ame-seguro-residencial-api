@@ -22,9 +22,8 @@ describe("SmartphoneProposalMail", () => {
 
     it("Envia o e-mail para o segurado", async () => {
         const mailInfo = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")       
-        const JsonMailInfo = formatMailJsonParseInfo(JSON.parse(mailInfo)) 
-        const attachFile = './src/files/example.pdf'
-        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail('hedanot636@566dh.com', JsonMailInfo, attachFile)
+        const JsonMailInfo = formatMailJsonParseInfo(JSON.parse(mailInfo))         
+        const proposalEmail = await smartphoneProposalMailService.sendSellingEmail('medek74137@igoqu.com', JsonMailInfo)
         expect(proposalEmail).toEqual(true)
     })
 

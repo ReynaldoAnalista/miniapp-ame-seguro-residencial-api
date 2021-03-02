@@ -82,7 +82,7 @@ export class MailAwsService implements MailSender {
          alternateEntity.body.push(htmlEntity);         
          mailContent.body.push(alternateEntity);
 
-         var data = fs.readFileSync(email.attach);
+         var data = fs.readFileSync('./src/files/CG_BILHETE.pdf');
 
          var attachmentEntity = mimemessage.factory({
             contentType: 'text/plain',
@@ -90,7 +90,7 @@ export class MailAwsService implements MailSender {
             body: data.toString('base64').replace(/([^\0]{76})/g, "$1\n")
         });
 
-        attachmentEntity.header('Content-Disposition', 'attachment ; filename="example.pdf"');
+        attachmentEntity.header('Content-Disposition', 'attachment ; filename="CG_BILHETE.pdf"');
 
         mailContent.body.push(attachmentEntity);
 
