@@ -25,8 +25,7 @@ export class SmartphoneProposalMailService {
     async sendSellingEmail(pass: string) {        
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
         let dataTogetPass = await this.smartphoneProposalRepository.findByID(pass)
-        const dataToSendMail =  await this.formatMailJsonParseInfo(dataTogetPass)
-
+        let dataToSendMail =  await this.formatMailJsonParseInfo(dataTogetPass)
         try {
             let template = await readFile(emailTemplate, 'utf-8')
             let body = template

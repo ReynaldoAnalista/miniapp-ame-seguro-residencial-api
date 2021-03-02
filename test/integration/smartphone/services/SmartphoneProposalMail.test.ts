@@ -2,13 +2,7 @@ import {initDependencies, iocContainer} from "../../../../src/inversify/inversif
 import { SmartphoneProposalMailService } from "../../../../src/modules/smartphoneProposal/services/SmartphoneProposalMailService";
 import { DataToSendMail } from "../../../../src/modules/smartphoneProposal/model/DataToSendMail";
 
-import path from "path";
-import util from "util";
-import fs from "fs";
-
 initDependencies()
-
-const readFile = util.promisify(fs.readFile)
 
 jest.setTimeout(3000)
 
