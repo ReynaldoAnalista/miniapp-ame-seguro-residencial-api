@@ -19,7 +19,7 @@ export class SmartphoneProposalMailService {
     ) {
     }
 
-    async sendSellingEmail(sentMail:string, dataToSendMail: DataToSendMail) {        
+    async sendSellingEmail(sentMail:string, dataToSendMail: DataToSendMail, attachFile : string) {        
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
         try {
             let template = await readFile(emailTemplate, 'utf-8')
@@ -69,10 +69,11 @@ export class SmartphoneProposalMailService {
                 from: MAIL_FROM,
                 subject: 'Cupom bilhete seguro',
                 to: sentMail,
-                body: body
+                body: body,
+                attach: attachFile
             } as SimpleEmail
             const emailSent = await this.send(email)
-            return emailSent
+            return true
         } catch (e) {
             console.debug('ERRO ENVIO' , e);            
             throw 'Erro ao enviar email de cupom'
