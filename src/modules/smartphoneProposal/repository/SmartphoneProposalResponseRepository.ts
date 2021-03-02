@@ -2,7 +2,7 @@ import {injectable, inject} from "inversify";
 import {DynamoHolder} from "../../../repository/DynamoHolder";
 import {getLogger} from "../../../server/Logger";
 
-const TABLE = `${process.env.DYNAMODB_ENV}__seguro_celular_response`;
+const TABLE = `${process.env.DYNAMODB_ENV}_seguro_celular_response`;
 
 const log = getLogger("SmartphoneProposalResponseRepository")
 
