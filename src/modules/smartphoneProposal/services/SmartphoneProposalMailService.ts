@@ -73,7 +73,8 @@ export class SmartphoneProposalMailService {
             let email = { 
                 from: MAIL_FROM,
                 subject: 'Cupom bilhete seguro',
-                // to: sentMail,
+                // TODO : Descobrir como pegar o e-mail
+                // to: sentMail, 
                 body: body
             } as SimpleEmail
             const emailSent = await this.send(email)
