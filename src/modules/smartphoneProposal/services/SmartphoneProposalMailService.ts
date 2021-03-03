@@ -81,9 +81,10 @@ export class SmartphoneProposalMailService {
                 .replace(/@@iof@@/g, `${dataToSendMail.iof}`)
                 .replace(/@@total_prize@@/g, `${dataToSendMail.totalPrize}`)
 
-            const emailFrom = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
+            const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
+            const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
             log.debug(`EmailFrom:${emailFrom}`)
-            const sendResult = await EmailSender.sendEmail(emailFrom ? emailFrom : 'no-reply@amegidital.com', email, body)
+            const sendResult = await EmailSender.sendEmail(emailFrom, email, body)
             return sendResult.MessageId
         } catch (e) {
             console.debug('ERRO ENVIO', e);
