@@ -59,6 +59,16 @@
     ],
     "customPayload": {
       "clientCallbackUrl": "https://miniapps.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+      "selectedPlan": {
+        "id": 1,
+        "description": "Ame Proteção Total",
+        "percent": 17.84,
+        "stolenFranchise": 0.2,
+        "brokenFranchise": 0.15,
+        "screenFranchise": 0.1,
+        "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+        "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem"
+      },
       "proposal": {
         "insured_data": {
           "insured_name": "Marcelo Madeira de Matos",
@@ -122,10 +132,10 @@
           "policy_item_number": 2053627
         },
         "policy_data": {
-          "start_valid_document": "Tu032021",
+          "start_valid_document": "03032021",
           "key_contract_certificate_number": "00001614734026812",
           "mother_policy_number": "6944000861071",
-          "end_valid_document": "We032022"
+          "end_valid_document": "03032022"
         },
         "variable_policy_data": {
           "proposal_number": 20536270000,
