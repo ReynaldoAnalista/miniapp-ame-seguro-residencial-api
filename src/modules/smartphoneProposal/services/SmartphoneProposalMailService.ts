@@ -82,20 +82,17 @@ export class SmartphoneProposalMailService {
             .replace(/@@total_prize@@/g, `${dataToSendMail.totalPrize}`)
 
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
-        const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
-        const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
+        // const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
+        // const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
-        if (accessKeyId && secretAccessKey) {
-            log.debug(`EmailFrom:${emailFrom}`)
-            try {
-                const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
-                return sendResult.MessageId
-            } catch (e) {
-                console.error('Email not sent, error', e);
-                throw 'Error during sending email'
-            }
-        } else {
-            throw "AWS Mail credentials not configured, MAIL_ACCESS_KEY_ID & MAIL_SECRET_ACCESS_KEY"
+        log.debug(`EmailFrom:${emailFrom}`)
+
+        try {
+            const sendResult = await EmailSender.sendEmail(emailFrom, email, body)
+            return sendResult.MessageId
+        } catch (e) {
+            console.error('Email not sent, error', e);
+            throw 'Error during sending email'
         }
 
     }

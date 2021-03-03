@@ -1,12 +1,8 @@
 const AWS = require('aws-sdk');
 
 export default class EmailSender {
-    static async sendEmail(mailFrom, mailTo, HTMLContent, accessKeyId, secretAccessKey) {
-        AWS.config.update({
-            region: 'us-east-1',
-            accessKeyId,
-            secretAccessKey
-        });
+    static async sendEmail(mailFrom, mailTo, HTMLContent) {
+        AWS.config.update({region: 'us-east-1'});
         const params = {
             Destination: {ToAddresses: [mailTo]},
             Message: {
