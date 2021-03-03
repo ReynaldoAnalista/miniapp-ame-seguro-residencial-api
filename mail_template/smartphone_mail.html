@@ -17,6 +17,10 @@
             margin:0 auto; max-width:1000px; min-width:1000px;
             border-collapse:collapse;
         }        
+        .table-body--without-border {
+            margin:0 auto; max-width:1000px; min-width:1000px;
+            border-collapse:collapse;
+        }        
         .table-body thead th{
             padding: 0;
             height: 12px;
@@ -54,18 +58,17 @@
             <tr>
                 <tr>
                     <td>
-                        <table width="98%" style="height:30px; margin:10px">
-                            <td style="padding-left:2%">
-                                <img style="height:30px" 
-                                    src="https://calindra.tech/ame/email-veus-miniapp/logoame.png"
-                                    alt="logo da Ame" />
+                        <table>
+                            <td>
+                                <img style="height:30px; margin-right: 50px;" src="https://calindra.tech/ame/email-veus-miniapp/logoame.png" alt="logo da Ame" />
                             </td>   
                             <td>
                                 <b> CUPOM BILHETE SEGURO</b> <br>
                                 SEGURO DE ROUBO OU FURTO QUALIFICADO <br>
                                 DE ELETRÔNICO PORTÁTIL E QUEBRA ACIDENTAL
                             </td>
-                    </td>                
+                        </table>
+                    </td>
                 </tr>                
                 <tr>
                     <table class="table-body" style="margin-top: 25px">
@@ -308,8 +311,7 @@
                     </table>
                 </tr>
                 <tr>
-                    <table style="height:30px;">
-                        <tbody>
+                    <table class="table-body--without-border" style="height:30px;">                        
                             <tr>
                                 <td style="padding: 8px 0;">
                                    <span style="font-size: 12px; font-weight: bold;">(*)P.O.S(Participação Obrigatória do Segurado)</span>
@@ -337,8 +339,7 @@
                                         <b>PROCESSO SUSEP N 15.414.901005/2014-71</b>
                                     </span>
                                 </td>
-                            </tr>
-                        </tbody>
+                            </tr>                        
                     </table>
                 </tr>                
             </tr>
