@@ -12,7 +12,7 @@ describe("SmartphoneProposalMail", () => {
     })
     it("Envia o e-mail para o segurado", async () => {
         const pass = '321a1caf-1491-4c93-8569-46f11574c044';
-        const emailId = await smartphoneProposalMailService.sendSellingEmail(pass, true)
+        const emailId = await smartphoneProposalMailService.sendSellingEmail(pass)
         expect(emailId).toBeDefined()
     })
 })

@@ -10,6 +10,7 @@ import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
 import {Tenants} from "../../default/model/Tenants";
 import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
+import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -27,6 +28,8 @@ export class SmartphoneProposalService {
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
         @inject("SmartphoneProposalResponseRepository")
         private responseRepository: SmartphoneProposalResponseRepository,
+        @inject("SmartphoneProposalMailService")
+        private mailService: SmartphoneProposalMailService,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
@@ -34,15 +37,19 @@ export class SmartphoneProposalService {
 
     async processProposal(signedPayment: string) {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
-        console.log('Salvou o arquivo da proposta')
+        log.info('Separando o arquivo da proposta')
         const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
+        log.info('Enviando a proposta para a digibee')
         const proposalResponse = await this.sendProposal(proposal)
-        console.log('Enviou a proposta para a digibee')
+        log.info('Salvando a resposta da digibee')
         await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
-        console.log('Salvou a resposta da digibee')
+        log.info('Salvando a compra')
         await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.SMARTPHONE)
-        console.log('Salvou a compra')
+        log.info('Enviando o email ao cliente')
+        await this.mailService.sendSellingEmailByPaymentObject(unsignedPayment)
+        log.info('Retornando a proposta')
         return proposalResponse
     }
 

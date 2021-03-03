@@ -24,14 +24,18 @@ export class SmartphoneProposalMailService {
     ) {
     }
 
-    async sendSellingEmail(pass: string, istest ?: boolean) {
-        let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
-        const order = await this.smartphoneProposalRepository.findByID(pass)
-        if (!order) {
+    async sendSellingEmail(pass: string) {
+        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        if (!paymentObject) {
             throw "Order not found"
         }
-        const email: string = order.attributes?.customPayload?.clientEmail
-        const dataToSendMail = await this.formatMailJsonParseInfo(order)
+        return await this.sendSellingEmailByPaymentObject(paymentObject)
+    }
+
+    async sendSellingEmailByPaymentObject(unsignedPayment: any) {
+        const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
+        const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
+        let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
         try {
             let template = await readFile(emailTemplate, 'utf-8')
             let body = template
