@@ -73,8 +73,6 @@ export class SmartphoneProposalUtils {
         let toDay = moment(new Date());
         const startValidDocument = toDay.format('DDMMYYYY');
 
-        const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
-
         // Número único do contrato
         const keyContractCertificateNumber = contractNumber;
         log.debug('keyContractCertificateNumber', keyContractCertificateNumber)
@@ -158,6 +156,44 @@ export class SmartphoneProposalUtils {
         }
     }
 
+    static generateChargeData(installments, firstInstalment) {
+
+        // (FIXO DF), informado pela AME
+        const typeOfCollectionManager = "DF";
+
+        // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
+        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments);
+
+        // Mapfre ficou de enviar o código, estou aguardando
+        const paymentManagerCode = 99990638;
+
+        // CPF ou CGC AME
+        const documentType = "CGC";
+
+        // Número do documento AME
+        const documentNumber = "32778350000170";
+
+        // Quantidade de parcelas, informado pela AME
+        const numberOfInstallments = installments;
+
+        // Valor da primeira parcela, informado pela AME
+        const firstInstallmentValue = firstInstalment;
+
+        // Dia 28 do mês subsequente, informado pela AME
+        const maturityOfFirstInstallment = "10042021";
+
+        return {
+            "type_of_collection_manager": typeOfCollectionManager,
+            "payment_plan_code": paymentPlanCode,
+            "payment_manager_code": paymentManagerCode,
+            "document_type": documentType,
+            "document_number": documentNumber,
+            "number_of_installments": numberOfInstallments,
+            "first_installment_value": firstInstallmentValue,
+            "maturity_of_first_installment": maturityOfFirstInstallment
+        }
+    }
+
     static getPaymentPlanCode = (code) => {
         switch (code) {
             case 1:
@@ -198,44 +234,6 @@ export class SmartphoneProposalUtils {
 
             default:
                 return 301
-        }
-    }
-
-    static generateChargeData(installments, firstInstalment) {
-
-        // (FIXO DF), informado pela AME
-        const typeOfCollectionManager = "DF";
-
-        // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
-        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments);
-
-        // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 99990638;
-
-        // CPF ou CGC AME
-        const documentType = "CGC";
-
-        // Número do documento AME
-        const documentNumber = "32778350000170";
-
-        // Quantidade de parcelas, informado pela AME
-        const numberOfInstallments = installments;
-
-        // Valor da primeira parcela, informado pela AME
-        const firstInstallmentValue = firstInstalment;
-
-        // Dia 28 do mês subsequente, informado pela AME
-        const maturityOfFirstInstallment = "10042021";
-
-        return {
-            "type_of_collection_manager": typeOfCollectionManager,
-            "payment_plan_code": paymentPlanCode,
-            "payment_manager_code": paymentManagerCode,
-            "document_type": documentType,
-            "document_number": documentNumber,
-            "number_of_installments": numberOfInstallments,
-            "first_installment_value": firstInstallmentValue,
-            "maturity_of_first_installment": maturityOfFirstInstallment
         }
     }
 }
