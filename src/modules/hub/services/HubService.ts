@@ -38,8 +38,65 @@ export class HubService {
     async retrievePlans(customerId: string) {
         log.debug("retrievePlans")
         const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
-        const smartphonePlans = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
-        return {residentialPlans, smartphonePlans}
+        const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
+
+        const plans = [
+            {
+                id: 1,
+                description: "Ame Proteção Total",
+                percent: 17.84,
+                stolenFranchise: 0.2,
+                brokenFranchise: 0.15,
+                screenFranchise: 0.1,
+                coverage: "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+                guarantee: "Reparo ou em razão de impossibilidade, subtituição do bem"
+            },
+            {
+                id: 2,
+                description: "Ame Proteção Essencial",
+                percent: 13.88,
+                stolenFranchise: null,
+                brokenFranchise: 0.15,
+                screenFranchise: 0.1,
+                coverage: "Quebra acidental e proteção de tela",
+                guarantee: "Reparo ou em razão de impossibilidade, subtituição do bem"
+            },
+            {
+                id: 3,
+                description: "Ame Proteção de Tela",
+                percent: 9.25,
+                stolenFranchise: null,
+                brokenFranchise: null,
+                screenFranchise: 0.1,
+                coverage: "Proteção de tela",
+                guarantee: "Substituição da tela"
+            }
+        ]
+
+        let smartphonePlans = []
+        if (smartphonePlansFromDB) {
+            smartphonePlans = Object.assign(smartphonePlansFromDB).map(x => {
+
+                const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                const device = proposal.portable_equipment_risk_data
+
+                return {
+                    id: x.order,
+                    descricao: x.receivedPaymentNotification.title,
+                    data: '12/05/20',
+                    valor: '1.200,00',
+                    protocolo: '1243536363',
+                    aparelho: device.risk_description,
+                    imei: device.device_serial_code,
+                    cobertura: `${x.receivedPaymentNotification.title} ${x.receivedPaymentNotification.descritpion}`,
+                    garantia: '',
+                    franquia: '200.00',
+                }
+            })
+        }
+
+
+        return { residentialPlans, smartphonePlans }
     }
 
     /**
