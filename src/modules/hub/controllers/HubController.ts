@@ -33,6 +33,23 @@ export class HubController {
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
+    @Get("/rawplans/{customerId}")
+    public async retrieveRawPlans(@Path() customerId: string) {
+        logger.debug(`Consult plans for customerID=${customerId}`);
+        try {
+            const result: any = await this.hubService.retrievePlans(customerId, true)
+            if (!result) {
+                throw new ApiError("Nothing to show", 404, `Customer not found`)
+            }
+            logger.debug("customer request ended")
+            return result
+        } catch (e) {
+            throw new ApiError("Error on retrieve customer", 404, JSON.stringify({ apiStatus: e.status }))
+        }
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
     @Get("/configs/{key}")
     public async retrieveConfigs(@Path() key: string) {
         logger.debug("Consult configs");

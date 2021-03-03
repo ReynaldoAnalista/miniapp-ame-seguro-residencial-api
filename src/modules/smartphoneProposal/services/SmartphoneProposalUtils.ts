@@ -51,15 +51,14 @@ export class SmartphoneProposalUtils {
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.attributes?.customPayload?.proposal) {
             const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
-            const milisseconds = (new Date()).getTime()
-            const contractNumber = `${milisseconds}`.padStart(17, preNumber);
+            const contractNumber = `${unsignedProposal.nsu}`.padStart(17, preNumber);
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
             proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            const splits = {...unsignedProposal.splits[0]}
-            const installments = splits.installments ? splits.installments : 1
-            proposal.charge_type_data = this.generateChargeData(installments, splits.amount)
+            const split = { ...unsignedProposal.splits[0] }
+            const installments = split.installments ? split.installments : 1
+            proposal.charge_type_data = this.generateChargeData(installments, split.amount)
             return proposal
         }
         return null
@@ -131,26 +130,6 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateInsuredData(insuredData: InsuredData) {
-        return {
-            "insured_name": insuredData.insuredName,
-            "type_of_legal_person": insuredData.typeOfLegalPerson,
-            "cnpj_cpf": insuredData.cnpjCpf,
-            "date_of_birth": insuredData.dateOfBirth,
-            "gender": insuredData.gender,
-            "address_data": {
-                "type_of_street": insuredData.typeOfStreet,
-                "street": insuredData.street,
-                "number": insuredData.number,
-                "complement": insuredData.complement,
-                "district": insuredData.district,
-                "city": insuredData.city,
-                "zip_code": insuredData.zipCode,
-                "federal_unit": insuredData.federalUnit
-            }
-        }
-    }
-
     static generateVariablePolicyData(contractNumber, contractValue) {
 
         //Número da proposta a ser gerada pela AME
@@ -176,69 +155,6 @@ export class SmartphoneProposalUtils {
             "proposal_date": proposalDate,
             "policy_commission": policyCommission,
             "policy_cost": policyCost
-        }
-    }
-
-    static generatePortableEquipmentRiskData() {
-
-        // CPF por risco, acredito que pode ser o mesmo cpf do segurado, informado pela AME
-        const cpfCnpjByRisk = 47156984523;
-
-        // MESMA DESCRIÇÃO DO BEM SEGURADO abaixo, informado pela AME
-        const riskDescription = "CELULAR LG K10 PRO 5.7";
-
-        // Descrição do bem segurado, informado pela AME
-        const productDescription = "CELULAR LG K10 PRO 5.7";
-
-        // Caso não tenha, enviar 1, informado pela AME
-        const manufacturerCode = 1;
-
-        // Nome do fabricante do aparelho, informado pela AME
-        const manufacturerName = "LG CELULAR SP";
-
-        // Descrição do bem segurado, informado pela AME
-        const modelDescription = 1;
-
-        // Enviar 2, informado pela AME
-        const equipmentType = 1;
-
-        // Valor do bem, informado pela AME
-        const equipmentValue = 999.90;
-
-        // Número da nota fiscal, informado pela AME
-        const invoiceNumber = 1258745698;
-
-        // Data da nota fiscal, informado pela AME
-        const invoiceDate = "10122020";
-
-        // IMEI, informado pela AME
-        const deviceSerialCode = "fke782521dd";
-
-        return {
-            "cpf_cnpj_by_risk": cpfCnpjByRisk,
-            "risk_description": riskDescription,
-            "product_description": productDescription,
-            "manufacturer_code": manufacturerCode,
-            "manufacturer_name": manufacturerName,
-            "model_description": modelDescription,
-            "equipment_type": equipmentType,
-            "equipment_value": equipmentValue,
-            "invoice_number": invoiceNumber,
-            "invoice_date": invoiceDate,
-            "device_serial_code": deviceSerialCode
-        }
-    }
-
-    static generateCoverageData(coverageData: CoverageData) {
-
-        // Informar fixo 01
-        const policyItemNumber = "000001";
-
-        return {
-            "policy_item_number": policyItemNumber,
-            "coverage_code": coverageData.coverageCode,
-            "insured_amount": coverageData.insuredAmount,
-            "liquid_prize": coverageData.liquidPrize
         }
     }
 
