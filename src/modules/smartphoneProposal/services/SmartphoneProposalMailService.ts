@@ -32,7 +32,7 @@ export class SmartphoneProposalMailService {
         return await this.sendSellingEmailByPaymentObject(paymentObject)
     }
 
-    async sendSellingEmailByPaymentObject(unsignedPayment: any) {
+    async sendSellingEmailByPaymentObject(unsignedPayment: any) {        
         const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
@@ -51,7 +51,6 @@ export class SmartphoneProposalMailService {
             // DADOS DO REPRESENTANTE DO SEGURO
             .replace(/@@social_reazon@@/g, `${dataToSendMail.SecurityRepresentationSocialReazon}`)
             .replace(/@@cnpj@@/g, `${dataToSendMail.SecurityRepresentationCnpj}`)
-            .replace(/@@cod_susep@@/g, `${dataToSendMail.SecurityRepresentationCodSusep}`)
             // DADOS DA SEGURADORA
             .replace(/@@secury_data_social_reazon@@/g, `${dataToSendMail.securityDataSocialReazon}`)
             .replace(/@@secury_data_cpf@@/g, `${dataToSendMail.securityDataCpf}`)
@@ -87,7 +86,7 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {
+        try {                   
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body)
             return sendResult.MessageId
         } catch (e) {
@@ -99,19 +98,21 @@ export class SmartphoneProposalMailService {
 
     async formatMailJsonParseInfo(MailInfo) {
 
-        const dataToSendMail: DataToSendMail = {
-            securityName: MailInfo?.attributes?.customPayload?.proposal.insured_data.insured_name,
-            securityUserCpf: MailInfo?.attributes?.customPayload?.proposal.insured_data.cnpj_cpf,
-            securityAddress: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.street,
-            securityAddressNumber: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.number,
-            securityAddressDistrict: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.district,
-            securityAddressCity: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.city,
-            securityAddressUf: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.federal_unit,
-            securityDataUserCep: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.zip_code,
+        const UserData = MailInfo?.attributes?.customPayload?.proposal?.insured_data
+        const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
 
-            SecurityRepresentationSocialReazon: '-',
-            SecurityRepresentationCnpj: '-',
-            SecurityRepresentationCodSusep: '-',
+        const dataToSendMail: DataToSendMail = {
+            securityName: UserData.insured_name,
+            securityUserCpf: UserData?.cnpj_cpf,
+            securityAddress: UserData?.address_data.street,
+            securityAddressNumber: UserData?.address_data.number,
+            securityAddressDistrict: UserData?.address_data.district,
+            securityAddressCity: UserData?.address_data.city,
+            securityAddressUf: UserData?.address_data.federal_unit,
+            securityDataUserCep: UserData?.address_data.zip_code,
+
+            SecurityRepresentationSocialReazon: policyHolderData?.corporate_name_policyholder_name,
+            SecurityRepresentationCnpj: policyHolderData?.cnpj_cpf,
 
             securityDataSocialReazon: '-',
             securityDataCpf: '-',
@@ -134,8 +135,8 @@ export class SmartphoneProposalMailService {
             prizeAcidental: '-',
             lackAcidental: '-',
             productDescription: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
-            model: '-',
-            mark: '-',
+            model: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
+            mark: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.manufacturer_name,
             paymentForm: MailInfo?.operationType,
             liquidPrice: MailInfo?.amount,
             iof: '-',
