@@ -9,6 +9,7 @@ COPY yarn.lock .
 COPY tsconfig.json .
 COPY newrelic_prod.js newrelic.js
 COPY config/production.json ./config/production.json
+COPY mail_template mail_template
 COPY src src
 
 RUN chown -R node:node /home/node/app
