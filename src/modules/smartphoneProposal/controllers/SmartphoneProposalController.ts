@@ -29,6 +29,19 @@ export class SmartphoneProposalController {
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
         }
     }
+        
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/updateProposal/{proposalId}")
+    public async updateProposal(@Body() proposalId: string) {
+        logger.info('Proposal Id %j', proposalId);
+        try {
+            return await this.planService.updateProposal(proposalId)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
