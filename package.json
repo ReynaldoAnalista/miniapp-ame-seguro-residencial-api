@@ -10,7 +10,7 @@
     "start-server": "NODE_ENV=development node dist/app.js",
     "dev": "yarn tsoa:gen && NODE_ENV=development nodemon --ignore src/routes.ts --ext ts,js --exec 'yarn tsoa:routes && ts-node src/app.ts'",
     "debug": "yarn tsoa:gen && NODE_ENV=development nodemon --ignore src/routes.ts --ext ts,js --exec 'yarn tsoa:routes && node -r ts-node/register --inspect src/app.ts'",
-    "test": "yarn tsoa:routes && SAC_API_KEY=ChaveParaSAC CI=true DYNAMODB_ENV=stag jest --colors --detectOpenHandles",
+    "test": "yarn tsoa:routes && SAC_API_KEY=ChaveParaSAC CI=true DYNAMODB_ENV=stag APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* jest --detectOpenHandles",
     "build": "rimraf dist && yarn tsoa:gen && tsc",
     "coverage": "jest --coverage",
     "tsoa:gen": "yarn tsoa swagger -c ./tsoa.json && yarn tsoa routes -c ./tsoa.json",
