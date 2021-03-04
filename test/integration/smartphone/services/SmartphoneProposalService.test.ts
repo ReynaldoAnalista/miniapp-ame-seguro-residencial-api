@@ -21,6 +21,7 @@ describe("SmartphoneProposalService", () => {
     let parameterStore: ParameterStore
     let signedPayment: any
 
+
     beforeAll(async () => {
         smartphoneProposalService = iocContainer.get("SmartphoneProposalService")
         parameterStore = iocContainer.get("ParameterStore")
@@ -29,7 +30,7 @@ describe("SmartphoneProposalService", () => {
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         console.log('Buscou o secret na AWS')
         const paymentObject = JSON.parse(payment)
-        console.log('Realizou o parse do arquivo de callback')
+        console.log('Realizou o parse do arquivo de callback')  
         paymentObject.id = uuidv4()
         paymentObject.attributes.customPayload.customerId = uuidv4()
         signedPayment = await sign(paymentObject, secret)
