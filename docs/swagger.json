@@ -203,6 +203,41 @@
 				]
 			}
 		},
+		"/v1/hub/rawplans/{customerId}": {
+			"get": {
+				"operationId": "RetrieveRawPlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/hub/configs/{key}": {
 			"get": {
 				"operationId": "RetrieveConfigs",
