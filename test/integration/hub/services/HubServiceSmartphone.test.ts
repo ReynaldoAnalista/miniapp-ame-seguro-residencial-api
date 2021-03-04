@@ -66,7 +66,7 @@ describe("HubService Consulta proposta smartphone", () => {
 
         let hasId: boolean = false
         let hasDescription: boolean = false
-        let hasDate: boolean = false
+        let hasProtocol: boolean = false
 
         const smartphonePlans = customerPlans.smartphonePlans
         const hasSmartphonePlans: boolean = (Array.isArray(smartphonePlans) && smartphonePlans.length > 0)
@@ -75,15 +75,14 @@ describe("HubService Consulta proposta smartphone", () => {
 
             const smartphonePlan = smartphonePlans.find(x => x.id === customerIdSmartphone)
 
-
             if (smartphonePlan) {
                 hasId = !!smartphonePlan.id
-                hasDescription = !!smartphonePlan.descricao
-                hasDate = !!smartphonePlan.data
+                hasDescription = !!smartphonePlan.description
+                hasProtocol = !!smartphonePlan.protocol
             }
         }
-
-        expect(hasSmartphonePlans && hasId && hasDescription && hasDate).toBe(true)
+        
+        expect(hasSmartphonePlans && hasId && hasDescription && hasProtocol).toBe(true)
     })
 
     afterAll(async () => {
