@@ -10,6 +10,7 @@ import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {getLogger} from "../../../server/Logger";
 import { stringify } from "qs";
+import moment from 'moment';
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
@@ -91,14 +92,13 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {                   
+        try {        
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             return sendResult.MessageId
         } catch (e) {
             console.error('Email not sent, error', e);
             throw 'Error during sending email'
-        }
-
+        }       
     }
 
     async formatMailJsonParseInfo(MailInfo) {
@@ -106,6 +106,8 @@ export class SmartphoneProposalMailService {
         const UserData = MailInfo?.attributes?.customPayload?.proposal?.insured_data
         const equipamentRiskData = MailInfo?.attributes?.customPayload?.proposal?.portable_equipment_risk_data
         const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
+        const policyData = MailInfo?.attributes?.customPayload?.proposal?.policy_data
+        const variablePolicyHolderData = MailInfo?.attributes?.customPayload?.proposal?.variable_policy_data        
 
         const dataToSendMail: DataToSendMail = {
             securityName: UserData.insured_name, 
@@ -128,9 +130,9 @@ export class SmartphoneProposalMailService {
 
             securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
             securyDataIndividualTicket: MailInfo?.nsu,
-            securyDataEmissionDate: `${MailInfo?.date[2]}/${MailInfo?.date[1]}/${MailInfo?.date[0]}`,
-            securyDataInitialSuranceTerm: '-',
-            securyDataFinalSuranceTerm: '-',
+            securyDataEmissionDate: moment(`${MailInfo?.date[2]}/${MailInfo?.date[1]}/${MailInfo?.date[0]}`, "DMYYYY").format("MM/DD/YYYY"),
+            securyDataInitialSuranceTerm: moment(policyData.start_valid_document, "DDMMYYYY").format("MM/DD/YYYY"),            
+            securyDataFinalSuranceTerm: moment(policyData.end_valid_document, "DDMMYYYY").format("MM/DD/YYYY"),
 
             maxLimitThieft: '0',
             posThieft: '20%',
