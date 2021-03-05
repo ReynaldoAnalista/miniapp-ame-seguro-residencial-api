@@ -71,7 +71,7 @@ export class SmartphoneProposalUtils {
 
         // Início da Vigência da apólice
         let toDay = moment(new Date());
-        const startValidDocument = toDay.format('DDMMYYYY');
+        const startValidDocument = toDay.format('MMDDYYYY');
 
         // Número único do contrato
         const keyContractCertificateNumber = contractNumber;
@@ -79,7 +79,7 @@ export class SmartphoneProposalUtils {
 
         // Fim da Vigência da apólice
         toDay.add(365, "days");
-        const endValidDocument = toDay.format('DDMMYYYY');
+        const endValidDocument = toDay.format('MMDDYYYY');
 
         return {
             "mother_policy_number": motherPolicyNumber,

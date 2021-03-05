@@ -130,9 +130,9 @@ export class SmartphoneProposalMailService {
 
             securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
             securyDataIndividualTicket: MailInfo?.nsu,
-            securyDataEmissionDate: moment(`${MailInfo?.date[2]}/${MailInfo?.date[1]}/${MailInfo?.date[0]}`, "DMYYYY").format("MM/DD/YYYY"),
-            securyDataInitialSuranceTerm: moment(policyData.start_valid_document, "DDMMYYYY").format("MM/DD/YYYY"),            
-            securyDataFinalSuranceTerm: moment(policyData.end_valid_document, "DDMMYYYY").format("MM/DD/YYYY"),
+            securyDataEmissionDate: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
+            securyDataInitialSuranceTerm: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
+            securyDataFinalSuranceTerm: moment(policyData.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
 
             maxLimitThieft: '0',
             posThieft: '20%',
