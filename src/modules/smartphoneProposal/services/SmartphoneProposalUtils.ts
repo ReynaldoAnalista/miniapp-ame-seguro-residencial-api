@@ -78,7 +78,7 @@ export class SmartphoneProposalUtils {
         log.debug('keyContractCertificateNumber', keyContractCertificateNumber)
 
         // Fim da Vigência da apólice
-        toDay.add(1, "year");
+        toDay.add(365, "days");
         const endValidDocument = toDay.format('DDMMYYYY');
 
         return {
