@@ -8,7 +8,8 @@ import {ResidentialProposalRepository} from "../../residentialProposal/repositor
 import {ResidentialSoldProposalRepository} from "../../residentialProposal/repository/ResidentialSoldProposalRepository";
 import {SmartphoneSoldProposalRepository} from "../../smartphoneProposal/repository/SmartphoneSoldProposalRepository";
 import {SmartphoneProposalRepository} from "../../smartphoneProposal/repository/SmartphoneProposalRepository";
-import {SmartphoneProposalResponseRepository} from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
+import { SmartphoneProposalResponseRepository } from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
+import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -30,6 +31,8 @@ export class HubService {
         private smartphoneProposalResponseRepository: SmartphoneProposalResponseRepository,
         @inject("SmartphoneSoldProposalRepository")
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
+        @inject("SoldProposalRepository")
+        private soldProposalRepository: SoldProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
@@ -73,10 +76,9 @@ export class HubService {
     /**
      * Este método é utilizado apenas para testes
      */
-    async deleteOrderFromCustomer(customerId: string, order: string) {
+    async deleteOrderFromCustomer(customerId: string, orderId: string) {
         log.debug("deleteOrderFromCustomer")
-        await this.residentialSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
-        await this.smartphoneSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
+        this.soldProposalRepository.deleteByCustomerAndOrder(customerId, orderId)
     }
 
     async retrieveConfigs() {
