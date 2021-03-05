@@ -141,7 +141,7 @@ export class SmartphoneProposalUtils {
 
         //Comissão da apólice, informado pela AME
         const comission = 32
-        const policyCommission = (contractValue / 100) * comission;
+        const policyCommission = this.formatPrice((contractValue / 100) * comission);
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
@@ -177,7 +177,7 @@ export class SmartphoneProposalUtils {
         const numberOfInstallments = installments;
 
         // Valor da primeira parcela, informado pela AME
-        const firstInstallmentValue = firstInstalment;
+        const firstInstallmentValue = this.formatPrice(firstInstalment);
 
         // Dia 28 do mês subsequente, informado pela AME
         const maturityOfFirstInstallment = "10042021";
@@ -192,6 +192,19 @@ export class SmartphoneProposalUtils {
             "first_installment_value": firstInstallmentValue,
             "maturity_of_first_installment": maturityOfFirstInstallment
         }
+    }
+
+    static formatPrice = (value) => {
+        const type = 'round'
+        value = +(value / 100);
+        const exp = -2;
+        if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+            return NaN;
+        }
+        value = value.toString().split('e');
+        value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+        value = value.toString().split('e');
+        return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
     }
 
     static getPaymentPlanCode = (code) => {
