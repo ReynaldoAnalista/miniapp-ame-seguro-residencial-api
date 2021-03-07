@@ -119,7 +119,7 @@ export class SmartphoneProposalRepository {
             invoice_date: typeof(equipamentRiskData?.invoice_date) == 'string' && equipamentRiskData?.invoice_date.length <= 8,
             device_serial_code: typeof(equipamentRiskData?.device_serial_code) == 'string' && equipamentRiskData?.device_serial_code.length <= 20,
             // coverage date
-            policy_item_number: typeof(coverageData?.policy_item_number) == 'number' && coverageData?.policy_item_number.toString().length <= 6,
+            policy_item_number: typeof(coverageData?.policy_item_number) == 'number' && coverageData?.policy_item_number.toString().length <= 6 && coverageData?.policy_item_number.toString() == '000001',
             coverage_code: typeof(coverageData?.coverage_code) == 'number' && coverageData?.coverage_code.toString().length == 1,
             insured_amount: typeof(coverageData?.insured_amount) == 'number' && coverageData?.insured_amount.toString().length <= 20,
             liquid_prize: typeof(coverageData?.liquid_prize) == 'number' && coverageData?.liquid_prize.toString().length <= 20,
