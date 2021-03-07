@@ -81,11 +81,15 @@ export class SmartphoneProposalRepository {
 
     async validateProposal(proposal) {       
 
+        var filter : string[] = []
+
         var policyHolderData = proposal?.attributes?.customPayload?.proposal?.policyholder_data
         var insuredData = proposal?.attributes?.customPayload?.proposal?.insured_data
         var adressData = policyHolderData?.address_data
         var equipamentRiskData = proposal?.attributes?.customPayload?.proposal?.portable_equipment_risk_data
         var coverageData = proposal?.attributes?.customPayload?.proposal?.coverage_data      
+        var variablePolicyData = proposal?.attributes?.customPayload?.proposal?.variablePolicyData
+        var changeTypeData = proposal?.attributes?.customPayload?.proposal?.charge_type_data
 
         const validProposal = {
             // Insured_data
@@ -125,10 +129,39 @@ export class SmartphoneProposalRepository {
             // cnpj_cpf		
             // address_data
             policy_data_type_of_street: typeof(policyHolderData?.type_of_street) == 'string' && policyHolderData?.type_of_street.length <= 2,
-            // TODO : TERMINAR DE PREENCHER OS DADOS
-        } 
-        
-        return validProposal
+            policy_data_street: typeof(policyHolderData?.street) == 'string' && policyHolderData?.street.length <= 60,
+            policy_data_number: typeof(policyHolderData?.number) == 'string' && policyHolderData?.number.length <= 10,
+            policy_data_complement: typeof(policyHolderData?.complement) == 'string' && policyHolderData?.complement.length <= 10,
+            policy_data_district: typeof(policyHolderData?.district) == 'string' && policyHolderData?.district.length <= 20,
+            policy_data_city: typeof(policyHolderData?.city) == 'string' && policyHolderData?.city.length <= 20,
+            policy_data_zip_code: typeof(policyHolderData?.zip_code) == 'string' && policyHolderData?.zip_code.length <= 9,
+            policy_data_federal_unit: typeof(policyHolderData?.federal_unit) == 'string' && policyHolderData?.federal_unit.length <= 2,
+            // variable policy data
+            proposal_number: typeof(variablePolicyData?.proposal_number) == 'number' && variablePolicyData?.proposal_number.toString().length <= 14,
+            insurance_certificate_number: typeof(variablePolicyData?.insurance_certificate_number) == 'string' && variablePolicyData?.insurance_certificate_number.length <= 9,
+            proposal_date: typeof(variablePolicyData?.proposal_date) == 'string' && variablePolicyData?.proposal_date.length <= 8,
+            policy_commission: typeof(variablePolicyData?.policy_commission) == 'number' && variablePolicyData?.policy_commission.toString().length <= 5,
+            policy_cost: typeof(variablePolicyData?.policy_cost) == 'number' && variablePolicyData?.policy_cost.toString().length <= 5,
+            // charge_type_data
+            type_of_collection_manager: typeof(changeTypeData?.type_of_collection_manager) == 'string' && changeTypeData?.type_of_collection_manager.length <= 2,
+            payment_plan_code: typeof(changeTypeData?.payment_plan_code) == 'number' && changeTypeData?.payment_plan_code.toString().length <= 8,
+            payment_manager_code: typeof(changeTypeData?.payment_manager_code) == 'number' && changeTypeData?.payment_plan_code.toString().length <= 8,
+            document_type: typeof(changeTypeData?.document_type) == 'number' && changeTypeData?.document_type.length <= 3,
+            document_number: typeof(changeTypeData?.document_number) == 'string' && changeTypeData?.document_number.length <= 20,
+            number_of_installments: typeof(changeTypeData?.number_of_installments) == 'string' && changeTypeData?.number_of_installments.length <= 2,            
+            first_installment_value: typeof(changeTypeData?.first_installment_value) == 'number' && changeTypeData?.first_installment_value.toString().length <= 11,            
+            maturity_of_first_installment: typeof(changeTypeData?.maturity_of_first_installment) == 'string' && changeTypeData?.maturity_of_first_installment.length <= 8
+        }                    
+        for (const [objectValues, objectKeys] of Object.entries(validProposal)) {
+            if (objectKeys == false) {                
+                filter.push(objectValues)
+            }
+        }
+        return filter
     }
+
+    async habilidade(skill, find) {
+        return (skill.indexOf(find) == false);
+    };
 
 }
