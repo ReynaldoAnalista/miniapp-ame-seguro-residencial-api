@@ -1,159 +1,161 @@
 {
-  "date": [
-    2021,
-    3,
-    3,
-    1,
-    13,
-    39,
-    853257000
-  ],
-  "cashType": "CARD",
-  "amount": 9,
-  "debitWalletId": "320a49e1-06a3-44f3-8194-c71d8acb5121",
-  "splits": [
-    {
-      "date": [
-        2021,
-        3,
-        3,
-        1,
-        13,
-        39,
-        853265000
-      ],
-      "cardMasked": "516230######1458",
-      "cashType": "CARD",
-      "amount": 9,
-      "installments": 1,
-      "id": "5b835849-fe93-4adf-8b02-8ccfa035c74d",
-      "cardBrand": "MASTERCARD",
-      "status": "AUTHORIZED"
-    }
-  ],
-  "description": "Para: Apple iPhone 12 Mini 256GB",
-  "title": "Ame Proteção de Tela",
-  "type": "PAYMENT",
-  "nsu": "444198532740",
-  "peer": null,
+  "amount": 17840,
   "amountRefunded": 0,
-  "name": "Compra on-line",
-  "operationType": "DEBIT",
-  "currency": "BRL",
   "attributes": {
-    "vbaMethod": "NO_VBA_INFO",
-    "orderId": "4f6f57fc-ae86-4b6a-8120-89f76e454a4b",
-    "isVerified": true,
-    "origin": "MINIAPP",
-    "miniApp": {
-      "id": "ame-seguro-smartphone",
-      "hasOrderDetails": false
-    },
-    "paymentOnce": false,
-    "items": [
-      {
-        "description": "Proteção do tipo Ame Proteção de Tela para um smartphone modelo Apple iPhone 12 Mini (IMEI:649494948494484) 256GB avaliado em R$ 1,00",
-        "amount": 9,
-        "quantity": 1
-      }
-    ],
     "customPayload": {
-      "clientCallbackUrl": "https://miniapps.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
-      "selectedPlan": {
-        "id": 1,
-        "description": "Ame Proteção Total",
-        "percent": 17.84,
-        "stolenFranchise": 0.2,
-        "brokenFranchise": 0.15,
-        "screenFranchise": 0.1,
-        "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
-        "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem"
-      },
+      "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+      "clientEmail": "marcelo@calindra.com.br",
+      "customerId": "4c1b25a3-8470-43ae-b4dc-26d5ed3cdb32",
+      "isFrom": "PHONE_SEC",
+      "miniAppId": "21644",
+      "origin": "MINIAPP",
       "proposal": {
-        "insured_data": {
-          "insured_name": "Marcelo Madeira de Matos",
-          "cnpj_cpf": "09548913763",
-          "gender": "M",
-          "address_data": {
-            "number": "100",
-            "city": "Rio de Janeiro",
-            "street": "Rua Nelson Mandela",
-            "district": "Botafogo",
-            "federal_unit": "BRA",
-            "type_of_street": "01",
-            "complement": "306a",
-            "zip_code": "22260-005"
-          },
-          "type_of_legal_person": "F",
-          "date_of_birth": "16011982"
+        "charge_type_data": {
+          "document_number": "32778350000170",
+          "document_type": "CGC",
+          "first_installment_value": 178.4,
+          "maturity_of_first_installment": "10042021",
+          "number_of_installments": 1,
+          "payment_manager_code": 99990638,
+          "payment_plan_code": 301,
+          "type_of_collection_manager": "DF"
         },
-        "portable_equipment_risk_data": {
-          "cpf_cnpj_by_risk": "09548913763",
-          "equipment_value": 1,
-          "device_serial_code": "649494948494484",
-          "risk_description": "Apple iPhone 12 Mini 256GB",
-          "manufacturer_code": 1,
-          "model_description": 1,
-          "manufacturer_name": "Apple",
-          "equipment_type": 1,
-          "product_description": "Apple iPhone 12 Mini 256GB",
-          "invoice_number": "555797976",
-          "invoice_date": "010121"
+        "coverage_data": {
+          "coverage_code": 1,
+          "insured_amount": 1000,
+          "liquid_prize": 178,
+          "policy_item_number": 1
+        },
+        "insured_data": {
+          "address_data": {
+            "city": "São Vicente",
+            "district": "Jardim Independência",
+            "federal_unit": "BRA",
+            "number": "50",
+            "street": "Rua São Jorge",
+            "type_of_street": "01",
+            "zip_code": "11380-310"
+          },
+          "cnpj_cpf": "09548913763",
+          "date_of_birth": "01161982",
+          "gender": "M",
+          "insured_name": "Marcelo Madeira",
+          "type_of_legal_person": "F"
+        },
+        "policy_data": {
+          "end_valid_document": "03082022",
+          "key_contract_certificate_number": "99999474868562627",
+          "mother_policy_number": "2716000020171",
+          "start_valid_document": "03082021"
         },
         "policyholder_data": {
-          "cnpj_cpf": "32778350000170",
           "address_data": {
-            "number": "302",
             "city": "São Paulo",
-            "street": "Fidencio Ramos",
+            "complement": "",
             "district": "Vila Olímpia",
             "federal_unit": "SP",
+            "number": "302",
+            "street": "Fidencio Ramos",
             "type_of_street": "01",
-            "complement": "",
             "zip_code": 4551010
           },
+          "cnpj_cpf": "32778350000170",
           "corporate_name_policyholder_name": "AMEDIGITAL",
           "type_of_legal_person": "J"
         },
-        "charge_type_data": {
-          "document_number": "13850516000177",
-          "maturity_of_first_installment": "10042021",
-          "payment_plan_code": 723,
-          "payment_manager_code": 99999999,
-          "number_of_installments": 1,
-          "type_of_collection_manager": "TA",
-          "first_installment_value": 249.97,
-          "document_type": "CGC"
-        },
-        "coverage_data": {
-          "liquid_prize": 1,
-          "coverage_code": 447,
-          "insured_amount": 1,
-          "policy_item_number": 2053627
-        },
-        "policy_data": {
-          "start_valid_document": "03032021",
-          "key_contract_certificate_number": "00001614734026812",
-          "mother_policy_number": "6944000861071",
-          "end_valid_document": "03032022"
+        "portable_equipment_risk_data": {
+          "cpf_cnpj_by_risk": "09548913763",
+          "device_serial_code": "618918810818191",
+          "equipment_type": 1,
+          "equipment_value": 1000,
+          "invoice_date": "02022021",
+          "invoice_number": "123456789",
+          "manufacturer_code": 1,
+          "manufacturer_name": "Samsung",
+          "model_description": "Samsung Galaxy M02s 512GB",
+          "product_description": "Samsung Galaxy M02s 512GB",
+          "risk_description": "Samsung Galaxy M02s 512GB"
         },
         "variable_policy_data": {
-          "proposal_number": 20536270000,
-          "policy_commission": 62,
-          "insurance_certificate_number": "102201800",
+          "insurance_certificate_number": "868562627",
+          "policy_commission": 57.09,
+          "policy_cost": 0,
           "proposal_date": "02032021",
-          "policy_cost": 0
+          "proposal_number": "99474868562627"
         }
       },
-      "miniAppId": "630",
-      "clientEmail": "mmadeiramatos@gmail.com",
-      "isFrom": "mini-app-ame-seguro-smartphone",
-      "origin": "MINIAPP",
-      "customerId": "7da0073d-c535-44f6-a56e-715d758085bb"
+      "selectedPlan": {
+        "brokenFranchise": 0.15,
+        "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+        "description": "Ame Proteção Total",
+        "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem",
+        "id": 1,
+        "installmentPrice": "R$ 14,87",
+        "percent": 17.84,
+        "price": "R$ 178,40",
+        "priceInCents": 17840,
+        "screenFranchise": 0.1,
+        "stolenFranchise": 0.2
+      }
     },
-    "transactionChangedCallbackUrl": "https://miniapps.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
+    "items": [
+      {
+        "amount": 17840,
+        "description": "Proteção do tipo Ame Proteção Total para um smartphone modelo Samsung Galaxy M02s (IMEI:618918810818191) 512GB avaliado em R$ 1.000,00",
+        "quantity": 1
+      }
+    ],
+    "miniApp": {
+      "hasOrderDetails": false,
+      "id": "ame-seguro-smartphone"
+    },
+    "orderId": "e697543a-fb02-448f-8fc8-a9fa22601f8b",
+    "origin": "MINIAPP",
+    "paymentOnce": false,
+    "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
   },
+  "cashType": "CASH",
+  "currency": "BRL",
+  "date": [
+    2021,
+    3,
+    8,
+    20,
+    47,
+    48,
+    562588000
+  ],
+  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
+  "description": "Para: Samsung Galaxy M02s 512GB",
+  "exp": 1615250872,
+  "iat": 1615236472,
+  "id": "60ac535a-d94d-4751-8e74-e68c28cd2657",
+  "name": "Compra on-line",
+  "nsu": "474868562627",
   "operationReference": null,
-  "id": "100aaee8-6a00-4f44-95c2-c50e66d69f15",
-  "status": "AUTHORIZED"
+  "operationType": "DEBIT",
+  "peer": null,
+  "splits": [
+    {
+      "amount": 17840,
+      "cardBrand": null,
+      "cardMasked": null,
+      "cashType": "CASH",
+      "date": [
+        2021,
+        3,
+        8,
+        20,
+        47,
+        48,
+        562612000
+      ],
+      "id": "52200649-0166-4315-b13b-7bcab6501bbc",
+      "installments": null,
+      "status": "AUTHORIZED"
+    }
+  ],
+  "status": "AUTHORIZED",
+  "title": "Ame Proteção Total",
+  "type": "PAYMENT"
 }
