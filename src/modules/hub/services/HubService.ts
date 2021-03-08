@@ -40,6 +40,7 @@ export class HubService {
 
     async retrievePlans(customerId: string, raw?: boolean) {
         log.debug("retrievePlans")
+        log.debug("Showing Raw Plans: " + !!raw)
         const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
 
@@ -52,19 +53,21 @@ export class HubService {
 
                     const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
                     const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
-                    const device = proposal.portable_equipment_risk_data
+                    const device = proposal?.portable_equipment_risk_data
 
                     return {
-                        id: x.order,
-                        description: x.receivedPaymentNotification.title,
-                        date: proposal.variable_policy_e?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
-                        value: x.receivedPaymentNotification.amount,
-                        protocol: x.receivedPaymentNotification.nsu,
-                        device: device.risk_description,
-                        imei: device.device_serial_code,
-                        coverage: selectedPlan.coverage,
-                        guarantee: selectedPlan.guarantee,
-                        franchise: '-',
+                        id: x.order,    
+                        description: x.receivedPaymentNotification?.title,
+                        date: proposal?.variable_policy_data?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        device: device?.risk_description,
+                        imei: device?.device_serial_code,
+                        coverage: selectedPlan?.coverage,
+                        guarantee: selectedPlan?.guarantee,
+                        stolenFranchise: selectedPlan.stolenFranchise,
+                        brokenFranchise: selectedPlan.brokenFranchise,
+                        screenFranchise: selectedPlan.screenFranchise,
                     }
                 })  
             }

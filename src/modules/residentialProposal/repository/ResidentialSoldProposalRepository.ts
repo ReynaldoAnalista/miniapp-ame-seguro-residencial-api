@@ -27,18 +27,25 @@ export class ResidentialSoldProposalRepository {
     }
 
     async findAllFromCustomer(customerId: string) {
+        log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)
         let params = {
             TableName: TABLE,
-            KeyConditionExpression: "customerId = :customerId",
+            KeyConditionExpression: "#customerId = :customerId",
+            ExpressionAttributeNames: {
+                "#customerId": "customerId"
+            },
             ExpressionAttributeValues: {
                 ":customerId": customerId
             }
         };
         try {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-            let result = await dynamoDocClient.query(params).promise();            
+            let result = await dynamoDocClient.query(params).promise();
+            log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter(x => x.tenant === Tenants.RESIDENTIAL)
         } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
             return []
         }
     }
