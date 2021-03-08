@@ -286,6 +286,7 @@ export class ResidentialProposalService {
             } catch (e) {
                 await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
             }
+            await this.saveSoldProposal(proposal, proposalResponse, Tenants.RESIDENTIAL)
             log.debug("Proposal sent %j", unsignedPayment.id)
             return proposalResponse
         } else {
@@ -354,22 +355,28 @@ export class ResidentialProposalService {
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
-        await this.residentialSoldProposalRepository.create({
-            customerId: proposal.attributes.customPayload.proposal.customerId,
-            order: proposal.id,
-            tenant: tenant,
-            createdAt: new Date().toISOString(),
-            success: response.success,
-            partnerResponse: response,
-            receivedPaymentNotification: proposal
-        } as SmartphoneSoldProposal)
+        try {
+            await this.residentialSoldProposalRepository.create({
+                customerId: proposal.attributes.customPayload.proposal.customerId,
+                order: proposal.id,
+                tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
+                partnerResponse: response,
+                receivedPaymentNotification: proposal
+            } as SmartphoneSoldProposal)
+            log.debug("saveSoldProposal:success")
+        } catch (e) {
+            log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
     }
 
     delay(seconds) {
         log.debug(`Awaiting for ${seconds} seconds`)
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve()
+                resolve(null)
             }, seconds * 1000)
         })
     }

@@ -45,7 +45,8 @@ export const initDependencies = () => {
     bindSingleton("../modules/residentialProposal/services")
     bindSingleton("../modules/smartphoneProposal/services")
 
-    /* Initialize Repositories */
+/* Initialize Repositories */
+    bindSingleton("../modules/hub/repository")
     bindSingleton("../modules/residentialProposal/repository")
     bindSingleton("../modules/smartphoneProposal/repository")
     //bindSingleton("../modules/voucher/repository")

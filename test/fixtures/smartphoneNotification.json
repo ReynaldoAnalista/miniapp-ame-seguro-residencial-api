@@ -1,110 +1,159 @@
 {
-  "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",
   "date": [
-    2020,
-    11,
-    30,
-    17,
-    32,
-    30,
-    934391000
+    2021,
+    3,
+    3,
+    1,
+    13,
+    39,
+    853257000
   ],
-  "operationType": "DEBIT",
-  "name": "Compra on-line",
-  "title": "Seguro Residencial",
-  "description": "Proteção Essencial",
-  "status": "AUTHORIZED",
-  "type": "PAYMENT",
-  "currency": "BRL",
-  "cashType": "CASH",
-  "amount": 14488,
-  "amountRefunded": 0,
+  "cashType": "CARD",
+  "amount": 9,
+  "debitWalletId": "320a49e1-06a3-44f3-8194-c71d8acb5121",
   "splits": [
     {
-      "id": "02101354-cbf5-49d0-af03-203b0385797a",
       "date": [
-        2020,
-        11,
-        30,
-        17,
-        32,
-        30,
-        934406000
+        2021,
+        3,
+        3,
+        1,
+        13,
+        39,
+        853265000
       ],
-      "status": "AUTHORIZED",
-      "cashType": "CASH",
-      "amount": 14488,
-      "installments": null,
-      "cardMasked": null,
-      "cardBrand": null
+      "cardMasked": "516230######1458",
+      "cashType": "CARD",
+      "amount": 9,
+      "installments": 1,
+      "id": "5b835849-fe93-4adf-8b02-8ccfa035c74d",
+      "cardBrand": "MASTERCARD",
+      "status": "AUTHORIZED"
     }
   ],
+  "description": "Para: Apple iPhone 12 Mini 256GB",
+  "title": "Ame Proteção de Tela",
+  "type": "PAYMENT",
+  "nsu": "444198532740",
+  "peer": null,
+  "amountRefunded": 0,
+  "name": "Compra on-line",
+  "operationType": "DEBIT",
+  "currency": "BRL",
   "attributes": {
-    "cashbackAmountValue": 0,
-    "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/c8848f6a-40c0-4388-af9e-4d53ec3e9019",
+    "vbaMethod": "NO_VBA_INFO",
+    "orderId": "4f6f57fc-ae86-4b6a-8120-89f76e454a4b",
+    "isVerified": true,
+    "origin": "MINIAPP",
+    "miniApp": {
+      "id": "ame-seguro-smartphone",
+      "hasOrderDetails": false
+    },
+    "paymentOnce": false,
     "items": [
       {
-        "description": "Proteção Essencial",
-        "amount": 14488,
+        "description": "Proteção do tipo Ame Proteção de Tela para um smartphone modelo Apple iPhone 12 Mini (IMEI:649494948494484) 256GB avaliado em R$ 1,00",
+        "amount": 9,
         "quantity": 1
       }
     ],
     "customPayload": {
-      "isFrom": "mini-app-ame-seguro-residencial",
-      "customerId": "",
-      "clientCallbackUrl": "https://649a8d572b3e.ngrok.io/ame-seguro-residencial/v1/plans/sendProposal",
-      "clientEmail" : "marcelo.madeira@calindra.com.br",
+      "clientCallbackUrl": "https://miniapps.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+      "selectedPlan": {
+        "id": 1,
+        "description": "Ame Proteção Total",
+        "percent": 17.84,
+        "stolenFranchise": 0.2,
+        "brokenFranchise": 0.15,
+        "screenFranchise": 0.1,
+        "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+        "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem"
+      },
       "proposal": {
         "insured_data": {
-          "insured_name": "EDEMILSON CONCEICAO ALELUIA",
-          "type_of_legal_person": "F",
-          "cnpj_cpf": "47156984523",
-          "date_of_birth": "12051996",
+          "insured_name": "Marcelo Madeira de Matos",
+          "cnpj_cpf": "09548913763",
           "gender": "M",
           "address_data": {
+            "number": "100",
+            "city": "Rio de Janeiro",
+            "street": "Rua Nelson Mandela",
+            "district": "Botafogo",
+            "federal_unit": "BRA",
             "type_of_street": "01",
-            "street": "COQUEIROS RUA A CASA",
-            "number": "1",
-            "complement": "",
-            "district": "Tento",
-            "city": "Valenca",
-            "zip_code": 45400000,
-            "federal_unit": "BA"
-          }
+            "complement": "306a",
+            "zip_code": "22260-005"
+          },
+          "type_of_legal_person": "F",
+          "date_of_birth": "16011982"
         },
         "portable_equipment_risk_data": {
-          "cpf_cnpj_by_risk": 47156984523,
-          "risk_description": "CELULAR LG K10 PRO 5.7",
-          "product_description": "CELULAR LG K10 PRO 5.7",
+          "cpf_cnpj_by_risk": "09548913763",
+          "equipment_value": 1,
+          "device_serial_code": "649494948494484",
+          "risk_description": "Apple iPhone 12 Mini 256GB",
           "manufacturer_code": 1,
-          "manufacturer_name": "LG CELULAR SP",
           "model_description": 1,
+          "manufacturer_name": "Apple",
           "equipment_type": 1,
-          "equipment_value": 999.90,
-          "invoice_number": 1258745698,
-          "invoice_date": "10222018",
-          "device_serial_code": "fke782521dd"
+          "product_description": "Apple iPhone 12 Mini 256GB",
+          "invoice_number": "555797976",
+          "invoice_date": "010121"
+        },
+        "policyholder_data": {
+          "cnpj_cpf": "32778350000170",
+          "address_data": {
+            "number": "302",
+            "city": "São Paulo",
+            "street": "Fidencio Ramos",
+            "district": "Vila Olímpia",
+            "federal_unit": "SP",
+            "type_of_street": "01",
+            "complement": "",
+            "zip_code": 4551010
+          },
+          "corporate_name_policyholder_name": "AMEDIGITAL",
+          "type_of_legal_person": "J"
+        },
+        "charge_type_data": {
+          "document_number": "13850516000177",
+          "maturity_of_first_installment": "10042021",
+          "payment_plan_code": 723,
+          "payment_manager_code": 99999999,
+          "number_of_installments": 1,
+          "type_of_collection_manager": "TA",
+          "first_installment_value": 249.97,
+          "document_type": "CGC"
         },
         "coverage_data": {
-          "policy_item_number": 2053627,
+          "liquid_prize": 1,
           "coverage_code": 447,
-          "insured_amount": 999.90,
-          "liquid_prize": 116.40
+          "insured_amount": 1,
+          "policy_item_number": 2053627
+        },
+        "policy_data": {
+          "start_valid_document": "03032021",
+          "key_contract_certificate_number": "00001614734026812",
+          "mother_policy_number": "6944000861071",
+          "end_valid_document": "03032022"
+        },
+        "variable_policy_data": {
+          "proposal_number": 20536270000,
+          "policy_commission": 62,
+          "insurance_certificate_number": "102201800",
+          "proposal_date": "02032021",
+          "policy_cost": 0
         }
       },
-      "workspaceUrl": "https://miniapps.hml.amedigital.com/workspace/user/mmadeiramatos/gmail.com/OrderDetails.html?data=eyJwdWJsaWNLZXkiOiJjODg0OGY2YS00MGMwLTQzODgtYWY5ZS00ZDUzZWMzZTkwMTkiLCJzbHVnIjoiYW1lLXNlZ3Vyby1yZXNpZGVuY2lhbCIsInRpdGxlIjoiU2VndXJvIFJlc2lkZW5jaWFsIn0=&devmode=true&cid=QVdTQUxCPVV3MXphOEt6L3R6dk5MOUVZdEw0S25QSWlBRWdDSFg1SHFJVlFQMzBuU0owcUg5dCttOUZTZk9rdDRoMG4xSkpSU3M3N0hOY0k3bkFMdEVaTmZTYjJlRm1UdGhhNThhWXE3am9UdEkxTVVjNFFtVTZRYkFUTjd0eU9hWW8=",
-      "miniAppId": "3981"
+      "miniAppId": "630",
+      "clientEmail": "mmadeiramatos@gmail.com",
+      "isFrom": "mini-app-ame-seguro-smartphone",
+      "origin": "MINIAPP",
+      "customerId": "7da0073d-c535-44f6-a56e-715d758085bb"
     },
-    "paymentOnce": false,
-    "origin": "MINIAPP",
-    "miniApp": {
-      "id": "ame-seguro-residencial",
-      "hasOrderDetails": false
-    },
-    "orderId": "de102460-3679-4b1c-8ee8-d4e21a33be8c"
+    "transactionChangedCallbackUrl": "https://miniapps.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
   },
   "operationReference": null,
-  "peer": null,
-  "nsu": "063150934412",
-  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89"
+  "id": "100aaee8-6a00-4f44-95c2-c50e66d69f15",
+  "status": "AUTHORIZED"
 }

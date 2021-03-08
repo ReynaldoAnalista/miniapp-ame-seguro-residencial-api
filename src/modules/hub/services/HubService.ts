@@ -8,7 +8,8 @@ import {ResidentialProposalRepository} from "../../residentialProposal/repositor
 import {ResidentialSoldProposalRepository} from "../../residentialProposal/repository/ResidentialSoldProposalRepository";
 import {SmartphoneSoldProposalRepository} from "../../smartphoneProposal/repository/SmartphoneSoldProposalRepository";
 import {SmartphoneProposalRepository} from "../../smartphoneProposal/repository/SmartphoneProposalRepository";
-import {SmartphoneProposalResponseRepository} from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
+import { SmartphoneProposalResponseRepository } from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
+import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -30,25 +31,54 @@ export class HubService {
         private smartphoneProposalResponseRepository: SmartphoneProposalResponseRepository,
         @inject("SmartphoneSoldProposalRepository")
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
+        @inject("SoldProposalRepository")
+        private soldProposalRepository: SoldProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {
     }
 
-    async retrievePlans(customerId: string) {
+    async retrievePlans(customerId: string, raw?: boolean) {
         log.debug("retrievePlans")
         const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
-        const smartphonePlans = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
-        return {residentialPlans, smartphonePlans}
+        const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
+
+        let smartphonePlans = []
+        if (smartphonePlansFromDB) {
+            if (raw) {
+                smartphonePlans = Object.assign(smartphonePlansFromDB)
+            } else {
+                smartphonePlans = Object.assign(smartphonePlansFromDB).map(x => {
+
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    const device = proposal.portable_equipment_risk_data
+
+                    return {
+                        id: x.order,
+                        description: x.receivedPaymentNotification.title,
+                        date: proposal.variable_policy_e?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
+                        value: x.receivedPaymentNotification.amount,
+                        protocol: x.receivedPaymentNotification.nsu,
+                        device: device.risk_description,
+                        imei: device.device_serial_code,
+                        coverage: selectedPlan.coverage,
+                        guarantee: selectedPlan.guarantee,
+                        franchise: '-',
+                    }
+                })  
+            }
+            
+        }
+        return { residentialPlans, smartphonePlans }
     }
 
     /**
      * Este método é utilizado apenas para testes
      */
-    async deleteOrderFromCustomer(customerId: string, order: string) {
+    async deleteOrderFromCustomer(customerId: string, orderId: string) {
         log.debug("deleteOrderFromCustomer")
-        await this.residentialSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
-        await this.smartphoneSoldProposalRepository.deleteByCustomerAndOrder(customerId, order)
+        this.soldProposalRepository.deleteByCustomerAndOrder(customerId, orderId)
     }
 
     async retrieveConfigs() {

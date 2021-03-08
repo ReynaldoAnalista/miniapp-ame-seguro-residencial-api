@@ -23,6 +23,11 @@ export interface DataToSendMail {
     securyDataEmissionDate?: string    
     securyDataInitialSuranceTerm?: string    
     securyDataFinalSuranceTerm?: string    
+
+    glassProtectMaxLimit?: string
+    glassProtectPos?: string
+    glassProtectCoverPrize?: string
+    glassProtectCarency?: string
     
     maxLimitThieft?: string    
     posThieft?: string    

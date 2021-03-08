@@ -55,18 +55,34 @@ describe("HubService Consulta proposta smartphone", () => {
         paymentObject.attributes.customPayload.customerId = customerIdSmartphone
         await smartphoneProposalService.saveProposal(paymentObject)
         const proposalResponse = await smartphoneProposalService.sendProposal(paymentObject)
-        await smartphoneProposalService.saveProposalResponse(proposalResponse)
+        await smartphoneProposalService.saveProposalResponse(proposalResponse, paymentObject.id)
         await smartphoneProposalService.saveSoldProposal(paymentObject, proposalResponse, Tenants.SMARTPHONE)
 
     })
 
     it("Busca um determinado plano comprado", async () => {
-        const customerPlans = await hubService.retrievePlans(customerIdSmartphone)
-        let thePlan: any
-        if (customerPlans.smartphonePlans?.length) {
-            thePlan = customerPlans.smartphonePlans.find(x => x.order === paymentIdSmartphone)
+
+        const customerPlans = Object.assign(await hubService.retrievePlans(customerIdSmartphone))
+
+        let hasId: boolean = false
+        let hasDescription: boolean = false
+        let hasProtocol: boolean = false
+
+        const smartphonePlans = customerPlans.smartphonePlans
+        const hasSmartphonePlans: boolean = (Array.isArray(smartphonePlans) && smartphonePlans.length > 0)
+
+        if (hasSmartphonePlans) {
+
+            const smartphonePlan = smartphonePlans.find(x => x.id === customerIdSmartphone)
+
+            if (smartphonePlan) {
+                hasId = !!smartphonePlan.id
+                hasDescription = !!smartphonePlan.description
+                hasProtocol = !!smartphonePlan.protocol
+            }
         }
-        expect(thePlan).toBeDefined()
+        
+        expect(hasSmartphonePlans && hasId && hasDescription && hasProtocol).toBe(true)
     })
 
     afterAll(async () => {
