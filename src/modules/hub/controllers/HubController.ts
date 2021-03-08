@@ -27,7 +27,8 @@ export class HubController {
             logger.debug("customer request ended")
             return result
         } catch (e) {
-            throw new ApiError("Error on retrieve customer", 404, JSON.stringify({apiStatus: e.status}))
+            logger.error(e)
+            throw new ApiError(`Error on retrieve plans for customer ${customerId}`, 404, JSON.stringify({ apiStatus: e.status }))
         }
     }
 
@@ -44,7 +45,8 @@ export class HubController {
             logger.debug("customer request ended")
             return result
         } catch (e) {
-            throw new ApiError("Error on retrieve customer", 404, JSON.stringify({ apiStatus: e.status }))
+            logger.error(e)
+            throw new ApiError(`Error on retrieve rawplans for customer ${customerId}`, 404, JSON.stringify({ apiStatus: e.status }))
         }
     }
 

@@ -40,7 +40,7 @@ export class HubService {
 
     async retrievePlans(customerId: string, raw?: boolean) {
         log.debug("retrievePlans")
-        log.debug("Showing Raw Plans: " + raw)
+        log.debug("Showing Raw Plans: " + !!raw)
         const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
 
@@ -57,14 +57,14 @@ export class HubService {
 
                     return {
                         id: x.order,
-                        description: x.receivedPaymentNotification.title,
-                        date: proposal.variable_policy_e?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
-                        value: x.receivedPaymentNotification.amount,
-                        protocol: x.receivedPaymentNotification.nsu,
-                        device: device.risk_description,
-                        imei: device.device_serial_code,
-                        coverage: selectedPlan.coverage,
-                        guarantee: selectedPlan.guarantee,
+                        description: x.receivedPaymentNotification?.title,
+                        date: proposal?.variable_policy_e?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        device: device?.risk_description,
+                        imei: device?.device_serial_code,
+                        coverage: selectedPlan?.coverage,
+                        guarantee: selectedPlan?.guarantee,
                         franchise: '-',
                     }
                 })  
