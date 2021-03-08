@@ -30,12 +30,14 @@ export class ResidentialSoldProposalRepository {
         log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)
         let params = {
             TableName: TABLE,
-            KeyConditionExpression: "#customerId = :customerId",
+            KeyConditionExpression: "#customerId = :customerId and #tenant = :tenant",
             ExpressionAttributeNames: {
-                "#customerId": "customerId"
+                "#customerId": "customerId",
+                "#tenant": "tenant",
             },
             ExpressionAttributeValues: {
-                ":customerId": customerId
+                ":customerId": customerId,
+                ":tenant": Tenants.SMARTPHONE
             }
         };
         try {
