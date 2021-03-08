@@ -40,6 +40,7 @@ export class HubService {
 
     async retrievePlans(customerId: string, raw?: boolean) {
         log.debug("retrievePlans")
+        log.debug("Showing Raw Plans: " + raw)
         const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
 
