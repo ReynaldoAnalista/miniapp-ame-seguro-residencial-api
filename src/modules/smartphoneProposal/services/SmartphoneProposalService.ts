@@ -54,21 +54,21 @@ export class SmartphoneProposalService {
     }
     
     async updateProposal(proposalId: string) {
-        const getProposal = await this.smartphoneProposalRepository.findByID(proposalId)
+        const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
        
-        const proposal = SmartphoneProposalUtils.generateProposal(getProposal)
+        const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
         log.info('Enviando a proposta para a digibee')
 
         const proposalResponse = await this.sendProposal(proposal)
         log.info('Recebendo a resposta da digibee')
         
-        await this.updateProposalResponse(getProposal)
+        await this.updateProposalResponse(proposalRequest)
         log.info('Atualizando a compra')
 
-        await this.updateSoldProposal(getProposal)
+        await this.updateSoldProposal(proposalRequest)
         log.info('Enviando o email ao cliente')
         
-        await this.mailService.sendSellingEmailByPaymentObject(getProposal)
+        await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
         log.info('Retornando a proposta')
         
         return proposalResponse
