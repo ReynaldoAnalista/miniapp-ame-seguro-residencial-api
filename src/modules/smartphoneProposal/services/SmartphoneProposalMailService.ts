@@ -9,6 +9,8 @@ import EmailSender from "./EmailSender";
 import {TYPES} from "../../../inversify/inversify.types";
 import {ParameterStore} from "../../../configs/ParameterStore";
 import {getLogger} from "../../../server/Logger";
+import { stringify } from "qs";
+import moment from 'moment';
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
@@ -32,7 +34,7 @@ export class SmartphoneProposalMailService {
         return await this.sendSellingEmailByPaymentObject(paymentObject)
     }
 
-    async sendSellingEmailByPaymentObject(unsignedPayment: any) {
+    async sendSellingEmailByPaymentObject(unsignedPayment: any) {        
         const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
@@ -51,7 +53,6 @@ export class SmartphoneProposalMailService {
             // DADOS DO REPRESENTANTE DO SEGURO
             .replace(/@@social_reazon@@/g, `${dataToSendMail.SecurityRepresentationSocialReazon}`)
             .replace(/@@cnpj@@/g, `${dataToSendMail.SecurityRepresentationCnpj}`)
-            .replace(/@@cod_susep@@/g, `${dataToSendMail.SecurityRepresentationCodSusep}`)
             // DADOS DA SEGURADORA
             .replace(/@@secury_data_social_reazon@@/g, `${dataToSendMail.securityDataSocialReazon}`)
             .replace(/@@secury_data_cpf@@/g, `${dataToSendMail.securityDataCpf}`)
@@ -73,6 +74,10 @@ export class SmartphoneProposalMailService {
             .replace(/@@pos_acidental@@/g, `${dataToSendMail.posAcidental}`)
             .replace(/@@prize_acidental@@/g, `${dataToSendMail.prizeAcidental}`)
             .replace(/@@lack_acidental@@/g, `${dataToSendMail.lackAcidental}`)
+            .replace(/@@max_limit_glass_protect@@/g, `${dataToSendMail.glassProtectMaxLimit}`)
+            .replace(/@@pos_glass_protect@@/g, `${dataToSendMail.glassProtectPos}`)
+            .replace(/@@cover_prize_glass_protect@@/g, `${dataToSendMail.glassProtectCoverPrize}`)
+            .replace(/@@carency_glass_protect@@/g, `${dataToSendMail.glassProtectCarency}`)
             .replace(/@@product_description@@/g, `${dataToSendMail.productDescription}`)
             .replace(/@@model@@/g, `${dataToSendMail.model}`)
             .replace(/@@mark@@/g, `${dataToSendMail.mark}`)
@@ -82,57 +87,68 @@ export class SmartphoneProposalMailService {
             .replace(/@@total_prize@@/g, `${dataToSendMail.totalPrize}`)
 
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
-        // const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
-        // const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
+        const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
+        const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {
-            const sendResult = await EmailSender.sendEmail(emailFrom, email, body)
+        try {        
+            const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             return sendResult.MessageId
         } catch (e) {
             console.error('Email not sent, error', e);
             throw 'Error during sending email'
-        }
-
+        }       
     }
 
     async formatMailJsonParseInfo(MailInfo) {
 
+        const UserData = MailInfo?.attributes?.customPayload?.proposal?.insured_data
+        const equipamentRiskData = MailInfo?.attributes?.customPayload?.proposal?.portable_equipment_risk_data
+        const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
+        const policyData = MailInfo?.attributes?.customPayload?.proposal?.policy_data
+        const variablePolicyHolderData = MailInfo?.attributes?.customPayload?.proposal?.variable_policy_data        
+
         const dataToSendMail: DataToSendMail = {
-            securityName: MailInfo?.attributes?.customPayload?.proposal.insured_data.insured_name,
-            securityUserCpf: MailInfo?.attributes?.customPayload?.proposal.insured_data.cnpj_cpf,
-            securityAddress: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.street,
-            securityAddressNumber: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.number,
-            securityAddressDistrict: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.district,
-            securityAddressCity: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.city,
-            securityAddressUf: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.federal_unit,
-            securityDataUserCep: MailInfo?.attributes?.customPayload?.proposal.insured_data.address_data.zip_code,
+            securityName: UserData.insured_name, 
+            securityUserCpf: UserData?.cnpj_cpf,
+            securityAddress: UserData?.address_data.street,
+            securityAddressNumber: UserData?.address_data.number,
+            securityAddressDistrict: UserData?.address_data.district,
+            securityAddressCity: UserData?.address_data.city,
+            securityAddressUf: UserData?.address_data.federal_unit,
+            securityDataUserCep: UserData?.address_data.zip_code,
 
-            SecurityRepresentationSocialReazon: '-',
-            SecurityRepresentationCnpj: '-',
-            SecurityRepresentationCodSusep: '-',
+            SecurityRepresentationSocialReazon: policyHolderData?.corporate_name_policyholder_name,
+            SecurityRepresentationCnpj: policyHolderData?.cnpj_cpf,
 
-            securityDataSocialReazon: '-',
-            securityDataCpf: '-',
+            securityDataSocialReazon: 'Mapfre Seguros Gerais SA',
+            securityDataCpf: '61074175/0001-38',
 
-            brokerName: '-',
-            brokerCodSusep: '-',
+            brokerName: 'Pulso Corretora de Seguros e Serviços de Internet Ltda.',
+            brokerCodSusep: '100713015',
 
-            securyDataBranch: '-',
-            securyDataIndividualTicket: '-',
-            securyDataEmissionDate: '-',
-            securyDataInitialSuranceTerm: '-',
-            securyDataFinalSuranceTerm: '-',
+            securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
+            securyDataIndividualTicket: MailInfo?.nsu,
+            securyDataEmissionDate: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
+            securyDataInitialSuranceTerm: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
+            securyDataFinalSuranceTerm: moment(policyData.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
 
-            maxLimitThieft: '-',
-            posThieft: '-',
+            maxLimitThieft: '0',
+            posThieft: '20%',
             prizeThieft: '-',
             lackThieft: '-',
-            maxLimitAcidental: '-',
-            posAcidental: '-',
+            
+            maxLimitAcidental: stringify(equipamentRiskData?.equipment_value),
+            posAcidental: '15%',
             prizeAcidental: '-',
             lackAcidental: '-',
+
+            glassProtectMaxLimit: stringify(equipamentRiskData?.equipment_value),
+            glassProtectPos: '10%',
+            glassProtectCoverPrize: '9,25%',
+            glassProtectCarency: '-',
+
             productDescription: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
             model: '-',
             mark: '-',
@@ -141,7 +157,6 @@ export class SmartphoneProposalMailService {
             iof: '-',
             totalPrize: '-'
         }
-
         return dataToSendMail;
     }
 }

@@ -51,15 +51,14 @@ export class SmartphoneProposalUtils {
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.attributes?.customPayload?.proposal) {
             const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
-            const milisseconds = (new Date()).getTime()
-            const contractNumber = `${milisseconds}`.padStart(17, preNumber);
+            const contractNumber = `${unsignedProposal.nsu}`.padStart(17, preNumber);
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
             proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            const splits = {...unsignedProposal.splits[0]}
-            const installments = splits.installments ? splits.installments : 1
-            proposal.charge_type_data = this.generateChargeData(installments, splits.amount)
+            const split = { ...unsignedProposal.splits[0] }
+            const installments = split.installments ? split.installments : 1
+            proposal.charge_type_data = this.generateChargeData(installments, split.amount)
             return proposal
         }
         return null
@@ -72,17 +71,15 @@ export class SmartphoneProposalUtils {
 
         // Início da Vigência da apólice
         let toDay = moment(new Date());
-        const startValidDocument = toDay.format('DDMMYYYY');
-
-        const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
+        const startValidDocument = toDay.format('MMDDYYYY');
 
         // Número único do contrato
         const keyContractCertificateNumber = contractNumber;
         log.debug('keyContractCertificateNumber', keyContractCertificateNumber)
 
         // Fim da Vigência da apólice
-        toDay.add(1, "year");
-        const endValidDocument = toDay.format('DDMMYYYY');
+        toDay.add(365, "days");
+        const endValidDocument = toDay.format('MMDDYYYY');
 
         return {
             "mother_policy_number": motherPolicyNumber,
@@ -131,26 +128,6 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateInsuredData(insuredData: InsuredData) {
-        return {
-            "insured_name": insuredData.insuredName,
-            "type_of_legal_person": insuredData.typeOfLegalPerson,
-            "cnpj_cpf": insuredData.cnpjCpf,
-            "date_of_birth": insuredData.dateOfBirth,
-            "gender": insuredData.gender,
-            "address_data": {
-                "type_of_street": insuredData.typeOfStreet,
-                "street": insuredData.street,
-                "number": insuredData.number,
-                "complement": insuredData.complement,
-                "district": insuredData.district,
-                "city": insuredData.city,
-                "zip_code": insuredData.zipCode,
-                "federal_unit": insuredData.federalUnit
-            }
-        }
-    }
-
     static generateVariablePolicyData(contractNumber, contractValue) {
 
         //Número da proposta a ser gerada pela AME
@@ -164,7 +141,7 @@ export class SmartphoneProposalUtils {
 
         //Comissão da apólice, informado pela AME
         const comission = 32
-        const policyCommission = (contractValue / 100) * comission;
+        const policyCommission = this.formatPrice((contractValue / 100) * comission);
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
@@ -179,67 +156,55 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generatePortableEquipmentRiskData() {
+    static generateChargeData(installments, firstInstalment) {
 
-        // CPF por risco, acredito que pode ser o mesmo cpf do segurado, informado pela AME
-        const cpfCnpjByRisk = 47156984523;
+        // (FIXO DF), informado pela AME
+        const typeOfCollectionManager = "DF";
 
-        // MESMA DESCRIÇÃO DO BEM SEGURADO abaixo, informado pela AME
-        const riskDescription = "CELULAR LG K10 PRO 5.7";
+        // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
+        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments);
 
-        // Descrição do bem segurado, informado pela AME
-        const productDescription = "CELULAR LG K10 PRO 5.7";
+        // Mapfre ficou de enviar o código, estou aguardando
+        const paymentManagerCode = 99990638;
 
-        // Caso não tenha, enviar 1, informado pela AME
-        const manufacturerCode = 1;
+        // CPF ou CGC AME
+        const documentType = "CGC";
 
-        // Nome do fabricante do aparelho, informado pela AME
-        const manufacturerName = "LG CELULAR SP";
+        // Número do documento AME
+        const documentNumber = "32778350000170";
 
-        // Descrição do bem segurado, informado pela AME
-        const modelDescription = 1;
+        // Quantidade de parcelas, informado pela AME
+        const numberOfInstallments = installments;
 
-        // Enviar 2, informado pela AME
-        const equipmentType = 1;
+        // Valor da primeira parcela, informado pela AME
+        const firstInstallmentValue = this.formatPrice(firstInstalment);
 
-        // Valor do bem, informado pela AME
-        const equipmentValue = 999.90;
-
-        // Número da nota fiscal, informado pela AME
-        const invoiceNumber = 1258745698;
-
-        // Data da nota fiscal, informado pela AME
-        const invoiceDate = "10122020";
-
-        // IMEI, informado pela AME
-        const deviceSerialCode = "fke782521dd";
+        // Dia 28 do mês subsequente, informado pela AME
+        const maturityOfFirstInstallment = "10042021";
 
         return {
-            "cpf_cnpj_by_risk": cpfCnpjByRisk,
-            "risk_description": riskDescription,
-            "product_description": productDescription,
-            "manufacturer_code": manufacturerCode,
-            "manufacturer_name": manufacturerName,
-            "model_description": modelDescription,
-            "equipment_type": equipmentType,
-            "equipment_value": equipmentValue,
-            "invoice_number": invoiceNumber,
-            "invoice_date": invoiceDate,
-            "device_serial_code": deviceSerialCode
+            "type_of_collection_manager": typeOfCollectionManager,
+            "payment_plan_code": paymentPlanCode,
+            "payment_manager_code": paymentManagerCode,
+            "document_type": documentType,
+            "document_number": documentNumber,
+            "number_of_installments": numberOfInstallments,
+            "first_installment_value": firstInstallmentValue,
+            "maturity_of_first_installment": maturityOfFirstInstallment
         }
     }
 
-    static generateCoverageData(coverageData: CoverageData) {
-
-        // Informar fixo 01
-        const policyItemNumber = "000001";
-
-        return {
-            "policy_item_number": policyItemNumber,
-            "coverage_code": coverageData.coverageCode,
-            "insured_amount": coverageData.insuredAmount,
-            "liquid_prize": coverageData.liquidPrize
+    static formatPrice = (value) => {
+        const type = 'round'
+        value = +(value / 100);
+        const exp = -2;
+        if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+            return NaN;
         }
+        value = value.toString().split('e');
+        value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+        value = value.toString().split('e');
+        return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
     }
 
     static getPaymentPlanCode = (code) => {
@@ -282,44 +247,6 @@ export class SmartphoneProposalUtils {
 
             default:
                 return 301
-        }
-    }
-
-    static generateChargeData(installments, firstInstalment) {
-
-        // (FIXO DF), informado pela AME
-        const typeOfCollectionManager = "DF";
-
-        // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
-        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments);
-
-        // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 99990638;
-
-        // CPF ou CGC AME
-        const documentType = "CGC";
-
-        // Número do documento AME
-        const documentNumber = "32778350000170";
-
-        // Quantidade de parcelas, informado pela AME
-        const numberOfInstallments = installments;
-
-        // Valor da primeira parcela, informado pela AME
-        const firstInstallmentValue = firstInstalment;
-
-        // Dia 28 do mês subsequente, informado pela AME
-        const maturityOfFirstInstallment = "10042021";
-
-        return {
-            "type_of_collection_manager": typeOfCollectionManager,
-            "payment_plan_code": paymentPlanCode,
-            "payment_manager_code": paymentManagerCode,
-            "document_type": documentType,
-            "document_number": documentNumber,
-            "number_of_installments": numberOfInstallments,
-            "first_installment_value": firstInstallmentValue,
-            "maturity_of_first_installment": maturityOfFirstInstallment
         }
     }
 }
