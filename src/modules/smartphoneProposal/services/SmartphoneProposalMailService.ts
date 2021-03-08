@@ -92,7 +92,7 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {        
+        try {                    
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             return sendResult.MessageId
         } catch (e) {
@@ -107,7 +107,9 @@ export class SmartphoneProposalMailService {
         const equipamentRiskData = MailInfo?.attributes?.customPayload?.proposal?.portable_equipment_risk_data
         const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
         const policyData = MailInfo?.attributes?.customPayload?.proposal?.policy_data
-        const variablePolicyHolderData = MailInfo?.attributes?.customPayload?.proposal?.variable_policy_data        
+        const selectedPlan = MailInfo?.attributes?.customPayload?.selectedPlan               
+
+        let selectedPercent = this.selectedPlanPercent(selectedPlan)        
 
         const dataToSendMail: DataToSendMail = {
             securityName: UserData.insured_name, 
@@ -117,10 +119,10 @@ export class SmartphoneProposalMailService {
             securityAddressDistrict: UserData?.address_data.district,
             securityAddressCity: UserData?.address_data.city,
             securityAddressUf: UserData?.address_data.federal_unit,
-            securityDataUserCep: UserData?.address_data.zip_code,
+            securityDataUserCep: UserData?.address_data.zip_code,            
 
-            SecurityRepresentationSocialReazon: policyHolderData?.corporate_name_policyholder_name,
-            SecurityRepresentationCnpj: policyHolderData?.cnpj_cpf,
+            SecurityRepresentationSocialReazon: typeof(policyHolderData?.corporate_name_policyholder_name) != 'undefined' ? policyHolderData?.corporate_name_policyholder_name : '-',
+            SecurityRepresentationCnpj: typeof(policyHolderData?.cnpj_cpf) != 'undefined' ? policyHolderData?.cnpj_cpf : '-',
 
             securityDataSocialReazon: 'Mapfre Seguros Gerais SA',
             securityDataCpf: '61074175/0001-38',
@@ -130,33 +132,65 @@ export class SmartphoneProposalMailService {
 
             securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
             securyDataIndividualTicket: MailInfo?.nsu,
-            securyDataEmissionDate: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
-            securyDataInitialSuranceTerm: moment(policyData.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
-            securyDataFinalSuranceTerm: moment(policyData.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY"),
+            securyDataEmissionDate: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
+            securyDataInitialSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
+            securyDataFinalSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',            
 
-            maxLimitThieft: '0',
+            maxLimitThieft: 'R$: ' + equipamentRiskData?.equipment_value.toLocaleString(),
             posThieft: '20%',
-            prizeThieft: '-',
+            prizeThieft: (selectedPercent['thieft']) !=  0 ? this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value) + '%' : '-',
             lackThieft: '-',
             
-            maxLimitAcidental: stringify(equipamentRiskData?.equipment_value),
+            maxLimitAcidental: 'R$: ' + equipamentRiskData?.equipment_value.toLocaleString(),
             posAcidental: '15%',
-            prizeAcidental: '-',
+            prizeAcidental: (selectedPercent['acidental_broken']) !=  0 ? this.setPercent(selectedPercent['acidental_broken'], equipamentRiskData?.equipment_value) + '%' : '-',
             lackAcidental: '-',
 
-            glassProtectMaxLimit: stringify(equipamentRiskData?.equipment_value),
+            glassProtectMaxLimit: 'R$: ' + equipamentRiskData?.equipment_value.toLocaleString(),
             glassProtectPos: '10%',
-            glassProtectCoverPrize: '9,25%',
+            glassProtectCoverPrize: selectedPercent['broken_glass'] !=  0 ? this.setPercent(selectedPercent['broken_glass'], equipamentRiskData?.equipment_value) + '%' : '-',
             glassProtectCarency: '-',
 
             productDescription: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
             model: '-',
             mark: '-',
-            paymentForm: MailInfo?.operationType,
-            liquidPrice: MailInfo?.amount,
-            iof: '-',
-            totalPrize: '-'
+            paymentForm: MailInfo?.operationType, 
+            liquidPrice: 'R$ ' + this.setPercent(8.62, equipamentRiskData?.equipment_value),
+            iof: 'R$ ' + this.setPercent(7.38, equipamentRiskData?.equipment_value), 
+            totalPrize: `${selectedPercent['total'].toString().replace('.',',')}`
         }
         return dataToSendMail;
+    }
+
+    setPercent(percent, value) {        
+        return (((percent * 100) / value  ) / 100).toFixed(2).toString().replace('.', ',')
+    }
+
+    selectedPlanPercent(selectedPlan) {
+        switch (selectedPlan.id) {
+            case 1 :
+                return {
+                    total: 17.84,
+                    thieft: 8.73,
+                    acidental_broken: 6.11,
+                    broken_glass: 3
+                }
+            case 2:
+                return {
+                    total: 13.88,
+                    thieft: 0,
+                    acidental_broken: 9.31,
+                    broken_glass: 4.57
+                }            
+            case 3: 
+                return {
+                    total: 9.25,
+                    thieft: 0,
+                    acidental_broken: 0,
+                    broken_glass: 9.25
+                }            
+            default :
+                return 0
+        }
     }
 }
