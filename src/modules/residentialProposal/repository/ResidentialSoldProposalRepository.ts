@@ -20,9 +20,11 @@ export class ResidentialSoldProposalRepository {
     }
 
     async create(soldProposal: ResidentialSoldProposal) {
+        log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
         let params = {TableName: TABLE, Item: soldProposal};
         await dynamoDocClient.put(params).promise();
+        log.debug('REGISTER WROTE ON', TABLE);
         return soldProposal
     }
 
