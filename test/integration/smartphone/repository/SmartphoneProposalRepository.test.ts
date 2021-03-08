@@ -17,6 +17,7 @@ describe("SmartphoneProposalRepository", () => {
     it("validação de dados da ultima requisição", async () => {                
         const getLastProposal = await smartphoneProposalRepository.listProposal()
         const validateProposal = await smartphoneProposalRepository.validateProposal(getLastProposal[0])                
+        console.log('VALIDAÇÕES DE DADOS FALSA', validateProposal)        
         expect(validateProposal.length).toBe(0)
     })
     
