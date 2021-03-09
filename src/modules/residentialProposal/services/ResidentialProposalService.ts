@@ -286,7 +286,8 @@ export class ResidentialProposalService {
             } catch (e) {
                 await this.saveProposalFail(unsignedPayment.id, (e.message ? e.message : e.toString()))
             }
-            await this.saveSoldProposal(proposal, proposalResponse, Tenants.RESIDENTIAL)
+            log.info('Salvando a compra')
+            await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.RESIDENTIAL)
             log.debug("Proposal sent %j", unsignedPayment.id)
             return proposalResponse
         } else {
