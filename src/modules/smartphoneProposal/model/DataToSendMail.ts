@@ -43,5 +43,6 @@ export interface DataToSendMail {
     paymentForm?: string    
     liquidPrice?: string    
     iof?: string    
-    totalPrize?: string        
+    totalPrize?: string
+    securyDataRepresentation?: string
 }
