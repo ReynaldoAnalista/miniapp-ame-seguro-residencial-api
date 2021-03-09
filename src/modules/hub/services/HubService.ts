@@ -62,6 +62,7 @@ export class HubService {
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         device: device?.risk_description,
+                        deviceValue: (device?.equipment_value) ? device?.equipment_value * 100 : 0,
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
