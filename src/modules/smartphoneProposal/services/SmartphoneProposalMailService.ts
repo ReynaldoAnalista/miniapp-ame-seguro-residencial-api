@@ -91,7 +91,7 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {                    
+        try {                                
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             return sendResult.MessageId
         } catch (e) {
@@ -154,9 +154,8 @@ export class SmartphoneProposalMailService {
             model: '-',
             mark: '-', 
             paymentForm: MailInfo?.operationType, 
-            liquidPrice: 'R$ ' + this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace('.', ','),            
-            iof: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['total'], equipamentRiskData?.equipment_value))- parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value))).toFixed(2).replace('.', ',')
-            , 
+            liquidPrice: 'R$ ' + this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace('.', ','),
+            iof: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 7.38 / 100).toFixed(2).replace('.',','), 
             totalPrize: 'R$ ' + this.setPercent(selectedPercent['total'], equipamentRiskData?.equipment_value).replace('.', ','), 
             securyDataRepresentation: (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace(',','.')) * 32 / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         } 
