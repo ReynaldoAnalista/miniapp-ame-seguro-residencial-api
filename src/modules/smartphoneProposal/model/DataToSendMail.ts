@@ -45,4 +45,7 @@ export interface DataToSendMail {
     iof?: string    
     totalPrize?: string
     securyDataRepresentation?: string
+    carencyThief?: string
+    carencyBroken?: string
+    carencyAcident?: string
 }

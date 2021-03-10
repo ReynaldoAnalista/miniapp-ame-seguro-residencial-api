@@ -39,7 +39,7 @@ export class SmartphoneProposalMailService {
 
         let template = await readFile(emailTemplate, 'utf-8')
         let body = template
-        // DADOS DO USUARIO
+            // DADOS DO USUARIO
             .replace(/@@secury_user_name@@/g, `${dataToSendMail.securityName}`)
             .replace(/@@secury_user_cpf@@/g, `${dataToSendMail.securityUserCpf}`)
             .replace(/@@secury_user_address@@/g, `${dataToSendMail.securityAddress}`)
@@ -78,12 +78,15 @@ export class SmartphoneProposalMailService {
             .replace(/@@carency_glass_protect@@/g, `${dataToSendMail.glassProtectCarency}`)
             .replace(/@@product_description@@/g, `${dataToSendMail.productDescription}`)
             .replace(/@@model@@/g, `${dataToSendMail.model}`)
-            .replace(/@@mark@@/g, `${dataToSendMail.mark}`)
+            .replace(/@@mark@@/g, `${dataToSendMail.mark}`) 
             .replace(/@@payment_form@@/g, `${dataToSendMail.paymentForm}`)
             .replace(/@@liquid_prize@@/g, `${dataToSendMail.liquidPrice}`)
             .replace(/@@iof@@/g, `${dataToSendMail.iof}`)
             .replace(/@@total_prize@@/g, `${dataToSendMail.totalPrize}`)
             .replace(/@@secury_data_representation@@/g, `${dataToSendMail.securyDataRepresentation}`)
+            .replace(/@@carency_thieft@@/g, `${dataToSendMail.carencyThief}`)
+            .replace(/@@carency_broken@@/g, `${dataToSendMail.carencyBroken}`)
+            .replace(/@@carency_acident@@/g, `${dataToSendMail.carencyAcident}`)
 
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
         const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
@@ -91,7 +94,7 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {                                
+        try {       
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             return sendResult.MessageId
         } catch (e) {
@@ -128,42 +131,45 @@ export class SmartphoneProposalMailService {
 
             brokerName: 'Pulso Corretora de Seguros e Serviços de Internet Ltda.',
             brokerCodSusep: '202037915',
-
+ 
             securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
             securyDataIndividualTicket: MailInfo?.nsu, 
             securyDataEmissionDate: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
             securyDataInitialSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
             securyDataFinalSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',            
 
-            maxLimitThieft: equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-            posThieft: '20%',
-            prizeThieft: (selectedPercent['thieft']) !=  0 ? 'R$ ' + this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
+            maxLimitThieft: selectedPlan.id == 1 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
+            posThieft: selectedPlan.id == 1 ? '20%' : '-',
+            carencyThief: selectedPlan.id == 1 ? 'Não há' : '-',
+            prizeThieft: selectedPlan.id == 1 && (selectedPercent['thieft']) !=  0 ? 'R$ ' + this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackThieft: '-',
             
-            maxLimitAcidental: equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-            posAcidental: '15%',
+            maxLimitAcidental: selectedPlan.id == 2 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
+            posAcidental: selectedPlan.id == 2 || selectedPlan.id == 1 ? '15%' : '-',
             prizeAcidental: (selectedPercent['acidental_broken']) !=  0 ? 'R$ ' + this.setPercent(selectedPercent['acidental_broken'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackAcidental: '-',
+            carencyAcident:  selectedPlan.id == 1 || selectedPlan.id == 2 ? 'Não há' : '-',
 
             glassProtectMaxLimit: equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-            glassProtectPos: '10%',
+            glassProtectPos: (selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3) ? '10%' : '-',
             glassProtectCoverPrize: selectedPercent['broken_glass'] !=  0 ? 'R$ ' + this.setPercent(selectedPercent['broken_glass'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             glassProtectCarency: '-',
-
+            carencyBroken: selectedPlan.id == 3 || selectedPlan.id == 2 || selectedPlan.id == 1 ? 'Não há' : '-', 
+ 
             productDescription: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
             model: '-',
             mark: '-', 
             paymentForm: MailInfo?.operationType, 
             liquidPrice: 'R$ ' + this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace('.', ','),
-            iof: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 7.38 / 100).toFixed(2).replace('.',','), 
-            totalPrize: 'R$ ' + this.setPercent(selectedPercent['total'], equipamentRiskData?.equipment_value).replace('.', ','), 
+            iof: 'R$' + (Math.abs(parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738) - parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value))).toFixed(2).replace('.',','), 
+            totalPrize: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738).toFixed(2).replace('.',','), 
             securyDataRepresentation: (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace(',','.')) * 32 / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-        } 
+        }
         return dataToSendMail;
     }
 
     setPercent(percent, value) {        
-        return (((percent * 100) / value  ) * 100).toFixed(2)
+        return (value *  percent / 100).toFixed(2)
     }
 
     formatCnpj(v){
@@ -188,28 +194,28 @@ export class SmartphoneProposalMailService {
         switch (selectedPlan.id) {
             case 1 :
                 return {
-                    total: 17.84,
-                    liquid_prize: 16.62,
+                    total: 17.8416,
+                    liquid_prize: 16.6154,
                     thieft: 8.73,
-                    acidental_broken: 6.11,
+                    acidental_broken: 6.1114,
                     broken_glass: 3
                 }
             case 2:
                 return {
-                    total: 13.88,
-                    liquid_prize: 12.92,
+                    total: 13.8768,
+                    liquid_prize: 12.9231,
                     thieft: 0,
-                    acidental_broken: 9.31,
+                    acidental_broken: 9.3066,
                     broken_glass: 4.57
                 }            
             case 3: 
-                return {
-                    total: 9.25,
-                    liquid_prize: 8.62,
+                return { 
+                    total: 9.2512,
+                    liquid_prize: 8.6154,
                     thieft: 0,
                     acidental_broken: 0,
-                    broken_glass: 9.25
-                }            
+                    broken_glass: 9.2512 
+                }           
             default :
                 return 0
         }
