@@ -67,8 +67,7 @@ describe("SmartphoneProposalMail", () => {
     })
 
     it("Envia o e-mail para o segurado", async () => {
-        let getPass = await smartphoneProposalRepository.listProposal() 
-        const emailId = await smartphoneProposalMailService.sendSellingEmail(getPass[0].id)
+        const emailId = await smartphoneProposalMailService.sendSellingEmail(customerIdSmartphone)
         expect(emailId).toBeDefined()
     })
 })

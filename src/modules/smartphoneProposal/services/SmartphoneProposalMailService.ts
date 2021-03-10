@@ -109,8 +109,7 @@ export class SmartphoneProposalMailService {
         const equipamentRiskData = MailInfo?.attributes?.customPayload?.proposal?.portable_equipment_risk_data
         const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
         const policyData = MailInfo?.attributes?.customPayload?.proposal?.policy_data
-        const selectedPlan = MailInfo?.attributes?.customPayload?.selectedPlan               
-
+        const selectedPlan = MailInfo?.attributes?.customPayload?.selectedPlan
         let selectedPercent = this.selectedPlanPercent(selectedPlan)        
 
         const dataToSendMail: DataToSendMail = {
@@ -191,33 +190,37 @@ export class SmartphoneProposalMailService {
     
 
     selectedPlanPercent(selectedPlan) {
-        switch (selectedPlan.id) {
-            case 1 :
-                return {
-                    total: 17.8416,
-                    liquid_prize: 16.6154,
-                    thieft: 8.73,
-                    acidental_broken: 6.1114,
-                    broken_glass: 3
-                }
-            case 2:
-                return {
-                    total: 13.8768,
-                    liquid_prize: 12.9231,
-                    thieft: 0,
-                    acidental_broken: 9.3066,
-                    broken_glass: 4.57
-                }            
-            case 3: 
-                return { 
-                    total: 9.2512,
-                    liquid_prize: 8.6154,
-                    thieft: 0,
-                    acidental_broken: 0,
-                    broken_glass: 9.2512 
-                }           
-            default :
-                return 0
+        if (selectedPlan) {
+            log.debug(`Selecting data from plan ${selectedPlan.id}`)
+            switch (selectedPlan.id) {
+                case 1:
+                    return {
+                        total: 17.8416,
+                        liquid_prize: 16.6154,
+                        thieft: 8.73,
+                        acidental_broken: 6.1114,
+                        broken_glass: 3
+                    }
+                case 2:
+                    return {
+                        total: 13.8768,
+                        liquid_prize: 12.9231,
+                        thieft: 0,
+                        acidental_broken: 9.3066,
+                        broken_glass: 4.57
+                    }
+                case 3:
+                    return {
+                        total: 9.2512,
+                        liquid_prize: 8.6154,
+                        thieft: 0,
+                        acidental_broken: 0,
+                        broken_glass: 9.2512
+                    }
+                default:
+                    return 0
+            }
         }
+        throw "SelectedPlan not sent"
     }
 }
