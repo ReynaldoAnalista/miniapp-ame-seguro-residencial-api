@@ -37,9 +37,22 @@ export class SmartphoneProposalMailService {
         log.error("Order not found")
         throw new Error("Order not found")
     }
+    
+    // TODO : Feito somente para testes, retirada depois
+    async sendSellingEmailWithParams(pass: string, email: string) {
+        log.debug(`Sending email: ${pass}`)
+        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        if (paymentObject) {
+            return await this.sendSellingEmailByPaymentObject(paymentObject, email)
+        }
+        log.error("Order not found")
+        throw new Error("Order not found")
+    }
+    // FIMTODO
 
-    async sendSellingEmailByPaymentObject(unsignedPayment: any) {
-        const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
+    async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
+        
+        const email = emailPass != "" ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         logger.info('Preparando o layout do e-mail')
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')

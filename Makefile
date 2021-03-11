@@ -20,7 +20,7 @@ runserver: build	commithash
 	COMMIT_HASH="$(COMMIT_HASH)" APPLICATION_NAME='ame-seguro-residencial' DYNAMODB_ENV='stag' DEBUG=ame-seguro-residencial:* yarn run dev
 
 runhomolog: build	commithash
-	@echo '=========== Starting ame-seguro-residencial ==========='
+	@echo '=========== Starting ame-seguro-residencial HOMOLOG ==========='
 	COMMIT_HASH="$(COMMIT_HASH)" DYNAMODB_HOST='http://localhost:8000' APPLICATION_NAME='ame-seguro-residencial' DYNAMODB_ENV='stag' DEBUG=ame-seguro-residencial:* yarn run dev
 
 runtest:
