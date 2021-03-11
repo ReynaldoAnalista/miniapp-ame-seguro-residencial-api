@@ -9,9 +9,13 @@ import { TYPES } from "../../../inversify/inversify.types";
 import { ParameterStore } from "../../../configs/ParameterStore";
 import { getLogger } from "../../../server/Logger";
 import moment from 'moment';
+import { loggers } from "winston";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
+
+const logger = getLogger("SmartphoneProposalMailService")
+
 
 @injectable()
 export class SmartphoneProposalMailService {
@@ -37,6 +41,7 @@ export class SmartphoneProposalMailService {
     async sendSellingEmailByPaymentObject(unsignedPayment: any) {
         const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
+        logger.info('Preparando o layout do e-mail')
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
 
         let template = await readFile(emailTemplate, 'utf-8')
@@ -96,8 +101,9 @@ export class SmartphoneProposalMailService {
         const emailFrom = forceEmailSender ? forceEmailSender : 'no-reply@amedigital.com'
         log.debug(`EmailFrom:${emailFrom}`)
 
-        try {
+        try {      
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
+            logger.info('Email Enviado')
             return sendResult.MessageId
         } catch (e) {
             console.error('Email not sent, error', e);
