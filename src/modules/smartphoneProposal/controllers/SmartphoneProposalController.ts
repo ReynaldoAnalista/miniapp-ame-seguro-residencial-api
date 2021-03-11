@@ -33,7 +33,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/updateProposal/{proposalId}")
-    public async updateProposal(@Body() proposalId: string) {
+    public async updateProposal(@Path() proposalId: string) {
         logger.info('Proposal Id %j', proposalId);
         try {
             return await this.planService.updateProposal(proposalId)
@@ -46,7 +46,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/proposal/{pass}/sendEmail")
-    public async sendMailProposal(@Body() pass: string) {
+    public async sendMailProposal(@Path() pass: string) {
         logger.debug(`Sending email for proposal:${pass}`)
         try {
             await this.smartphoneProposalMailService.sendSellingEmail(pass)            
