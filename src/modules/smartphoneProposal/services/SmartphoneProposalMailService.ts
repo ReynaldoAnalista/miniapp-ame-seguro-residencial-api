@@ -1,13 +1,13 @@
-import {inject, injectable} from "inversify";
+import { inject, injectable } from "inversify";
 import fs from "fs";
 import util from "util";
 import path from "path";
-import {DataToSendMail} from "../model/DataToSendMail";
-import {SmartphoneProposalRepository} from '../repository/SmartphoneProposalRepository'
+import { DataToSendMail } from "../model/DataToSendMail";
+import { SmartphoneProposalRepository } from '../repository/SmartphoneProposalRepository'
 import EmailSender from "./EmailSender";
-import {TYPES} from "../../../inversify/inversify.types";
-import {ParameterStore} from "../../../configs/ParameterStore";
-import {getLogger} from "../../../server/Logger";
+import { TYPES } from "../../../inversify/inversify.types";
+import { ParameterStore } from "../../../configs/ParameterStore";
+import { getLogger } from "../../../server/Logger";
 import moment from 'moment';
 import { loggers } from "winston";
 
@@ -29,14 +29,16 @@ export class SmartphoneProposalMailService {
     }
 
     async sendSellingEmail(pass: string) {
+        log.debug(`Sending email: ${pass}`)
         const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (!paymentObject) {
-            throw "Order not found"
+        if (paymentObject) {
+            return await this.sendSellingEmailByPaymentObject(paymentObject)
         }
-        return await this.sendSellingEmailByPaymentObject(paymentObject)
+        log.error("Order not found")
+        throw new Error("Order not found")
     }
 
-    async sendSellingEmailByPaymentObject(unsignedPayment: any) {        
+    async sendSellingEmailByPaymentObject(unsignedPayment: any) {
         const email: string = unsignedPayment?.attributes?.customPayload?.clientEmail
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         logger.info('Preparando o layout do e-mail')
@@ -83,7 +85,7 @@ export class SmartphoneProposalMailService {
             .replace(/@@carency_glass_protect@@/g, `${dataToSendMail.glassProtectCarency}`)
             .replace(/@@product_description@@/g, `${dataToSendMail.productDescription}`)
             .replace(/@@model@@/g, `${dataToSendMail.model}`)
-            .replace(/@@mark@@/g, `${dataToSendMail.mark}`) 
+            .replace(/@@mark@@/g, `${dataToSendMail.mark}`)
             .replace(/@@payment_form@@/g, `${dataToSendMail.paymentForm}`)
             .replace(/@@liquid_prize@@/g, `${dataToSendMail.liquidPrice}`)
             .replace(/@@iof@@/g, `${dataToSendMail.iof}`)
@@ -106,7 +108,7 @@ export class SmartphoneProposalMailService {
         } catch (e) {
             console.error('Email not sent, error', e);
             throw 'Error during sending email'
-        }       
+        }
     }
 
     async formatMailJsonParseInfo(MailInfo) {
@@ -116,84 +118,84 @@ export class SmartphoneProposalMailService {
         const policyHolderData = MailInfo?.attributes?.customPayload?.proposal?.policyholder_data
         const policyData = MailInfo?.attributes?.customPayload?.proposal?.policy_data
         const selectedPlan = MailInfo?.attributes?.customPayload?.selectedPlan
-        let selectedPercent = this.selectedPlanPercent(selectedPlan)        
+        let selectedPercent = this.selectedPlanPercent(selectedPlan)
 
         const dataToSendMail: DataToSendMail = {
-            securityName: UserData.insured_name, 
+            securityName: UserData.insured_name,
             securityUserCpf: this.formatCPF(UserData?.cnpj_cpf),
             securityAddress: UserData?.address_data.street,
             securityAddressNumber: UserData?.address_data.number,
             securityAddressDistrict: UserData?.address_data.district,
             securityAddressCity: UserData?.address_data.city,
             securityAddressUf: UserData?.address_data.federal_unit,
-            securityDataUserCep: UserData?.address_data.zip_code,            
+            securityDataUserCep: UserData?.address_data.zip_code,
 
-            SecurityRepresentationSocialReazon: typeof(policyHolderData?.corporate_name_policyholder_name) != 'undefined' ? policyHolderData?.corporate_name_policyholder_name : '-',
-            SecurityRepresentationCnpj: typeof(policyHolderData?.cnpj_cpf) != 'undefined' ? this.formatCnpj(policyHolderData?.cnpj_cpf) : '-',
+            SecurityRepresentationSocialReazon: typeof (policyHolderData?.corporate_name_policyholder_name) != 'undefined' ? policyHolderData?.corporate_name_policyholder_name : '-',
+            SecurityRepresentationCnpj: typeof (policyHolderData?.cnpj_cpf) != 'undefined' ? this.formatCnpj(policyHolderData?.cnpj_cpf) : '-',
 
             securityDataSocialReazon: 'Mapfre Seguros Gerais SA',
             securityDataCpf: '61.074.175/0001-38',
 
             brokerName: 'Pulso Corretora de Seguros e Serviços de Internet Ltda.',
             brokerCodSusep: '202037915',
- 
+
             securyDataBranch: '071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis',
-            securyDataIndividualTicket: MailInfo?.nsu, 
-            securyDataEmissionDate: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
-            securyDataInitialSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
-            securyDataFinalSuranceTerm: typeof(policyData?.end_valid_document) != 'undefined' ? moment(policyData?.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',            
+            securyDataIndividualTicket: MailInfo?.nsu,
+            securyDataEmissionDate: typeof (policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
+            securyDataInitialSuranceTerm: typeof (policyData?.end_valid_document) != 'undefined' ? moment(policyData?.start_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
+            securyDataFinalSuranceTerm: typeof (policyData?.end_valid_document) != 'undefined' ? moment(policyData?.end_valid_document, "MMDDYYYY").format("DD/MM/YYYY") : '-',
 
             maxLimitThieft: selectedPlan.id == 1 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
             posThieft: selectedPlan.id == 1 ? '20%' : '-',
             carencyThief: selectedPlan.id == 1 ? 'Não há' : '-',
-            prizeThieft: selectedPlan.id == 1 && (selectedPercent['thieft']) !=  0 ? 'R$ ' + this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
+            prizeThieft: selectedPlan.id == 1 && (selectedPercent['thieft']) != 0 ? 'R$ ' + this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackThieft: '-',
-            
+
             maxLimitAcidental: selectedPlan.id == 2 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
             posAcidental: selectedPlan.id == 2 || selectedPlan.id == 1 ? '15%' : '-',
-            prizeAcidental: (selectedPercent['acidental_broken']) !=  0 ? 'R$ ' + this.setPercent(selectedPercent['acidental_broken'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
+            prizeAcidental: (selectedPercent['acidental_broken']) != 0 ? 'R$ ' + this.setPercent(selectedPercent['acidental_broken'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackAcidental: '-',
-            carencyAcident:  selectedPlan.id == 1 || selectedPlan.id == 2 ? 'Não há' : '-',
+            carencyAcident: selectedPlan.id == 1 || selectedPlan.id == 2 ? 'Não há' : '-',
 
             glassProtectMaxLimit: equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
             glassProtectPos: (selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3) ? '10%' : '-',
-            glassProtectCoverPrize: selectedPercent['broken_glass'] !=  0 ? 'R$ ' + this.setPercent(selectedPercent['broken_glass'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
+            glassProtectCoverPrize: selectedPercent['broken_glass'] != 0 ? 'R$ ' + this.setPercent(selectedPercent['broken_glass'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             glassProtectCarency: '-',
-            carencyBroken: selectedPlan.id == 3 || selectedPlan.id == 2 || selectedPlan.id == 1 ? 'Não há' : '-', 
- 
+            carencyBroken: selectedPlan.id == 3 || selectedPlan.id == 2 || selectedPlan.id == 1 ? 'Não há' : '-',
+
             productDescription: MailInfo?.attributes?.customPayload?.proposal.portable_equipment_risk_data.product_description,
             model: '-',
-            mark: '-', 
-            paymentForm: MailInfo?.operationType, 
+            mark: '-',
+            paymentForm: MailInfo?.operationType,
             liquidPrice: 'R$ ' + this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace('.', ','),
-            iof: 'R$' + (Math.abs(parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738) - parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value))).toFixed(2).replace('.',','), 
-            totalPrize: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738).toFixed(2).replace('.',','), 
-            securyDataRepresentation: (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace(',','.')) * 32 / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+            iof: 'R$' + (Math.abs(parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738) - parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value))).toFixed(2).replace('.', ','),
+            totalPrize: 'R$ ' + (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value)) * 1.0738).toFixed(2).replace('.', ','),
+            securyDataRepresentation: (parseFloat(this.setPercent(selectedPercent['liquid_prize'], equipamentRiskData?.equipment_value).replace(',', '.')) * 32 / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
         }
         return dataToSendMail;
     }
 
-    setPercent(percent, value) {        
-        return (value *  percent / 100).toFixed(2)
+    setPercent(percent, value) {
+        return (value * percent / 100).toFixed(2)
     }
 
-    formatCnpj(v){
-        v=v.replace(/\D/g,"")                           //Remove tudo o que não é dígito
-        v=v.replace(/^(\d{2})(\d)/,"$1.$2")             //Coloca ponto entre o segundo e o terceiro dígitos
-        v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3") //Coloca ponto entre o quinto e o sexto dígitos
-        v=v.replace(/\.(\d{3})(\d)/,".$1/$2")           //Coloca uma barra entre o oitavo e o nono dígitos
-        v=v.replace(/(\d{4})(\d)/,"$1-$2")              //Coloca um hífen depois do bloco de quatro dígitos
+    formatCnpj(v) {
+        v = v.replace(/\D/g, "")                           //Remove tudo o que não é dígito
+        v = v.replace(/^(\d{2})(\d)/, "$1.$2")             //Coloca ponto entre o segundo e o terceiro dígitos
+        v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3") //Coloca ponto entre o quinto e o sexto dígitos
+        v = v.replace(/\.(\d{3})(\d)/, ".$1/$2")           //Coloca uma barra entre o oitavo e o nono dígitos
+        v = v.replace(/(\d{4})(\d)/, "$1-$2")              //Coloca um hífen depois do bloco de quatro dígitos
         return v
     }
 
-    formatCPF(cpf){
-        cpf=cpf.replace(/\D/g,"")
-        cpf=cpf.replace(/(\d{3})(\d)/,"$1.$2")
-        cpf=cpf.replace(/(\d{3})(\d)/,"$1.$2")
-        cpf=cpf.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
+    formatCPF(cpf) {
+        cpf = cpf.replace(/\D/g, "")
+        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2")
+        cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2")
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
         return cpf
-        }
-    
+    }
+
 
     selectedPlanPercent(selectedPlan) {
         if (selectedPlan) {

@@ -45,6 +45,7 @@ export class SmartphoneProposalRepository {
     }
 
     async findByID(id: string) {
+        log.debug(`Searching on table: ${TABLE} for id: ${id}`)
         let params = {
             TableName: TABLE,
             Key: {
@@ -52,9 +53,13 @@ export class SmartphoneProposalRepository {
             }
         };
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-
         let result = await dynamoDocClient.get(params).promise();
-        return result.Item
+        if (result.Item) {
+            log.debug("Have found")
+            return result.Item
+        }
+        log.debug("Not found")
+        return null
     }
 
     async update(proposal) {

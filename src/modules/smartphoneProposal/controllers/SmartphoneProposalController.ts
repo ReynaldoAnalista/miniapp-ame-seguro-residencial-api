@@ -33,7 +33,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/updateProposal/{proposalId}")
-    public async updateProposal(@Body() proposalId: string) {
+    public async updateProposal(@Path() proposalId: string) {
         logger.info('Proposal Id %j', proposalId);
         try {
             return await this.planService.updateProposal(proposalId)
