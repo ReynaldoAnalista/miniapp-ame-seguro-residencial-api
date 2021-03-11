@@ -46,9 +46,10 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/proposal/{pass}/sendEmail")
-    public async sendMailProposal(@Body() pass: string) {        
+    public async sendMailProposal(@Path() pass: string) {
         try {
-            await this.smartphoneProposalMailService.sendSellingEmail(pass)            
+            logger.info('E-mail com o id de compra:', pass)
+            await this.smartphoneProposalMailService.sendSellingEmail(pass)       
         } catch (e) {
             logger.error(e.message)            
         }
