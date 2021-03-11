@@ -145,7 +145,7 @@ export class SmartphoneProposalMailService {
             prizeThieft: selectedPlan.id == 1 && (selectedPercent['thieft']) != 0 ? 'R$ ' + this.setPercent(selectedPercent['thieft'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackThieft: '-',
 
-            maxLimitAcidental: selectedPlan.id == 2 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
+            maxLimitAcidental: selectedPlan.id == 1 || selectedPlan.id == 2 ? equipamentRiskData?.equipment_value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-',
             posAcidental: selectedPlan.id == 2 || selectedPlan.id == 1 ? '15%' : '-',
             prizeAcidental: (selectedPercent['acidental_broken']) != 0 ? 'R$ ' + this.setPercent(selectedPercent['acidental_broken'], equipamentRiskData?.equipment_value).replace('.', ',') : '-',
             lackAcidental: '-',
