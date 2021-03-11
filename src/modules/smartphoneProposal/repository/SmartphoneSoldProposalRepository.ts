@@ -45,6 +45,15 @@ export class SmartphoneSoldProposalRepository {
         log.debug('REGISTER WROTE ON', TABLE);
         return soldProposal
     }
+    
+    async update(soldProposal: SmartphoneSoldProposal) {
+        log.debug('TRYING UPDATE ON', TABLE);
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+        let params = {TableName: TABLE, Key: soldProposal};
+        await dynamoDocClient.update(params).promise();
+        log.debug('UPDATED ON', TABLE);
+        return soldProposal
+    }
 
     async findAllFromCustomer(customerId: string) {
         log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)

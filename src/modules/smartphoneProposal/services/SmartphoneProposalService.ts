@@ -52,6 +52,27 @@ export class SmartphoneProposalService {
         log.info('Retornando a proposta')
         return proposalResponse
     }
+    
+    async updateProposal(proposalId: string) {
+        const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+       
+        const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
+        log.info('Enviando a proposta para a digibee')
+
+        const proposalResponse = await this.sendProposal(proposal)
+        log.info('Recebendo a resposta da digibee')
+        
+        await this.updateProposalResponse(proposalRequest)
+        log.info('Atualizando a compra')
+
+        await this.updateSoldProposal(proposalRequest)
+        log.info('Enviando o email ao cliente')
+        
+        await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
+        log.info('Retornando a proposta')
+        
+        return proposalResponse
+    }
 
     async saveProposal(proposal: any): Promise<void> {
         log.debug('Saving proposal to DynamoDB')
@@ -97,6 +118,17 @@ export class SmartphoneProposalService {
             log.error(e)
         }
     }
+    
+    async updateProposalResponse(proposal: any) {
+        log.debug("updateProposalResponse")
+        try {
+            await this.responseRepository.update(proposal)
+            log.debug("updateProposalResponse:success")
+        } catch (e) {
+            log.debug("updateProposalResponse:Fail")
+            log.error(e)
+        }
+    }
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
@@ -115,6 +147,22 @@ export class SmartphoneProposalService {
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
+    }
+    
+    async updateSoldProposal(proposal: any) {
+        log.debug("updateSoldProposal")
+        try {
+            await this.smartphoneSoldProposalRepository.update({
+                customerId: proposal.attributes.customPayload.customerId,
+                order: proposal.id,
+                createdAt: new Date().toISOString(),
+                receivedPaymentNotification: proposal
+            } as SmartphoneSoldProposal)
+            log.debug("updateSoldProposal:success")
+        } catch (e) {
+            log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
     }
