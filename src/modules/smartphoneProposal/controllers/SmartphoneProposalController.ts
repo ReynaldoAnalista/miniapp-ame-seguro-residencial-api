@@ -54,4 +54,18 @@ export class SmartphoneProposalController {
             logger.error(e.message)            
         }
     }
+
+    // TODO : Feito somente para testes, retirada depois
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/proposal_email/{pass}/{email}/sendEmail")
+    public async sendMailProposalWithParams(@Path() pass: string, email: string) {
+        try {
+            logger.info('E-mail com o id de compra:', pass)
+            await this.smartphoneProposalMailService.sendSellingEmailWithParams(pass, email)       
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+    // FIMTODO
 }
