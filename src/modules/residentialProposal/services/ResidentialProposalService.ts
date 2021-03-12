@@ -359,7 +359,7 @@ export class ResidentialProposalService {
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
             await this.residentialSoldProposalRepository.create({
-                customerId: proposal.attributes.customPayload.proposal.customerId,
+                customerId: proposal.attributes.customPayload.customerId,
                 order: proposal.id,
                 tenant: tenant,
                 createdAt: new Date().toISOString(),
