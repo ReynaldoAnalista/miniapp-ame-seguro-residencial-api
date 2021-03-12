@@ -174,7 +174,7 @@ export class SmartphoneProposalUtils {
         const documentNumber = "32778350000170";
 
         // Quantidade de parcelas, informado pela AME
-        const numberOfInstallments = installments;
+        const numberOfInstallments = 1;
 
         // Valor da primeira parcela, informado pela AME
         const firstInstallmentValue = this.formatPrice(firstInstalment);
