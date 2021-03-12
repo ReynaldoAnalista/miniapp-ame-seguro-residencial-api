@@ -366,6 +366,7 @@ export class ResidentialProposalService {
                 success: response.success,
                 partnerResponse: response,
                 apiVersion,
+                status: "PROCESSED",
                 receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
