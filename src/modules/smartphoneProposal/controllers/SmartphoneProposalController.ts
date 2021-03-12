@@ -49,7 +49,7 @@ export class SmartphoneProposalController {
     public async sendMailProposal(@Path() pass: string) {
         try {
             logger.info('E-mail com o id de compra:', pass)
-            await this.smartphoneProposalMailService.sendSellingEmail(pass)       
+            await this.planService.sendSellingEmail(pass)       
         } catch (e) {
             logger.error(e.message)            
         }

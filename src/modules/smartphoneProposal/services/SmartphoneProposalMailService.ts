@@ -10,10 +10,10 @@ import { ParameterStore } from "../../../configs/ParameterStore";
 import { getLogger } from "../../../server/Logger";
 import moment from 'moment';
 import { loggers } from "winston";
+import { SmartphoneProposalService } from "./SmartphoneProposalService";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
-
 const logger = getLogger("SmartphoneProposalMailService")
 
 
@@ -26,17 +26,7 @@ export class SmartphoneProposalMailService {
         @inject("SmartphoneProposalRepository")
         private smartphoneProposalRepository: SmartphoneProposalRepository,
     ) {
-    }
-
-    async sendSellingEmail(pass: string) {
-        log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (paymentObject) {
-            return await this.sendSellingEmailByPaymentObject(paymentObject)
-        }
-        log.error("Order not found")
-        throw new Error("Order not found")
-    }
+    }    
     
     // TODO : Feito somente para testes, retirada depois
     async sendSellingEmailWithParams(pass: string, email: string) {
@@ -50,8 +40,8 @@ export class SmartphoneProposalMailService {
     }
     // FIMTODO
 
-    async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
-        
+    async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {               
+        logger.info('Preparando para envio do E-mail')
         const email = emailPass != undefined ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail                        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         logger.info('Preparando o layout do e-mail')
@@ -119,7 +109,7 @@ export class SmartphoneProposalMailService {
             logger.info('Email Enviado')
             return sendResult.MessageId
         } catch (e) {
-            console.error('Email not sent, error', e);
+            logger.error('Email not sent, error', e);
             throw 'Error during sending email'
         }
     }

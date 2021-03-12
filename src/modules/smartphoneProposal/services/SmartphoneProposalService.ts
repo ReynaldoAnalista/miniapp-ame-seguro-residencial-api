@@ -53,18 +53,21 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
-    async updateProposal(proposalId: string) {
+    async updateProposal(proposalId: string, notSendToDigibee?: boolean) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
        
         const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
         log.info('Enviando a proposta para a digibee')
 
         const proposalResponse = await this.sendProposal(proposal)
-        log.info('Recebendo a resposta da digibee')
         
-        await this.updateProposalResponse(proposalRequest)
+        console.log('notSendToDigibee', notSendToDigibee)
+        if(notSendToDigibee == false) {
+            await this.updateProposalResponse(proposalRequest)
+            log.info('Recebendo a resposta da digibee')        
+        }
+        
         log.info('Atualizando a compra')
-
         await this.updateSoldProposal(proposalRequest)
         log.info('Enviando o email ao cliente')
         
@@ -72,6 +75,24 @@ export class SmartphoneProposalService {
         log.info('Retornando a proposta')
         
         return proposalResponse
+    }
+
+    async sendSellingEmail(pass: string) {
+        log.debug(`Sending email: ${pass}`)
+        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        if (paymentObject) {
+            
+            log.info('Reprocessando a tabela Segunro Celular Compras Sem enviar a DigiBee')
+            const updateProposal = await this.updateProposal(paymentObject.id, true)
+    
+            log.info('Atualizando a tabela SoldProposal')
+            await this.updateSoldProposal(updateProposal)
+
+            log.info('Enviando o E-mail')
+            return await this.mailService.sendSellingEmailByPaymentObject(paymentObject)
+        }
+        log.error("Order not found")
+        throw new Error("Order not found")
     }
 
     async saveProposal(proposal: any): Promise<void> {
