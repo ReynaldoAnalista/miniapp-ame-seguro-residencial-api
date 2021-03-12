@@ -163,6 +163,7 @@ export class SmartphoneProposalService {
                 success: response.success,
                 partnerResponse: response,
                 apiVersion,
+                status: "PROSSESSING",
                 receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
