@@ -29,15 +29,43 @@ export class SmartphoneProposalController {
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
         }
     }
+        
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/updateProposal/{proposalId}")
+    public async updateProposal(@Path() proposalId: string) {
+        logger.info('Proposal Id %j', proposalId);
+        try {
+            return await this.planService.updateProposal(proposalId)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/proposal/{pass}/sendEmail")
-    public async sendMailProposal(@Body() pass: string) {        
+    public async sendMailProposal(@Path() pass: string) {
         try {
-            await this.smartphoneProposalMailService.sendSellingEmail(pass)            
+            logger.info('E-mail com o id de compra:', pass)
+            await this.smartphoneProposalMailService.sendSellingEmail(pass)       
         } catch (e) {
             logger.error(e.message)            
         }
     }
+
+    // TODO : Feito somente para testes, retirada depois
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/proposal_email/{pass}/{email}/sendEmail")
+    public async sendMailProposalWithParams(@Path() pass: string, email: string) {
+        try {
+            logger.info('E-mail com o id de compra:', pass)
+            await this.smartphoneProposalMailService.sendSellingEmailWithParams(pass, email)       
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+    // FIMTODO
 }
