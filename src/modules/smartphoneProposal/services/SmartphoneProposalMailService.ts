@@ -143,8 +143,8 @@ export class SmartphoneProposalMailService {
             securityAddressUf: UserData?.address_data.federal_unit,
             securityDataUserCep: UserData?.address_data.zip_code,
 
-            SecurityRepresentationSocialReazon: typeof (policyHolderData?.corporate_name_policyholder_name) != 'undefined' ? policyHolderData?.corporate_name_policyholder_name : '-',
-            SecurityRepresentationCnpj: typeof (policyHolderData?.cnpj_cpf) != 'undefined' ? this.formatCnpj(policyHolderData?.cnpj_cpf) : '-',
+            SecurityRepresentationSocialReazon: 'AMEDIGITAL',
+            SecurityRepresentationCnpj: "32.778.350/0001-70",
 
             securityDataSocialReazon: 'Mapfre Seguros Gerais SA',
             securityDataCpf: '61.074.175/0001-38',
