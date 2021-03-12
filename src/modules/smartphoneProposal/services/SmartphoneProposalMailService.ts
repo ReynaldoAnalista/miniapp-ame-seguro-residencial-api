@@ -52,7 +52,7 @@ export class SmartphoneProposalMailService {
 
     async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
         
-        const email = emailPass != "" ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail        
+        const email = emailPass != undefined ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail                        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         logger.info('Preparando o layout do e-mail')
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
