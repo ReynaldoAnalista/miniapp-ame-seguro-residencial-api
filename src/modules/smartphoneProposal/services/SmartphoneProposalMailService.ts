@@ -14,7 +14,6 @@ import { SmartphoneProposalService } from "./SmartphoneProposalService";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
-const logger = getLogger("SmartphoneProposalMailService")
 
 
 @injectable()
@@ -41,10 +40,10 @@ export class SmartphoneProposalMailService {
     // FIMTODO
 
     async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {               
-        logger.info('Preparando para envio do E-mail')
+        log.info('Preparando para envio do E-mail')
         const email = emailPass != undefined ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail                        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
-        logger.info('Preparando o layout do e-mail')
+        log.info('Preparando o layout do e-mail')
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
 
         let template = await readFile(emailTemplate, 'utf-8')
@@ -106,10 +105,10 @@ export class SmartphoneProposalMailService {
 
         try {                   
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
-            logger.info('Email Enviado')
+            log.info('Email Enviado')
             return sendResult.MessageId
         } catch (e) {
-            logger.error('Email not sent, error', e);
+            log.error('Email not sent, error', e);
             throw 'Error during sending email'
         }
     }
