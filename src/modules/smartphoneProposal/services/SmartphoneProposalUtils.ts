@@ -136,8 +136,8 @@ export class SmartphoneProposalUtils {
         //Ainda sem definição
         const insuranceCertificateNumber = contractNumber.slice(-9);
 
-        //Data da proposta do seguro (inicio da vigência), informado pela AME
-        const proposalDate = "02032021";
+        //Data da proposta do seguro (inicio da vigência), informado pela AME (FORMATADO MM-DD-YYYY)
+        const proposalDate = "03022021";
 
         //Comissão da apólice, informado pela AME
         const comission = 32
@@ -179,8 +179,8 @@ export class SmartphoneProposalUtils {
         // Valor da primeira parcela, informado pela AME
         const firstInstallmentValue = this.formatPrice(firstInstalment);
 
-        // Dia 28 do mês subsequente, informado pela AME
-        const maturityOfFirstInstallment = "10042021";
+        // Dia 28 do mês subsequente, informado pela AME (FORMATADO PARA MM-DD-YYYY)
+        const maturityOfFirstInstallment = "04102021";
 
         return {
             "type_of_collection_manager": typeOfCollectionManager,
