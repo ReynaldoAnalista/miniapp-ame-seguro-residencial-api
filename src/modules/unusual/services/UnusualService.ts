@@ -1,6 +1,4 @@
 import { inject, injectable } from "inversify";
-import { ParameterStore } from "../../../configs/ParameterStore";
-import { TYPES } from "../../../inversify/inversify.types";
 import { getLogger } from "../../../server/Logger";
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository";
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService";
@@ -10,9 +8,7 @@ const log = getLogger("UnusualService")
 @injectable()
 export class UnusualService {
 
-    constructor(
-        @inject(TYPES.ParameterStore)
-        private parameterStore: ParameterStore,
+    constructor(        
         @inject("SmartphoneProposalRepository")
         private smartphoneProposalRepository :  SmartphoneProposalRepository,
         @inject("SmartphoneProposalMailService")
