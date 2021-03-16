@@ -13,10 +13,6 @@ import { loggers } from "winston";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
-
-const logger = getLogger("SmartphoneProposalMailService")
-
-
 @injectable()
 export class SmartphoneProposalMailService {
 
@@ -38,23 +34,11 @@ export class SmartphoneProposalMailService {
         throw new Error("Order not found")
     }
     
-    // TODO : Feito somente para testes, retirada depois
-    async sendSellingEmailWithParams(pass: string, email: string) {
-        log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (paymentObject) {
-            return await this.sendSellingEmailByPaymentObject(paymentObject, email)
-        }
-        log.error("Order not found")
-        throw new Error("Order not found")
-    }
-    // FIMTODO
-
     async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
         
         const email = emailPass != undefined ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail                        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
-        logger.info('Preparando o layout do e-mail')
+        log.info('Preparando o layout do e-mail')
         let emailTemplate = path.resolve(__dirname, '../../../../mail_template/smartphone_mail.html')
 
         let template = await readFile(emailTemplate, 'utf-8')
@@ -116,7 +100,7 @@ export class SmartphoneProposalMailService {
 
         try {                   
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
-            logger.info('Email Enviado')
+            log.info('Email Enviado')
             return sendResult.MessageId
         } catch (e) {
             console.error('Email not sent, error', e);
