@@ -357,9 +357,9 @@ export class ResidentialProposalService {
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
         try {
-            const apiVersion = process.env.COMMIT_HASH || "unavailable"
+            const apiVersion = process.env.COMMIT_HASH || "unavailable"                        
             await this.residentialSoldProposalRepository.create({
-                customerId: proposal.attributes.customPayload.customerId,
+                customerId: proposal.attributes.customPayload.proposal.customerId,
                 order: proposal.id,
                 tenant: tenant,
                 createdAt: new Date().toISOString(),
