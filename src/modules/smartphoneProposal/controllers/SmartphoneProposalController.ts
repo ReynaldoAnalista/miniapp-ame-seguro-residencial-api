@@ -68,4 +68,19 @@ export class SmartphoneProposalController {
         }
     }
     // FIMTODO
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get("/validate_email/{pass}")
+    public async validateMailProposal(@Path() pass: string) {
+        try {
+            logger.info('Validação do e-mail com o id de compra:', pass)
+            const validateProposal = await this.planService.validateMailProposal(pass)            
+            logger.info('E-mail validado', validateProposal)
+            return validateProposal
+        } catch (e) {
+            logger.error(e)            
+        }
+    }
+
 }
