@@ -57,7 +57,7 @@ export class SmartphoneProposalController {
     
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Get("/sold_proposal/{customerId}/{order}/statusUpdate")
+    @Post("/sold_proposal/{customerId}/{order}/statusUpdate")
     public async statusUpdateSoldProposal(@Path() customerId: string, order: string) {
         try {
             logger.info('Atualização do status SoldProposal com o Id da compra:', customerId)
