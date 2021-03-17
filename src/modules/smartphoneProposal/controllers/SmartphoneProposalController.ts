@@ -54,4 +54,16 @@ export class SmartphoneProposalController {
             logger.error(e.message)            
         }
     }
+    
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sold_proposal/{customerId}/{order}/statusUpdate")
+    public async statusUpdateSoldProposal(@Path() customerId: string, order: string) {
+        try {
+            logger.info('Atualização do status SoldProposal com o Id da compra:', customerId)
+            await this.planService.updateStatusSoldProposal(customerId, order)
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
 }
