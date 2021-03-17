@@ -748,8 +748,38 @@
 				]
 			}
 		},
-		"/v1/smartphone/proposal_email/{pass}/{email}/sendEmail": {
-			"post": {
+		"/v1/smartphone/sold_proposal/{pass}/statusUpdate": {
+			"get": {
+				"operationId": "StatusUpdateSoldProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pass",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/unusual/proposal_email/{pass}/{email}/sendEmail": {
+			"get": {
 				"operationId": "SendMailProposalWithParams",
 				"responses": {
 					"200": {
@@ -778,6 +808,36 @@
 					{
 						"in": "path",
 						"name": "email",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/unusual/update_old_clients/{proposalId}": {
+			"get": {
+				"operationId": "UpdateProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "proposalId",
 						"required": true,
 						"schema": {
 							"type": "string"

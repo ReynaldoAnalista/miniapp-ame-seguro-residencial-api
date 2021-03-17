@@ -179,11 +179,13 @@ export class SmartphoneProposalService {
 
     async updateStatusSoldProposal(customerId : string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
-        const proposalRequest = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)        
         try {
+            const proposalRequest : any = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
             await this.smartphoneSoldProposalRepository.update({
-                // customerId: proposalRequest?.customerId, // TODO
-                // order: proposalRequest?.id,
+                customerId: proposalRequest?.customerId,
+                order: proposalRequest?.order,
+                tenant: Tenants.SMARTPHONE,
+                receivedPaymentNotification: proposalRequest?.receivedPaymentNotification,
                 status: SoldProposalStatus.update,
                 updatedAt: new Date().toISOString()
             } as SmartphoneSoldProposal)
