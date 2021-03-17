@@ -5,5 +5,7 @@ export interface SmartphoneSoldProposal {
     receivedPaymentNotification: any,
     partnerResponse: any,
     success: boolean,
-    createdAt: string
+    createdAt: string,
+    updatedAt?: string,
+    status: string
 }

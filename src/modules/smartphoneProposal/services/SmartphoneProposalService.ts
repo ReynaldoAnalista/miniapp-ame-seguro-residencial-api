@@ -11,6 +11,7 @@ import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProp
 import {Tenants} from "../../default/model/Tenants";
 import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
+import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -166,12 +167,29 @@ export class SmartphoneProposalService {
                 success: response.success,
                 partnerResponse: response,
                 apiVersion,
-                status: "PROSSESSING",
+                status: SoldProposalStatus.create,
                 receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
+    }
+
+    async updateStatusSoldProposal(customerId : string) {
+        log.debug("Buscando proposta pelo Id updateSoldProposal ")
+        const proposalRequest = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)        
+        try {
+            await this.smartphoneSoldProposalRepository.update({
+                // customerId: proposalRequest?.customerId, // TODO
+                // order: proposalRequest?.id,
+                status: SoldProposalStatus.update,
+                updatedAt: new Date().toISOString()
+            } as SmartphoneSoldProposal)
+            log.debug("updateSoldProposal:success")
+        } catch (e) {
+            log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
     }
