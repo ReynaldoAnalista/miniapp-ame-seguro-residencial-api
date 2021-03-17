@@ -57,11 +57,11 @@ export class SmartphoneProposalController {
     
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Get("/sold_proposal/{order}/statusUpdate")
-    public async statusUpdateSoldProposal(@Path() order: string) {
+    @Get("/sold_proposal/{customerId}/{order}/statusUpdate")
+    public async statusUpdateSoldProposal(@Path() customerId: string, order: string) {
         try {
-            logger.info('Atualização do status SoldProposal com o Id da compra:', order)
-            await this.planService.updateStatusSoldProposal(order)       
+            logger.info('Atualização do status SoldProposal com o Id da compra:', customerId)
+            await this.planService.updateStatusSoldProposal(customerId, order)
         } catch (e) {
             logger.error(e.message)            
         }

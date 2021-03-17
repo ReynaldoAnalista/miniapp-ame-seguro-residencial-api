@@ -6,7 +6,6 @@ export interface SmartphoneSoldProposal {
     partnerResponse: any,
     success: boolean,
     createdAt: string,
-    updatedAt?: string,
     status: string,
     apiVersion: string
 }

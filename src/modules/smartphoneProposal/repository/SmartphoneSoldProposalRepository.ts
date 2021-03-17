@@ -79,12 +79,19 @@ export class SmartphoneSoldProposalRepository {
         }
     }
     
-    async findAllFromOrder(order: string) {
-        console.log(`Searching for Proposals in Table: ${TABLE}, order: ${order}`)
+    async findAllFromCustomerAndOrder(customerId: string, order: string) {        
         let params = {
             TableName: TABLE,
-            KeyConditionExpression: "#order = :order"            
-        };
+            KeyConditionExpression: "#customerId = :customerId AND #order = :order",
+            ExpressionAttributeNames: {
+                "#customerId": "customerId",
+                "#order": "order",
+            },
+            ExpressionAttributeValues: {
+                ":customerId": customerId,
+                ":order": order
+            }
+        };        
         try {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
             let result = await dynamoDocClient.query(params).promise();
