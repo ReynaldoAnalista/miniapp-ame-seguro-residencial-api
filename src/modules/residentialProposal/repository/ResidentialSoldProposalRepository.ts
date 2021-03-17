@@ -19,14 +19,13 @@ export class ResidentialSoldProposalRepository {
     ) {
     }
 
-    async create(soldProposal: ResidentialSoldProposal) {
+    async create(soldProposal: ResidentialSoldProposal) {               
         log.debug('TRYING TO WRITE ON', TABLE);
-        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
-        let params = {TableName: TABLE, Item: soldProposal};
-        await dynamoDocClient.put(params).promise();
-        log.debug('REGISTER WROTE ON', TABLE);
-        return soldProposal
-    }
+        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();        
+        dynamoDocClient.put({TableName: TABLE, Item: soldProposal}).promise();
+        console.log('REGISTER WROTE ON', TABLE);
+        return soldProposal 
+    }  
 
     async findAllFromCustomer(customerId: string) {
         log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)
