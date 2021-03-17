@@ -11,6 +11,7 @@ import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProp
 import {Tenants} from "../../default/model/Tenants";
 import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
+import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -166,12 +167,36 @@ export class SmartphoneProposalService {
                 success: response.success,
                 partnerResponse: response,
                 apiVersion,
-                status: "PROSSESSING",
+                status: SoldProposalStatus.create,
                 receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
+    }
+
+    async updateStatusSoldProposal(customerId : string, order : string) {
+        log.debug("Buscando proposta pelo Id updateSoldProposal ")
+        try {
+            const getResponse : any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            const proposalRequest = getResponse[0]
+            
+            await this.smartphoneSoldProposalRepository.update({
+                partnerResponse: proposalRequest?.partnerResponse,
+                createdAt: proposalRequest?.createdAt,
+                apiVersion: proposalRequest?.apiVersion,
+                success: true,
+                customerId: proposalRequest?.customerId,
+                receivedPaymentNotification: proposalRequest?.receivedPaymentNotification,
+                tenant: Tenants.SMARTPHONE,
+                order: proposalRequest?.order,
+                status: SoldProposalStatus.update
+            } as SmartphoneSoldProposal)
+            log.debug("updateSoldProposal:success")
+        } catch (e) {
+            log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
     }
