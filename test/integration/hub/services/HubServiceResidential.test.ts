@@ -69,18 +69,10 @@ describe("HubService Consulta proposta residencial", () => {
     it("Busca um determinado plano comprado", async () => {
         const customerPlans = await hubService.retrievePlans(customerIdResidential)
         let thePlan: any
-        let hasId: boolean = false
-        let hasDescription: boolean = false
-        let hasProtocol: boolean = false
         if (customerPlans.residentialPlans?.length) {
             thePlan = customerPlans.residentialPlans.find(x => x.order === paymentIdResidential)
-             if (thePlan ) {
-                hasId = !!thePlan.id
-                hasDescription = !!thePlan.description
-                hasProtocol = !!thePlan.protocol
-            }
         }        
-        expect(thePlan && hasId && hasDescription && hasProtocol).toBeDefined()
+        expect(thePlan).toBeDefined()
     })
 
     afterAll(async () => {

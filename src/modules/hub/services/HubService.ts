@@ -41,10 +41,35 @@ export class HubService {
     async retrievePlans(customerId: string, raw?: boolean) {
         log.debug("retrievePlans")
         log.debug("Showing Raw Plans: " + !!raw)
-        const residentialPlans = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
+        const residentialPlansFromDB = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
+        
+      
 
         let smartphonePlans = []
+        let residentialPlans = []
+        if (residentialPlansFromDB) {
+            if (raw) {
+                smartphonePlans = Object.assign(residentialPlansFromDB)
+            } else {
+                smartphonePlans = Object.assign(residentialPlansFromDB).map(x => {
+
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const address = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    // const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    return {
+                        id: x.order,    
+                        description: x.receivedPaymentNotification?.title,
+                        date: proposal?.variable_policy_data?.proposal_date?.replace(/(\d\d)(\d\d)(\d\d\d\d)/, "$1/$2/$3"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        address: address?.imovel?.endereco
+                        // coverage: selectedPlan?.coverage,
+                    }
+                })  
+            }
+            
+        }
         if (smartphonePlansFromDB) {
             if (raw) {
                 smartphonePlans = Object.assign(smartphonePlansFromDB)
