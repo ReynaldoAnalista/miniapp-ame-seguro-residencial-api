@@ -68,25 +68,24 @@ describe("HubService Consulta proposta residencial", () => {
 
     it("Busca um determinado plano comprado", async () => {
         const customerPlans = await hubService.retrievePlans(customerIdResidential)
+        let thePlan: any
         let hasId: boolean = false
         let hasDescription: boolean = false
         let hasProtocol: boolean = false
-        const residentialPlans = customerPlans.residentialPlans
-        const hasResidentialPlans: boolean = (Array.isArray(residentialPlans) && residentialPlans.length > 0)
-        if (hasResidentialPlans) {
-            const residentialPlan = residentialPlans.find(x => x.order === customerIdResidential)
-              if (residentialPlan) {
-                hasId = !!residentialPlan.id
-                hasDescription = !!residentialPlan.description
-                hasProtocol = !!residentialPlan.protocol
+        if (customerPlans.residentialPlans?.length) {
+            thePlan = customerPlans.residentialPlans.find(x => x.order === paymentIdResidential)
+             if (thePlan ) {
+                hasId = !!thePlan.id
+                hasDescription = !!thePlan.description
+                hasProtocol = !!thePlan.protocol
             }
         }        
-         expect( hasResidentialPlans && hasId && hasDescription && hasProtocol).toBe(true)
+        expect(thePlan && hasId && hasDescription && hasProtocol).toBeDefined()
     })
 
-    // afterAll(async () => {
-    //     await hubService.deleteOrderFromCustomer(customerIdResidential, paymentIdResidential)
-    //     iocContainer.unbindAll()
-    // })
+    afterAll(async () => {
+        await hubService.deleteOrderFromCustomer(customerIdResidential, paymentIdResidential)
+        iocContainer.unbindAll()
+    })
 
 })
