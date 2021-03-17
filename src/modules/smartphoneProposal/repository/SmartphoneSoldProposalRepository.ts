@@ -47,13 +47,13 @@ export class SmartphoneSoldProposalRepository {
     }
     
     async update(soldProposal: any) {
-        log.debug('TRYING UPDATE ON', TABLE);        
+        log.debug('TRYING UPDATE ON', TABLE);                
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();        
         let params = {TableName: TABLE, Item: soldProposal};
         await dynamoDocClient.put(params).promise();
         log.debug('UPDATED ON', TABLE);
         return soldProposal
-    }
+    }   
 
     async findAllFromCustomer(customerId: string) {
         log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)
@@ -66,6 +66,24 @@ export class SmartphoneSoldProposalRepository {
             ExpressionAttributeValues: {
                 ":customerId": customerId
             }
+        };
+        try {
+            let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
+            let result = await dynamoDocClient.query(params).promise();
+            log.debug(`Have found ${result.Items?.length} items`)
+            return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE)
+        } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
+            return []
+        }
+    }
+    
+    async findAllFromOrder(order: string) {
+        console.log(`Searching for Proposals in Table: ${TABLE}, order: ${order}`)
+        let params = {
+            TableName: TABLE,
+            KeyConditionExpression: "#order = :order"            
         };
         try {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();

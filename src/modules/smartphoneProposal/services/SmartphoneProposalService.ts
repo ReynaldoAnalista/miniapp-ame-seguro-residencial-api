@@ -177,17 +177,25 @@ export class SmartphoneProposalService {
         }
     }
 
-    async updateStatusSoldProposal(customerId : string) {
+    async updateStatusSoldProposal(order : string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
-            const proposalRequest : any = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
+            const getProposal : any = await this.smartphoneSoldProposalRepository.findAllFromOrder(order)
+            const proposalRequest = getProposal
+
+            console.log(proposalRequest);            
+
             await this.smartphoneSoldProposalRepository.update({
+                partnerResponse: proposalRequest?.partnerResponse,
+                createdAt: proposalRequest?.createdAt,
+                updatedAt: proposalRequest?.createdAt,
+                apiVersion: proposalRequest?.apiVersion,
+                success: proposalRequest?.success,
                 customerId: proposalRequest?.customerId,
-                order: proposalRequest?.order,
-                tenant: Tenants.SMARTPHONE,
                 receivedPaymentNotification: proposalRequest?.receivedPaymentNotification,
-                status: SoldProposalStatus.update,
-                updatedAt: new Date().toISOString()
+                tenant: Tenants.SMARTPHONE,
+                order: proposalRequest?.order,
+                status: SoldProposalStatus.update
             } as SmartphoneSoldProposal)
             log.debug("updateSoldProposal:success")
         } catch (e) {
