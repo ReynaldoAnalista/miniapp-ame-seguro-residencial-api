@@ -54,7 +54,6 @@ describe("ResidentialProposalService", () => {
         const signedPayment = await sign(paymentObject, secret)
         console.log('Assinou o arquivo de callback')
         const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
-        await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
         console.log('Enviou a proposta para a previsul')
         expect(proposalProtocol.result).toBeDefined()
     })
