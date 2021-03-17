@@ -56,9 +56,7 @@ export class SmartphoneProposalUtils {
             proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            const split = { ...unsignedProposal.splits[0] }
-            const installments = split.installments ? split.installments : 1
-            proposal.charge_type_data = this.generateChargeData(installments, split.amount)
+            proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)
             return proposal
         }
         return null
@@ -136,12 +134,11 @@ export class SmartphoneProposalUtils {
         //Ainda sem definição
         const insuranceCertificateNumber = contractNumber.slice(-9);
 
-        //Data da proposta do seguro (inicio da vigência), informado pela AME
-        const proposalDate = "02032021";
+        //Data da proposta do seguro (inicio da vigência), informado pela AME (FORMATADO MM-DD-YYYY)
+        const proposalDate = "03022021";
 
         //Comissão da apólice, informado pela AME
-        const comission = 32
-        const policyCommission = this.formatPrice((contractValue / 100) * comission);
+        const policyCommission = 35
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
@@ -156,7 +153,10 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateChargeData(installments, firstInstalment) {
+    static generateChargeData(firstInstalment) {
+
+        // Não importa o parcelamento, foi acertado que será apenas em 1 parcela para a mapfre
+        const installments = 1
 
         // (FIXO DF), informado pela AME
         const typeOfCollectionManager = "DF";
@@ -174,13 +174,13 @@ export class SmartphoneProposalUtils {
         const documentNumber = "32778350000170";
 
         // Quantidade de parcelas, informado pela AME
-        const numberOfInstallments = installments;
+        const numberOfInstallments = 1;
 
         // Valor da primeira parcela, informado pela AME
         const firstInstallmentValue = this.formatPrice(firstInstalment);
 
-        // Dia 28 do mês subsequente, informado pela AME
-        const maturityOfFirstInstallment = "10042021";
+        // Dia 28 do mês subsequente, informado pela AME (FORMATADO PARA MM-DD-YYYY)
+        const maturityOfFirstInstallment = "04102021";
 
         return {
             "type_of_collection_manager": typeOfCollectionManager,

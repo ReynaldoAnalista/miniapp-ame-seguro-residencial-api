@@ -55,10 +55,11 @@ export class SmartphoneProposalService {
     
     async updateProposal(proposalId: string, notSendToDigibee?: boolean) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
-       
+        log.info('Recebendo a proposta', proposalId)
+
         const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
         log.info('Enviando a proposta para a digibee')
-
+        
         const proposalResponse = await this.sendProposal(proposal)
         
         console.log('notSendToDigibee', notSendToDigibee)
@@ -68,7 +69,8 @@ export class SmartphoneProposalService {
         }
         
         log.info('Atualizando a compra')
-        await this.updateSoldProposal(proposalRequest)
+
+        await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
         log.info('Enviando o email ao cliente')
         
         await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
@@ -77,22 +79,27 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
 
-    async sendSellingEmail(pass: string) {
-        log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (paymentObject) {
-            
-            log.info('Reprocessando a tabela Segunro Celular Compras Sem enviar a DigiBee')
-            const updateProposal = await this.updateProposal(paymentObject.id, true)
-    
-            log.info('Atualizando a tabela SoldProposal')
-            await this.updateSoldProposal(updateProposal)
+    async updateOldCustumersProposal(proposalId: string) {
+        const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+        log.info('Recebendo a proposta de ID', proposalId)
 
-            log.info('Enviando o E-mail')
-            return await this.mailService.sendSellingEmailByPaymentObject(paymentObject)
+        await this.updateProposalResponse(proposalRequest)
+        log.info('Atualizando a ProposalResponse')
+
+        // Resposta da DigiBee mokada
+        const soldProposalResponse = {
+            "success": true,
+            "content": {
+                "msg" : "Proposta recebida com sucesso. Será processada em modo batch nos horários pre-estabelecidos",
+                "mother_policy_number": '2716000020171',
+                "success": true
+            }
         }
-        log.error("Order not found")
-        throw new Error("Order not found")
+
+        const soldProposal = await this.updateSoldProposal(proposalRequest, soldProposalResponse, Tenants.SMARTPHONE)
+        log.info('Atualizando a SoldProposal')
+
+        return soldProposal
     }
 
     async saveProposal(proposal: any): Promise<void> {
@@ -173,14 +180,17 @@ export class SmartphoneProposalService {
         }
     }
     
-    async updateSoldProposal(proposal: any) {
+    async updateSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("updateSoldProposal")
         try {
             await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.attributes.customPayload.customerId,
                 order: proposal.id,
-                createdAt: new Date().toISOString(),
-                receivedPaymentNotification: proposal
+                tenant: tenant,
+                receivedPaymentNotification: proposal,
+                partnerResponse: response,
+                success: response.success,
+                createdAt: new Date().toISOString()
             } as SmartphoneSoldProposal)
             log.debug("updateSoldProposal:success")
         } catch (e) {

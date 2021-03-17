@@ -14,8 +14,6 @@ import { SmartphoneProposalService } from "./SmartphoneProposalService";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
-
-
 @injectable()
 export class SmartphoneProposalMailService {
 
@@ -27,20 +25,8 @@ export class SmartphoneProposalMailService {
     ) {
     }    
     
-    // TODO : Feito somente para testes, retirada depois
-    async sendSellingEmailWithParams(pass: string, email: string) {
-        log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (paymentObject) {
-            return await this.sendSellingEmailByPaymentObject(paymentObject, email)
-        }
-        log.error("Order not found")
-        throw new Error("Order not found")
-    }
-    // FIMTODO
-
-    async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {               
-        log.info('Preparando para envio do E-mail')
+    async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
+        
         const email = emailPass != undefined ? emailPass : unsignedPayment?.attributes?.customPayload?.clientEmail                        
         const dataToSendMail = await this.formatMailJsonParseInfo(unsignedPayment)
         log.info('Preparando o layout do e-mail')
