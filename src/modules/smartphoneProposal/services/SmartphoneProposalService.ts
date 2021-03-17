@@ -204,18 +204,33 @@ export class SmartphoneProposalService {
             log.error(e)
         }
     }
+
+    async sendSellingEmail(pass: string) {
+        log.debug(`Sending email: ${pass}`)
+        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        if (paymentObject) {
+            
+            log.info('Reprocessando a tabela Segunro Celular Compras Sem enviar a DigiBee')
+            const updateProposal = await this.updateProposal(paymentObject.id, true)
     
-    async updateSoldProposal(proposal: any, response: any, tenant: string) {
+            log.info('Atualizando a tabela SoldProposal')
+            await this.updateSoldProposal(updateProposal)
+
+            log.info('Enviando o E-mail')
+            return await this.mailService.sendSellingEmailByPaymentObject(paymentObject)
+        }
+        log.error("Order not found")
+        throw new Error("Order not found")
+    }
+    
+    async updateSoldProposal(proposal: any) {
         log.debug("updateSoldProposal")
         try {
             await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.attributes.customPayload.customerId,
                 order: proposal.id,
-                tenant: tenant,
-                receivedPaymentNotification: proposal,
-                partnerResponse: response,
-                success: response.success,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("updateSoldProposal:success")
         } catch (e) {
