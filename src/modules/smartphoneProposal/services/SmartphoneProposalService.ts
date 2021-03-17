@@ -204,6 +204,24 @@ export class SmartphoneProposalService {
             log.error(e)
         }
     }
+
+    async sendSellingEmail(pass: string) {
+        log.debug(`Sending email: ${pass}`)
+        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        if (paymentObject) {
+            
+            log.info('Reprocessando a tabela Segunro Celular Compras Sem enviar a DigiBee')
+            const updateProposal = await this.updateProposal(paymentObject.id, true)
+    
+            log.info('Atualizando a tabela SoldProposal')
+            // await this.updateSoldProposal(updateProposal)
+
+            log.info('Enviando o E-mail')
+            return await this.mailService.sendSellingEmailByPaymentObject(paymentObject)
+        }
+        log.error("Order not found")
+        throw new Error("Order not found")
+    }
     
     async updateSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("updateSoldProposal")
