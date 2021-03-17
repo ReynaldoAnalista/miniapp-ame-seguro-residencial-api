@@ -9,6 +9,7 @@ import Plans from "./Plans";
 import {SmartphoneSoldProposal} from "../../smartphoneProposal/model/SmartphoneSoldProposal";
 import {ResidentialSoldProposalRepository} from "../repository/ResidentialSoldProposalRepository";
 import {Tenants} from "../../default/model/Tenants";
+import { ResidentialSoldProposal } from "../model/ResidentialSoldProposal";
 
 const log = getLogger("ResidentialProposalService")
 
@@ -362,13 +363,13 @@ export class ResidentialProposalService {
                 customerId: proposal.attributes.customPayload.proposal.customerId,
                 order: proposal.id,
                 tenant: tenant,
-                createdAt: new Date().toISOString(),
-                success: response.success,
+                receivedPaymentNotification: proposal,
                 partnerResponse: response,
+                success: response.success,
+                createdAt: new Date().toISOString(),
                 apiVersion,
                 status: "PROCESSED",
-                receivedPaymentNotification: proposal
-            } as SmartphoneSoldProposal)
+            } as ResidentialSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
