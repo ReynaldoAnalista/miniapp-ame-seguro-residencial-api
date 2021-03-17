@@ -56,9 +56,7 @@ export class SmartphoneProposalUtils {
             proposal.policy_data = this.generatePolicyData(contractNumber)
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            const split = { ...unsignedProposal.splits[0] }
-            const installments = split.installments ? split.installments : 1
-            proposal.charge_type_data = this.generateChargeData(installments, split.amount)
+            proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)
             return proposal
         }
         return null
@@ -140,8 +138,7 @@ export class SmartphoneProposalUtils {
         const proposalDate = "03022021";
 
         //Comissão da apólice, informado pela AME
-        const comission = 32
-        const policyCommission = this.formatPrice((contractValue / 100) * comission);
+        const policyCommission = 35
 
         //Custo da apólice, informar zero no caso da AME
         const policyCost = 0;
@@ -156,7 +153,10 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateChargeData(installments, firstInstalment) {
+    static generateChargeData(firstInstalment) {
+
+        // Não importa o parcelamento, foi acertado que será apenas em 1 parcela para a mapfre
+        const installments = 1
 
         // (FIXO DF), informado pela AME
         const typeOfCollectionManager = "DF";

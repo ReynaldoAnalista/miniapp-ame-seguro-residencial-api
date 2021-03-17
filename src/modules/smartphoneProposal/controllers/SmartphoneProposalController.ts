@@ -49,7 +49,19 @@ export class SmartphoneProposalController {
     public async sendMailProposal(@Path() pass: string) {
         try {
             logger.info('E-mail com o id de compra:', pass)
-            await this.smartphoneProposalMailService.sendSellingEmail(pass)       
+            await this.planService.sendSellingEmail(pass)       
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+    
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sold_proposal/{customerId}/{order}/statusUpdate")
+    public async statusUpdateSoldProposal(@Path() customerId: string, order: string) {
+        try {
+            logger.info('Atualização do status SoldProposal com o Id da compra:', customerId)
+            await this.planService.updateStatusSoldProposal(customerId, order)
         } catch (e) {
             logger.error(e.message)            
         }

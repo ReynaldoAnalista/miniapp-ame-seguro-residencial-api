@@ -36,7 +36,7 @@ export const initDependencies = () => {
     bindControllers("../modules/hub/controllers")
     bindControllers("../modules/residentialProposal/controllers")
     bindControllers("../modules/smartphoneProposal/controllers")
-    bindControllers("../modules/unusual/controllers")
+    // bindControllers("../modules/unusual/controllers")
 
     /* Initialize Services */
     iocContainer.bind<ApiServer>(TYPES.ApiServer).to(ApiServer).inSingletonScope()

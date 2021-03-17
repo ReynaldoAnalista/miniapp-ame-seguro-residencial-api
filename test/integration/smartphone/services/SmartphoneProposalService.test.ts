@@ -44,7 +44,14 @@ describe("SmartphoneProposalService", () => {
     it("Atualização da proposta de crédito", async() => {
         const proposalId = '37fa1e7f-8441-4026-ad23-0675216f7821'        
         const updateProposal =  await smartphoneProposalService.updateProposal(proposalId)
+        console.debug(updateProposal)        
         expect(updateProposal).toBeDefined()
+    })
+
+    it("Envio de proposta para DigiBee", async() => {
+        const proposalId = '37fa1e7f-8441-4026-ad23-0675216f7821'        
+        const digibeeProposal = await smartphoneProposalService.sendDigiBeeProposal(proposalId)
+        expect(digibeeProposal).toBeDefined()
     })
 
 })

@@ -10,6 +10,7 @@ import { ParameterStore } from "../../../configs/ParameterStore";
 import { getLogger } from "../../../server/Logger";
 import moment from 'moment';
 import { loggers } from "winston";
+import { SmartphoneProposalService } from "./SmartphoneProposalService";
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("SmartphoneProposalMailService")
@@ -22,17 +23,7 @@ export class SmartphoneProposalMailService {
         @inject("SmartphoneProposalRepository")
         private smartphoneProposalRepository: SmartphoneProposalRepository,
     ) {
-    }
-
-    async sendSellingEmail(pass: string) {
-        log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        if (paymentObject) {
-            return await this.sendSellingEmailByPaymentObject(paymentObject)
-        }
-        log.error("Order not found")
-        throw new Error("Order not found")
-    }
+    }    
     
     async sendSellingEmailByPaymentObject(unsignedPayment: any, emailPass?: string) {
         
@@ -103,7 +94,7 @@ export class SmartphoneProposalMailService {
             log.info('Email Enviado')
             return sendResult.MessageId
         } catch (e) {
-            console.error('Email not sent, error', e);
+            log.error('Email not sent, error', e);
             throw 'Error during sending email'
         }
     }
