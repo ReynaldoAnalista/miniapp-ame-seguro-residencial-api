@@ -17,6 +17,8 @@ import { ResidentialProposalController } from './modules/residentialProposal/con
 import { ZipCodeController } from './modules/residentialProposal/controllers/ZipCodeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SmartphoneProposalController } from './modules/smartphoneProposal/controllers/SmartphoneProposalController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { UnusualController } from './modules/unusual/controllers/UnusualController';
 import { expressAuthentication } from './middleware/authentication';
 import * as express from 'express';
 
@@ -527,7 +529,7 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.post('/ame-seguro-residencial/v1/smartphone/proposal_email/:pass/:email/sendEmail',
+    app.get('/ame-seguro-residencial/unusual/proposal_email/:pass/:email/sendEmail',
         function(request: any, response: any, next: any) {
             const args = {
                 pass: { "in": "path", "name": "pass", "required": true, "dataType": "string" },
@@ -543,13 +545,38 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller: any = iocContainer.get<SmartphoneProposalController>(SmartphoneProposalController);
+            const controller: any = iocContainer.get<UnusualController>(UnusualController);
             if (typeof controller['setStatus'] === 'function') {
                 controller.setStatus(undefined);
             }
 
 
             const promise = controller.sendMailProposalWithParams.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/ame-seguro-residencial/unusual/update_old_clients/:proposalId',
+        function(request: any, response: any, next: any) {
+            const args = {
+                proposalId: { "in": "path", "name": "proposalId", "required": true, "dataType": "string" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<UnusualController>(UnusualController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.updateProposal.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
