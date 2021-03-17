@@ -54,7 +54,7 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
-    async updateProposal(proposalId: string) {
+    async updateProposal(proposalId: string, notSendToDigibee?: boolean) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
         log.info('Recebendo a proposta', proposalId)
 
@@ -62,9 +62,13 @@ export class SmartphoneProposalService {
         log.info('Enviando a proposta para a digibee')
         
         const proposalResponse = await this.sendProposal(proposal)
-        log.info('Recebendo a resposta da digibee')
         
-        await this.updateProposalResponse(proposalRequest)
+        console.log('notSendToDigibee', notSendToDigibee)
+        if(notSendToDigibee == false) {
+            await this.updateProposalResponse(proposalRequest)
+            log.info('Recebendo a resposta da digibee')        
+        }
+        
         log.info('Atualizando a compra')
 
         await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
