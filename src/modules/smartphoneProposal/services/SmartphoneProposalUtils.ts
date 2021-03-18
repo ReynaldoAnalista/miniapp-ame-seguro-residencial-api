@@ -48,12 +48,13 @@ export interface CoverageData {
 const log = getLogger("SmartphoneProposalUtils")
 
 export class SmartphoneProposalUtils {
+
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.attributes?.customPayload?.proposal) {
             const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
             const contractNumber = `${unsignedProposal.nsu}`.padStart(17, preNumber);
             let proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
-            proposal.policy_data = this.generatePolicyData(contractNumber)
+            proposal.policy_data = this.generatePolicyData(contractNumber, this.generateDateProposal(unsignedProposal.date))
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
             proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)
@@ -62,13 +63,13 @@ export class SmartphoneProposalUtils {
         return null
     }
 
-    static generatePolicyData(contractNumber) {
+    static generatePolicyData(contractNumber, dateProposal: Date = new Date()) {
         // Todas as apólices são ligadas à uma apólice mãe única
         const motherPolicyNumber = "2716000020171";
 
 
         // Início da Vigência da apólice
-        let toDay = moment(new Date());
+        let toDay = moment(dateProposal);
         const startValidDocument = toDay.format('MMDDYYYY');
 
         // Número único do contrato
@@ -85,6 +86,10 @@ export class SmartphoneProposalUtils {
             "end_valid_document": endValidDocument,
             "key_contract_certificate_number": keyContractCertificateNumber
         }
+    }
+
+    static generateDateProposal(date : any) {
+        return new Date(date[0], date[1] - 1,date[2])
     }
 
     static generatePolicyHolderData() {
