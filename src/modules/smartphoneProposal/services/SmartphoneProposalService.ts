@@ -37,13 +37,16 @@ export class SmartphoneProposalService {
     }
 
     async processProposal(signedPayment: string) {
-        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
         log.info('Separando o arquivo da proposta')
         const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
+        console.log('proposal', proposal)
+        
         log.info('Enviando a proposta para a digibee')
         const proposalResponse = await this.sendProposal(proposal)
+        console.log('proposalResponse', proposalResponse)
         log.info('Salvando a resposta da digibee')
         await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
         log.info('Salvando a compra')
@@ -54,29 +57,21 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
-    async updateProposal(proposalId: string, notSendToDigibee?: boolean) {
+    async updateProposal(proposalId: string, notSendToDigibee: boolean = false) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
         log.info('Recebendo a proposta', proposalId)
-
         const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
-        log.info('Enviando a proposta para a digibee')
-        
+        log.info('Enviando a proposta para a digibee')        
         const proposalResponse = await this.sendProposal(proposal)
-        
-        console.log('notSendToDigibee', notSendToDigibee)
         if(notSendToDigibee == false) {
             await this.updateProposalResponse(proposalRequest)
             log.info('Recebendo a resposta da digibee')        
-        }
-        
+        }        
         log.info('Atualizando a compra')
-
         await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
-        log.info('Enviando o email ao cliente')
-        
+        log.info('Enviando o email ao cliente')        
         await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
-        log.info('Retornando a proposta')
-        
+        log.info('Retornando a proposta')        
         return proposalResponse
     }
 
