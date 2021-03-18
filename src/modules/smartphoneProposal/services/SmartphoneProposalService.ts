@@ -41,9 +41,7 @@ export class SmartphoneProposalService {
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
         log.info('Separando o arquivo da proposta')
-        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
-        console.log('proposal', proposal)
-        
+        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)        
         log.info('Enviando a proposta para a digibee')
         const proposalResponse = await this.sendProposal(proposal)
         console.log('proposalResponse', proposalResponse)
