@@ -242,4 +242,21 @@ export class SmartphoneProposalService {
         }
     }
 
+    async validateMailProposal(proposalId: string) {
+        const proposal = await this.smartphoneProposalRepository.findByID(proposalId)
+        const validateMail = await this.smartphoneProposalRepository.validateProposal(proposal)        
+        if(validateMail.length > 0) {
+            return {  
+                'message': 'Campos inválidos',
+                'invalid_fields': validateMail,
+                'valid': false
+            } 
+        } 
+        return {  
+            'message': 'E-mail validado com sucesso',
+            'invalid_fields': '',
+            'valid': true
+        }
+    }
+
 }
