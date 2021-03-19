@@ -8,6 +8,7 @@ import util from "util";
 import fs from "fs";
 import {Tenants} from "../../../../src/modules/default/model/Tenants";
 import {ParameterStore} from "../../../../src/configs/ParameterStore";
+import { SmartphoneProposalRepository } from "../../../../src/modules/smartphoneProposal/repository/SmartphoneProposalRepository";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -18,12 +19,14 @@ jest.setTimeout(20000)
 describe("SmartphoneProposalService", () => {
 
     let smartphoneProposalService: SmartphoneProposalService
+    let smartphoneProposalRepository: SmartphoneProposalRepository
     let parameterStore: ParameterStore
     let signedPayment: any
 
 
     beforeAll(async () => {
         smartphoneProposalService = iocContainer.get("SmartphoneProposalService")
+        smartphoneProposalRepository = iocContainer.get("SmartphoneProposalRepository")
         parameterStore = iocContainer.get("ParameterStore")
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")
         console.log('Leu o arquivo de callback')
@@ -42,15 +45,16 @@ describe("SmartphoneProposalService", () => {
     })
 
     it("Atualização da proposta de crédito", async() => {
-        const proposalId = '37fa1e7f-8441-4026-ad23-0675216f7821'        
+        const getProposal = await smartphoneProposalRepository.listProposal()
+        const proposalId = getProposal[0].id
         const updateProposal =  await smartphoneProposalService.updateProposal(proposalId)
-        console.debug(updateProposal)        
         expect(updateProposal).toBeDefined()
     })
 
     it("Envio de proposta para DigiBee", async() => {
-        const proposalId = '37fa1e7f-8441-4026-ad23-0675216f7821'        
-        const digibeeProposal = await smartphoneProposalService.sendDigiBeeProposal(proposalId)
+        const getProposal = await smartphoneProposalRepository.listProposal()
+        const proposalId = getProposal[0].id        
+        const digibeeProposal = await smartphoneProposalService.sendProposal(proposalId)
         expect(digibeeProposal).toBeDefined()
     })
 

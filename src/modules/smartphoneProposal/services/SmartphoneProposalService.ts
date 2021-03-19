@@ -37,11 +37,11 @@ export class SmartphoneProposalService {
     }
 
     async processProposal(signedPayment: string) {
-        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
         log.info('Separando o arquivo da proposta')
-        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
+        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)        
         log.info('Enviando a proposta para a digibee')
         const proposalResponse = await this.sendProposal(proposal)
         log.info('Salvando a resposta da digibee')
@@ -54,29 +54,21 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
-    async updateProposal(proposalId: string, notSendToDigibee?: boolean) {
+    async updateProposal(proposalId: string, notSendToDigibee: boolean = false) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
         log.info('Recebendo a proposta', proposalId)
-
         const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
-        log.info('Enviando a proposta para a digibee')
-        
+        log.info('Enviando a proposta para a digibee')        
         const proposalResponse = await this.sendProposal(proposal)
-        
-        console.log('notSendToDigibee', notSendToDigibee)
         if(notSendToDigibee == false) {
             await this.updateProposalResponse(proposalRequest)
             log.info('Recebendo a resposta da digibee')        
-        }
-        
+        }        
         log.info('Atualizando a compra')
-
         await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
-        log.info('Enviando o email ao cliente')
-        
+        log.info('Enviando o email ao cliente')        
         await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
-        log.info('Retornando a proposta')
-        
+        log.info('Retornando a proposta')        
         return proposalResponse
     }
 
@@ -239,6 +231,23 @@ export class SmartphoneProposalService {
         } catch (e) {
             log.debug("updateSoldProposal:Fail")
             log.error(e)
+        }
+    }
+
+    async validateMailProposal(proposalId: string) {
+        const proposal = await this.smartphoneProposalRepository.findByID(proposalId)
+        const validateMail = await this.smartphoneProposalRepository.validateProposal(proposal)        
+        if(validateMail.length > 0) {
+            return {  
+                'message': 'Campos inválidos',
+                'invalid_fields': validateMail,
+                'valid': false
+            } 
+        } 
+        return {  
+            'message': 'E-mail validado com sucesso',
+            'invalid_fields': '',
+            'valid': true
         }
     }
 

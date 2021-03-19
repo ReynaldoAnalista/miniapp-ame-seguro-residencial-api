@@ -30,11 +30,11 @@
           "address_data": {
             "city": "São Vicente",
             "district": "Jardim Independência",
-            "federal_unit": "BRA",
+            "federal_unit": "BR",
             "number": "50",
             "street": "Rua São Jorge",
             "type_of_street": "01",
-            "zip_code": "11380-310"
+            "zip_code": "11380310"
           },
           "cnpj_cpf": "09548913763",
           "date_of_birth": "01161982",

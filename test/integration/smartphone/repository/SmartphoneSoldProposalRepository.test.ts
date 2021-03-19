@@ -12,10 +12,10 @@ describe("SmartphoneSoldProposalRepository", () => {
     })
 
     it("buscar informações de compra baseado no id do usuário", async () => {
-        let costumerId = 'f0548f1a-826f-4956-9c80-6b007a2a2be4'
-        // const getInfoFromCostumer = await smartphoneSoldProposalRepository.findAllFromCustomer(costumerId)
-        const verifyTable= await smartphoneSoldProposalRepository.checkTable()
-        console.debug('getInfoFromCostumer', verifyTable)
+        const getInfoFromCostumer = await smartphoneSoldProposalRepository.listSoldProposal()
+        const costomerId = getInfoFromCostumer[0].customerId
+        const customerInfo = await smartphoneSoldProposalRepository.findAllFromCustomer(costomerId) 
+        expect(customerInfo).toBeDefined() 
     })
     
 })
