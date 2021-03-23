@@ -10,6 +10,7 @@ import {Tenants} from "../../../../src/modules/default/model/Tenants";
 import {ResidentialProposalService} from "../../../../src/modules/residentialProposal/services/ResidentialProposalService";
 import {generate} from "gerador-validador-cpf";
 import {ParameterStore} from "../../../../src/configs/ParameterStore";
+import moment from "moment";
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -61,18 +62,20 @@ describe("HubService Consulta proposta residencial", () => {
         paymentObject.id = customerIdResidential
         paymentObject.attributes.customPayload.proposal.cpf = generate()
         paymentObject.attributes.customPayload.proposal.customerId = paymentIdResidential
-        const signedPayment = await sign(paymentObject, secret)
-        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
+        paymentObject.attributes.customPayload.proposal.dataInicioVigencia = moment().add(1, 'd').format('YYYY-MM-DD')
+        paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, 'd').format('YYYY-MM-DD')
+        const signedPayment = await sign(paymentObject, secret)        
+        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)    
         await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
     })
 
-    it("Busca um determinado plano comprado", async () => {
-        const customerPlans = await hubService.retrievePlans(customerIdResidential)
+    it("Busca um determinado plano comprado", async () => {        
+        const customerPlans = await hubService.retrievePlans(customerIdResidential)        
         let thePlan: any
         if (customerPlans.residentialPlans?.length) {
-            thePlan = customerPlans.residentialPlans.find(x => x.order === paymentIdResidential)
+            thePlan = Object.assign(customerPlans.residentialPlans).find(x => x.id == paymentIdResidential)
         }        
-        expect(thePlan).toBeDefined()
+        expect(thePlan).toBeDefined() 
     })
 
     afterAll(async () => {
