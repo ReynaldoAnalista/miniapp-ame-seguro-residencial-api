@@ -1,45 +1,46 @@
-export default [{
-    id: '117030111',
-    descricao: 'Proteção Essencial',
-    premio: 144.24,
-    coberturas: [
-        {
-            id: '538437',
-            descricao: 'Incêndio, Queda de Raio e Explosão de Qualquer Natureza',
-            valor: 120000,
-        },
-        {
-            id: '538438',
-            descricao: 'Danos Elétricos',
-            valor: 3500,
-        },
-        {
-            id: '538439',
-            descricao: 'Perda ou Pagamento de Aluguel',
-            valor: 6000,
-        },
-        {
-            id: '538440',
-            descricao: 'Responsabilidade Civil Familiar',
-            valor: 10000,
-        },
-        {
-            id: '538441',
-            descricao: 'Assistência Residencial Básica/Simplificada',
-            valor: 0,
-            premio: 6.37,
-        },
-        {
-            id: '538492',
-            descricao: 'Sorteio',
-            valor: 5000,
-            premio: 0,
-        },
-    ],
-},
+export default [
+    {
+        id: '117030111',
+        descricao: 'Essencial',
+        premio: 144.24,
+        coberturas: [
+            {
+                id: '538437',
+                descricao: 'Incêndio, Queda de Raio e Explosão de Qualquer Natureza',
+                valor: 120000,
+            },
+            {
+                id: '538438',
+                descricao: 'Danos Elétricos',
+                valor: 3500,
+            },
+            {
+                id: '538439',
+                descricao: 'Perda ou Pagamento de Aluguel',
+                valor: 6000,
+            },
+            {
+                id: '538440',
+                descricao: 'Responsabilidade Civil Familiar',
+                valor: 10000,
+            },
+            {
+                id: '538441',
+                descricao: 'Assistência Residencial Básica/Simplificada',
+                valor: 0,
+                premio: 6.37,
+            },
+            {
+                id: '538492',
+                descricao: 'Sorteio',
+                valor: 5000,
+                premio: 0,
+            },
+        ],
+    },
     {
         id: '117030112',
-        descricao: 'Proteção Clássica',
+        descricao: 'Clássica',
         premio: 240.83,
         coberturas: [
             {
@@ -76,7 +77,7 @@ export default [{
     },
     {
         id: '117030113',
-        descricao: 'Plano Superior',
+        descricao: 'Superior',
         premio: 376.68,
         coberturas: [
             {
@@ -113,7 +114,7 @@ export default [{
     },
     {
         id: '117030114',
-        descricao: 'Proteção Total',
+        descricao: 'Total',
         premio: 582.86,
         coberturas: [
             {
@@ -160,7 +161,7 @@ export default [{
     },
     {
         id: '117030115',
-        descricao: 'Proteção Master',
+        descricao: 'Master',
         premio: 691.84,
         coberturas: [
             {
@@ -207,7 +208,7 @@ export default [{
     },
     {
         id: '117030116',
-        descricao: 'Proteção Premium',
+        descricao: 'Premium',
         premio: 895.18,
         coberturas: [
             {
@@ -254,7 +255,7 @@ export default [{
     },
     {
         id: '117030121',
-        descricao: 'Proteção Essencial',
+        descricao: 'Essencial',
         premio: 166.32,
         coberturas: [
             {
@@ -312,7 +313,7 @@ export default [{
     },
     {
         id: '117030122',
-        descricao: 'Proteção Clássica',
+        descricao: 'Clássica',
         premio: 296.04,
         coberturas: [
             {
@@ -370,7 +371,7 @@ export default [{
     },
     {
         id: '117030123',
-        descricao: 'Plano Superior',
+        descricao: 'Superior',
         premio: 453.96,
         coberturas: [
             {
@@ -428,7 +429,7 @@ export default [{
     },
     {
         id: '117030124',
-        descricao: 'Proteção Total',
+        descricao: 'Total',
         premio: 660.86,
         coberturas: [
             {
@@ -475,7 +476,7 @@ export default [{
     },
     {
         id: '117030125',
-        descricao: 'Proteção Master',
+        descricao: 'Master',
         premio: 800.94,
         coberturas: [
             {
@@ -522,7 +523,7 @@ export default [{
     },
     {
         id: '117030126',
-        descricao: 'Proteção Premium',
+        descricao: 'Premium',
         premio: 1051.04,
         coberturas: [
             {
@@ -569,7 +570,7 @@ export default [{
     },
     {
         id: '117030711',
-        descricao: 'Proteção Essencial',
+        descricao: 'Essencial',
         premio: 211.93,
         coberturas: [
             {
@@ -620,7 +621,7 @@ export default [{
     },
     {
         id: '117030712',
-        descricao: 'Proteção Clássica',
+        descricao: 'Clássica',
         premio: 364.56,
         coberturas: [
             {
@@ -671,7 +672,7 @@ export default [{
     },
     {
         id: '117030713',
-        descricao: 'Proteção Superior',
+        descricao: 'Superior',
         premio: 574.56,
         coberturas: [
             {
@@ -721,66 +722,8 @@ export default [{
         ],
     },
     {
-        id: '117030721',
-        descricao: 'Plano R$ 120.000 / Roubo',
-        premio: 276.25,
-        coberturas: [
-            {
-                id: '538628',
-                descricao: 'Incêndio, Queda de Raio e Explosão de Qualquer Natureza',
-                valor: 120000,
-                taxa: 0.78376,
-                premio: 94.05,
-                percentualFranquia: 10,
-                valorLimiteFranquiaMinimo: 600,
-            },
-            {
-                id: '538629',
-                descricao: 'Danos Elétricos',
-                valor: 3500,
-                taxa: 24.71876,
-                premio: 86.52,
-                percentualFranquia: 10,
-                valorLimiteFranquiaMinimo: 600,
-            },
-            {
-                id: '538630',
-                descricao: 'Perda ou Pagamento de Aluguel',
-                valor: 6000,
-                taxa: 0.78413,
-                premio: 4.7,
-            },
-            {
-                id: '538631',
-                descricao: 'Responsabilidade Civil Familiar',
-                valor: 10000,
-                taxa: 0.5718,
-                premio: 5.72,
-            },
-            {
-                id: '538632',
-                descricao: 'Assistência Residencial Básica/Simplificada',
-                valor: 0,
-                premio: 6.37,
-            },
-            {
-                id: '538637',
-                descricao: 'Sorteio',
-                valor: 5000,
-                premio: 0,
-            },
-            {
-                id: '538638',
-                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
-                valor: 1000,
-                taxa: 59.89942,
-                premio: 59.9,
-            },
-        ],
-    },
-    {
         id: '117030722',
-        descricao: 'Proteção Clássica',
+        descricao: 'Clássica',
         premio: 525.23,
         coberturas: [
             {
@@ -838,7 +781,7 @@ export default [{
     },
     {
         id: '117030723',
-        descricao: 'Proteção Superior',
+        descricao: 'Superior',
         premio: 799.68,
         coberturas: [
             {
@@ -896,7 +839,7 @@ export default [{
     },
     {
         id: '117030724',
-        descricao: 'Proteção Essencial',
+        descricao: 'Essencial',
         premio: 276.25,
         coberturas: [
             {
@@ -954,7 +897,7 @@ export default [{
     },
     {
         id: '117030714',
-        descricao: 'Proteção Total',
+        descricao: 'Total',
         premio: 852.43,
         coberturas: [
             {
@@ -1001,7 +944,7 @@ export default [{
     },
     {
         id: '117030715',
-        descricao: 'Proteção Master',
+        descricao: 'Master',
         premio: 1016.14,
         coberturas: [
             {
@@ -1048,7 +991,7 @@ export default [{
     },
     {
         id: '117030716',
-        descricao: 'Proteção Premium',
+        descricao: 'Premium',
         premio: 1322.25,
         coberturas: [
             {
@@ -1095,7 +1038,7 @@ export default [{
     },
     {
         id: '117030725',
-        descricao: 'Proteção Total',
+        descricao: 'Total',
         premio: 1093.53,
         coberturas: [
             {
@@ -1142,7 +1085,7 @@ export default [{
     },
     {
         id: '117030726',
-        descricao: 'Proteção Master',
+        descricao: 'Master',
         premio: 1353.68,
         coberturas: [
             {
@@ -1189,7 +1132,7 @@ export default [{
     },
     {
         id: '117030727',
-        descricao: 'Proteção Premium',
+        descricao: 'Premium',
         premio: 1804.45,
         coberturas: [
             {
@@ -1233,4 +1176,5 @@ export default [{
                 valor: 5000,
             },
         ],
-    }]
+    },
+]
