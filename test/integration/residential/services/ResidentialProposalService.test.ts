@@ -5,6 +5,8 @@ import {ParameterStore} from "../../../../src/configs/ParameterStore";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';
 import { generate } from 'gerador-validador-cpf';
+import delay from 'delay';
+
 
 import path from "path";
 import util from "util";
@@ -14,7 +16,6 @@ import {RequestService} from "../../../../src/modules/authToken/services/Request
 import {ResidentialSoldProposalRepository} from "../../../../src/modules/residentialProposal/repository/ResidentialSoldProposalRepository";
 import moment from "moment";
 import Plans from "../../../../src/modules/residentialProposal/services/Plans";
-const delay = require('delay');
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -65,19 +66,23 @@ describe("ResidentialProposalService", () => {
 
     it("Recebe todos os planos e envia pra Previsul", async() => {
         console.log('Buscando todos os planos')
-        const allPlans = Plans.map((x) => { return x.id  })       
+        const allPlans = Plans.map((x) => { return { 
+            id: x.id, 
+            descricao: x.descricao,
+            premio: Number(x.premio.toString().replace('.', ''))
+        }})
         console.log('Filtrando todos os planos')        
-        const filterPlans = await Promise.all(allPlans.map(async planId =>  {
-            try {                
-                await delay(1200) 
-                return await retrivePlanRequest(planId);                                        
-            } catch(ex) {                
-                await delay(1200)
-                return {
-                    error: `Id do Plano: ${planId} - Erro: ${ex}`
-                }
+
+        const filterPlans = await Promise.all(allPlans.map(async x =>  {
+            try {          
+                await delay(2000);
+                return retrivePlanRequest(x.id, x.descricao, x.premio)
+            } catch(ex) {        
+                await delay(2000);
+                return {error: `Id do Plano: ${x.id} - Erro: ${ex}`}
             }
         }))
+
         const errorPlains = filterPlans.filter((x) => { return x.error })
         console.log('Erros dos planos', errorPlains);
         expect(errorPlains.length).toBe(0)
@@ -88,19 +93,29 @@ describe("ResidentialProposalService", () => {
         iocContainer.unbindAll()
     })    
 
-    async function retrivePlanRequest(planId: string = '117030111') {
-        const payment = await readFile(path.resolve(__dirname, "../../../fixtures/residentialNotification.json"), "utf-8")
-        const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")        
-        const paymentObject = JSON.parse(payment)        
-        paymentObject.id = orderId
-        paymentObject.attributes.customPayload.proposal.cpf = generate()
-        paymentObject.attributes.customPayload.proposal.customerId = customerId
-        paymentObject.attributes.customPayload.proposal.dataInicioVigencia = moment().add(1, 'd').format('YYYY-MM-DD')
-        paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, 'd').format('YYYY-MM-DD')
-        paymentObject.attributes.customPayload.proposal.planoId = planId
-        const signedPayment = await sign(paymentObject, secret)        
-        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)        
-        return proposalProtocol
-    }
-
+    async function retrivePlanRequest(planId: string = '117030111', descricaoPlano: string = 'Proteção Essencial', premio: number = 14424) {
+        try {
+            const payment = await readFile(path.resolve(__dirname, "../../../fixtures/residentialNotification.json"), "utf-8")
+            const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")        
+            const paymentObject = JSON.parse(payment)        
+            paymentObject.id = orderId
+            paymentObject.attributes.customPayload.proposal.cpf = generate()
+            paymentObject.attributes.customPayload.proposal.customerId = customerId
+            paymentObject.attributes.customPayload.proposal.dataInicioVigencia = moment().add(1, 'd').format('YYYY-MM-DD')
+            paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, 'd').format('YYYY-MM-DD')        
+            paymentObject.attributes.customPayload.proposal.planoId = planId
+            paymentObject.description = descricaoPlano
+            paymentObject.amount = premio  
+            const signedPayment = await sign(paymentObject, secret)                
+            const proposalProtocol = await residentialProposalService.processProposal(signedPayment)     
+            await delay(5000);      
+            if(typeof proposalProtocol == 'undefined') {
+                return {error : `erro no ID : ${planId}`}
+            }            
+            return proposalProtocol        
+        } catch(err) {
+            return err
+        }        
+    }    
+      
 })
