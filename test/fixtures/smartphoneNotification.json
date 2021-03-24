@@ -1,159 +1,118 @@
 {
-  "amount": 17840,
-  "amountRefunded": 0,
-  "attributes": {
-    "customPayload": {
-      "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
-      "clientEmail": "marcelo@calindra.com.br",
-      "customerId": "4c1b25a3-8470-43ae-b4dc-26d5ed3cdb32",
-      "isFrom": "PHONE_SEC",
-      "miniAppId": "21644",
-      "origin": "MINIAPP",
-      "proposal": {
-        "charge_type_data": {
-          "document_number": "32778350000170",
-          "document_type": "CGC",
-          "first_installment_value": 178.4,
-          "maturity_of_first_installment": "10042021",
-          "number_of_installments": 1,
-          "payment_manager_code": 99990638,
-          "payment_plan_code": 301,
-          "type_of_collection_manager": "DF"
+    "amount": 17842,
+    "amountRefunded": 0,
+    "attributes": {
+        "customPayload": {
+            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+            "clientEmail": "marcelo@calindra.com.br",
+            "customerId": "4c1b25a3-8470-43ae-b4dc-26d5ed3cdb32",
+            "isFrom": "PHONE_SEC",
+            "miniAppId": "21644",
+            "origin": "MINIAPP",
+            "proposal": {
+                "coverage_data": {
+                    "coverage_code": 1,
+                    "insured_amount": 1000,
+                    "liquid_prize": 178.42,
+                    "policy_item_number": 1
+                },
+                "insured_data": {
+                    "address_data": {
+                        "city": "São Vicente",
+                        "district": "Jardim Independência",
+                        "federal_unit": "SP",
+                        "number": "50",
+                        "street": "Rua São Jorge",
+                        "type_of_street": "01",
+                        "zip_code": "11380310"
+                    },
+                    "cnpj_cpf": "09548913763",
+                    "date_of_birth": "01161982",
+                    "gender": "M",
+                    "insured_name": "Marcelo Madeira",
+                    "type_of_legal_person": "F"
+                },
+                "portable_equipment_risk_data": {
+                    "cpf_cnpj_by_risk": "09548913763",
+                    "device_serial_code": "123456789123456",
+                    "equipment_type": 1,
+                    "equipment_value": 1000,
+                    "invoice_date": "01012021",
+                    "invoice_number": "123456789",
+                    "manufacturer_code": 1,
+                    "manufacturer_name": "Samsung",
+                    "model_description": "Samsung Galaxy_A02s 64GB",
+                    "product_description": "Samsung Galaxy_A02s 64GB",
+                    "risk_description": "Samsung Galaxy_A02s 64GB"
+                }
+            },
+            "selectedPlan": {
+                "brokenFranchise": 0.15,
+                "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+                "description": "Ame Proteção Total",
+                "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem",
+                "id": 1,
+                "installmentPrice": "R$ 17,84",
+                "percent": 17.8416,
+                "price": "R$ 0,49",
+                "priceInCents": 17841.6,
+                "screenFranchise": 0.1,
+                "stolenFranchise": 0.2,
+                "totalPrice": "R$ 178,42"
+            }
         },
-        "coverage_data": {
-          "coverage_code": 1,
-          "insured_amount": 1000,
-          "liquid_prize": 178,
-          "policy_item_number": 1
+        "items": [{
+                "amount": 17841,
+                "description": "Proteção do tipo Ame Proteção Total para um smartphone modelo Samsung Galaxy_A02s (IMEI:123456789123456) 64GB avaliado em R$ 1.000,00",
+            "quantity": 1
+        }],
+        "miniApp": {
+            "hasOrderDetails": false,
+            "id": "ame-seguro-smartphone"
         },
-        "insured_data": {
-          "address_data": {
-            "city": "São Vicente",
-            "district": "Jardim Independência",
-            "federal_unit": "BR",
-            "number": "50",
-            "street": "Rua São Jorge",
-            "type_of_street": "01",
-            "zip_code": "11380310"
-          },
-          "cnpj_cpf": "09548913763",
-          "date_of_birth": "01161982",
-          "gender": "M",
-          "insured_name": "Marcelo Madeira",
-          "type_of_legal_person": "F"
-        },
-        "policy_data": {
-          "end_valid_document": "03082022",
-          "key_contract_certificate_number": "99999474868562627",
-          "mother_policy_number": "2716000020171",
-          "start_valid_document": "03082021"
-        },
-        "policyholder_data": {
-          "address_data": {
-            "city": "São Paulo",
-            "complement": "",
-            "district": "Vila Olímpia",
-            "federal_unit": "SP",
-            "number": "302",
-            "street": "Fidencio Ramos",
-            "type_of_street": "01",
-            "zip_code": 4551010
-          },
-          "cnpj_cpf": "32778350000170",
-          "corporate_name_policyholder_name": "AMEDIGITAL",
-          "type_of_legal_person": "J"
-        },
-        "portable_equipment_risk_data": {
-          "cpf_cnpj_by_risk": "09548913763",
-          "device_serial_code": "618918810818191",
-          "equipment_type": 1,
-          "equipment_value": 1000,
-          "invoice_date": "02022021",
-          "invoice_number": "123456789",
-          "manufacturer_code": 1,
-          "manufacturer_name": "Samsung",
-          "model_description": "Samsung Galaxy M02s 512GB",
-          "product_description": "Samsung Galaxy M02s 512GB",
-          "risk_description": "Samsung Galaxy M02s 512GB"
-        },
-        "variable_policy_data": {
-          "insurance_certificate_number": "868562627",
-          "policy_commission": 57.09,
-          "policy_cost": 0,
-          "proposal_date": "02032021",
-          "proposal_number": "99474868562627"
-        }
-      },
-      "selectedPlan": {
-        "brokenFranchise": 0.15,
-        "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
-        "description": "Ame Proteção Total",
-        "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem",
-        "id": 1,
-        "installmentPrice": "R$ 14,87",
-        "percent": 17.84,
-        "price": "R$ 178,40",
-        "priceInCents": 17840,
-        "screenFranchise": 0.1,
-        "stolenFranchise": 0.2
-      }
+        "orderId": "f8be1d8e-85fa-42ca-bd79-7c3470b2c09b",
+        "origin": "MINIAPP",
+        "paymentOnce": false,
+        "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
     },
-    "items": [
-      {
-        "amount": 17840,
-        "description": "Proteção do tipo Ame Proteção Total para um smartphone modelo Samsung Galaxy M02s (IMEI:618918810818191) 512GB avaliado em R$ 1.000,00",
-        "quantity": 1
-      }
-    ],
-    "miniApp": {
-      "hasOrderDetails": false,
-      "id": "ame-seguro-smartphone"
-    },
-    "orderId": "e697543a-fb02-448f-8fc8-a9fa22601f8b",
-    "origin": "MINIAPP",
-    "paymentOnce": false,
-    "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
-  },
-  "cashType": "CASH",
-  "currency": "BRL",
-  "date": [
-    2021,
-    3,
-    8,
-    20,
-    47,
-    48,
-    562588000
-  ],
-  "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
-  "description": "Para: Samsung Galaxy M02s 512GB",
-  "id": "60ac535a-d94d-4751-8e74-e68c28cd2657",
-  "name": "Compra on-line",
-  "nsu": "474868562627",
-  "operationReference": null,
-  "operationType": "DEBIT",
-  "peer": null,
-  "splits": [
-    {
-      "amount": 17840,
-      "cardBrand": null,
-      "cardMasked": null,
-      "cashType": "CASH",
-      "date": [
+    "cashType": "CASH",
+    "currency": "BRL",
+    "date": [
         2021,
         3,
+        24,
+        12,
+        36,
         8,
-        20,
-        47,
-        48,
-        562612000
-      ],
-      "id": "52200649-0166-4315-b13b-7bcab6501bbc",
-      "installments": null,
-      "status": "AUTHORIZED"
-    }
-  ],
-  "status": "AUTHORIZED",
-  "title": "Ame Proteção Total",
-  "type": "PAYMENT"
+        281738000
+    ],
+    "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
+    "description": "Para: Samsung Galaxy_A02s 64GB",
+    "id": "81047477-5fac-4ced-8d1d-6a9b59800664",
+    "name": "Compra on-line",
+    "nsu": "045368281759",
+    "operationReference": null,
+    "operationType": "DEBIT",
+    "peer": null,
+    "splits": [{
+            "amount": 17842,
+        "cardBrand": null,
+        "cardMasked": null,
+        "cashType": "CASH",
+        "date": [
+            2021,
+            3,
+            24,
+            12,
+            36,
+            8,
+            281753000
+        ],
+        "id": "6e6b0812-bc05-4dc5-babc-bedbda04713b",
+        "installments": null,
+        "status": "AUTHORIZED"
+    }],
+    "status": "AUTHORIZED",
+    "title": "Ame Proteção Total",
+    "type": "PAYMENT"
 }
