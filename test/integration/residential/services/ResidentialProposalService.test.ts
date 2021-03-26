@@ -45,25 +45,6 @@ describe("ResidentialProposalService", () => {
         
     })
 
-    // it("Recebe o plano e envia para a previsul", async () => {
-    //     const payment = await readFile(path.resolve(__dirname, "../../../fixtures/residentialNotification.json"), "utf-8")
-    //     console.log('Leu o arquivo de callback')
-    //     const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-    //     console.log('Buscou o secret na AWS')
-    //     const paymentObject = JSON.parse(payment)
-    //     console.log('Realizou o parse do arquivo de callback')
-    //     paymentObject.id = orderId
-    //     paymentObject.attributes.customPayload.proposal.cpf = generate()
-    //     paymentObject.attributes.customPayload.proposal.customerId = customerId
-    //     paymentObject.attributes.customPayload.proposal.dataInicioVigencia = moment().add(1, 'd').format('YYYY-MM-DD')
-    //     paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, 'd').format('YYYY-MM-DD')
-    //     const signedPayment = await sign(paymentObject, secret)
-    //     console.log('Assinou o arquivo de callback')
-    //     const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
-    //     console.log('Enviou a proposta para a previsul')
-    //     expect(proposalProtocol.result).toBeDefined()
-    // })
-
     it("Recebe todos os planos e envia pra Previsul", async() => {
         console.log('Buscando todos os planos')
         const allPlans = Plans.map((x) => { return { 
