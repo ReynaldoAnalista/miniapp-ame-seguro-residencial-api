@@ -1,0 +1,5 @@
+@startuml atualizacao_status_compra
+API -> SOLD_PROPOSAL: Busca proposta pelo ID e ORDER
+SOLD_PROPOSAL -> API: Retorna a resposta
+API -> SOLD_PROPOSAL: Atualiza status PROCESSED
+@endum
