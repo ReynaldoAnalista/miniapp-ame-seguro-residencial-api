@@ -1,0 +1,16 @@
+@startuml envio_proposta
+MINIAPP -> API : Envia o token
+API -> SEGURO_RESIDENCIAL:  Salva proposta na tabela
+API -> PLANOS : Check preço no JSON
+PLANOS -> API : Retorno da validação do preço
+alt Check == sucesso
+   API -> PREVISUL : Envia proposta 
+    PREVISUL -> API : Sucesso no envio da proposta
+    API -> SEGURO_RESIDENCIAL : Salva na tabela
+    API -> SOLD_PROPOSAL : Salva na tabela
+    else 
+    PREVISUL ->  API : Falha ao salvar a proposta
+    API -> SEGURO_RESIDENCIAL : Salva na tabela
+    end
+    API -> MINIAPP: Retorno da proposta
+@enduml
