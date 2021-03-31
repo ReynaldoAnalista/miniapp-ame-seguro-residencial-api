@@ -1,0 +1,6 @@
+@startuml
+Miniapp -> API: Busca campanhas
+API -> DB: buscar campanhas
+DB -> API: campanhas
+API -> Miniapp: Campanhas
+@enduml

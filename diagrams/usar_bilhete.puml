@@ -1,0 +1,22 @@
+@startuml
+
+title "Processo de Jogada do usuário"
+
+actor Miniapp
+control BeeLeads_Webview
+control API
+database DB
+
+autonumber
+Miniapp -> BeeLeads_Webview: Jogar
+note left
+Para cada vez que alguém
+abrir um cupom fiscal
+vai jogar as raspadinhas
+endnote
+BeeLeads_Webview --> API: Jogada
+API --> BeeLeads_Webview: OK
+API -> DB: Salvar Jogada
+DB -> API: OK
+
+@enduml

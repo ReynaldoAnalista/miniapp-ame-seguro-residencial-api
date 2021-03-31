@@ -1,0 +1,31 @@
+@startuml
+
+title "Processo de Correção para notas salvas e não enviadas"
+
+actor Usuário
+control API
+database DB
+control IZIO
+
+autonumber
+Usuário -> API: Processar Notas
+note left
+Usuário vai bater 
+na API para 
+processar 10 NF
+endnote
+API -> DB: Buscar 10 Notas
+note right
+Query tem que fazer
+join de ticket + response
+Pegar toda nota que não
+possui response
+endnote
+DB -> API: Retorna notas
+API -> IZIO: Envia 1 nota a cada 2s
+IZIO -> API: Resposta
+API -> DB: Salva Resposta
+DB -> API
+API -> Usuário: Retorna OK
+
+@enduml
