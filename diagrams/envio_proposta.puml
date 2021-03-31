@@ -1,0 +1,9 @@
+@startuml
+Miniapp -> API: Pega o Token
+API -> SEGURO_CELULAR_COMPRAS: Salva o dado tabela
+API -> DIGIBEE: Envia proposta
+DIGIBEE -> API: Recebe resposta
+API -> SEGURO_CELULAR_RESPONSE : Salva a resposta na tabela
+API -> SOLD_PROPOSAL: Salva a resposta na tabela
+API -> EMAIL: Envia 
+@enduml
