@@ -1,16 +1,36 @@
 @startuml envio_proposta
-MINIAPP -> API : Envia o token
+
+title "Envio da proposta para a Previsul"
+
+control PAYMENT
+control API
+database SEGURO_RESIDENCIAL
+database SOLD_PROPOSAL
+control PREVISUL
+
+PAYMENT -> API : Envia o token
+activate API #900
+
+API -> API : Descriptograva para Proposta
+
 API -> SEGURO_RESIDENCIAL:  Salva proposta na tabela
-API -> PLANOS : Check preço no JSON
-PLANOS -> API : Retorno da validação do preço
-alt Check == sucesso
-   API -> PREVISUL : Envia proposta 
-    PREVISUL -> API : Sucesso no envio da proposta
-    API -> SEGURO_RESIDENCIAL : Salva na tabela
-    API -> SOLD_PROPOSAL : Salva na tabela
-    else 
-    PREVISUL ->  API : Falha ao salvar a proposta
-    API -> SEGURO_RESIDENCIAL : Salva na tabela
-    end
-    API -> MINIAPP: Retorno da proposta
+SEGURO_RESIDENCIAL -> API
+
+API -> API : Avalia o preço
+
+alt Preço OK
+
+API -> PREVISUL : Envia proposta 
+PREVISUL -> API : Resposta
+
+end
+
+API -> SEGURO_RESIDENCIAL : Salva sucesso ou falha
+SEGURO_RESIDENCIAL -> API
+
+API -> SOLD_PROPOSAL : Salva dados consolidados
+SOLD_PROPOSAL -> API
+
+API -> PAYMENT: Retorno da proposta
+deactivate API
 @enduml
