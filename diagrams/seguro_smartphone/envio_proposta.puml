@@ -1,0 +1,26 @@
+@startuml
+
+title "Envio da proposta para a Mapfre"
+
+control PAYMENT
+control API
+database SEGURO_RESIDENCIAL
+database SEGURO_CELULAR_COMPRAS
+database SEGURO_CELULAR_RESPONSE
+database SOLD_PROPOSAL
+control DIGIBEE
+
+PAYMENT -> API: Envia o Token
+API -> API: Descriptografa 
+API -> SEGURO_CELULAR_COMPRAS: Salva o dado tabela
+SEGURO_CELULAR_COMPRAS -> API
+API -> API: Processa a proposta
+API -> DIGIBEE: Envia proposta
+DIGIBEE -> API: Recebe resposta
+API -> SEGURO_CELULAR_RESPONSE : Salva a resposta na tabela
+SEGURO_CELULAR_RESPONSE -> API
+API -> SOLD_PROPOSAL: Salva o consolidado
+SOLD_PROPOSAL -> API
+API -> API: Envia email
+API -> PAYMENT
+@enduml
