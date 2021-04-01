@@ -54,7 +54,19 @@ export class SmartphoneProposalController {
             logger.error(e.message)            
         }
     }
-    
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/proposal/{pass}/sendEmail/{email}")
+    public async sendMailProposalToMe(@Path() pass: string, @Path() email: string) {
+        try {
+            logger.info('E-mail com o id de compra:', pass)
+            await this.planService.sendSellingEmail(pass, email)
+        } catch (e) {
+            logger.error(e.message)
+        }
+    }
+
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/sold_proposal/{customerId}/{order}/statusUpdate")
