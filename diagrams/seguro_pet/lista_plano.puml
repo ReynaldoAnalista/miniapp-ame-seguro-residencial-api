@@ -1,0 +1,15 @@
+@startuml lista_plano
+title "Lista plano"
+
+control PAYMENT
+control API
+control B2SKY
+
+PAYMENT -> API : Solicita dados
+activate API #900
+API -> B2SKY : Solicita token
+B2SKY -> API: Token autorizado
+API -> B2SKY: Envio da solicitação
+B2SKY -> API: Resposta da solicitação
+API -> PAYMENT: Envia dados
+@enduml

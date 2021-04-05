@@ -1,0 +1,18 @@
+@startuml envio_proposta
+
+title "Cotação na B2SKY"
+
+control PAYMENT
+control API
+control B2SKY
+
+PAYMENT -> API : Envia os dados para requisição
+activate API #900
+
+API -> B2SKY : Solicita token
+B2SKY -> API: Token autorizado
+
+API -> B2SKY: Envio da requisição
+B2SKY -> API: Resposta da requisição
+API -> PAYMENT: Envia dados
+@enduml
