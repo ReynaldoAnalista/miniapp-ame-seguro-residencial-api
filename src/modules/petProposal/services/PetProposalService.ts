@@ -23,10 +23,10 @@ export class PetProposalService {
         try {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.PET_URL_BASE,
-                this.requestService.METHODS.POST,
+                this.requestService.METHODS.GET,
                 null,
                 'PET',
-                'grant_type=client_credentials&scope=seguro-pet'
+                'plan'
             );
             result = response.data
             log.info('Success proposal sent')
