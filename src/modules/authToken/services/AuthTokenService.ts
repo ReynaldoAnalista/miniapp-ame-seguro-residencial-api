@@ -46,7 +46,7 @@ export class AuthTokenService {
 
     async retrieveAuthorization(tenant: string, resetCache = false): Promise<string | undefined> {
         log.debug('Starting Authorization for ' + tenant)
-        const AUTH_KEY = tenant === 'SMARTPHONE' ? 'SMARTPHONE_URL_AUTHORIZATION' : 'URL_AUTHORIZATION'
+        const AUTH_KEY = (tenant === 'SMARTPHONE') ? 'SMARTPHONE_URL_AUTHORIZATION' : (tenant === 'PET') ? 'PET_URL_BASE' : 'URL_AUTHORIZATION'
         const AUTH_URL = await this.parameterStore.getSecretValue(AUTH_KEY)
         const TOKEN_CACHE = `TOKENCACHE_${tenant}`
         if (resetCache) {
@@ -119,6 +119,40 @@ export class AuthTokenService {
                     });
                 cache.put(TOKEN_CACHE, result, 1000 * 60)
                 return result
+            }
+
+            if (tenant === Tenants.PET) {
+                log.debug('Trying to authorizate on ' + AUTH_URL)
+                let clientId = await this.retrieveConfig('PET_CLIENT_ID')
+                let clientSecret = await this.retrieveConfig('PET_CLIENT_SECRET')
+                let clientScope = await this.retrieveConfig('PET_CLIENT_SCOPE')
+                const authorization = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64')
+                let config = {
+                    headers: {
+                        'Authorization': `Basic ${authorization}`,
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'User-Agent': ''
+                    }
+                };
+                let body = qs.stringify({
+                    'grant_type': 'client_credentials',
+                    'scope': clientScope
+                })
+                let result: AuthToken = new AuthToken();
+
+                await axios.post(AUTH_URL, body, config)
+                    .then((res) => {
+                        log.debug("AUTHORIZED");
+                        result = AuthToken.fromObject(res.data);
+                    })
+                    .catch((err) => {
+                        log.error("ERROR ON AUTHORIZING");
+                        log.error("AXIOS ERROR: ", err);
+                    });
+
+                cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
+                return result.access_token;
+
             }
 
 
