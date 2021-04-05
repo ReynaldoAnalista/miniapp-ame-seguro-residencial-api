@@ -4,8 +4,6 @@ title "Cotação na B2SKY"
 
 control PAYMENT
 control API
-database SEGURO_PET_COTACAO
-database SOLD_PROPOSAL
 control B2SKY
 
 PAYMENT -> API : Envia os dados para requisição
@@ -14,9 +12,7 @@ activate API #900
 API -> B2SKY : Solicita token
 B2SKY -> API: Token autorizado
 
-API -> SEGURO_PET: Salva informações para tabela
 API -> B2SKY: Envio da requisição
 B2SKY -> API: Resposta da requisição
-API -> SOLD_PROPOSAL: Salva informações na tabela
 API -> PAYMENT: Envia dados
 @enduml
