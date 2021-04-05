@@ -1,22 +1,22 @@
 @startuml envio_proposta
 
-title "Cotação na B2SKY"
+title "Adesão na B2SKY"
 
 control PAYMENT
 control API
-database SEGURO_PET_COTACAO
+database SEGURO_PET_ADESAO
 database SOLD_PROPOSAL
 control B2SKY
 
-PAYMENT -> API : Envia os dados para requisição
+PAYMENT -> API : Envia id da cotação
 activate API #900
 
 API -> B2SKY : Solicita token
 B2SKY -> API: Token autorizado
 
-API -> SEGURO_PET: Salva informações para tabela
-API -> B2SKY: Envio da requisição
-B2SKY -> API: Resposta da requisição
+API -> SEGURO_PET_RESPONSE: Salva informações para tabela
+API -> B2SKY: Envio do id da cotação
+B2SKY -> API: Resposta da cotação
 API -> SOLD_PROPOSAL: Salva informações na tabela
 API -> PAYMENT: Envia dados
 @enduml
