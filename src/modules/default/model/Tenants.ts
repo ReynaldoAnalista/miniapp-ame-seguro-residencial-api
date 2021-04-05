@@ -1,4 +1,5 @@
 export enum Tenants {
     SMARTPHONE = "SMARTPHONE",
-    RESIDENTIAL = "RESIDENTIAL"
+    RESIDENTIAL = "RESIDENTIAL",
+    PET = "PET",
 }
