@@ -1,0 +1,45 @@
+@startuml envio_proposta
+
+title "Cotação na B2SKY"
+
+control PAYMENT
+control API
+database SEGURO_PET
+database SOLD_PROPOSAL
+control B2SKY
+
+PAYMENT -> API : Envia os dados para requisição
+activate API #900
+
+API -> B2SKY : Solicita token
+B2SKY -> API: Token autorizado
+
+API -> SEGURO_PET: Salva informações para tabela
+API -> B2SKY: Envio de requisição
+B2SKY -> API: Resposta da requisição
+API -> SOLD_PROPOSAL: Salva informações na tabela
+API -> PAYMENT: Envia dados
+
+
+
+' API -> SEGURO_RESIDENCIAL:  Salva proposta na tabela
+' SEGURO_RESIDENCIAL -> API
+
+' API -> API : Avalia o preço
+
+' alt Preço OK
+
+' API -> PREVISUL : Envia proposta 
+' PREVISUL -> API : Resposta
+
+' end
+
+' API -> SEGURO_RESIDENCIAL : Salva sucesso ou falha
+' SEGURO_RESIDENCIAL -> API
+
+' API -> SOLD_PROPOSAL : Salva dados consolidados
+' SOLD_PROPOSAL -> API
+
+' API -> PAYMENT: Retorno da proposta
+' deactivate API
+@enduml
