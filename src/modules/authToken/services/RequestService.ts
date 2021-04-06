@@ -85,7 +85,7 @@ export class RequestService {
             method: method,
             url: apiUrl + (queryString ? queryString : ""),
             headers,
-            data: JSON.stringify(body),
+            data: body != null ? JSON.stringify(body) : null,
         };
 
         let result = await axios(config);

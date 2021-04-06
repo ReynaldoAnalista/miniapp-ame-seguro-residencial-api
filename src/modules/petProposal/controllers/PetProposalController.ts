@@ -16,14 +16,27 @@ export class PetProposalController {
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Post("/petList")
-    public async sendProposal() {
+    @Get("/petList")
+    public async petList() {
         logger.info('Get Pet List');
         try {
             return await this.petService.listPlans()
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("List Pets Not sent", 500)
+        }
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get(`/petDescPlan/{idPlan}`)
+    public async descPetList(@Path() idPlan: string) {
+        logger.info('Get Desc Plan');
+        try {
+            return await this.petService.descPlans(idPlan)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Desc Plans Not sent", 500)
         }
     }
 

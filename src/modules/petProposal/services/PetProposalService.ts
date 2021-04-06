@@ -11,34 +11,54 @@ const log = getLogger("PetProposalService");
 
 @injectable()
 export class PetProposalService {
-
     constructor(
-        @inject("RequestService") private requestService : RequestService
-    ) {
-
-    }
+        @inject("RequestService") private requestService: RequestService
+    ) {}
 
     async listPlans() {
-        let result
+        let result;
         try {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.PET_URL_BASE,
                 this.requestService.METHODS.GET,
                 null,
-                'PET',
-                'plan'
+                "PET",
+                "seguro-pet/v2/plan"
             );
-            result = response.data
-            log.info('Success proposal sent')
+            result = response.data;
+            log.info("Success Plan List");
         } catch (e) {
-            const status = e.response?.status
-            result = null
-            log.debug(`Error %j`, e)
-            log.debug('Error when trying to send proposal');
-            log.debug(`Status Code: ${status}`)
+            const status = e.response?.status;
+            result = null;
+            log.debug(`Error %j`, e);
+            log.debug("Error when trying to Plan List");
+            log.debug(`Status Code: ${status}`);
         }
-        return result
-
+        log.debug("Debug Data " + result);
+        return result;
     }
 
+
+    async descPlans(planId : string) {
+        let result;
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.PET_URL_BASE,
+                this.requestService.METHODS.GET,
+                null,
+                "PET",
+                `seguro-pet/v2/plan/${planId}`
+            );
+            result = response.data;
+            log.info(`Success Desc Plan :${planId}`);
+        } catch (e) {
+            const status = e.response?.status;
+            result = null;
+            log.debug(`Error %j`, e);
+            log.debug("Error when trying to Desc Plan");
+            log.debug(`Status Code: ${status}`);
+        }
+        log.debug("Debug Data " + result);
+        return result;
+    }
 }
