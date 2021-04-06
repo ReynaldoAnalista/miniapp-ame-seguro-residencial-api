@@ -6,6 +6,7 @@ import { RequestService } from "../../authToken/services/RequestService";
 import { ParameterStore } from "../../../configs/ParameterStore";
 import { SmartphoneSoldProposal } from "../../smartphoneProposal/model/SmartphoneSoldProposal";
 import { Tenants } from "../../default/model/Tenants";
+import Plans from "./Plans";
 
 const log = getLogger("PetProposalService");
 
@@ -17,29 +18,12 @@ export class PetProposalService {
 
     async listPlans() {
         let result;
-        try {
-            const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.PET_URL_BASE,
-                this.requestService.METHODS.GET,
-                null,
-                "PET",
-                "seguro-pet/v2/plan"
-            );
-            result = response.data;
-            log.info("Success Plan List");
-        } catch (e) {
-            const status = e.response?.status;
-            result = null;
-            log.debug(`Error %j`, e);
-            log.debug("Error when trying to Plan List");
-            log.debug(`Status Code: ${status}`);
-        }
+        result = Plans;
         log.debug("Debug Data " + result);
         return result;
     }
 
-
-    async descPlans(planId : string) {
+    async descPlans(planId: string) {
         let result;
         try {
             const response = await this.requestService.makeRequest(

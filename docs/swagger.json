@@ -352,8 +352,8 @@
 			}
 		},
 		"/v1/pet/petList": {
-			"post": {
-				"operationId": "SendProposal",
+			"get": {
+				"operationId": "PetList",
 				"responses": {
 					"200": {
 						"content": {
@@ -375,6 +375,41 @@
 				},
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/v1/pet/petDescPlan/{idPlan}": {
+			"get": {
+				"operationId": "DescPetList",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "idPlan",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/v1/plans/proposal-report": {
