@@ -255,5 +255,13 @@ export class SmartphoneProposalService {
             'valid': true
         }
     }
+    
+    async validateProposal(data: any) {
+        var costumerId = data.control_data.customer_identifier_code        
+        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(costumerId)
+        // const validateMail = await this.smartphoneProposalRepository.validateProposal(soldProposal)        
+
+        return soldProposal
+    }
 
 }
