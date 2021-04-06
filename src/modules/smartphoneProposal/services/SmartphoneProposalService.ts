@@ -200,15 +200,18 @@ export class SmartphoneProposalService {
     async sendSellingEmail(pass: string, forceEmail?: string) {
         log.debug(`Sending email: ${pass}`)
         const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
-        const response = await this.responseRepository.findByID(pass)
-        if (paymentObject && response) {
+        if (paymentObject) {
 
             const proposal = SmartphoneProposalUtils.generateProposal(paymentObject)
-            // log.info('Reprocessando a tabela Segunro Celular Compras Sem enviar a DigiBee')
-            const updateProposal = await this.updateProposal(paymentObject.id, true)
+
+            let proposalResponse = await this.responseRepository.findByID(pass)
+            if (!proposalResponse) {
+                log.info('Sem response, enviando para Digibee')
+                proposalResponse = await this.sendProposal(proposal)
+            }
     
-            // log.info('Atualizando a tabela SoldProposal')
-            await this.updateSoldProposal(proposal, response, Tenants.SMARTPHONE)
+            log.info('Atualizando a tabela SoldProposal')
+            await this.updateSoldProposal(proposal, proposalResponse, Tenants.SMARTPHONE)
 
             log.info('Enviando o E-mail')
             return await this.mailService.sendSellingEmailByPaymentObject(paymentObject, forceEmail)

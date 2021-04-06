@@ -351,6 +351,32 @@
 				]
 			}
 		},
+		"/v1/pet/petList": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/v1/plans/proposal-report": {
 			"get": {
 				"operationId": "ProposalReport",
@@ -748,13 +774,135 @@
 				]
 			}
 		},
-		"/v1/smartphone/sold_proposal/{pass}/statusUpdate": {
-			"get": {
+		"/v1/smartphone/proposal/{pass}/sendEmail/{email}": {
+			"post": {
+				"operationId": "SendMailProposalToMe",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pass",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "email",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/smartphone/sold_proposal/{customerId}/{order}/statusUpdate": {
+			"post": {
 				"operationId": "StatusUpdateSoldProposal",
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "order",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/smartphone/validate_email/{pass}": {
+			"get": {
+				"operationId": "ValidateMailProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												},
+												"invalid_fields": {
+													"items": {
+														"type": "string"
+													},
+													"type": "array"
+												},
+												"valid": {
+													"type": "boolean"
+												}
+											},
+											"required": [
+												"valid",
+												"invalid_fields",
+												"message"
+											],
+											"type": "object"
+										},
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												},
+												"invalid_fields": {
+													"type": "string"
+												},
+												"valid": {
+													"type": "boolean"
+												}
+											},
+											"required": [
+												"valid",
+												"invalid_fields",
+												"message"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
 						},
 						"description": "Retrieved"
 					},
