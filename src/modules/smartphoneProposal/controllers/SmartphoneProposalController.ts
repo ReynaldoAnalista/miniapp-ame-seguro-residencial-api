@@ -102,7 +102,7 @@ export class SmartphoneProposalController {
         try {
             logger.info('Validação da proposta pela DigiBee:')
             const validateProposal = await this.planService.validateProposal(digiBeeResponse)
-            logger.info('Proposta validado', validateProposal)
+            logger.info('Proposta validada', validateProposal)
             return validateProposal
         } catch (e) {
             logger.error(e)            

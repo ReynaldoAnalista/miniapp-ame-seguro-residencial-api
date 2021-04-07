@@ -257,11 +257,27 @@ export class SmartphoneProposalService {
     }
     
     async validateProposal(data: any) {
-        var costumerId = data.control_data.customer_identifier_code        
-        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(costumerId)
-        // const validateMail = await this.smartphoneProposalRepository.validateProposal(soldProposal)        
-
-        return soldProposal
+        var dataInfo = data.control_data
+        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(dataInfo.customer_identifier_code)
+        log.info('Buscando informações na tabela SoldProposal')
+        const requestProposal = await soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
+        log.info('Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente')
+        if (requestProposal) {
+            requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
+            requestProposal.control_data = data
+            await this.smartphoneSoldProposalRepository.update(requestProposal)
+            log.info('Salvando atualização na tabela SoldProposal')
+            return {
+                message: 'Proposta atualizada com sucesso',
+                status: 200
+            }
+        } else {
+            log.info('Erro ao coletar as informações na tabela SoldProposal')
+            return {
+                message: 'Erro ao coletar informações na base',
+                status: 404
+            }
+        }
     }
 
 }
