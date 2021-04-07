@@ -25,7 +25,7 @@ export class PetProposalController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Get("/planList")
-    public async petList() {
+    public async planList() {
         logger.info("Get Plan List");
         try {
             return await this.petService.listPlans();
