@@ -26,12 +26,12 @@ export class PetProposalController {
     @SuccessResponse("200", "Retrieved")
     @Get("/planList")
     public async petList() {
-        logger.info("Get Pet List");
+        logger.info("Get Plan List");
         try {
             return await this.petService.listPlans();
         } catch (e) {
             logger.error(e.message);
-            throw new ApiError("List Pets Not sent", 500);
+            throw new ApiError("List Plans Not sent", 500);
         }
     }
 
