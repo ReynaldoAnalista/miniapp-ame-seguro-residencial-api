@@ -31,6 +31,58 @@
 				],
 				"type": "object",
 				"additionalProperties": true
+			},
+			"DigibeeConfirmation": {
+				"properties": {
+					"control_data": {
+						"properties": {
+							"key_contract_certificate_number": {
+								"type": "number",
+								"format": "double"
+							},
+							"customer_identifier_code": {
+								"type": "string"
+							},
+							"processing_data": {
+								"type": "string"
+							},
+							"acceptance_type": {
+								"type": "string"
+							},
+							"shipping_file_number": {
+								"type": "number",
+								"format": "double"
+							},
+							"sequential_shipping_number": {
+								"type": "number",
+								"format": "double"
+							},
+							"rejection_reason_code": {
+								"type": "number",
+								"format": "double"
+							},
+							"rejection_description": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"rejection_description",
+							"rejection_reason_code",
+							"sequential_shipping_number",
+							"shipping_file_number",
+							"acceptance_type",
+							"processing_data",
+							"customer_identifier_code",
+							"key_contract_certificate_number"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"control_data"
+				],
+				"type": "object",
+				"additionalProperties": true
 			}
 		},
 		"securitySchemes": {}
@@ -959,6 +1011,53 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/smartphone/confirm_proposal": {
+			"post": {
+				"operationId": "ConfirmProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"status",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DigibeeConfirmation"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/unusual/proposal_email/{pass}/{email}/sendEmail": {

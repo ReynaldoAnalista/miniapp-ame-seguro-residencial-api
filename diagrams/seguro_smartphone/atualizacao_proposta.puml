@@ -1,0 +1,12 @@
+@startuml
+
+title "Atualização da Base pela DigiBee"
+
+control DIGIBEE
+control API
+database SOLD_PROPOSAL
+
+DIGIBEE -> API: Envia a solicitação
+API -> SOLD_PROPOSAL: Atualiza a tabela
+API -> DIGIBEE: Envia o retorno
+@enduml
