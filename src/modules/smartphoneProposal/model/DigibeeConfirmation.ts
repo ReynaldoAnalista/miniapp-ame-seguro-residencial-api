@@ -1,4 +1,4 @@
-export interface DigiBeeResponse {
+export interface DigibeeConfirmation {
     control_data: {
 		key_contract_certificate_number: number,
 		customer_identifier_code: string,

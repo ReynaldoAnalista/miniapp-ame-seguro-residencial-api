@@ -3,7 +3,7 @@ import {SmartphoneProposalService} from "../services/SmartphoneProposalService"
 import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
-import { DigiBeeResponse } from "../model/DigiBeeResponse";
+import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 import { SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import { SmartphoneProposalMailService } from "../services/SmartphoneProposalMailService";
 
@@ -97,11 +97,11 @@ export class SmartphoneProposalController {
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Post("/validate_proposal")
-    public async validateProposal(@Body() digiBeeResponse: DigiBeeResponse) {
+    @Post("/confirm_proposal")
+    public async confirmProposal(@Body() digibeeConfirmation: DigibeeConfirmation) {
         try {
             logger.info('Validação da proposta pela DigiBee:')
-            const validateProposal = await this.planService.validateProposal(digiBeeResponse)
+            const validateProposal = await this.planService.confirmProposal(digibeeConfirmation)
             logger.info('Proposta validada', validateProposal)
             return validateProposal
         } catch (e) {

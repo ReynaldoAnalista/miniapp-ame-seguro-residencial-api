@@ -12,6 +12,7 @@ import {Tenants} from "../../default/model/Tenants";
 import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
+import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -256,15 +257,15 @@ export class SmartphoneProposalService {
         }
     }
     
-    async validateProposal(data: any) {
-        var dataInfo = data.control_data
+    async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
+        var dataInfo = digibeeConfirmation.control_data
         const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(dataInfo.customer_identifier_code)
         log.info('Buscando informações na tabela SoldProposal')
-        const requestProposal = await soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
+        const requestProposal = soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
         log.info('Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente')
         if (requestProposal) {
             requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
-            requestProposal.control_data = data
+            requestProposal.control_data = digibeeConfirmation
             await this.smartphoneSoldProposalRepository.update(requestProposal)
             log.info('Salvando atualização na tabela SoldProposal')
             return {
@@ -272,7 +273,7 @@ export class SmartphoneProposalService {
                 status: 200
             }
         } else {
-            log.info('Erro ao coletar as informações na tabela SoldProposal')
+            log.error('Erro ao coletar as informações na tabela SoldProposal')
             return {
                 message: 'Erro ao coletar informações na base',
                 status: 404
