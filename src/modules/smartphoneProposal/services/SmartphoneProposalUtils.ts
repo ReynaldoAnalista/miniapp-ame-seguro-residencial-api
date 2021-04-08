@@ -71,6 +71,9 @@ export class SmartphoneProposalUtils {
         if(typeof (proposal.insured_data.address_data.complement) != "undefined")
             proposal.insured_data.address_data.complement = proposal.insured_data.address_data.complement.slice(0,10)
         
+        if(typeof (proposal.insured_data.address_data.city) != "undefined")
+            proposal.insured_data.address_data.city = proposal.insured_data.address_data.city.slice(0,20)
+        
         
         return proposal
     }
