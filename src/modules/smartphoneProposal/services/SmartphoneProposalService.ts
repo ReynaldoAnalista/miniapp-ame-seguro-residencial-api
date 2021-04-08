@@ -75,14 +75,21 @@ export class SmartphoneProposalService {
     
     async updateManyProposal(proposal: any) {
         try {
-            if(typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
+            if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
+                let successCount = 0
+                let missCount = 0
                 await proposal.ordersToSend.forEach(async proposalId =>  {
                     const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
                     if(proposalRequest){
                         log.info('Recebendo a proposta', proposalId)
                         const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
                         log.info('Enviando a proposta para a digibee')
-                        const proposalResponse = await this.sendProposal(proposal)            
+                        const proposalResponse = await this.sendProposal(proposal)
+                        if (proposalResponse.success) {
+                            successCount += 1
+                        } else {
+                            missCount += 1
+                        }
                         await this.updateProposalResponse(proposalRequest)
                         log.info('Recebendo a resposta da digibee')                             
                         log.info('Proposta validada pela digibee')
@@ -92,7 +99,7 @@ export class SmartphoneProposalService {
                     }
                 });
                 return {
-                    message: 'Ordens executadas com sucesso',
+                    message: `${successCount} Ordens executadas com sucesso, ${missCount} Ordens falharam`,
                     status: 200,
                 }    
             }
