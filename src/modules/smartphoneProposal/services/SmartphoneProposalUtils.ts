@@ -64,11 +64,13 @@ export class SmartphoneProposalUtils {
     }
 
     static formatedProposalValues(proposal) {
-        proposal.insured_data.address_data.district = proposal.insured_data.address_data.district.slice(0,20)
+
+        if(typeof(proposal.insured_data.address_data.district) != "undefined")
+            proposal.insured_data.address_data.district = proposal.insured_data.address_data.district.slice(0,20)
         
-        if(typeof proposal.insured_data.address_data.complement != undefined) {
+        if(typeof (proposal.insured_data.address_data.complement) != "undefined")
             proposal.insured_data.address_data.complement = proposal.insured_data.address_data.complement.slice(0,10)
-        }
+        
         
         return proposal
     }
