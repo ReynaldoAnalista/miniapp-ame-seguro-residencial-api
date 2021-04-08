@@ -57,10 +57,16 @@ export class SmartphoneProposalUtils {
             proposal.policy_data = this.generatePolicyData(contractNumber, this.generateDateProposal(unsignedProposal.date))
             proposal.policyholder_data = this.generatePolicyHolderData()
             proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)
-            return proposal
+            proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)                        
+            return this.formatedProposalValues(proposal)
         }
         return null
+    }
+
+    static formatedProposalValues(proposal) {
+        proposal.insured_data.address_data.district = proposal.insured_data.address_data.district.slice(0,20)
+
+        return proposal
     }
 
     static generatePolicyData(contractNumber, dateProposal: Date = new Date()) {
