@@ -72,6 +72,36 @@ export class SmartphoneProposalService {
         log.info('Retornando a proposta')        
         return proposalResponse
     }
+    
+    async updateManyProposal(proposal: any) {
+        try {
+            await proposal.ordersToSend.forEach(async proposalId =>  {
+                const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+                log.info('Recebendo a proposta', proposalId)
+                const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
+                log.info('Enviando a proposta para a digibee')
+                const proposalResponse = await this.sendProposal(proposal)            
+                await this.updateProposalResponse(proposalRequest)
+                log.info('Recebendo a resposta da digibee')             
+                if(proposalRequest){
+                    log.info('Proposta validada pela digibee')
+                    await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
+                    log.info('Atualizando a compra no SoldProposal')
+                    log.info(`Ordem de Id: ${proposalId} Executada com sucesso`)
+                }
+            });
+            return {
+                message: 'Ordens executadas com sucesso',
+                status: 200,
+            }
+        }catch(e) {
+            log.error("Erro de execução: ", e)
+            return {
+                message: 'Erro na execução das ordens',
+                status: 400,
+            }
+        }
+    }
 
     async updateOldCustumersProposal(proposalId: string) {
         const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)

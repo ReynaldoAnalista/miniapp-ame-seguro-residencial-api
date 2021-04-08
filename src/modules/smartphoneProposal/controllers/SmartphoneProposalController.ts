@@ -44,6 +44,20 @@ export class SmartphoneProposalController {
         }
     }
 
+        
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/update_many_proposal")
+    public async updateManyProposal(@Body() proposal: any) {
+        logger.info('Enviando várias propostas para atualização');
+        try {
+            return await this.planService.updateManyProposal(proposal)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
+
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/proposal/{pass}/sendEmail")

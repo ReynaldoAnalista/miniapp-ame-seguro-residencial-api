@@ -65,7 +65,6 @@ export class SmartphoneProposalUtils {
 
     static formatedProposalValues(proposal) {
         proposal.insured_data.address_data.district = proposal.insured_data.address_data.district.slice(0,20)
-
         return proposal
     }
 
