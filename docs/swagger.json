@@ -405,7 +405,7 @@
 		},
 		"/v1/pet/planList": {
 			"get": {
-				"operationId": "PetList",
+				"operationId": "PlanList",
 				"responses": {
 					"200": {
 						"content": {
@@ -432,6 +432,41 @@
 		"/v1/pet/petDescPlan/{idPlan}": {
 			"get": {
 				"operationId": "DescPetList",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "idPlan",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/pet/quote/{idPlan}": {
+			"post": {
+				"operationId": "QuotationPetPlans",
 				"responses": {
 					"200": {
 						"content": {
@@ -829,6 +864,53 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/smartphone/update_many_proposal": {
+			"post": {
+				"operationId": "UpdateManyProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"status",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/v1/smartphone/proposal/{pass}/sendEmail": {

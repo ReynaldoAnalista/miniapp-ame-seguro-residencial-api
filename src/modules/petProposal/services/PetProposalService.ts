@@ -45,4 +45,27 @@ export class PetProposalService {
         log.debug("Debug Data " + result);
         return result;
     }
+
+    async quotePlans(planId: string, body: any) {
+        let result;
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.PET_URL_BASE,
+                this.requestService.METHODS.POST,
+                body,
+                "PET",
+                `seguro-pet/v2/quote/${planId}`
+            );
+            result = response.data;
+            log.info(`Success Quotation Plan :${planId}`);
+        } catch (e) {
+            const status = e.response?.status;
+            result = null;
+            log.debug(`Error %j`, e);
+            log.debug("Error when trying to Quotation Plan");
+            log.debug(`Status Code: ${status}`);
+        }
+        log.debug("Debug Data " + result);
+        return result;
+    }
 }
