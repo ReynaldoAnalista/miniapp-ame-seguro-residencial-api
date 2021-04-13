@@ -7,6 +7,7 @@ import { ParameterStore } from "../../../configs/ParameterStore";
 import { SmartphoneSoldProposal } from "../../smartphoneProposal/model/SmartphoneSoldProposal";
 import { Tenants } from "../../default/model/Tenants";
 import Plans from "./Plans";
+import { PetQuotationPlan } from "../model/PetQuotationPlan";
 
 const log = getLogger("PetProposalService");
 
@@ -24,6 +25,8 @@ export class PetProposalService {
     }
 
     async descPlans(planId: string) {
+        console.log('PETBASE' , this.requestService.ENDPOINTS.PET_URL_BASE);
+        
         let result;
         try {
             const response = await this.requestService.makeRequest(
@@ -46,7 +49,7 @@ export class PetProposalService {
         return result;
     }
 
-    async quotePlans(planId: string, body: any) {
+    async quotePlans(planId: string, body: PetQuotationPlan) {       
         let result;
         try {
             const response = await this.requestService.makeRequest(

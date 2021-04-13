@@ -12,7 +12,6 @@ import {
 import { getLogger } from "../../../server/Logger";
 import { ApiError } from "../../../errors/ApiError";
 import { PetProposalService } from "../services/PetProposalService";
-import { PetQuotationPlan } from "../model/PetQuotationPlan";
 
 const logger = getLogger("PetController");
 
@@ -54,7 +53,7 @@ export class PetProposalController {
     @Post(`/quote/{idPlan}`)
     public async quotationPetPlans(
         @Path() idPlan: string,
-        @Body() petQuotationPlan: PetQuotationPlan
+        @Body() petQuotationPlan: any
     ) {
         logger.info("Get Quotation Plan");
         try {
