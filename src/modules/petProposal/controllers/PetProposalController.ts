@@ -12,7 +12,7 @@ import {
 import { getLogger } from "../../../server/Logger";
 import { ApiError } from "../../../errors/ApiError";
 import { PetProposalService } from "../services/PetProposalService";
-import PetQuotationPlan from "../model/PetQuotationPlan";
+import { PetQuotationPlan } from "../model/PetQuotationPlan";
 
 const logger = getLogger("PetController");
 
