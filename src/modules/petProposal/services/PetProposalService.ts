@@ -25,8 +25,6 @@ export class PetProposalService {
     }
 
     async descPlans(planId: string) {
-        console.log('PETBASE' , this.requestService.ENDPOINTS.PET_URL_BASE);
-        
         let result;
         try {
             const response = await this.requestService.makeRequest(
