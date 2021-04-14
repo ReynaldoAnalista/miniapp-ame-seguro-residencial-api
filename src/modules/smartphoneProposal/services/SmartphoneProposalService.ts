@@ -333,7 +333,11 @@ export class SmartphoneProposalService {
                 proposal.attributes.customPayload.proposal.coverage_data.liquid_prize = withoutIOF
             }
         }
-        return proposal
+        return {
+          id: proposal?.id,
+          preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
+          preco_liquido: proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize
+        } 
     }
 
 }
