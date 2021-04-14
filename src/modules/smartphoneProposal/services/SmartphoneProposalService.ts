@@ -331,13 +331,14 @@ export class SmartphoneProposalService {
         if (amount) {
             if (proposal?.attributes?.customPayload?.proposal?.coverage_data) {                
                 proposal.attributes.customPayload.proposal.coverage_data.liquid_prize = withoutIOF
+                this.smartphoneProposalRepository.update(proposal)
+                return {
+                    id: proposal?.id,
+                    preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
+                    preco_liquido: proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize
+                } 
             }
         }
-        return {
-          id: proposal?.id,
-          preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
-          preco_liquido: proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize
-        } 
     }
 
 }
