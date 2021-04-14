@@ -303,22 +303,30 @@ export class SmartphoneProposalService {
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
         var dataInfo = digibeeConfirmation.control_data
         const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(dataInfo.customer_identifier_code)
-        log.info('Buscando informações na tabela SoldProposal')
-        const requestProposal = soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
-        log.info('Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente')
-        if (requestProposal) {
-            requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
-            requestProposal.control_data = digibeeConfirmation
-            await this.smartphoneSoldProposalRepository.update(requestProposal)
-            log.info('Salvando atualização na tabela SoldProposal')
-            return {
-                message: 'Proposta atualizada com sucesso',
-                status: 200
+        if (soldProposal && soldProposal.length) {
+            log.info('Buscando informações na tabela SoldProposal')
+            const requestProposal = soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
+            log.info('Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente')
+            if (requestProposal) {
+                requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
+                requestProposal.control_data = digibeeConfirmation
+                await this.smartphoneSoldProposalRepository.update(requestProposal)
+                log.info('Salvando atualização na tabela SoldProposal')
+                return {
+                    message: 'Proposta atualizada com sucesso',
+                    status: 200
+                }
+            } else {
+                log.error('Sem propostas com NSU especificado')
+                return {
+                    message: 'NSU não encontrato para este cliente',
+                    status: 403
+                }
             }
         } else {
             log.error('Erro ao coletar as informações na tabela SoldProposal')
             return {
-                message: 'Erro ao coletar informações na base',
+                message: 'Cliente não encontrato',
                 status: 404
             }
         }
@@ -331,13 +339,14 @@ export class SmartphoneProposalService {
         if (amount) {
             if (proposal?.attributes?.customPayload?.proposal?.coverage_data) {                
                 proposal.attributes.customPayload.proposal.coverage_data.liquid_prize = withoutIOF
+                this.smartphoneProposalRepository.update(proposal)
+                return {
+                    id: proposal?.id,
+                    preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
+                    preco_liquido: proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize
+                } 
             }
         }
-        return {
-          id: proposal?.id,
-          preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
-          preco_liquido: proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize
-        } 
     }
 
 }
