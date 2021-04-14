@@ -325,11 +325,11 @@ export class SmartphoneProposalService {
     }
 
     async processIOF(compraId: string) {
-        let proposal = await this.smartphoneProposalRepository.findByID(compraId)
-        const amount = proposal?.amount
-        const withoutIOF = (Math.round(amount * 1.0734) / 100)
+        let proposal = await this.smartphoneProposalRepository.findByID(compraId)        
+        const amount = proposal?.amount        
+        const withoutIOF = (Math.round(amount / 1.0734) / 100)
         if (amount) {
-            if (proposal?.attributes?.customPayload?.proposal?.coverage_data) {
+            if (proposal?.attributes?.customPayload?.proposal?.coverage_data) {                
                 proposal.attributes.customPayload.proposal.coverage_data.liquid_prize = withoutIOF
             }
         }
