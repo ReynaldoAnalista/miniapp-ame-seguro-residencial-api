@@ -112,12 +112,17 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/confirm_proposal")
-    public async confirmProposal(@Body() digibeeConfirmation: DigibeeConfirmation) {
+    public async confirmProposal(@Body() digibeeConfirmation: DigibeeConfirmation, @Path("x-partner") partnerId: string) {
         try {
-            logger.info('Validação da proposta pela DigiBee:')
-            const validateProposal = await this.planService.confirmProposal(digibeeConfirmation)
-            logger.info('Proposta validada', validateProposal)
-            return validateProposal
+            if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
+                logger.info('Validação da proposta pela DigiBee:')
+                const validateProposal = await this.planService.confirmProposal(digibeeConfirmation)
+                logger.info('Proposta validada', validateProposal)
+                return validateProposal
+            } else {
+                return { authorization: false, message: 'Partner not recognized' }
+            }
+
         } catch (e) {
             logger.error(e)            
         }
