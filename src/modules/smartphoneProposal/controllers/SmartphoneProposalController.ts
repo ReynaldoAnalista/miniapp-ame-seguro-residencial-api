@@ -123,4 +123,21 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/processIOF")
+    public async processIOF(@Body() UUIDList: any[]) {
+        try {
+            logger.info('Realizando processamento de IOF')
+            if (Array.isArray(UUIDList)) {
+                return UUIDList.map(async uuid => {
+                    logger.debug(`Processando: ${uuid}`)
+                    return await this.planService.processIOF(uuid)
+                })
+            }
+        } catch (e) {
+            logger.error(e)
+        }
+    }
+
 }

@@ -405,7 +405,7 @@
 		},
 		"/v1/pet/planList": {
 			"get": {
-				"operationId": "PetList",
+				"operationId": "PlanList",
 				"responses": {
 					"200": {
 						"content": {
@@ -831,6 +831,53 @@
 				]
 			}
 		},
+		"/v1/smartphone/update_many_proposal": {
+			"post": {
+				"operationId": "UpdateManyProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"status",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/smartphone/proposal/{pass}/sendEmail": {
 			"post": {
 				"operationId": "SendMailProposal",
@@ -1054,6 +1101,48 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/DigibeeConfirmation"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/smartphone/processIOF": {
+			"post": {
+				"operationId": "ProcessIOF",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"additionalProperties": true,
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"additionalProperties": true,
+									"type": "object"
+								},
+								"type": "array"
 							}
 						}
 					}
