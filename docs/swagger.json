@@ -1068,20 +1068,39 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
+									"oneOf": [
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												},
+												"status": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"status",
+												"message"
+											],
+											"type": "object"
 										},
-										"status": {
-											"type": "number",
-											"format": "double"
+										{
+											"properties": {
+												"authorization": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message",
+												"authorization"
+											],
+											"type": "object"
 										}
-									},
-									"required": [
-										"status",
-										"message"
-									],
-									"type": "object"
+									]
 								}
 							}
 						},
@@ -1095,7 +1114,16 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -1116,7 +1144,24 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"additionalProperties": true,
+										"properties": {
+											"id": {
+												"additionalProperties": true,
+												"type": "object"
+											},
+											"preco_cobrado": {
+												"type": "string"
+											},
+											"preco_liquido": {
+												"additionalProperties": true,
+												"type": "object"
+											}
+										},
+										"required": [
+											"preco_liquido",
+											"preco_cobrado",
+											"id"
+										],
 										"type": "object"
 									},
 									"type": "array"
