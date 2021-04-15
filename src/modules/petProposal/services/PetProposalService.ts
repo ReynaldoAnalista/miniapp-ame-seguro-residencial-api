@@ -25,8 +25,18 @@ export class PetProposalService {
     }
 
     async sendProposal(proposal: any) {
-        const quote = await 
+        const planId = proposal.customPayload.proposal.planId
+        const proposalPets = await this.formatPetProposal(proposal.customPayload.proposal.pets)
+        
+        log.debug(proposalPets)
+        // const quote = await this.quotePlans()
         log.info("Solicita a cotação")
+    }
+
+    async formatPetProposal(proposal : any[]) {
+        proposal.map(async prop => {
+            
+        })
     }
 
     async descPlans(planId: string) {

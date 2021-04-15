@@ -50,17 +50,19 @@ export class PetProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Get(`/sendProposal`)
+    @Post(`/sendProposal`)
     public async sendProposal(@Body() proposal: any) {
-        logger.info("Get Desc Plan");
+        logger.info("Send Proposal Plan");
         try {
             return await this.petService.sendProposal(proposal);
         } catch (e) {
             logger.error(e.message);
-            throw new ApiError("Desc Plans Not sent", 500);
+            throw new ApiError("Proposal Not sent", 500);
         }
     }
-    
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
     @Post(`/quote/{idPlan}`)
     public async quotationPetPlans(
         @Path() idPlan: string,
