@@ -464,6 +464,41 @@
 				]
 			}
 		},
+		"/v1/pet/quote/{idPlan}": {
+			"post": {
+				"operationId": "QuotationPetPlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "idPlan",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/plans/proposal-report": {
 			"get": {
 				"operationId": "ProposalReport",
