@@ -47,4 +47,17 @@ export class PetProposalController {
             throw new ApiError("Desc Plans Not sent", 500);
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Get(`/sendProposal`)
+    public async sendProposal(@Body() proposal: any) {
+        logger.info("Get Desc Plan");
+        try {
+            return await this.petService.sendProposal(proposal);
+        } catch (e) {
+            logger.error(e.message);
+            throw new ApiError("Desc Plans Not sent", 500);
+        }
+    }
 }

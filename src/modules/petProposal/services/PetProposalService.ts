@@ -23,6 +23,11 @@ export class PetProposalService {
         return result;
     }
 
+    async sendProposal(proposal: any) {
+        const quote = await 
+        log.info("Solicita a cotação")
+    }
+
     async descPlans(planId: string) {
         let result;
         try {
