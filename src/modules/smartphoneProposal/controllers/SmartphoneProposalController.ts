@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify"
 import {SmartphoneProposalService} from "../services/SmartphoneProposalService"
-import {Get, Path, Route, SuccessResponse, Response, Post, Body, Security} from "tsoa"
+import { Get, Path, Route, SuccessResponse, Response, Post, Body, Security, Header } from "tsoa"
 import {getLogger} from "../../../server/Logger"
 import {ApiError} from "../../../errors/ApiError";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
@@ -112,7 +112,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/confirm_proposal")
-    public async confirmProposal(@Body() digibeeConfirmation: DigibeeConfirmation, @Path("x-partner") partnerId: string) {
+    public async confirmProposal(@Body() digibeeConfirmation: DigibeeConfirmation, @Header("x-partner") partnerId: string) {
         try {
             if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
                 logger.info('Validação da proposta pela DigiBee:')
