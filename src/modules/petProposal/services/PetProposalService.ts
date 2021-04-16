@@ -8,13 +8,15 @@ import { SmartphoneSoldProposal } from "../../smartphoneProposal/model/Smartphon
 import { Tenants } from "../../default/model/Tenants";
 import Plans from "./Plans";
 import moment from "moment";
+import { PetProposalUtil } from "./PetProposalUtil";
 
 const log = getLogger("PetProposalService");
 
 @injectable()
 export class PetProposalService {
     constructor(
-        @inject("RequestService") private requestService: RequestService
+        @inject("RequestService") private requestService: RequestService,
+        @inject("PetProposalUtil") private petProposalUtil: PetProposalUtil,
     ) {}
 
     async listPlans() {
@@ -26,52 +28,15 @@ export class PetProposalService {
 
     async sendProposal(proposal: any) {
         const planId = proposal.customPayload.proposal.planId;
-        const proposalPets = await this.formatPetProposal(proposal.customPayload.proposal)
-        log.info("Formatação dos campos para cotação")
-        const quotePlan = await this.quotePlans(planId, proposalPets)
-        var contractId = quotePlan.data.contract_uuid
+        const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.customPayload.proposal)
+        log.info("Formatação dos campos para cotação")                
+        const quotePlan = await this.quotePlans(planId, proposalPets)                
         log.info("Solicita a cotação dos planos")
-        // const getProposal = await this.requestProposal(contractId)
-        // log.info("Faz a requisição da proposta")
-        // return getProposal
-        return quotePlan
-    }
-
-    async formatPetProposal(proposal: any) {
-        var productId : number = 0;
-        try {
-            var petsBirthDate = proposal.pets.map((prop) => {
-                return {
-                    age: Number(prop.age),
-                    name: prop.namePet,
-                    size: prop.size,
-                    breed: prop.breed,
-                    color: prop.color,
-                    gender: prop.gender,
-                    species: prop.species,
-                    vaccined: prop.vaccined,
-                    preexisting_condition: prop.preexisting_condition,
-                    birth_date: moment(prop.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),                    
-                };
-            });
-            switch (proposal.planId) {
-                case 48:
-                    var productId = 33;
-                    break;
-                case 49:
-                    var productId = 34;
-                    break;
-                case 50:
-                    var productId = 35;
-                    break;
-            }
-            return {
-                pets: petsBirthDate,
-                product_ids: [productId],
-            };
-        } catch (e) {
-            log.debug("Format Proposal error: " + e.message);
-        }
+        const formatProposal = await this.petProposalUtil.formatRequestProposal(proposal)
+        const quoteId = quotePlan.data.contract_uuid
+        const getProposal = await this.requestProposal(quoteId, formatProposal)
+        log.info("Faz a requisição da proposta")
+        return getProposal
     }
 
     async descPlans(planId: string) {
@@ -120,13 +85,13 @@ export class PetProposalService {
         return result;
     }
 
-    async requestProposal(contractId) {
+    async requestProposal(contractId, formatProposal) {
         let result
         try {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.PET_URL_BASE,
                 this.requestService.METHODS.POST,
-                null,
+                formatProposal,
                 Tenants.PET,
                 `seguro-pet/v2/enroll/${contractId}`
             );
@@ -140,5 +105,6 @@ export class PetProposalService {
             log.debug(`Status Code: ${status}`);
         }
     }
+
 
 }
