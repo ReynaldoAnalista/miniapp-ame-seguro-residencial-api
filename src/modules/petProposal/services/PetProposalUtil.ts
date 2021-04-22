@@ -9,11 +9,33 @@ export class PetProposalUtil {
 
     async formatRequestProposal(proposal: any) {
         return {            
-            payment: {
-                id_opcao_pagamento: 0
-            },
-            pets: proposal.customPayload.proposal.pets,
-            insurance_holder: null
+            payment: { id_opcao_pagamento: 1 },
+            insurance_holder: proposal.customPayload.proposal.insurance_holder,
+            pets: proposal.customPayload.proposal.pets.map(pet => {
+                return {
+					namePet: pet.namePet,
+					birthDatePet: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
+					color: pet.color,
+					age: parseInt(pet.age),
+					gender: pet.gender,
+					size: pet.size,
+					description: pet.description,
+					vaccined: pet.vaccined,
+					preexisting_condition: pet.preexisting_condition,
+					species: pet.species,
+					breed: pet.bread
+				}
+            })
+        }
+    }
+
+    async formatDatabaseProposal(quoteId : string, quoteProposal: any, requestProposal: any) {
+        return {
+            id: quoteId,
+            date: moment().format('DD-MM-YYYY hh:mm:ss'),
+            quoteProposal: quoteProposal,
+            enrollProposal: requestProposal,
+            status: requestProposal.data == "Success" ? true : false
         }
     }
 
