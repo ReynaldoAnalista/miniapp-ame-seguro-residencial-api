@@ -1,0 +1,77 @@
+{
+	"title": "Amigo Ame Fit",
+	"description": "Transporte ao veterinário (até R$ 400).",
+	"amount": 67080,
+	"callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
+	"customPayload": {
+		"isFrom": "PHONE_SEC",
+		"origin": "MINIAPP",
+		"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/pet/sendProposal",
+		"clientEmail": "izabella.assad@calindra.com.br",
+		"proposal": {
+			"planId": 48,
+			"pets": [
+				{
+					"namePet": "Bolinha",
+					"birthDatePet": "20012021",
+					"color": "Preto",
+					"age": "1",
+					"gender": "Macho",
+					"size": "Porte Pequeno",
+					"description": "",
+					"vaccined": "Sim",
+					"preexisting_condition": "Não",
+					"species": "Cachorro",
+					"breed": "Cavalier king charles spaniel"
+				},
+				{
+					"namePet": "Lulu",
+					"birthDatePet": "20012021",
+					"color": "Preto",
+					"age": "3",
+					"gender": "Femea",
+					"size": "Porte Pequeno",
+					"description": "",
+					"vaccined": "Sim",
+					"preexisting_condition": "Não",
+					"species": "Cachorro",
+					"breed": "Cavalier king charles spaniel"
+				}
+			],
+			"insurance_holder": {
+				"phones": [
+					{
+						"type": "android",
+						"phone": "21968462664",
+						"area_code": "21968462664"
+					}
+				],
+				"addresses": [
+					{
+						"city": "Rio de Janeiro",
+						"state": "RJ",
+						"number": "49",
+						"street": "Rua Divisória",
+						"zipcode": "21331250",
+						"district": "Bento Ribeiro",
+						"additional_details": "Apt 101"
+					}
+				],
+				"cpf": "16286131736",
+				"name": "Izabella da Silva Assad",
+				"email": "izabella.assad@calindra.com.br",
+				"birth_date": "19970517"
+			}
+		},
+		"payment": {
+			"id_opcao_pagamento": 1
+		}
+	},
+	"items": [
+		{
+			"description": "Transporte ao veterinário (até R$ 100), consulta emergencial (até R$ 150), atendimento ambulatorial (até R$ 200), exames (básicos, complexos, imagem, cardiológicos e de alta complexidade - até R$ 500), cirurgias (até R$ 750), internação (até R$ 500), e assistência funeral (até R$ 400).",
+			"quantity": 1,
+			"amount": 67080
+		}
+	]
+}
