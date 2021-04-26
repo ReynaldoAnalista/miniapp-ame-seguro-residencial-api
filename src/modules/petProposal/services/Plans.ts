@@ -54,9 +54,9 @@ export default [
             },
             {
                 description:
-                    "internação (até R$ 1.000), acupuntura/ fisioterapia (até R$ 500))",
+                    "Iternação (até R$ 1.000), acupuntura/ fisioterapia (até R$ 500))",
             },
-            { description: "assistência funeral (até R$ 600)" },
+            { description: "Assistência funeral (até R$ 600)" },
         ],
     },
     {
