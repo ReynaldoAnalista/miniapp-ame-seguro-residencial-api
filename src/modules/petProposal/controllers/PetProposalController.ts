@@ -47,4 +47,33 @@ export class PetProposalController {
             throw new ApiError("Desc Plans Not sent", 500);
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post(`/sendProposal`)
+    public async sendProposal(@Body() proposal: any) {
+        logger.info("Send Proposal Plan");
+        try {
+            return await this.petService.sendProposal(proposal);
+        } catch (e) {
+            logger.error(e.message);
+            throw new ApiError("Proposal Not sent", 500);
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post(`/quote/{idPlan}`)
+    public async quotationPetPlans(
+        @Path() idPlan: string,
+        @Body() petQuotationPlan: any
+    ) {
+        logger.info("Get Quotation Plan");
+        try {
+            return await this.petService.quotePlans(idPlan, petQuotationPlan);
+        } catch (e) {
+            logger.error(e.message);
+            throw new ApiError("Desc Quotation Not sent", 500);
+        }
+    }
 }
