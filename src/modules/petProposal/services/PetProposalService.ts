@@ -39,13 +39,17 @@ export class PetProposalService {
             const quoteId = quotePlan.data.contract_uuid
             const getProposal = await this.requestProposal(quoteId, formatProposal)
             log.info("Faz a requisição da proposta")
-            const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, formatProposal, getProposal)               
+            const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, formatProposal, getProposal)
             await this.petProposalRepository.create(databaseProposalFormat)
             log.info("Salva a proposta no banco de dados")
-            return getProposal        
+            return databaseProposalFormat
         } catch (e) {
             log.error(e);            
         }
+    }
+
+    async deleteFromId(proposalId : string) {
+
     }
 
     async descPlans(planId: string) {

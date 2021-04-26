@@ -88,11 +88,11 @@ describe("ResidentialProposalService", () => {
             paymentObject.description = descricaoPlano
             paymentObject.amount = premio  
             const signedPayment = await sign(paymentObject, secret)                
-            const proposalProtocol = await residentialProposalService.processProposal(signedPayment)     
+            const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
             await delay(5000);      
             if(typeof proposalProtocol == 'undefined') {
                 return {error : `erro no ID : ${planId}`}
-            }            
+            }
             return proposalProtocol        
         } catch(err) {
             return err
