@@ -1,6 +1,7 @@
 export default [
     {
         id: 48,
+        id_hml: 46,
         name: "Amigo Ame Fit",
         premio: 670.8,
         coverage: [
@@ -37,6 +38,7 @@ export default [
     },
     {
         id: 49,
+        id_hml: 47,
         name: "Amigo Ame Master",
         premio: 1282.8,
         coverage: [
@@ -81,6 +83,7 @@ export default [
     },
     {
         id: 50,
+        id_hml: 48,
         name: "Amigo Ame Super",
         premio: 1834.8,
         coverage: [
