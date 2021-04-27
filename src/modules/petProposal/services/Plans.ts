@@ -5,26 +5,33 @@ export default [
         premio: 670.8,
         coverage: [
             {
-                description: "Transporte ao veterinário (até R$ 100)",
+                description: "Transporte ao veterinário ",
+                value: "Até R$ 100,00",
             },
             {
-                description: "Consulta emergencial (até R$ 150)",
+                description: "Consulta emergencial",
+                value: "Até R$ 150,00",
             },
             {
-                description: "Atendimento ambulatorial (até R$ 200)",
+                description: "Atendimento ambulatorial",
+                value: "Até R$ 200,00",
             },
             {
                 description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade - até R$ 500)",
+                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
+                value: "Até R$ 500,00",
             },
             {
-                description: "Cirurgias (até R$ 750)",
+                description: "Cirurgias",
+                value: "Até R$ 750,00",
             },
             {
-                description: "Internação (até R$ 500)",
+                description: "Internação",
+                value: "Até R$ 500,00",
             },
             {
-                description: "Assistência funeral (até R$ 400)",
+                description: "Assistência funeral",
+                value: "Até R$ 400,00",
             },
         ],
     },
@@ -34,29 +41,42 @@ export default [
         premio: 1282.8,
         coverage: [
             {
-                description: "Aplicação de vacinas (até R$ 150)",
+                description: "Aplicação de vacinas",
+                value: "Até R$ 150,00",
             },
             {
-                description: "Transporte ao veterinário (até R$ 100)",
+                description: "Transporte ao veterinário",
+                value: "Até R$ 100,00",
             },
             {
-                description: "Consulta emergencial (até R$ 200)",
+                description: "Consulta emergencial",
+                value: "Até R$ 200,00",
             },
             {
-                description: "Atendimento ambulatorial (até R$ 250)",
-            },
-            {
-                description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade - até R$ 750)",
-            },
-            {
-                description: "Cirurgias (até R$ 1.400)",
+                description: "Atendimento ambulatorial",
+                value: "Até R$ 250,00",
             },
             {
                 description:
-                    "internação (até R$ 1.000), acupuntura/ fisioterapia (até R$ 500))",
+                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
+                value: "Até R$ 750,00",
             },
-            { description: "assistência funeral (até R$ 600)" },
+            {
+                description: "Cirurgias",
+                value: "Até R$ 1.400,00",
+            },
+            {
+                description: "Iternação",
+                value: "Até R$ 1.000,00",
+            },
+            {
+                description: "Acupuntura/ fisioterapia",
+                value: "Até R$ 500,00",
+            },
+            {
+                description: "Assistência funeral",
+                value: "Até R$ 600,00",
+            },
         ],
     },
     {
@@ -65,29 +85,37 @@ export default [
         premio: 1834.8,
         coverage: [
             {
-                description: "Aplicação de vacinas (até R$ 200)",
+                description: "Aplicação de vacinas",
+                value: "Até R$ 200,00",
             },
             {
-                description: "Transporte ao veterinário (até R$ 150)",
+                description: "Transporte ao veterinário ",
+                value: "Até R$ 150,00",
             },
             {
-                description: "Consulta emergencial (até R$ 300)",
+                description: "Consulta emergencial",
+                value: "Até R$ 300,00",
             },
             {
-                description: "Atendimento ambulatorial (até R$ 350)",
+                description: "Atendimento ambulatorial ",
+                value: "Até R$ 350,00",
             },
             {
                 description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade - até R$ 1.000)",
+                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade",
+                value: "Até R$ 1.000,00",
             },
             {
-                description: "Cirurgias (até R$ 2.000)",
+                description: "Cirurgias ",
+                value: "Até R$ 2.000,00",
             },
             {
-                description: "Internação (até R$ 1.500) ",
+                description: "Internação ",
+                value: "Até R$ 1.500,00",
             },
             {
-                description: "Assistência funeral (até R$ 800)",
+                description: "Assistência funeral ",
+                value: "Até R$ 800,00",
             },
         ],
     },
