@@ -53,8 +53,10 @@ export default [
                 description: "Cirurgias (até R$ 1.400)",
             },
             {
-                description:
-                    "Iternação (até R$ 1.000), acupuntura/ fisioterapia (até R$ 500))",
+                description: "Iternação (até R$ 1.000)",
+            },
+            {
+                description: "Acupuntura/ fisioterapia (até R$ 500)",
             },
             { description: "Assistência funeral (até R$ 600)" },
         ],
