@@ -31,7 +31,7 @@ export class PetProposalService {
     async sendProposal(proposal: any) {
         try {        
             const planId = proposal.customPayload.proposal.planId;
-            const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.customPayload.proposal)
+            const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.customPayload)
             log.info("Formatação dos campos para cotação")                
             const quotePlan = await this.quotePlans(planId, proposalPets)                
             log.info("Solicita a cotação dos planos")
@@ -42,7 +42,7 @@ export class PetProposalService {
             const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, formatProposal, getProposal)
             await this.petProposalRepository.create(databaseProposalFormat)
             log.info("Salva a proposta no banco de dados")
-            return databaseProposalFormat
+            return getProposal
         } catch (e) {
             log.error(e);            
         }

@@ -39,10 +39,10 @@ export class PetProposalUtil {
         }
     }
 
-    async formatQuoteProposal(proposal: any) {
+    async formatQuoteProposal(customPayload: any) {
         var productId : number = 0;
         try {
-            var petsBirthDate = proposal.pets.map((prop) => {
+            var petsBirthDate = customPayload.proposal.pets.map((prop) => {
                 return {
                     age: Number(prop.age),
                     name: prop.namePet,
@@ -56,16 +56,30 @@ export class PetProposalUtil {
                     birth_date: moment(prop.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),                    
                 };
             });
-            switch (proposal.planId) {
-                case 48:
-                    var productId = 33;
-                    break;
-                case 49:
-                    var productId = 34;
-                    break;
-                case 50:
-                    var productId = 35;
-                    break;
+            if (customPayload.ambiente === "prod") {
+                switch (customPayload.proposal.planId) {
+                    case 48:
+                        var productId = 33;
+                        break;
+                    case 49:
+                        var productId = 34;
+                        break;
+                    case 50:
+                        var productId = 35;
+                        break;
+                }
+            } else {
+                switch (customPayload.proposal.planId) {
+                    case 46:
+                        var productId = 28;
+                        break;
+                    case 47:
+                        var productId = 29;
+                        break;
+                    case 48:
+                        var productId = 30;
+                        break;
+                }
             }
             return {
                 pets: petsBirthDate,
