@@ -284,10 +284,36 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/pet/sendProposal',
+        function(request: any, response: any, next: any) {
+            const args = {
+                proposal: { "in": "body", "name": "proposal", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<PetProposalController>(PetProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.sendProposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.post('/ame-seguro-residencial/v1/pet/quote/:idPlan',
         function(request: any, response: any, next: any) {
             const args = {
                 idPlan: { "in": "path", "name": "idPlan", "required": true, "dataType": "string" },
+                petQuotationPlan: { "in": "body", "name": "petQuotationPlan", "required": true, "dataType": "any" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

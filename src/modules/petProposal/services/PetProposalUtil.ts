@@ -58,13 +58,13 @@ export class PetProposalUtil {
             });
             switch (proposal.planId) {
                 case 48:
-                    var productId = 30;
+                    var productId = 33;
                     break;
                 case 49:
-                    var productId = 31;
+                    var productId = 34;
                     break;
                 case 50:
-                    var productId = 32;
+                    var productId = 35;
                     break;
             }
             return {
