@@ -68,7 +68,7 @@ export default [
                 value: "Até R$ 1.400,00",
             },
             {
-                description: "Iternação",
+                description: "Internação",
                 value: "Até R$ 1.000,00",
             },
             {
