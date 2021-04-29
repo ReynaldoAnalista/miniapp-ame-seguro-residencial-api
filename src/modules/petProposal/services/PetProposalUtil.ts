@@ -10,8 +10,8 @@ export class PetProposalUtil {
     async formatRequestProposal(proposal: any) {
         return {            
             payment: { id_opcao_pagamento: 1 },
-            insurance_holder: proposal.customPayload.proposal.insurance_holder,
-            pets: proposal.customPayload.proposal.pets.map(pet => {
+            insurance_holder: proposal.attributes?.customPayload.proposal.insurance_holder,
+            pets: proposal.attributes?.customPayload.proposal.pets.map(pet => {
                 return {
 					namePet: pet.namePet,
 					birthDatePet: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
