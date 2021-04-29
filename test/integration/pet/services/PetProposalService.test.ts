@@ -34,8 +34,8 @@ describe("PetProposalService", () => {
     })
     
     it("Envio da requisição de Pet", async() => {
-        const petService = await petProposalService.sendProposal(signedPayment)
-        expect(petService?.status).toBe(true)
+        const petService = await petProposalService.sendProposal(signedPayment)        
+        expect(petService?.data).toBe("Success")
     }) 
 
 })
