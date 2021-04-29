@@ -54,9 +54,8 @@
                 "planId": 48,
                 "pets": [{
                     "namePet": "Bolinha",
-                    "birthDatePet": "20012021",
+                    "birthDatePet": "20012019",
                     "color": "Preto",
-                    "age": "1",
                     "gender": "Macho",
                     "size": "Porte Pequeno",
                     "description": "",

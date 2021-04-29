@@ -16,7 +16,7 @@ export class PetProposalUtil {
 					namePet: pet.namePet,
 					birthDatePet: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
 					color: pet.color,
-					age: parseInt(pet.age),
+					age: typeof(pet.age) == "undefined" ? moment().diff(moment(pet.birthDatePet, "DDMMYYYY"), 'years') : Number(pet.age),
 					gender: pet.gender,
 					size: pet.size,
 					description: pet.description,
