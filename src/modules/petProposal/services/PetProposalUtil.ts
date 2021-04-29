@@ -44,7 +44,7 @@ export class PetProposalUtil {
         try {
             var petsBirthDate = customPayload.proposal.pets.map((prop) => {
                 return {
-                    age: Number(prop.age),
+                    age: typeof(prop.age) == "undefined" ? moment().diff(moment(prop.birthDatePet, "DDMMYYYY"), 'years') : Number(prop.age),
                     name: prop.namePet,
                     size: prop.size,
                     breed: prop.breed,
