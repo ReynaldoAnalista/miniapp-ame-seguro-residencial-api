@@ -20,8 +20,7 @@ const logger = getLogger("PetController");
 @injectable()
 export class PetProposalController {
     constructor(
-        @inject("PetProposalService") private petService: PetProposalService,
-        @inject("PetProposalNotification") private petProposalNotification: PetProposalNotification
+        @inject("PetProposalService") private petService: PetProposalService
     ) {}
 
     @Response(404, "NotFound")
