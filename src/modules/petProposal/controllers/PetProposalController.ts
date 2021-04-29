@@ -12,6 +12,7 @@ import {
 import { getLogger } from "../../../server/Logger";
 import { ApiError } from "../../../errors/ApiError";
 import { PetProposalService } from "../services/PetProposalService";
+import { PetProposalNotification } from "../model/PetProposalNotification";
 
 const logger = getLogger("PetController");
 
@@ -19,7 +20,8 @@ const logger = getLogger("PetController");
 @injectable()
 export class PetProposalController {
     constructor(
-        @inject("PetProposalService") private petService: PetProposalService
+        @inject("PetProposalService") private petService: PetProposalService,
+        @inject("PetProposalNotification") private petProposalNotification: PetProposalNotification
     ) {}
 
     @Response(404, "NotFound")
@@ -51,10 +53,10 @@ export class PetProposalController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post(`/sendProposal`)
-    public async sendProposal(@Body() proposal: any) {
+    public async sendProposal(@Body() signedPayment: PetProposalNotification) {
         logger.info("Send Proposal Plan");
         try {
-            return await this.petService.sendProposal(proposal);
+            return await this.petService.sendProposal(signedPayment.signedPayment);
         } catch (e) {
             logger.error(e.message);
             throw new ApiError("Proposal Not sent", 500);
