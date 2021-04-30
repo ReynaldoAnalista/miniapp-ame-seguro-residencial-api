@@ -10,6 +10,7 @@ import Plans from "./Plans";
 import moment from "moment";
 import { PetProposalUtil } from "./PetProposalUtil";
 import { PetProposalRepository } from "../repository/PetProposalRepository";
+import { PetSoldProposalRepository } from "../repository/PetSoldProposalRepository";
 
 const log = getLogger("PetProposalService");
 
@@ -20,6 +21,7 @@ export class PetProposalService {
         @inject("RequestService") private requestService: RequestService,
         @inject("PetProposalUtil") private petProposalUtil: PetProposalUtil,
         @inject("PetProposalRepository") private petProposalRepository: PetProposalRepository,
+        @inject("PetSoldProposalRepository") private soldProposalRepository: PetSoldProposalRepository,
     ) {}
 
     async listPlans() {
@@ -40,9 +42,12 @@ export class PetProposalService {
         const quoteId = quotePlan.data.contract_uuid
         const getProposal = await this.requestProposal(quoteId, formatProposal)
         log.info("Faz a requisição da proposta")
-        const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, formatProposal, getProposal)
+        const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, proposal, getProposal)
         await this.petProposalRepository.create(databaseProposalFormat)
         log.info("Salva a proposta no banco de dados")
+        const soldProposalFormat = await this.petProposalUtil.formatDatabaseSoldProposal(databaseProposalFormat)
+        await this.soldProposalRepository.create(soldProposalFormat)
+        log.info("Salva a proposta no banco de Sold Proposal de Pet")
         return getProposal
     }
 
