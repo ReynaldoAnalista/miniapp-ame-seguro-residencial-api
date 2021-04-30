@@ -1,22 +1,35 @@
 import { inject, injectable } from "inversify";
 import moment from "moment";
 import { getLogger } from "../../../server/Logger";
+import { Tenants } from "../../default/model/Tenants";
 
 const log = getLogger("PetProposalUtil");
 
 @injectable()
 export class PetProposalUtil {
 
+    async formatDatabaseSoldProposal(proposal: any, customerId: string) {
+        return {            
+            customerId,
+            order: proposal.id,
+            tenant: Tenants.PET,
+            receivedPaymentNotification: proposal.enrollProposal,
+            partnerResponse: proposal.quoteProposal,
+            success: proposal.enrollProposal.data == "Success" ? true : false,
+            createdAt: moment().format("YYYY-MM-DD h:m:s")
+        }
+    }
+
     async formatRequestProposal(proposal: any) {
         return {            
             payment: { id_opcao_pagamento: 1 },
-            insurance_holder: proposal.customPayload.proposal.insurance_holder,
-            pets: proposal.customPayload.proposal.pets.map(pet => {
+            insurance_holder: proposal.attributes?.customPayload.proposal.insurance_holder,
+            pets: proposal.attributes?.customPayload.proposal.pets.map(pet => {
                 return {
 					namePet: pet.namePet,
 					birthDatePet: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
 					color: pet.color,
-					age: parseInt(pet.age),
+					age: typeof(pet.age) == "undefined" ? moment().diff(moment(pet.birthDatePet, "DDMMYYYY"), 'years') : Number(pet.age),
 					gender: pet.gender,
 					size: pet.size,
 					description: pet.description,
@@ -44,7 +57,7 @@ export class PetProposalUtil {
         try {
             var petsBirthDate = customPayload.proposal.pets.map((prop) => {
                 return {
-                    age: Number(prop.age),
+                    age: typeof(prop.age) == "undefined" ? moment().diff(moment(prop.birthDatePet, "DDMMYYYY"), 'years') : Number(prop.age),
                     name: prop.namePet,
                     size: prop.size,
                     breed: prop.breed,

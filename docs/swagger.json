@@ -6,6 +6,19 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"PetProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"ResidentialProposalNotification": {
 				"properties": {
 					"signedPayment": {
@@ -464,6 +477,41 @@
 				]
 			}
 		},
+		"/v1/pet/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PetProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/pet/quote/{idPlan}": {
 			"post": {
 				"operationId": "QuotationPetPlans",
@@ -496,7 +544,16 @@
 							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/v1/plans/proposal-report": {

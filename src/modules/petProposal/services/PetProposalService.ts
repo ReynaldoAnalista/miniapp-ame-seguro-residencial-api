@@ -10,15 +10,18 @@ import Plans from "./Plans";
 import moment from "moment";
 import { PetProposalUtil } from "./PetProposalUtil";
 import { PetProposalRepository } from "../repository/PetProposalRepository";
+import { PetSoldProposalRepository } from "../repository/PetSoldProposalRepository";
 
 const log = getLogger("PetProposalService");
 
 @injectable()
 export class PetProposalService {
     constructor(
+        @inject("AuthTokenService") private authTokenService: AuthTokenService,
         @inject("RequestService") private requestService: RequestService,
         @inject("PetProposalUtil") private petProposalUtil: PetProposalUtil,
         @inject("PetProposalRepository") private petProposalRepository: PetProposalRepository,
+        @inject("PetSoldProposalRepository") private soldProposalRepository: PetSoldProposalRepository,
     ) {}
 
     async listPlans() {
@@ -28,24 +31,24 @@ export class PetProposalService {
         return result;
     }
 
-    async sendProposal(proposal: any) {
-        try {        
-            const planId = proposal.customPayload.proposal.planId;
-            const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.customPayload)
-            log.info("Formatação dos campos para cotação")                
-            const quotePlan = await this.quotePlans(planId, proposalPets)                
-            log.info("Solicita a cotação dos planos")
-            const formatProposal = await this.petProposalUtil.formatRequestProposal(proposal)
-            const quoteId = quotePlan.data.contract_uuid
-            const getProposal = await this.requestProposal(quoteId, formatProposal)
-            log.info("Faz a requisição da proposta")
-            const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, formatProposal, getProposal)
-            await this.petProposalRepository.create(databaseProposalFormat)
-            log.info("Salva a proposta no banco de dados")
-            return getProposal
-        } catch (e) {
-            log.error(e);            
-        }
+    async sendProposal(signedPayment: any) {
+        const proposal = await this.authTokenService.unsignNotification(signedPayment)
+        const planId = proposal.attributes?.customPayload.proposal.planId;
+        const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.attributes?.customPayload)
+        log.info("Formatação dos campos para cotação")
+        const quotePlan = await this.quotePlans(planId, proposalPets)
+        log.info("Solicita a cotação dos planos")
+        const formatProposal = await this.petProposalUtil.formatRequestProposal(proposal)
+        const quoteId = quotePlan.data.contract_uuid
+        const getProposal = await this.requestProposal(quoteId, formatProposal)
+        log.info("Faz a requisição da proposta")
+        const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, proposal, getProposal)
+        await this.petProposalRepository.create(databaseProposalFormat)
+        log.info("Salva a proposta no banco de dados")
+        const soldProposalFormat = await this.petProposalUtil.formatDatabaseSoldProposal(databaseProposalFormat, proposal.attributes?.customPayload?.customerId)
+        await this.soldProposalRepository.create(soldProposalFormat)
+        log.info("Salva a proposta no banco de Sold Proposal de Pet")
+        return getProposal
     }
 
     async deleteFromId(proposalId : string) {

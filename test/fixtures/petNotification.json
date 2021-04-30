@@ -1,77 +1,66 @@
 {
-	"title": "Amigo Ame Fit",
-	"description": "Transporte ao veterinário (até R$ 400).",
-	"amount": 67080,
-	"callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
-	"customPayload": {
-		"isFrom": "PHONE_SEC",
-		"origin": "MINIAPP",
-		"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/pet/sendProposal",
-		"clientEmail": "izabella.assad@calindra.com.br",
-		"proposal": {
-			"planId": 48,
-			"pets": [
-				{
-					"namePet": "Bolinha",
-					"birthDatePet": "20012021",
-					"color": "Preto",
-					"age": "1",
-					"gender": "Macho",
-					"size": "Porte Pequeno",
-					"description": "",
-					"vaccined": "Sim",
-					"preexisting_condition": "Não",
-					"species": "Cachorro",
-					"breed": "Cavalier king charles spaniel"
-				},
-				{
-					"namePet": "Lulu",
-					"birthDatePet": "20012021",
-					"color": "Preto",
-					"age": "3",
-					"gender": "Femea",
-					"size": "Porte Pequeno",
-					"description": "",
-					"vaccined": "Sim",
-					"preexisting_condition": "Não",
-					"species": "Cachorro",
-					"breed": "Cavalier king charles spaniel"
-				}
-			],
-			"insurance_holder": {
-				"phones": [
-					{
-						"type": "android",
-						"phone": "21968462664",
-						"area_code": "21968462664"
-					}
-				],
-				"addresses": [
-					{
-						"city": "Rio de Janeiro",
-						"state": "RJ",
-						"number": "49",
-						"street": "Rua Divisória",
-						"zipcode": "21331250",
-						"district": "Bento Ribeiro",
-						"additional_details": "Apt 101"
-					}
-				],
-				"cpf": "16286131736",
-				"name": "Izabella da Silva Assad",
-				"email": "izabella.assad@calindra.com.br",
-				"birth_date": "19970517"
-			}
-		},
-		"payment": {
-			"id_opcao_pagamento": 1
-		}
-	},
-	"items": [
-		{
-			"description": "Transporte ao veterinário (até R$ 100), consulta emergencial (até R$ 150), atendimento ambulatorial (até R$ 200), exames (básicos, complexos, imagem, cardiológicos e de alta complexidade - até R$ 500), cirurgias (até R$ 750), internação (até R$ 500), e assistência funeral (até R$ 400).",
-			"quantity": 1,
-			"amount": 67080
-		}
-	]
+    "title": "Amigo Ame Fit",
+    "description": "Amigo Ame Fit",
+    "amount": 67080,
+    "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
+    "customPayload": {
+        "isFrom": "PHONE_SEC",
+        "origin": "MINIAPP",
+        "customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+        "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/pet/sendProposal",
+        "clientEmail": "reynaldo.souza@calindra.com.br",
+        "ambiente": "qa",
+        "proposal": {
+            "planId": 46,
+            "pets": [
+                {
+                    "namePet": "Paçoca",
+                    "birthDatePet": "01022021",
+                    "color": "Pardo",
+                    "gender": "Macho",
+                    "size": "p",
+                    "description": "",
+                    "vaccined": "Não",
+                    "preexisting_condition": "Nao",
+                    "species": "Cachorro",
+                    "breed": "Shih-tzu",
+                    "id": 1619712878410
+                }
+            ],
+            "insurance_holder": {
+                "phones": [
+                    {
+                        "type": "android",
+                        "phone": "982875666",
+                        "area_code": "21"
+                    }
+                ],
+                "addresses": [
+                    {
+                        "city": "Niterói",
+                        "state": "RJ",
+                        "number": "108",
+                        "street": "Rua Barão do Amazonas",
+                        "zipcode": "24030111",
+                        "district": "Centro",
+                        "additional_details": "Apt 301"
+                    }
+                ],
+                "cpf": "13701818762",
+                "name": "Reynaldo Paixão de Souza",
+                "email": "reynaldo.souza@calindra.com.br",
+                "birth_date": "19910529"
+            }
+        },
+        "payment": {
+            "id_opcao_pagamento": 1
+        }
+    },
+    "items": [
+        {
+            "description": "Amigo Ame Fit",
+            "quantity": 1,
+            "amount": 67080
+        }
+    ]
 }
