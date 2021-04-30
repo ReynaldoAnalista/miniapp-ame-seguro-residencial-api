@@ -8,9 +8,9 @@ const log = getLogger("PetProposalUtil");
 @injectable()
 export class PetProposalUtil {
 
-    async formatDatabaseSoldProposal(proposal : any) {
+    async formatDatabaseSoldProposal(proposal: any, customerId: string) {
         return {            
-            customerId: proposal.quoteProposal.customPayload.customerId,
+            customerId,
             order: proposal.id,
             tenant: Tenants.PET,
             receivedPaymentNotification: proposal.enrollProposal,

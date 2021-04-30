@@ -45,7 +45,7 @@ export class PetProposalService {
         const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, proposal, getProposal)
         await this.petProposalRepository.create(databaseProposalFormat)
         log.info("Salva a proposta no banco de dados")
-        const soldProposalFormat = await this.petProposalUtil.formatDatabaseSoldProposal(databaseProposalFormat)
+        const soldProposalFormat = await this.petProposalUtil.formatDatabaseSoldProposal(databaseProposalFormat, proposal.attributes?.customPayload?.customerId)
         await this.soldProposalRepository.create(soldProposalFormat)
         log.info("Salva a proposta no banco de Sold Proposal de Pet")
         return getProposal
