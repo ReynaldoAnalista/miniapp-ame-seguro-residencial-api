@@ -36,10 +36,6 @@ export default [
             },
             {
                 description: "Limite anual total",
-                value: "Até R$ 600,00 por utilização",
-            },
-            {
-                description: "Limite anual total",
                 value: "R$ 3.000,00",
             },
         ],
