@@ -34,6 +34,14 @@ export default [
                 description: "Assistência funeral",
                 value: "Até R$ 400,00 por utilização",
             },
+            {
+                description: "Limite anual total",
+                value: "Até R$ 600,00 por utilização",
+            },
+            {
+                description: "Limite anual total",
+                value: "R$ 3.000,00",
+            },
         ],
     },
     {
@@ -79,6 +87,10 @@ export default [
                 description: "Assistência funeral",
                 value: "Até R$ 600,00 por utilização",
             },
+            {
+                description: "Limite anual total",
+                value: "R$ 6.000,00",
+            },
         ],
     },
     {
@@ -119,6 +131,10 @@ export default [
             {
                 description: "Assistência funeral ",
                 value: "Até R$ 800,00 por utilização",
+            },
+            {
+                description: "Limite anual total",
+                value: "R$ 10.000,00",
             },
         ],
     },
