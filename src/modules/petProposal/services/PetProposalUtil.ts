@@ -1,11 +1,24 @@
 import { inject, injectable } from "inversify";
 import moment from "moment";
 import { getLogger } from "../../../server/Logger";
+import { Tenants } from "../../default/model/Tenants";
 
 const log = getLogger("PetProposalUtil");
 
 @injectable()
 export class PetProposalUtil {
+
+    async formatDatabaseSoldProposal(proposal : any) {
+        return {            
+            customerId: proposal.quoteProposal.customPayload.customerId,
+            order: proposal.id,
+            tenant: Tenants.PET,
+            receivedPaymentNotification: proposal.enrollProposal,
+            partnerResponse: proposal.quoteProposal,
+            success: proposal.enrollProposal.data == "Success" ? true : false,
+            createdAt: moment().format("YYYY-MM-DD h:m:s")
+        }
+    }
 
     async formatRequestProposal(proposal: any) {
         return {            
