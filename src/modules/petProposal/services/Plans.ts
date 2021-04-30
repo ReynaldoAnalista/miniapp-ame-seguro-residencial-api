@@ -68,13 +68,8 @@ export default [
                 value: "Até R$ 1.400,00 por utilização",
             },
             {
-<<<<<<< HEAD
-                description: "Iternação",
-                value: "Até R$ 1.000,00 por utilização",
-=======
                 description: "Internação",
-                value: "Até R$ 1.000,00",
->>>>>>> 06ce6ffc99aaf9a1b88b7a1a92aa9f53f1503d99
+                value: "Até R$ 1.000,00 por utilização",
             },
             {
                 description: "Acupuntura/ fisioterapia",
