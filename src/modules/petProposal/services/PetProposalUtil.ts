@@ -32,7 +32,7 @@ export class PetProposalUtil {
 					age: typeof(pet.age) == "undefined" ? moment().diff(moment(pet.birthDatePet, "DDMMYYYY"), 'years') : Number(pet.age),
 					gender: pet.gender,
 					size: pet.size,
-					description: pet.description,
+					condition_description: pet.description,
 					vaccined: pet.vaccined,
 					preexisting_condition: pet.preexisting_condition,
 					species: pet.species,
