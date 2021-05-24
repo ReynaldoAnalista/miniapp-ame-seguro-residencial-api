@@ -40,9 +40,9 @@ export class SmartphoneSoldProposalRepository {
     async findcertificateNumber(certificateNumber: any) {
         let listProposal = await this.listSoldProposal()        
         return listProposal.map(element => {
-            if(certificateNumber.includes(element.control_data.control_data.key_contract_certificate_number)) {
+            if(certificateNumber.includes(element?.control_data?.control_data?.key_contract_certificate_number)) {
                 return {
-                    key_contract_certificate_number: element.control_data.control_data.key_contract_certificate_number,
+                    key_contract_certificate_number: element.control_data?.control_data?.key_contract_certificate_number,
                     customerId : element.customerId
                 } 
             }
