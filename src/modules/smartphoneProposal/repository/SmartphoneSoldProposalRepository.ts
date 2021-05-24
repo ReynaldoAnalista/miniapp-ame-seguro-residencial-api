@@ -37,12 +37,12 @@ export class SmartphoneSoldProposalRepository {
         return false
     }
 
-    async findByNsu(nsu: any) {
+    async findcertificateNumber(certificateNumber: any) {
         let listProposal = await this.listSoldProposal()        
         return listProposal.map(element => {
-            if(nsu.includes(element.receivedPaymentNotification.nsu)) {
+            if(certificateNumber.includes(element.control_data.control_data.key_contract_certificate_number)) {
                 return {
-                    nsu: element.receivedPaymentNotification.nsu,
+                    key_contract_certificate_number: element.control_data.control_data.key_contract_certificate_number,
                     customerId : element.customerId
                 } 
             }

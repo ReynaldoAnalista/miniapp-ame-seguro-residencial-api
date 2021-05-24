@@ -134,9 +134,8 @@ export class SmartphoneProposalController {
     public async customerIdCode(@Body() contract: any, @Header("x-partner") partnerId: string) {
         try {
             if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
-                logger.info('Validação da proposta pela DigiBee:')
-                logger.debug('KEY CONTRACT', contract.nsu);                
-                const customerIdCode = await this.planService.customerIdCode(contract.nsu)
+                logger.info('Validação da proposta pela DigiBee:')               
+                const customerIdCode = await this.planService.customerCertificateNumber(contract.certificateNumber)
                 return customerIdCode
             } else {
                 return { authorization: false, message: 'Partner not recognized' }
