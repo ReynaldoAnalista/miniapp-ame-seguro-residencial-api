@@ -299,6 +299,10 @@ export class SmartphoneProposalService {
             'valid': true
         }
     }
+
+    async customerIdCode(nsu : any) {
+        return await this.smartphoneSoldProposalRepository.findByNsu(nsu)
+    }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
         var dataInfo = digibeeConfirmation.control_data

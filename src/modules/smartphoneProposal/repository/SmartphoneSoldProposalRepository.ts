@@ -37,6 +37,18 @@ export class SmartphoneSoldProposalRepository {
         return false
     }
 
+    async findByNsu(nsu: any) {
+        let listProposal = await this.listSoldProposal()        
+        return listProposal.map(element => {
+            if(nsu.includes(element.receivedPaymentNotification.nsu)) {
+                return {
+                    nsu: element.receivedPaymentNotification.nsu,
+                    customerId : element.customerId
+                } 
+            }
+        }).filter(element => { return element != null });
+    }
+
     async create(soldProposal: SmartphoneSoldProposal) {
         log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
