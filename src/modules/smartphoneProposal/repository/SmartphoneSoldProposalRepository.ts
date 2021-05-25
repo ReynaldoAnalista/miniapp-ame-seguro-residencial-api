@@ -38,7 +38,7 @@ export class SmartphoneSoldProposalRepository {
     }
 
     async findcertificateNumber() {
-        let listProposal = await this.listSoldProposal()        
+        let listProposal = await this.listSoldProposal()
         return listProposal.map(element => {
             return {
                 key_contract_certificate_number: element.control_data?.control_data?.key_contract_certificate_number,
