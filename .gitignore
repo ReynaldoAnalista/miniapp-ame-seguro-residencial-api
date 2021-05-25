@@ -4,3 +4,4 @@ node_modules
 .vscode
 newrelic_agent.log
 yarn.lock
+yarn-error.log

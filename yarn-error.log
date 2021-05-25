@@ -2,7 +2,7 @@ Arguments:
   /usr/bin/node /usr/share/yarn/bin/yarn.js tsoa:routes
 
 PATH: 
-  /home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/tmp/yarn--1621892365176-0.00042376964603252354:/home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/home/reynaldo/.config/yarn/link/node_modules/.bin:/home/reynaldo/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/tmp/yarn--1621948100198-0.11365571592579493:/home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/home/reynaldo/.config/yarn/link/node_modules/.bin:/home/reynaldo/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.22.5

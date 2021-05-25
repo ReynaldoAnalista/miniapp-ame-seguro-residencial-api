@@ -151,14 +151,10 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/cancelation_security")
-    public async cancelationSecurity(@Body() cancelationPropose : any, @Header("x-partner") partnerId: string) {
-        try {
-            if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
+    public async cancelationSecurity(@Body() signedPayment: SmartphoneProposalNotification) {
+        try {            
             logger.info('Iniciando o processo de cancelamento')
-            return this.planService.cancelationProcess(cancelationPropose)
-            } else {
-                return { authorization: false, message: 'Partner not recognized' }
-            }
+            return this.planService.cancelationProcess(signedPayment.signedPayment)            
         } catch (e) {
             logger.error(e)
         }

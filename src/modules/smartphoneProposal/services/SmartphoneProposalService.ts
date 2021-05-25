@@ -305,18 +305,20 @@ export class SmartphoneProposalService {
         return await this.smartphoneSoldProposalRepository.findByNsu(nsu)
     }
 
-    async cancelationProcess(cancelationPropose : cancelationPropose) {
-        log.debug('Sending proposal to Partner')
-        log.debug(cancelationPropose)
+    async cancelationProcess(signedPayment : string) {
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
+        log.debug('Sending proposal to Partner')        
         let result
         try {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
                 this.requestService.METHODS.POST,
-                cancelationPropose,
+                unsignedPayment.attributes,
                 Tenants.SMARTPHONE
             );
-            result = {success: true, content: response.data}
+            result = {success: true, content: response.data}            
+            // TODO : Criar função para Salvar na SoldProposal
+            // this.saveSoldProposal(result);
             log.info('Success proposal sent')
         } catch (e) {
             const status = e.response?.status
