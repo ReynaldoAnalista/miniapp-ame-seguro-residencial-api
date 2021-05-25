@@ -300,8 +300,8 @@ export class SmartphoneProposalService {
         }
     }
 
-    async customerCertificateNumber(certificateNumber : any) {
-        return await this.smartphoneSoldProposalRepository.findcertificateNumber(certificateNumber)
+    async customerCertificateNumber() {
+        return await this.smartphoneSoldProposalRepository.findcertificateNumber()
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
