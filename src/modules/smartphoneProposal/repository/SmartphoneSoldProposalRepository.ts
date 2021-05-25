@@ -40,10 +40,12 @@ export class SmartphoneSoldProposalRepository {
     async findcertificateNumber() {
         let listProposal = await this.listSoldProposal()
         return listProposal.map(element => {
-            return {
-                key_contract_certificate_number: element.control_data?.control_data?.key_contract_certificate_number,
-                customerId : element.customerId
-            }
+            if(element.tenant == Tenants.SMARTPHONE) {
+                return {
+                    key_contract_certificate_number: element.control_data?.control_data?.key_contract_certificate_number,
+                    customerId : element.customerId
+                }
+            }            
         }).filter(element => { return element != null });
     }
 

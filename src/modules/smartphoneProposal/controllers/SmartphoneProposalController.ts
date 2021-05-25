@@ -131,7 +131,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/customer_id_code")
-    public async customerIdCode(@Body() contract: any, @Header("x-partner") partnerId: string) {
+    public async customerIdCode(@Header("x-partner") partnerId: string) {
         try {
             if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
                 logger.info('Validação da proposta pela DigiBee:')               
