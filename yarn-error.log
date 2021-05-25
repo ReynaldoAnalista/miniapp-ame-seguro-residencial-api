@@ -1,28 +1,28 @@
 Arguments: 
-  /home/izabella/.nvm/versions/node/v10.15.1/bin/node /usr/share/yarn/bin/yarn.js tsoa:routes
+  /usr/bin/node /usr/share/yarn/bin/yarn.js tsoa:routes
 
 PATH: 
-  /home/izabella/Documents/workspace/miniapp-ame-seguro-residencial-api/node_modules/.bin:/tmp/yarn--1617734922037-0.7981787907540034:/home/izabella/Documents/workspace/miniapp-ame-seguro-residencial-api/node_modules/.bin:/home/izabella/.config/yarn/link/node_modules/.bin:/home/izabella/.yarn/bin:/home/izabella/.nvm/versions/node/v10.15.1/libexec/lib/node_modules/npm/bin/node-gyp-bin:/home/izabella/.nvm/versions/node/v10.15.1/lib/node_modules/npm/bin/node-gyp-bin:/home/izabella/.nvm/versions/node/v10.15.1/bin/node_modules/npm/bin/node-gyp-bin:/home/izabella/.gvm/bin:/home/izabella/.nvm/versions/node/v10.15.1/bin:/home/izabella/.gvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/izabella/.ngrok:/home/izabella/.ngrok
+  /home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/tmp/yarn--1621892365176-0.00042376964603252354:/home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/home/reynaldo/.config/yarn/link/node_modules/.bin:/home/reynaldo/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.19.1
+  1.22.5
 
 Node version: 
-  10.15.1
+  10.19.0
 
 Platform: 
   linux x64
 
 Trace: 
   Error: EIO: i/o error, write
-      at writeSync (fs.js:569:3)
+      at writeSync (fs.js:573:3)
       at SyncWriteStream._write (internal/fs/sync_write_stream.js:22:3)
-      at doWrite (_stream_writable.js:410:12)
-      at writeOrBuffer (_stream_writable.js:394:5)
-      at SyncWriteStream.Writable.write (_stream_writable.js:294:11)
-      at ConsoleReporter._log (/usr/share/yarn/lib/cli.js:96624:17)
-      at ConsoleReporter.log (/usr/share/yarn/lib/cli.js:96612:10)
-      at ConsoleReporter.command (/usr/share/yarn/lib/cli.js:96641:10)
+      at doWrite (_stream_writable.js:415:12)
+      at writeOrBuffer (_stream_writable.js:399:5)
+      at SyncWriteStream.Writable.write (_stream_writable.js:299:11)
+      at ConsoleReporter._log (/usr/share/yarn/lib/cli.js:96770:17)
+      at ConsoleReporter.log (/usr/share/yarn/lib/cli.js:96758:10)
+      at ConsoleReporter.command (/usr/share/yarn/lib/cli.js:96787:10)
       at /usr/share/yarn/lib/cli.js:34545:16
       at Generator.next (<anonymous>)
 

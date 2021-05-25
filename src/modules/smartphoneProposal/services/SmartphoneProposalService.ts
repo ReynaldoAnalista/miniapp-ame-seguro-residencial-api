@@ -13,6 +13,7 @@ import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
+import { cancelationPropose } from "../model/CancelationPropose";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -302,6 +303,32 @@ export class SmartphoneProposalService {
 
     async customerIdCode(nsu : any) {
         return await this.smartphoneSoldProposalRepository.findByNsu(nsu)
+    }
+
+    async cancelationProcess(cancelationPropose : cancelationPropose) {
+        log.debug('Sending proposal to Partner')
+        log.debug(cancelationPropose)
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
+                this.requestService.METHODS.POST,
+                cancelationPropose,
+                Tenants.SMARTPHONE
+            );
+            result = {success: true, content: response.data}
+            log.info('Success proposal sent')
+        } catch (e) {
+            const status = e.response?.status
+            const statusText = e.response?.statusText
+            result = {success: false, status: status, message: statusText}
+            log.error(`Error %j`, statusText)
+            log.debug('Error when trying to send proposal');
+            log.debug(`Status Code: ${status}`)
+        }
+
+        return result
+
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {

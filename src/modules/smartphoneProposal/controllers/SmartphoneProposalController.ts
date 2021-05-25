@@ -6,6 +6,7 @@ import {ApiError} from "../../../errors/ApiError";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 import { SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import { SmartphoneProposalMailService } from "../services/SmartphoneProposalMailService";
+import { cancelationPropose } from "../model/CancelationPropose";
 
 const logger = getLogger("SmartphoneProposalController")
 
@@ -147,6 +148,21 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cancelation_security")
+    public async cancelationSecurity(@Body() cancelationPropose : any, @Header("x-partner") partnerId: string) {
+        try {
+            if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
+            logger.info('Iniciando o processo de cancelamento')
+            return this.planService.cancelationProcess(cancelationPropose)
+            } else {
+                return { authorization: false, message: 'Partner not recognized' }
+            }
+        } catch (e) {
+            logger.error(e)
+        }
+    }
 
 
     @Response(404, 'NotFound')
