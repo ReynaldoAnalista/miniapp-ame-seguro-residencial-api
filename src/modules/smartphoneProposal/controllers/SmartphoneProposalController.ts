@@ -135,7 +135,7 @@ export class SmartphoneProposalController {
         try {
             if (partnerId === '6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b') {
                 logger.info('Validação da proposta pela DigiBee:')               
-                const customerIdCode = await this.planService.customerCertificateNumber(contract.certificateNumber)
+                const customerIdCode = await this.planService.customerCertificateNumber()
                 return customerIdCode
             } else {
                 return { authorization: false, message: 'Partner not recognized' }

@@ -37,7 +37,7 @@ export class SmartphoneSoldProposalRepository {
         return false
     }
 
-    async findcertificateNumber(certificateNumber: any) {
+    async findcertificateNumber() {
         let listProposal = await this.listSoldProposal()        
         return listProposal.map(element => {
             return {
