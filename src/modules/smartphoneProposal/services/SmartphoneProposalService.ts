@@ -313,11 +313,11 @@ export class SmartphoneProposalService {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
                 this.requestService.METHODS.POST,
-                unsignedPayment.attributes,
+                unsignedPayment,
                 Tenants.SMARTPHONE
             );
-            result = {success: true, content: response.data}            
-            // TODO : Criar função para Salvar na SoldProposal
+            result = {success: true, content: response.data}
+            log.debug('Salvando o cancelamento na soldProposal');
             // this.saveSoldProposal(result);
             log.info('Success proposal sent')
         } catch (e) {
