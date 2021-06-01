@@ -39,24 +39,24 @@ describe("SmartphoneProposalService", () => {
         signedPayment = await sign(paymentObject, secret)
     })
 
-    // it("Recebe o plano e envia para a DigiBee", async () => {
-    //     const proposalResponse = await smartphoneProposalService.processProposal(signedPayment)
-    //     expect(proposalResponse.success).toEqual(true)
-    // })
+    it("Recebe o plano e envia para a DigiBee", async () => {
+        const proposalResponse = await smartphoneProposalService.processProposal(signedPayment)
+        expect(proposalResponse.success).toEqual(true)
+    })
 
-    // it("Atualização da proposta de crédito", async() => {
-    //     const getProposal = await smartphoneProposalRepository.listProposal()
-    //     const proposalId = getProposal[0].id
-    //     const updateProposal =  await smartphoneProposalService.updateProposal(proposalId)
-    //     expect(updateProposal).toBeDefined()
-    // })
+    it("Atualização da proposta de crédito", async() => {
+        const getProposal = await smartphoneProposalRepository.listProposal()
+        const proposalId = getProposal[0].id
+        const updateProposal =  await smartphoneProposalService.updateProposal(proposalId)
+        expect(updateProposal).toBeDefined()
+    })
 
-    // it("Envio de proposta para DigiBee", async() => {
-    //     const getProposal = await smartphoneProposalRepository.listProposal()
-    //     const proposalId = getProposal[0].id        
-    //     const digibeeProposal = await smartphoneProposalService.sendProposal(proposalId)
-    //     expect(digibeeProposal).toBeDefined()
-    // })
+    it("Envio de proposta para DigiBee", async() => {
+        const getProposal = await smartphoneProposalRepository.listProposal()
+        const proposalId = getProposal[0].id        
+        const digibeeProposal = await smartphoneProposalService.sendProposal(proposalId)
+        expect(digibeeProposal).toBeDefined()
+    })
 
     it("API para cancelamento", async() => {
         let cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
@@ -64,7 +64,6 @@ describe("SmartphoneProposalService", () => {
         let cancelSecret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         let signedCancelProcess = await sign(cancelObject, cancelSecret)
         const cancelProcess = await smartphoneProposalService.cancelationProcess(signedCancelProcess)
-        console.log(cancelProcess) 
         expect(cancelProcess).toBeDefined()
     })
 
