@@ -9,7 +9,7 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
 import {Tenants} from "../../default/model/Tenants";
-import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
+import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
@@ -216,13 +216,32 @@ export class SmartphoneProposalService {
             log.error(e)
         }
     }
+    
+    async saveCancelProposal(proposal: any, response: any, tenant: string) {
+        log.debug("saveSoldProposal")
+        try {
+            const apiVersion = process.env.COMMIT_HASH || "unavailable"
+            await this.smartphoneSoldProposalRepository.create({
+                customerId: proposal.customerId,
+                order: proposal.order,
+                tenant: tenant,
+                partnerResponse: response,
+                apiVersion,
+                status: SoldProposalStatus.cancel,
+                cancelationResponse : proposal
+            } as SmartphoneSoldProposal)
+            log.debug("saveSoldProposal:success")
+        } catch (e) {
+            log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
+    }
 
     async updateStatusSoldProposal(customerId : string, order : string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
             const getResponse : any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
-            const proposalRequest = getResponse[0]
-            
+            const proposalRequest = getResponse[0]            
             await this.smartphoneSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
                 createdAt: proposalRequest?.createdAt,
@@ -302,6 +321,35 @@ export class SmartphoneProposalService {
 
     async customerCertificateNumber() {
         return await this.smartphoneSoldProposalRepository.findcertificateNumber()
+    }
+
+    async cancelationProcess(signedPayment : string) {
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
+        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)        
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
+                this.requestService.METHODS.POST,
+                formatedCancelProposal,
+                Tenants.SMARTPHONE
+            )
+            result = { proposal: formatedCancelProposal, response : response.data, success : true }
+            log.debug('Salvando o cancelamento na soldProposal');
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            log.info('Success proposal cancel')
+            return result 
+        } catch (e) {
+            const status = e.response?.status
+            const statusText = e.response?.statusText
+            result = {success: false, status: status, message: statusText}
+            log.error(`Error %j`, statusText)
+            log.debug('Error when trying to cancel proposal');
+            log.debug(`Status Code: ${status}`)
+        }
+
+        return result
+
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {

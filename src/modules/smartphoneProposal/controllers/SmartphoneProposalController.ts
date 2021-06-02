@@ -6,6 +6,7 @@ import {ApiError} from "../../../errors/ApiError";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 import { SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import { SmartphoneProposalMailService } from "../services/SmartphoneProposalMailService";
+import { cancelationPropose } from "../model/CancelationPropose";
 
 const logger = getLogger("SmartphoneProposalController")
 
@@ -146,6 +147,17 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cancelation_security")
+    public async cancelationSecurity(@Body() signedPayment: SmartphoneProposalNotification) {
+        try {            
+            logger.info('Iniciando o processo de cancelamento')
+            return this.planService.cancelationProcess(signedPayment.signedPayment)            
+        } catch (e) {
+            logger.error(e)
+        }
+    }
 
 
     @Response(404, 'NotFound')
