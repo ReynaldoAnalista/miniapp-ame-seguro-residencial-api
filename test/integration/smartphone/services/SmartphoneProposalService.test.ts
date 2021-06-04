@@ -58,4 +58,13 @@ describe("SmartphoneProposalService", () => {
         expect(digibeeProposal).toBeDefined()
     })
 
+    it("API para cancelamento", async() => {
+        let cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
+        let cancelObject = JSON.parse(cancel)
+        let cancelSecret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
+        let signedCancelProcess = await sign(cancelObject, cancelSecret)
+        const cancelProcess = await smartphoneProposalService.cancelationProcess(signedCancelProcess)
+        expect(cancelProcess).toBeDefined()
+    })
+
 })

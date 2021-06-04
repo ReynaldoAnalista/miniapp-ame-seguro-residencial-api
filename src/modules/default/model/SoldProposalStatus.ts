@@ -1,4 +1,5 @@
 export enum SoldProposalStatus {
     create = "PROSSESSING",
-    update = "PROCESSED"
+    update = "PROCESSED",
+    cancel = "CANCELED"
 }

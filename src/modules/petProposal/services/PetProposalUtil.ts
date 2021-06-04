@@ -26,17 +26,14 @@ export class PetProposalUtil {
             insurance_holder: proposal.attributes?.customPayload.proposal.insurance_holder,
             pets: proposal.attributes?.customPayload.proposal.pets.map(pet => {
                 return {
-					namePet: pet.namePet,
-					birthDatePet: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
-					color: pet.color,
-					age: typeof(pet.age) == "undefined" ? moment().diff(moment(pet.birthDatePet, "DDMMYYYY"), 'years') : Number(pet.age),
-					gender: pet.gender,
-					size: pet.size,
-					condition_description: pet.description,
-					vaccined: pet.vaccined,
-					preexisting_condition: pet.preexisting_condition,
+					name: pet.namePet,
 					species: pet.species,
-					breed: pet.bread
+					breed: typeof(pet.breed) == "undefined" ? '' : pet.breed,
+					gender: pet.gender,
+					color: pet.color,
+					birth_date: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
+					size: pet.size,
+					preexisting_condition: pet.preexisting_condition
 				}
             })
         }
