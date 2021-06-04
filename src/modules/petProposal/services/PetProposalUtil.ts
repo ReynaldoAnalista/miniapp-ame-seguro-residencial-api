@@ -28,7 +28,7 @@ export class PetProposalUtil {
                 return {
 					name: pet.namePet,
 					species: pet.species,
-					breed: typeof(pet.bread) == "undefined" ? '' : pet.bread,
+					breed: typeof(pet.breed) == "undefined" ? '' : pet.breed,
 					gender: pet.gender,
 					color: pet.color,
 					birth_date: moment(pet.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
