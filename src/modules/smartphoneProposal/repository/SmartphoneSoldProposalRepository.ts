@@ -3,6 +3,7 @@ import {DynamoHolder} from "../../../repository/DynamoHolder";
 import {getLogger} from "../../../server/Logger";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {Tenants} from "../../default/model/Tenants";
+import moment from "moment";
 
 const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`;
 
@@ -35,6 +36,18 @@ export class SmartphoneSoldProposalRepository {
             log.error(e)
         }
         return false
+    }
+
+    async findcertificateNumber() {
+        let listProposal = await this.listSoldProposal()
+        return listProposal.map(element => {
+            if(element.tenant == Tenants.SMARTPHONE) {
+                return {
+                    key_contract_certificate_number: element.control_data?.control_data?.key_contract_certificate_number,
+                    customerId : element.customerId
+                }
+            }            
+        }).filter(element => { return element != null });
     }
 
     async create(soldProposal: SmartphoneSoldProposal) {
@@ -114,6 +127,20 @@ export class SmartphoneSoldProposalRepository {
             log.error(e)
             return []
         }
+    }
+
+    async formatCancelProposal(proposal: any) {
+            const soldProposalInfo : any = await this.findAllFromCustomerAndOrder(proposal.customerId, proposal.order)                  
+            return {
+                "key_certificate_number_cancellation" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.key_contract_certificate_number,
+                "policy_item_number_canceled" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data?.policy_item_number,
+                "definitive_policy_number" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.mother_policy_number,
+                "start_valid_policy" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.start_valid_document,
+                "policy_end" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.end_valid_document,
+                "cancellation_date" : moment().format("MMDDYYYY"),
+                "cancellation_type" : proposal.data.cancellation_type,
+                "cancellation_reason": proposal.data.cancellation_reason, 
+            };
     }
 
     /**
