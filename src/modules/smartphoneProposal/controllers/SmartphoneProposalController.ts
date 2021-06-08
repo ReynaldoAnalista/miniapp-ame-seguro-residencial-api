@@ -150,10 +150,10 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/cancelation_security")
-    public async cancelationSecurity(@Body() signedPayment: SmartphoneProposalNotification) {
+    public async cancelationSecurity(@Body() signedPayment: any) {
         try {            
             logger.info('Iniciando o processo de cancelamento')
-            return this.planService.cancelationProcess(signedPayment.signedPayment)            
+            return this.planService.cancelationProcess(signedPayment)
         } catch (e) {
             logger.error(e)
         }

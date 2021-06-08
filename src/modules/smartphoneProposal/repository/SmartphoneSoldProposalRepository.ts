@@ -131,6 +131,10 @@ export class SmartphoneSoldProposalRepository {
 
     async formatCancelProposal(proposal: any) {
             const soldProposalInfo : any = await this.findAllFromCustomerAndOrder(proposal.customerId, proposal.order)                  
+
+            if(soldProposalInfo.length == 0)
+                return false
+
             return {
                 "key_certificate_number_cancellation" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.key_contract_certificate_number,
                 "policy_item_number_canceled" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data?.policy_item_number,

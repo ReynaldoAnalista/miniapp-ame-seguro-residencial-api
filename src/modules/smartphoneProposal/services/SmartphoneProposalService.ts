@@ -37,7 +37,7 @@ export class SmartphoneProposalService {
     ) {
     }
 
-    async processProposal(signedPayment: string) {
+    async processProposal(signedPayment: string) {        
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
@@ -323,9 +323,23 @@ export class SmartphoneProposalService {
         return await this.smartphoneSoldProposalRepository.findcertificateNumber()
     }
 
-    async cancelationProcess(signedPayment : string) {
-        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
+    async cancelationProcess(signedPayment : any) {
+        let unsignedPayment;
+        if(!signedPayment.unsigned || typeof(signedPayment.unsigned) == "undefined") {
+            unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)        
+        } else {
+            unsignedPayment = signedPayment.cancelData
+        }        
+        
         const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)        
+        
+        if(!formatedCancelProposal){
+            return {
+                'err': 404,
+                'message' : 'Ordem não encontrada na base de dados'
+            }
+        }
+
         let result
         try {
             const response = await this.requestService.makeRequest(
