@@ -136,11 +136,11 @@ export class SmartphoneSoldProposalRepository {
                 return false
 
             return {
-                "key_certificate_number_cancellation" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.key_contract_certificate_number,
-                "policy_item_number_canceled" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data?.policy_item_number,
-                "definitive_policy_number" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.mother_policy_number,
-                "start_valid_policy" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.start_valid_document,
-                "policy_end" : soldProposalInfo[0].receivedPaymentNotification.attributes.customPayload.proposal.policy_data?.end_valid_document,
+                "key_certificate_number_cancellation" : soldProposalInfo[0].receivedPaymentNotification?.attributes?.customPayload.proposal.policy_data?.key_contract_certificate_number,
+                "policy_item_number_canceled" : soldProposalInfo[0].receivedPaymentNotification?.attributes?.customPayload.proposal.coverage_data?.policy_item_number,
+                "definitive_policy_number" : soldProposalInfo[0].receivedPaymentNotification?.attributes?.customPayload.proposal.policy_data?.mother_policy_number,
+                "start_valid_policy" : soldProposalInfo[0].receivedPaymentNotification?.attributes?.customPayload.proposal.policy_data?.start_valid_document,
+                "policy_end" : soldProposalInfo[0].receivedPaymentNotification?.attributes?.customPayload.proposal.policy_data?.end_valid_document,
                 "cancellation_date" : moment().format("MMDDYYYY"),
                 "cancellation_type" : proposal.data.cancellation_type,
                 "cancellation_reason": proposal.data.cancellation_reason, 
