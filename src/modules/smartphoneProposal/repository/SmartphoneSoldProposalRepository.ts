@@ -132,7 +132,7 @@ export class SmartphoneSoldProposalRepository {
     async formatCancelProposal(proposal: any) {
             const soldProposalInfo : any = await this.findAllFromCustomerAndOrder(proposal.customerId, proposal.order)                  
 
-            if(soldProposalInfo.length == 0)
+            if(!soldProposalInfo)
                 return false
 
             return {
