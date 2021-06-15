@@ -97,7 +97,7 @@ export class SmartphoneProposalController {
     
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
-    @Post("/find_from_order_customer/{customerId}/{order}")
+    @Post("/find_from_order_customer")
     public async findFromOrdeCustomer(@Body() customerId: string, order: string) {
         try {
             logger.info('Informações solicitadas de CustomerId e Order:', customerId)
