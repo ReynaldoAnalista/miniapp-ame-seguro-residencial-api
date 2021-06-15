@@ -242,11 +242,6 @@ export class SmartphoneProposalService {
         }
     }
 
-    async findFromCostumerOrder(customerId, order) {
-        const findFromCustomer = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
-        return findFromCustomer
-    }
-
     async updateStatusSoldProposal(customerId : string, order : string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
