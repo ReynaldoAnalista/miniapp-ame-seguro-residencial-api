@@ -40,7 +40,7 @@ export class PetSoldProposalRepository {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
             let result = await dynamoDocClient.query(params).promise();
             log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items?.filter(x => x.tenant === Tenants.PET && x.status != 'CANCELED')
+            return result.Items?.filter(x => x.tenant === Tenants.PET)
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
