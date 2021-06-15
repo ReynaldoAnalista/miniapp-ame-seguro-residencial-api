@@ -351,7 +351,7 @@ export class SmartphoneProposalService {
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info('Success proposal cancel')
             return result 
-        } catch (e) {
+        } catch (e) { 
             const status = e.response?.status
             const statusText = e.response?.statusText
             result = {success: false, status: status, message: statusText}
