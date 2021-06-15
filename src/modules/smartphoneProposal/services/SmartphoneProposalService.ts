@@ -230,8 +230,6 @@ export class SmartphoneProposalService {
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
-                partnerResponse: response,
-                apiVersion,
                 status: SoldProposalStatus.cancel,
                 cancelationResponse : proposal
             } as SmartphoneSoldProposal)
