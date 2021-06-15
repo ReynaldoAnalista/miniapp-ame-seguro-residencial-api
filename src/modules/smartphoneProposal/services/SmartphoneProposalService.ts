@@ -73,6 +73,11 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
+    async findFromCostumerOrder(customerId, order) {
+        const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+        return findFromCostumerOrder;
+    }
+
     async updateManyProposal(proposal: any) {
         try {
             if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
