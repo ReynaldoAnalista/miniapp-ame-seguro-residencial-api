@@ -121,7 +121,7 @@ export class SmartphoneSoldProposalRepository {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
             let result = await dynamoDocClient.query(params).promise();
             log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE)
+            return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE && x?.status != 'CANCELED')
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
