@@ -226,7 +226,7 @@ export class SmartphoneProposalService {
         log.debug("saveSoldProposal")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
-            await this.smartphoneSoldProposalRepository.create({
+            await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
