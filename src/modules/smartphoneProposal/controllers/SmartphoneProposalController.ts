@@ -98,7 +98,7 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/find_from_order_customer/{customerId}/{order}")
-    public async findFromOrdeCustomer(@Path() customerId: string, order: string) {
+    public async findFromOrdeCustomer(@Body() customerId: string, order: string) {
         try {
             logger.info('Informações solicitadas de CustomerId e Order:', customerId)
             await this.planService.findFromCostumerOrder(customerId, order)
