@@ -336,40 +336,31 @@ export class SmartphoneProposalService {
             unsignedPayment = signedPayment.cancelData
         }        
         
-        return unsignedPayment;
+        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)                
 
-        // const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)        
-        
-        // if(!formatedCancelProposal){
-        //     return {
-        //         'err': 404,
-        //         'message' : 'Ordem não encontrada na base de dados'
-        //     }
-        // }
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
+                this.requestService.METHODS.POST,
+                formatedCancelProposal,
+                Tenants.SMARTPHONE
+            )
+            result = { proposal: formatedCancelProposal, response : response.data, success : true }
+            log.debug('Salvando o cancelamento na soldProposal');
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            log.info('Success proposal cancel')
+            return result 
+        } catch (e) {
+            const status = e.response?.status
+            const statusText = e.response?.statusText
+            result = {success: false, status: status, message: statusText}
+            log.error(`Error %j`, statusText)
+            log.debug('Error when trying to cancel proposal');
+            log.debug(`Status Code: ${status}`)
+        }
 
-        // let result
-        // try {
-        //     const response = await this.requestService.makeRequest(
-        //         this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
-        //         this.requestService.METHODS.POST,
-        //         formatedCancelProposal,
-        //         Tenants.SMARTPHONE
-        //     )
-        //     result = { proposal: formatedCancelProposal, response : response.data, success : true }
-        //     log.debug('Salvando o cancelamento na soldProposal');
-        //     await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
-        //     log.info('Success proposal cancel')
-        //     return result 
-        // } catch (e) {
-        //     const status = e.response?.status
-        //     const statusText = e.response?.statusText
-        //     result = {success: false, status: status, message: statusText}
-        //     log.error(`Error %j`, statusText)
-        //     log.debug('Error when trying to cancel proposal');
-        //     log.debug(`Status Code: ${status}`)
-        // }
-
-        // return result
+        return result
 
     }
     
