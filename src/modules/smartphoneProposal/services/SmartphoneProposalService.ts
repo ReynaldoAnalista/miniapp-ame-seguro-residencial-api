@@ -224,14 +224,19 @@ export class SmartphoneProposalService {
     
     async saveCancelProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
+
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
             await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
+                partnerResponse: response,
+                apiVersion,
                 status: SoldProposalStatus.cancel,
-                cancelationResponse : proposal
+                receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
