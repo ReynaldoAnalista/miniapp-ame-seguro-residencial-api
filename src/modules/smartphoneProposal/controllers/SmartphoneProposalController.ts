@@ -6,7 +6,6 @@ import {ApiError} from "../../../errors/ApiError";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 import { SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import { SmartphoneProposalMailService } from "../services/SmartphoneProposalMailService";
-import { cancelationPropose } from "../model/CancelationPropose";
 
 const logger = getLogger("SmartphoneProposalController")
 
