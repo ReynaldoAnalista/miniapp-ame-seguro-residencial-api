@@ -336,6 +336,13 @@ export class SmartphoneProposalService {
         
         const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)                
 
+        if(!formatedCancelProposal) {
+            return {
+                'success' : false,
+                'error' : 'Não foi possível encontrar informações na base'
+            };
+        }
+
         let result
         try {
             const response = await this.requestService.makeRequest(
@@ -346,7 +353,7 @@ export class SmartphoneProposalService {
             )
             result = { proposal: formatedCancelProposal, response : response.data, success : true }
             log.debug('Salvando o cancelamento na soldProposal');
-            // await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info('Success proposal cancel')
             return result 
         } catch (e) { 
