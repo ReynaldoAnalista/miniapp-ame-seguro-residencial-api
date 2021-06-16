@@ -362,12 +362,12 @@ export class SmartphoneProposalService {
             log.info('Success proposal cancel')
             return result 
         } catch (e) { 
-            const status = e.response?.status
-            const statusText = e.response?.statusText
-            result = {success: false, status: status, message: statusText}
-            log.error(`Error %j`, statusText)
+            const error = e
+            const message = e.message
+            result = {success: false, error: error, message: message}
+            log.error(`Error %j`, error)
             log.debug('Error when trying to cancel proposal');
-            log.debug(`Status Code: ${status}`)
+            log.debug(`Status Code: ${message}`)
             return result
         }
     }
