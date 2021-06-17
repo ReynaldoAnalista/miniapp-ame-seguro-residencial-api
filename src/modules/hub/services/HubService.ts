@@ -11,6 +11,8 @@ import {SmartphoneProposalRepository} from "../../smartphoneProposal/repository/
 import { SmartphoneProposalResponseRepository } from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository";
 import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 import Plans from "../../residentialProposal/services/Plans";
+import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldProposalRepository";
+import moment from "moment";
 
 const log = getLogger("ResidentialProposalService")
 
@@ -32,6 +34,8 @@ export class HubService {
         private smartphoneProposalResponseRepository: SmartphoneProposalResponseRepository,
         @inject("SmartphoneSoldProposalRepository")
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
+        @inject("PetSoldProposalRepository")
+        private petSoldProposalRepository: PetSoldProposalRepository,
         @inject("SoldProposalRepository")
         private soldProposalRepository: SoldProposalRepository,
         @inject(TYPES.ParameterStore)
@@ -44,9 +48,11 @@ export class HubService {
         log.debug("Showing Raw Plans: " + !!raw)
         const residentialPlansFromDB = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
+        const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
         
         let smartphonePlans = []
         let residentialPlans = []
+        let petPlans = []
         if (residentialPlansFromDB) {
             if (raw) {
                 residentialPlans = Object.assign(residentialPlansFromDB)
@@ -98,7 +104,20 @@ export class HubService {
             }
             
         }
-        return { residentialPlans, smartphonePlans }
+        if (petPlansPlansFromDB) {
+            if (raw) {
+                petPlans = Object.assign(petPlansPlansFromDB)
+            } else {
+                petPlans = Object.assign(petPlansPlansFromDB).map(x => {
+                    return {
+                        status: x.success ? 'Contratado' : 'Não Contratado',
+                        initial_date: moment(x.createdAt).format('DD/MM/YYYY'),
+                        partner: 'Amigoo Pet'
+                    }
+                })  
+            }            
+        }
+        return { residentialPlans, smartphonePlans, petPlans }
     }
 
     /**
