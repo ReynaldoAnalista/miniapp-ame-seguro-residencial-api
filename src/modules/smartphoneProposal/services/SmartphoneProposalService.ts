@@ -348,7 +348,7 @@ export class SmartphoneProposalService {
             };
         }
 
-        return this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL;
+        return this.requestService.ENDPOINTS?.SMARTPHONE_URL_CANCEL;
 
         let result
         // try {
