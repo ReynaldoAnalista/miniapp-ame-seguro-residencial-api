@@ -73,6 +73,11 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
+    async findFromCostumerOrder(customerId, order) {
+        const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+        return findFromCostumerOrder;
+    }
+
     async updateManyProposal(proposal: any) {
         try {
             if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
@@ -219,16 +224,19 @@ export class SmartphoneProposalService {
     
     async saveCancelProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
+
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
-            await this.smartphoneSoldProposalRepository.create({
+            await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
                 partnerResponse: response,
                 apiVersion,
                 status: SoldProposalStatus.cancel,
-                cancelationResponse : proposal
+                receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
@@ -324,20 +332,20 @@ export class SmartphoneProposalService {
     }
 
     async cancelationProcess(signedPayment : any) {
-        let unsignedPayment;
+        let unsignedPayment : any;
         if(!signedPayment.unsigned || typeof(signedPayment.unsigned) == "undefined") {
             unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)        
         } else {
             unsignedPayment = signedPayment.cancelData
         }        
         
-        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)        
-        
-        if(!formatedCancelProposal){
+        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)                
+
+        if(!formatedCancelProposal) {
             return {
-                'err': 404,
-                'message' : 'Ordem não encontrada na base de dados'
-            }
+                'success' : false,
+                'error' : 'Não foi possível encontrar informações na base'
+            };
         }
 
         let result
@@ -353,17 +361,14 @@ export class SmartphoneProposalService {
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info('Success proposal cancel')
             return result 
-        } catch (e) {
-            const status = e.response?.status
-            const statusText = e.response?.statusText
-            result = {success: false, status: status, message: statusText}
-            log.error(`Error %j`, statusText)
+        } catch (e) { 
+            // const message = e.message
+            const result = {success: false, error: e.message}
+            log.error(`Error %j`, e.message)
             log.debug('Error when trying to cancel proposal');
-            log.debug(`Status Code: ${status}`)
+            // log.debug(`Status Code: ${message}`)
+            return result
         }
-
-        return result
-
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
