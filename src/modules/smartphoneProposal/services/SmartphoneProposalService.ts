@@ -348,27 +348,29 @@ export class SmartphoneProposalService {
             };
         }
 
+        return this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL;
+
         let result
-        try {
-            const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
-                this.requestService.METHODS.POST,
-                formatedCancelProposal,
-                Tenants.SMARTPHONE
-            )
-            result = { proposal: formatedCancelProposal, response : response.data, success : true }
-            log.debug('Salvando o cancelamento na soldProposal');
-            // await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
-            log.info('Success proposal cancel')
-            return result 
-        } catch (e) { 
-            // const message = e.message
-            const result = {success: false, error: e.message}
-            log.error(`Error %j`, e.message)
-            log.debug('Error when trying to cancel proposal');
-            // log.debug(`Status Code: ${message}`)
-            return result
-        }
+        // try {
+        //     const response = await this.requestService.makeRequest(
+        //         this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
+        //         this.requestService.METHODS.POST,
+        //         formatedCancelProposal,
+        //         Tenants.SMARTPHONE
+        //     )
+        //     result = { proposal: formatedCancelProposal, response : response.data, success : true }
+        //     log.debug('Salvando o cancelamento na soldProposal');
+        //     await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+        //     log.info('Success proposal cancel')
+        //     return result 
+        // } catch (e) { 
+        //     // const message = e.message
+        //     const result = {success: false, error: e.message}
+        //     log.error(`Error %j`, e.message)
+        //     log.debug('Error when trying to cancel proposal');
+        //     // log.debug(`Status Code: ${message}`)
+        //     return result
+        // }
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
