@@ -43,4 +43,30 @@ export class UnusualController {
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
     }
+
+        
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/find_from_order_customer/{customerId}/{order}")
+    public async findFromOrdeCustomer(@Path() customerId: string, order: string) {
+        try {
+            logger.info('Informações solicitadas de CustomerId e Order:', customerId)
+            const findFromOrdeCustomer = await this.smartphoneProposalService.findFromCostumerOrder(customerId, order)
+            return findFromOrdeCustomer
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+    
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get("/find_by_nsu/{nsu}")
+    public async findByNsu(@Path() nsu: string) {
+        try {            
+            const findFromNsu = await this.smartphoneProposalService.findByNsu(nsu)
+            return findFromNsu
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
 }

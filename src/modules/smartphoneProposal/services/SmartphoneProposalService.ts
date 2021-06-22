@@ -78,6 +78,11 @@ export class SmartphoneProposalService {
         return findFromCostumerOrder;
     }
 
+    async findByNsu(nsu) {
+        const findByNsu = this.smartphoneSoldProposalRepository.findByNsu(nsu);
+        return findByNsu;
+    }
+
     async updateManyProposal(proposal: any) {
         try {
             if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
