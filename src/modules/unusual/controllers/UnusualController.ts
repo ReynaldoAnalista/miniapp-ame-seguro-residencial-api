@@ -7,7 +7,7 @@ import { UnusualService } from "../services/UnusualService"
 
 const logger = getLogger("UnusualController")
 
-@Route('/unusual')
+@Route('/v1/unusual')
 @injectable()
 export class UnusualController {
 
