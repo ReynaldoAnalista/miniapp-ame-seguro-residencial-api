@@ -177,4 +177,16 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get("/find_by_nsu/{nsu}")
+    public async findByNsu(@Path() nsu: string) {
+        try {            
+            const findFromNsu = await this.planService.findByNsu(nsu)
+            return findFromNsu
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+
 }

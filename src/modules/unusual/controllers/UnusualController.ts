@@ -58,15 +58,5 @@ export class UnusualController {
         }
     }
     
-    @Response(404, 'NotFound')
-    @SuccessResponse("200", "Retrieved")
-    @Get("/find_by_nsu/{nsu}")
-    public async findByNsu(@Path() nsu: string) {
-        try {            
-            const findFromNsu = await this.smartphoneProposalService.findByNsu(nsu)
-            return findFromNsu
-        } catch (e) {
-            logger.error(e.message)            
-        }
-    }
+
 }
