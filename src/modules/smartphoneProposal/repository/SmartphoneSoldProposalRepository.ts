@@ -132,7 +132,7 @@ export class SmartphoneSoldProposalRepository {
     async findByNsu(NSU: string) {
         let params = {
             TableName: TABLE,
-            IndexName: "customerId",
+            IndexName: "nsu",
             KeyConditionExpression: "nsu = :nsu",
             ExpressionAttributeValues: {
                 ":nsu": NSU,
