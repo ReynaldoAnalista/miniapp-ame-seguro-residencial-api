@@ -154,9 +154,9 @@ export class SmartphoneSoldProposalRepository {
         let params = {
             TableName: TABLE,
             IndexName: "NSUIndex",
-            KeyConditionExpression: "NSUIndex = :NSUIndex",
+            KeyConditionExpression: "NSU = :NSU",
             ExpressionAttributeValues: {
-                ":NSUIndex": NSU,
+                ":NSU": NSU,
             }
         };
         try {
