@@ -167,7 +167,10 @@ export class SmartphoneSoldProposalRepository {
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
-            return []
+            return {
+                message: e,
+                success: false
+            }
         }
     }
 

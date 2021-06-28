@@ -79,7 +79,7 @@ export class SmartphoneProposalService {
     }
 
     async findByNsu(nsu) {
-        const findByNsu = this.smartphoneSoldProposalRepository.findByNsu(nsu);
+        const findByNsu = await this.smartphoneSoldProposalRepository.findByNsu(nsu);
         return findByNsu;
     }
 
