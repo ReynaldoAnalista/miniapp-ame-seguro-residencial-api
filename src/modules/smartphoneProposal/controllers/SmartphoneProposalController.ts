@@ -201,5 +201,17 @@ export class SmartphoneProposalController {
             logger.error(e.message)            
         }
     }
+    
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/update_nsu_order_customer")
+    public async updateNsuByCustumerAndOrder(@Body() custumerInfo: any) {
+        try {            
+            const findFromOrdeCustomer = await this.planService.updateNsuByCustumerAndOrder(custumerInfo)
+            return findFromOrdeCustomer
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
 
 }

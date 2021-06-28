@@ -62,7 +62,7 @@ export class SmartphoneSoldProposalRepository {
     async update(soldProposal: any) {
         log.debug('TRYING UPDATE ON', TABLE);                
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();        
-        let params = {TableName: TABLE, Item: soldProposal};
+        let params = { TableName: TABLE, Item: soldProposal };
         await dynamoDocClient.put(params).promise();
         log.debug('UPDATED ON', TABLE);
         return soldProposal
@@ -128,16 +128,37 @@ export class SmartphoneSoldProposalRepository {
             return []
         }
     }
+
+    async updateNsuByCustumerAndOrder(getCustomerId: string, getOrder: string) {
+        const soldProposalInfo = await this.findAllFromCustomerAndOrder(getCustomerId, getOrder);
+        const getNsu = soldProposalInfo?.map((x) => { return x.receivedPaymentNotification?.nsu} )[0];
+
+        const updateInfoTable = soldProposalInfo?.map((x) => {
+            return { 
+                partnerResponse: x.partnerResponse,
+                createdAt: x.createdAt,
+                success: x.success,
+                customerId: x.customerId,
+                receivedPaymentNotification: x.receivedPaymentNotification,
+                tenant: x.tenant,
+                order: x.order,
+                NSU: x.receivedPaymentNotification.nsu,
+             }
+        })
+
+        return this.update(updateInfoTable?.[0])
+                
+    }
     
     async findByNsu(NSU: string) {
         let params = {
             TableName: TABLE,
-            IndexName: "createdAt",
-            KeyConditionExpression: "createdAt = :createdAt",
+            IndexName: "NSUIndex",
+            KeyConditionExpression: "NSUIndex = :NSUIndex",
             ExpressionAttributeValues: {
-                ":createdAt": NSU,
+                ":NSUIndex": NSU,
             }
-        };        
+        };
         try {
             let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();
             let result = await dynamoDocClient.query(params).promise();

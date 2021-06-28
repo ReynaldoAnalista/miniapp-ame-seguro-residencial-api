@@ -183,6 +183,10 @@ export class SmartphoneProposalService {
         return result
     }
 
+    async updateNsuByCustumerAndOrder(custumerInfo : any) {
+        return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
+    }
+
     async saveProposalResponse(proposal: any, id: string) {
         log.debug("saveProposalResponse")
         try {
