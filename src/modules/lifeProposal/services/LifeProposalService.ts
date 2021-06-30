@@ -15,16 +15,16 @@ export class LifeProposalService {
         @inject("RequestService") private requestService: RequestService
     ) {}
 
-    async getProposalModel() {
+    async getCotation(cotation : any) {
         log.debug('Sending proposal to Partner')
         let result
         try {
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.LIFE_URL_BASE,
-                this.requestService.METHODS.GET,
-                null,
+                this.requestService.METHODS.POST,
+                cotation,
                 Tenants.LIFE,
-                '/rest-seguro-vida?company_code:0514'
+                '/rest-seguro-vida/cotacoes?company_code=0514'
             );
             result = {success: true, content: response.data}
             log.info('Success proposal sent')

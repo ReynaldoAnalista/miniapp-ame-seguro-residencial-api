@@ -24,11 +24,11 @@ export class LifeProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Get("/get_model")
-    public async planList() {
+    @Post("/cotation")
+    public async cotationPlan(@Body() cotation : any) {
         logger.info("Get Life Model");
         try {
-            return await this.lifeProposalService.getProposalModel()
+            return await this.lifeProposalService.getCotation(cotation)
         } catch (e) {
             logger.error(e.message);
             throw new ApiError("Life Model Not sent", 500);
