@@ -365,7 +365,7 @@ export class ResidentialProposalService {
                 tenant: tenant,
                 receivedPaymentNotification: proposal,
                 partnerResponse: response,
-                success: response.success,
+                success: response?.success,
                 createdAt: new Date().toISOString(),
                 apiVersion,
                 status: "PROCESSED",

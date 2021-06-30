@@ -30,9 +30,9 @@
             "insurance_holder": {
                 "phones": [
                     {
-                        "type": "android",
+                        "type": "mobile",
                         "phone": "982875666",
-                        "area_code": "21"
+                        "area_code": "21"                        
                     }
                 ],
                 "addresses": [

@@ -9,7 +9,7 @@ import {ParameterStore} from "../../../configs/ParameterStore";
 import {SmartphoneSoldProposal} from "../model/SmartphoneSoldProposal";
 import {SmartphoneSoldProposalRepository} from "../repository/SmartphoneSoldProposalRepository";
 import {Tenants} from "../../default/model/Tenants";
-import {SmartphoneProposalUtils} from "./SmartphoneProposalUtils";
+import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
@@ -37,7 +37,7 @@ export class SmartphoneProposalService {
     ) {
     }
 
-    async processProposal(signedPayment: string) {
+    async processProposal(signedPayment: string) {        
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
@@ -73,6 +73,16 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
+    async findFromCostumerOrder(customerId, order) {
+        const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+        return findFromCostumerOrder;
+    }
+
+    async findByNsu(nsu) {
+        const findByNsu = await this.smartphoneSoldProposalRepository.findByNsu(nsu);
+        return findByNsu;
+    }
+
     async updateManyProposal(proposal: any) {
         try {
             if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
@@ -173,6 +183,10 @@ export class SmartphoneProposalService {
         return result
     }
 
+    async updateNsuByCustumerAndOrder(custumerInfo : any) {
+        return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
+    }
+
     async saveProposalResponse(proposal: any, id: string) {
         log.debug("saveProposalResponse")
         try {
@@ -216,13 +230,35 @@ export class SmartphoneProposalService {
             log.error(e)
         }
     }
+    
+    async saveCancelProposal(proposal: any, response: any, tenant: string) {
+        log.debug("saveSoldProposal")
+
+        try {
+            const apiVersion = process.env.COMMIT_HASH || "unavailable"
+            await this.smartphoneSoldProposalRepository.update({
+                customerId: proposal.customerId,
+                order: proposal.order,
+                tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
+                partnerResponse: response,
+                apiVersion,
+                status: SoldProposalStatus.cancel,
+                receivedPaymentNotification: proposal
+            } as SmartphoneSoldProposal)
+            log.debug("saveSoldProposal:success")
+        } catch (e) {
+            log.debug("saveSoldProposal:Fail")
+            log.error(e)
+        }
+    }
 
     async updateStatusSoldProposal(customerId : string, order : string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
             const getResponse : any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
-            const proposalRequest = getResponse[0]
-            
+            const proposalRequest = getResponse[0]            
             await this.smartphoneSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
                 createdAt: proposalRequest?.createdAt,
@@ -297,6 +333,50 @@ export class SmartphoneProposalService {
             'message': 'E-mail validado com sucesso',
             'invalid_fields': '',
             'valid': true
+        }
+    }
+
+    async customerCertificateNumber() {
+        return await this.smartphoneSoldProposalRepository.findcertificateNumber()
+    }
+
+    async cancelationProcess(signedPayment : any) {
+        let unsignedPayment : any;
+        if(!signedPayment.unsigned || typeof(signedPayment.unsigned) == "undefined") {
+            unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)        
+        } else {
+            unsignedPayment = signedPayment.cancelData
+        }        
+        
+        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)                
+
+        if(!formatedCancelProposal) {
+            return {
+                'success' : false,
+                'error' : 'Não foi possível encontrar informações na base'
+            };
+        }
+
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_CANCEL,
+                this.requestService.METHODS.POST,
+                formatedCancelProposal,
+                Tenants.SMARTPHONE
+            )
+            result = { proposal: formatedCancelProposal, response : response.data, success : true }
+            log.debug('Salvando o cancelamento na soldProposal');
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            log.info('Success proposal cancel')
+            return result 
+        } catch (e) { 
+            // const message = e.message
+            const result = {success: false, error: e.message}
+            log.error(`Error %j`, e.message)
+            log.debug('Error when trying to cancel proposal');
+            // log.debug(`Status Code: ${message}`)
+            return result
         }
     }
     
