@@ -30,7 +30,7 @@ export class LifeProposalService {
             log.info('Success proposal sent')
         } catch (e) {
             const status = e.response?.status
-            const statusText = e.response?.statusText
+            const statusText = e
             result = {success: false, status: status, message: statusText}
             log.error(`Error %j`, statusText)
             log.debug('Error when trying to send proposal');
