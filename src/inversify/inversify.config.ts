@@ -37,6 +37,7 @@ export const initDependencies = () => {
     bindControllers("../modules/residentialProposal/controllers")
     bindControllers("../modules/smartphoneProposal/controllers")
     bindControllers("../modules/petProposal/controllers")
+    bindControllers("../modules/lifeProposal/controllers")
     // bindControllers("../modules/unusual/controllers")
 
     /* Initialize Services */
