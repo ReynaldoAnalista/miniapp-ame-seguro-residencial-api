@@ -416,6 +416,41 @@
 				]
 			}
 		},
+		"/v1/life/cotation": {
+			"post": {
+				"operationId": "CotationPlan",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/pet/planList": {
 			"get": {
 				"operationId": "PlanList",
@@ -1356,13 +1391,18 @@
 				}
 			}
 		},
-		"/unusual/proposal_email/{pass}/{email}/sendEmail": {
+		"/v1/smartphone/find_by_nsu/{nsu}": {
 			"get": {
-				"operationId": "SendMailProposalWithParams",
+				"operationId": "FindByNsu",
 				"responses": {
 					"200": {
 						"content": {
-							"application/json": {}
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
 						},
 						"description": "Retrieved"
 					},
@@ -1377,15 +1417,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "pass",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "email",
+						"name": "nsu",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -1394,37 +1426,7 @@
 				]
 			}
 		},
-		"/unusual/update_old_clients/{proposalId}": {
-			"get": {
-				"operationId": "UpdateProposal",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "proposalId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/unusual/find_from_order_customer/{customerId}/{order}": {
+		"/v1/smartphone/find_from_order_customer/{customerId}/{order}": {
 			"post": {
 				"operationId": "FindFromOrdeCustomer",
 				"responses": {
@@ -1467,9 +1469,9 @@
 				]
 			}
 		},
-		"/unusual/find_by_nsu/{nsu}": {
-			"get": {
-				"operationId": "FindByNsu",
+		"/v1/smartphone/update_nsu_order_customer": {
+			"post": {
+				"operationId": "UpdateNsuByCustumerAndOrder",
 				"responses": {
 					"200": {
 						"content": {
@@ -1490,10 +1492,78 @@
 					}
 				},
 				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/unusual/proposal_email/{pass}/{email}/sendEmail": {
+			"get": {
+				"operationId": "SendMailProposalWithParams",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
-						"name": "nsu",
+						"name": "pass",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "email",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/unusual/update_old_clients/{proposalId}": {
+			"get": {
+				"operationId": "UpdateProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "proposalId",
 						"required": true,
 						"schema": {
 							"type": "string"
