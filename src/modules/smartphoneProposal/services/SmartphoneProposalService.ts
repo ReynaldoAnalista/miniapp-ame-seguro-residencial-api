@@ -13,6 +13,7 @@ import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
+import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -338,6 +339,24 @@ export class SmartphoneProposalService {
 
     async customerCertificateNumber() {
         return await this.smartphoneSoldProposalRepository.findcertificateNumber()
+    }
+
+    async cancelationProcessWithOrder(orderProposal) {
+        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(orderProposal.customerId, orderProposal.order);        
+        const updateSoldProposal = soldProposal?.map((x) => {
+            return {
+                customerId: x.customerId,
+                order: x.order,
+                partnerResponse: x.partnerResponse,
+                createdAt: new Date().toISOString(),
+                success: true,
+                receivedPaymentNotification: x.receivedPaymentNotification,
+                tenant: Tenants.SMARTPHONE,
+                status: 'CANCELED',
+                NSU: x.receivedPaymentNotification?.nsu
+            }
+        })[0]                
+        return await this.smartphoneSoldProposalRepository.update(updateSoldProposal);
     }
 
     async cancelationProcess(signedPayment : any) {

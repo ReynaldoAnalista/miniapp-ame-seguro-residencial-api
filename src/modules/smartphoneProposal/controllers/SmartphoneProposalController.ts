@@ -159,6 +159,18 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sold_proposal_cancel")
+    public async cancelSoldProposal(@Body() orderProposal : any) {
+        try {            
+            logger.info('Iniciando o processo de cancelamento')
+            return this.planService.cancelationProcessWithOrder(orderProposal)
+        } catch (e) {
+            logger.error(e)
+        }
+    }
+
 
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
