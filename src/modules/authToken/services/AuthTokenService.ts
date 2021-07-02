@@ -44,9 +44,22 @@ export class AuthTokenService {
         throw "Retrieving config with no configName"
     }
 
+    async getUrlBase(tenant : string) {
+        switch(tenant) {
+            case 'SMARTPHONE':
+                return 'SMARTPHONE_URL_AUTHORIZATION'                
+            case 'PET':
+                return 'PET_URL_BASE'
+            case 'LIFE':
+                return 'LIFE_URL_AUTHORIZATION'                
+            default:
+                return 'URL_AUTHORIZATION'
+        }
+    }
+
     async retrieveAuthorization(tenant: string, resetCache = false): Promise<string | undefined> {
         log.debug('Starting Authorization for ' + tenant)
-        const AUTH_KEY = (tenant === 'SMARTPHONE') ? 'SMARTPHONE_URL_AUTHORIZATION' : (tenant === 'PET') ? 'PET_URL_BASE' : 'URL_AUTHORIZATION'
+        const AUTH_KEY = await this.getUrlBase(tenant)
         const AUTH_URL = await this.parameterStore.getSecretValue(AUTH_KEY)        
         const TOKEN_CACHE = `TOKENCACHE_${tenant}`
         if (resetCache) {
@@ -153,6 +166,30 @@ export class AuthTokenService {
                 cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
                 return result.access_token;
 
+            }
+
+            if (tenant === Tenants.LIFE) {
+                log.debug('Trying to authorizate on ' + AUTH_URL)
+                let lifeKey = await this.retrieveConfig('LIFE_API_KEY')
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'apikey': lifeKey
+                    }
+                };                
+                let result
+
+                await axios.get(AUTH_URL, config)
+                    .then((res) => {
+                        log.debug("AUTHORIZED");
+                        result = res.headers;
+                    })
+                    .catch((err) => {
+                        log.error("ERROR ON AUTHORIZING");
+                        log.error("AXIOS ERROR: ", err);
+                    });
+                // cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
+                return result.authorization;
             }
 
 

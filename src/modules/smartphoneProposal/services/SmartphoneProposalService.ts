@@ -13,6 +13,7 @@ import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
+import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -76,6 +77,11 @@ export class SmartphoneProposalService {
     async findFromCostumerOrder(customerId, order) {
         const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
         return findFromCostumerOrder;
+    }
+
+    async findByNsu(nsu) {
+        const findByNsu = await this.smartphoneSoldProposalRepository.findByNsu(nsu);
+        return findByNsu;
     }
 
     async updateManyProposal(proposal: any) {
@@ -176,6 +182,10 @@ export class SmartphoneProposalService {
         }
 
         return result
+    }
+
+    async updateNsuByCustumerAndOrder(custumerInfo : any) {
+        return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
     }
 
     async saveProposalResponse(proposal: any, id: string) {
@@ -329,6 +339,24 @@ export class SmartphoneProposalService {
 
     async customerCertificateNumber() {
         return await this.smartphoneSoldProposalRepository.findcertificateNumber()
+    }
+
+    async cancelationProcessWithOrder(orderProposal) {
+        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(orderProposal.customerId, orderProposal.order);        
+        const updateSoldProposal = soldProposal?.map((x) => {
+            return {
+                customerId: x.customerId,
+                order: x.order,
+                partnerResponse: x.partnerResponse,
+                createdAt: new Date().toISOString(),
+                success: true,
+                receivedPaymentNotification: x.receivedPaymentNotification,
+                tenant: Tenants.SMARTPHONE,
+                status: 'CANCELED',
+                NSU: x.receivedPaymentNotification?.nsu
+            }
+        })[0]                
+        return await this.smartphoneSoldProposalRepository.update(updateSoldProposal);
     }
 
     async cancelationProcess(signedPayment : any) {

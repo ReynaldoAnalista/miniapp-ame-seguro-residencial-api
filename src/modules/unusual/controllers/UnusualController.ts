@@ -7,7 +7,7 @@ import { UnusualService } from "../services/UnusualService"
 
 const logger = getLogger("UnusualController")
 
-@Route('/unusual')
+@Route('/v1/unusual')
 @injectable()
 export class UnusualController {
 
@@ -43,4 +43,9 @@ export class UnusualController {
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
     }
+
+        
+
+    
+
 }

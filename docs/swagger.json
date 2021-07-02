@@ -416,6 +416,41 @@
 				]
 			}
 		},
+		"/v1/life/cotation": {
+			"post": {
+				"operationId": "CotationPlan",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/pet/planList": {
 			"get": {
 				"operationId": "PlanList",
@@ -1076,49 +1111,6 @@
 				]
 			}
 		},
-		"/v1/smartphone/find_from_order_customer/{customerId}/{order}": {
-			"post": {
-				"operationId": "FindFromOrdeCustomer",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "customerId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "order",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/v1/smartphone/validate_email/{pass}": {
 			"get": {
 				"operationId": "ValidateMailProposal",
@@ -1340,6 +1332,41 @@
 				}
 			}
 		},
+		"/v1/smartphone/sold_proposal_cancel": {
+			"post": {
+				"operationId": "CancelSoldProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/smartphone/processIOF": {
 			"post": {
 				"operationId": "ProcessIOF",
@@ -1399,7 +1426,120 @@
 				}
 			}
 		},
-		"/unusual/proposal_email/{pass}/{email}/sendEmail": {
+		"/v1/smartphone/find_by_nsu/{nsu}": {
+			"get": {
+				"operationId": "FindByNsu",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "nsu",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/smartphone/find_from_order_customer/{customerId}/{order}": {
+			"post": {
+				"operationId": "FindFromOrdeCustomer",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "order",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/smartphone/update_nsu_order_customer": {
+			"post": {
+				"operationId": "UpdateNsuByCustumerAndOrder",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/unusual/proposal_email/{pass}/{email}/sendEmail": {
 			"get": {
 				"operationId": "SendMailProposalWithParams",
 				"responses": {
@@ -1437,7 +1577,7 @@
 				]
 			}
 		},
-		"/unusual/update_old_clients/{proposalId}": {
+		"/v1/unusual/update_old_clients/{proposalId}": {
 			"get": {
 				"operationId": "UpdateProposal",
 				"responses": {
