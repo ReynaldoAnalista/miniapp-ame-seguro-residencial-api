@@ -13,6 +13,7 @@ import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils";
 import {SmartphoneProposalMailService} from "./SmartphoneProposalMailService";
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
+import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository";
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -37,7 +38,7 @@ export class SmartphoneProposalService {
     ) {
     }
 
-    async processProposal(signedPayment: string) {
+    async processProposal(signedPayment: string) {        
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
         log.info('Salvando o arquivo da notificação')
         await this.saveProposal(unsignedPayment)
@@ -73,6 +74,16 @@ export class SmartphoneProposalService {
         return proposalResponse
     }
     
+    async findFromCostumerOrder(customerId, order) {
+        const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+        return findFromCostumerOrder;
+    }
+
+    async findByNsu(nsu) {
+        const findByNsu = await this.smartphoneSoldProposalRepository.findByNsu(nsu);
+        return findByNsu;
+    }
+
     async updateManyProposal(proposal: any) {
         try {
             if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
@@ -173,6 +184,10 @@ export class SmartphoneProposalService {
         return result
     }
 
+    async updateNsuByCustumerAndOrder(custumerInfo : any) {
+        return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
+    }
+
     async saveProposalResponse(proposal: any, id: string) {
         log.debug("saveProposalResponse")
         try {
@@ -219,16 +234,19 @@ export class SmartphoneProposalService {
     
     async saveCancelProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
+
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
-            await this.smartphoneSoldProposalRepository.create({
+            await this.smartphoneSoldProposalRepository.update({
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
+                createdAt: new Date().toISOString(),
+                success: response.success,
                 partnerResponse: response,
                 apiVersion,
                 status: SoldProposalStatus.cancel,
-                cancelationResponse : proposal
+                receivedPaymentNotification: proposal
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
@@ -323,9 +341,41 @@ export class SmartphoneProposalService {
         return await this.smartphoneSoldProposalRepository.findcertificateNumber()
     }
 
-    async cancelationProcess(signedPayment : string) {
-        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)        
-        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)        
+    async cancelationProcessWithOrder(orderProposal) {
+        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(orderProposal.customerId, orderProposal.order);        
+        const updateSoldProposal = soldProposal?.map((x) => {
+            return {
+                customerId: x.customerId,
+                order: x.order,
+                partnerResponse: x.partnerResponse,
+                createdAt: new Date().toISOString(),
+                success: true,
+                receivedPaymentNotification: x.receivedPaymentNotification,
+                tenant: Tenants.SMARTPHONE,
+                status: 'CANCELED',
+                NSU: x.receivedPaymentNotification?.nsu
+            }
+        })[0]                
+        return await this.smartphoneSoldProposalRepository.update(updateSoldProposal);
+    }
+
+    async cancelationProcess(signedPayment : any) {
+        let unsignedPayment : any;
+        if(!signedPayment.unsigned || typeof(signedPayment.unsigned) == "undefined") {
+            unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)        
+        } else {
+            unsignedPayment = signedPayment.cancelData
+        }        
+        
+        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)                
+
+        if(!formatedCancelProposal) {
+            return {
+                'success' : false,
+                'error' : 'Não foi possível encontrar informações na base'
+            };
+        }
+
         let result
         try {
             const response = await this.requestService.makeRequest(
@@ -339,17 +389,14 @@ export class SmartphoneProposalService {
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info('Success proposal cancel')
             return result 
-        } catch (e) {
-            const status = e.response?.status
-            const statusText = e.response?.statusText
-            result = {success: false, status: status, message: statusText}
-            log.error(`Error %j`, statusText)
+        } catch (e) { 
+            // const message = e.message
+            const result = {success: false, error: e.message}
+            log.error(`Error %j`, e.message)
             log.debug('Error when trying to cancel proposal');
-            log.debug(`Status Code: ${status}`)
+            // log.debug(`Status Code: ${message}`)
+            return result
         }
-
-        return result
-
     }
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {

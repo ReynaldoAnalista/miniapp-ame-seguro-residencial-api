@@ -4,7 +4,7 @@
     "attributes": {
         "customPayload": {
             "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
-            "clientEmail": "marcelo@calindra.com.br",
+            "clientEmail": "teste@email.com.br",
             "customerId": "4c1b25a3-8470-43ae-b4dc-26d5ed3cdb32",
             "isFrom": "PHONE_SEC",
             "miniAppId": "21644",

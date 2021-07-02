@@ -6,7 +6,6 @@ import {ApiError} from "../../../errors/ApiError";
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation";
 import { SmartphoneProposalNotification} from "../model/SmartphoneProposalNotification";
 import { SmartphoneProposalMailService } from "../services/SmartphoneProposalMailService";
-import { cancelationPropose } from "../model/CancelationPropose";
 
 const logger = getLogger("SmartphoneProposalController")
 
@@ -95,6 +94,7 @@ export class SmartphoneProposalController {
         }
     }
 
+
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Get("/validate_email/{pass}")
@@ -150,10 +150,22 @@ export class SmartphoneProposalController {
     @Response(404, 'NotFound')
     @SuccessResponse("200", "Retrieved")
     @Post("/cancelation_security")
-    public async cancelationSecurity(@Body() signedPayment: SmartphoneProposalNotification) {
+    public async cancelationSecurity(@Body() signedPayment: any) {
         try {            
             logger.info('Iniciando o processo de cancelamento')
-            return this.planService.cancelationProcess(signedPayment.signedPayment)            
+            return this.planService.cancelationProcess(signedPayment)
+        } catch (e) {
+            logger.error(e)
+        }
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sold_proposal_cancel")
+    public async cancelSoldProposal(@Body() orderProposal : any) {
+        try {            
+            logger.info('Iniciando o processo de cancelamento')
+            return this.planService.cancelationProcessWithOrder(orderProposal)
         } catch (e) {
             logger.error(e)
         }
@@ -174,6 +186,43 @@ export class SmartphoneProposalController {
             }
         } catch (e) {
             logger.error(e)
+        }
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Get("/find_by_nsu/{nsu}")
+    public async findByNsu(@Path() nsu: string) {
+        try {            
+            const findFromNsu = await this.planService.findByNsu(nsu)
+            return findFromNsu
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/find_from_order_customer/{customerId}/{order}")
+    public async findFromOrdeCustomer(@Path() customerId: string, order: string) {
+        try {
+            logger.info('Informações solicitadas de CustomerId e Order:', customerId)
+            const findFromOrdeCustomer = await this.planService.findFromCostumerOrder(customerId, order)
+            return findFromOrdeCustomer
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+    
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/update_nsu_order_customer")
+    public async updateNsuByCustumerAndOrder(@Body() custumerInfo: any) {
+        try {            
+            const findFromOrdeCustomer = await this.planService.updateNsuByCustumerAndOrder(custumerInfo)
+            return findFromOrdeCustomer
+        } catch (e) {
+            logger.error(e.message)            
         }
     }
 

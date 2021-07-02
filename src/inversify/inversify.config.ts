@@ -37,6 +37,7 @@ export const initDependencies = () => {
     bindControllers("../modules/residentialProposal/controllers")
     bindControllers("../modules/smartphoneProposal/controllers")
     bindControllers("../modules/petProposal/controllers")
+    bindControllers("../modules/lifeProposal/controllers")
     // bindControllers("../modules/unusual/controllers")
 
     /* Initialize Services */
@@ -48,6 +49,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/smartphoneProposal/services")
     bindSingleton("../modules/unusual/services")
     bindSingleton("../modules/petProposal/services")
+    bindSingleton("../modules/lifeProposal/services")
 
 /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
