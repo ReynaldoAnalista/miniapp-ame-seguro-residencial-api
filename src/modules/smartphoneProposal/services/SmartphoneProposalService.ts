@@ -184,6 +184,24 @@ export class SmartphoneProposalService {
         return result
     }
 
+    async updateLiquidPrice(custumerInfo : any) {
+        const soldProposal = await this.findFromCostumerOrder(custumerInfo.customerId, custumerInfo.order)            
+        
+        try {
+            if(soldProposal) {
+                let updateDigiBeeProposal = soldProposal[0]
+                updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize = updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0738
+                const digiBeeProposal = updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal
+                return await this.sendProposal(digiBeeProposal)
+            }
+        } catch(e) {
+            return {
+                'message' : e
+            }
+        }        
+        
+    }
+
     async updateNsuByCustumerAndOrder(custumerInfo : any) {
         return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
     }
@@ -401,8 +419,8 @@ export class SmartphoneProposalService {
     
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
         var dataInfo = digibeeConfirmation.control_data
-        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomer(dataInfo.customer_identifier_code)
-        if (soldProposal && soldProposal.length) {
+        const soldProposal = await this.smartphoneSoldProposalRepository.findByNsu(dataInfo.customer_identifier_code)
+        if(soldProposal) {
             log.info('Buscando informações na tabela SoldProposal')
             const requestProposal = soldProposal?.find(x => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString())
             log.info('Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente')

@@ -166,11 +166,7 @@ export class SmartphoneSoldProposalRepository {
             return result.Items?.filter(x => x.tenant === Tenants.SMARTPHONE && x?.status != 'CANCELED')
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
-            log.error(e)
-            return {
-                message: e,
-                success: false
-            }
+            log.error(e)            
         }
     }
 
