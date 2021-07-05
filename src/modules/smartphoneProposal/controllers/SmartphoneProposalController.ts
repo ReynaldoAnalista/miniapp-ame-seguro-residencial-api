@@ -226,4 +226,16 @@ export class SmartphoneProposalController {
         }
     }
 
+    @Response(404, 'NotFound')
+    @SuccessResponse("200", "Retrieved")
+    @Post("/update_liquid_price")
+    public async updateLiquidPrice(@Body() custumerInfo: any) {
+        try {            
+            const updateLiquidPrice = await this.planService.updateLiquidPrice(custumerInfo)
+            return updateLiquidPrice
+        } catch (e) {
+            logger.error(e.message)            
+        }
+    }
+
 }

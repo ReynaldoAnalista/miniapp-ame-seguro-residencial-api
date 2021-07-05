@@ -184,6 +184,24 @@ export class SmartphoneProposalService {
         return result
     }
 
+    async updateLiquidPrice(custumerInfo : any) {
+        const soldProposal = await this.findFromCostumerOrder(custumerInfo.customerId, custumerInfo.order)            
+        
+        try {
+            if(soldProposal) {
+                let updateDigiBeeProposal = soldProposal[0]
+                updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize = updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0738
+                const digiBeeProposal = updateDigiBeeProposal.receivedPaymentNotification.attributes.customPayload.proposal
+                return await this.sendProposal(digiBeeProposal)
+            }
+        } catch(e) {
+            return {
+                'message' : e
+            }
+        }        
+        
+    }
+
     async updateNsuByCustumerAndOrder(custumerInfo : any) {
         return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order);
     }
