@@ -7,5 +7,6 @@ export interface SmartphoneSoldProposal {
     success: boolean,
     createdAt: string,
     status: string,
-    apiVersion: string
+    apiVersion: string,
+    NSU: string
 }
