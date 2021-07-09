@@ -357,24 +357,19 @@ export class ResidentialProposalService {
 
     async saveSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("saveSoldProposal")
-        try {
-            const apiVersion = process.env.COMMIT_HASH || "unavailable"                        
-            await this.residentialSoldProposalRepository.create({
-                customerId: proposal.attributes.customPayload.proposal.customerId,
-                order: proposal.id,
-                tenant: tenant,
-                receivedPaymentNotification: proposal,
-                partnerResponse: response,
-                success: response?.success,
-                createdAt: new Date().toISOString(),
-                apiVersion,
-                status: "PROCESSED",
-            } as ResidentialSoldProposal)
-            log.debug("saveSoldProposal:success")
-        } catch (e) {
-            log.debug("saveSoldProposal:Fail")
-            log.error(e)
-        }
+        const apiVersion = process.env.COMMIT_HASH || "unavailable"
+        await this.residentialSoldProposalRepository.create({
+            customerId: proposal.attributes.customPayload.customerId,
+            order: proposal.id,
+            tenant: tenant,
+            receivedPaymentNotification: proposal,
+            partnerResponse: response,
+            success: response?.success,
+            createdAt: new Date().toISOString(),
+            apiVersion,
+            status: "PROCESSED",
+        } as ResidentialSoldProposal)
+        log.debug("saveSoldProposal:success")
     }
 
     delay(seconds) {
