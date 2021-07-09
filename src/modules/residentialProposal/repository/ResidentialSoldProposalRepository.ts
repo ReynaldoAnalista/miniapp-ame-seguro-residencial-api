@@ -22,7 +22,7 @@ export class ResidentialSoldProposalRepository {
     async create(soldProposal: ResidentialSoldProposal) {               
         log.debug('TRYING TO WRITE ON', TABLE);
         let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient();        
-        dynamoDocClient.put({TableName: TABLE, Item: soldProposal}).promise();
+        await dynamoDocClient.put({ TableName: TABLE, Item: soldProposal }).promise();
         console.log('REGISTER WROTE ON', TABLE);
         return soldProposal 
     }  
