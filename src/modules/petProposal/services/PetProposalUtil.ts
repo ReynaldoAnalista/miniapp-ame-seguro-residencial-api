@@ -49,8 +49,8 @@ export class PetProposalUtil {
     }
 
     async formatQuoteProposal(customPayload: any) {
-        const productId = 0
         try {
+            let productId = 0
             const petsBirthDate = customPayload.proposal.pets.map((prop) => {
                 return {
                     age:
@@ -67,29 +67,29 @@ export class PetProposalUtil {
                     preexisting_condition: prop.preexisting_condition,
                     birth_date: moment(prop.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
                 }
-            })
+            })            
             if (customPayload.ambiente === "prod") {
                 switch (customPayload.proposal.planId) {
                     case 48:
-                        let productId = 33
+                        productId = 33
                         break
                     case 49:
-                        let productId = 34
+                        productId = 34
                         break
                     case 50:
-                        let productId = 35
+                        productId = 35
                         break
                 }
             } else {
                 switch (customPayload.proposal.planId) {
                     case 46:
-                        let productId = 28
+                        productId = 28
                         break
                     case 47:
-                        let productId = 29
+                        productId = 29
                         break
                     case 48:
-                        let productId = 30
+                        productId = 30
                         break
                 }
             }

@@ -23,7 +23,7 @@ const sign = util.promisify(jwt.sign)
 const log = getLogger("PetProposalService:test")
 
 initDependencies()
-jest.setTimeout(20000)
+jest.setTimeout(30000)
 
 describe("ResidentialProposalService", () => {
     let residentialProposalRepository: ResidentialProposalRepository
@@ -54,8 +54,6 @@ describe("ResidentialProposalService", () => {
                 premio: Number(x.premio.toString().replace(".", "")),
             }
         })
-        log.debug("Filtrando todos os planos")
-
         const filterPlans = await Promise.all(
             allPlans.map(async (x) => {
                 try {

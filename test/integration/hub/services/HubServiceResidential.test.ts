@@ -42,15 +42,15 @@ describe("HubService Consulta proposta residencial", () => {
         const paymentObject = JSON.parse(payment)
         paymentObject.id = customerIdResidential
         paymentObject.attributes.customPayload.proposal.cpf = generate()
-        paymentObject.attributes.customPayload.proposal.customerId = paymentIdResidential
+        paymentObject.attributes.customPayload.customerId = paymentIdResidential
         paymentObject.attributes.customPayload.proposal.dataInicioVigencia = moment().add(1, "d").format("YYYY-MM-DD")
-        paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, "d").format("YYYY-MM-DD")
+        paymentObject.attributes.customPayload.proposal.pagamento.dataVencimento = moment().add(30, "d").format("YYYY-MM-DD")        
         const signedPayment = await sign(paymentObject, secret)
-        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)
-        await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
+        const proposalProtocol = await residentialProposalService.processProposal(signedPayment)        
+        const saveSoldProposal =  await residentialProposalService.saveSoldProposal(paymentObject, proposalProtocol, Tenants.RESIDENTIAL)
     })
 
-    it("Busca um determinado plano comprado", async () => {
+    it("Busca um determinado plano comprado", async () => {        
         const customerPlans = await hubService.retrievePlans(customerIdResidential)
         let thePlan: any
         if (customerPlans.residentialPlans?.length) {
