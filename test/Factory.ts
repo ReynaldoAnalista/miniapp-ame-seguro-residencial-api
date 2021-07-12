@@ -1,23 +1,26 @@
 import Axios from "axios"
+import { getLogger } from "../src/server/Logger"
 const formUrlEncoded = (x) => Object.keys(x).reduce((p, c) => p + `&${c}=${encodeURIComponent(x[c])}`, "")
+
+const log = getLogger("Factory")
 
 export default class Factory {
     static async getUserAmeToken() {
-        let data = formUrlEncoded({
+        const data = formUrlEncoded({
             grant_type: "password",
             username: "fabio.oshiro@gmail.com",
             password: "c@lindra123",
         })
-        let userTokenPromise = Axios.post("https://api.dev.amedigital.com/api/auth/oauth/token", data, {
+        const userTokenPromise = Axios.post("https://api.dev.amedigital.com/api/auth/oauth/token", data, {
             headers: {
                 "Cache-Control": "no-cache",
                 "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: "Basic NDBiNGE3MGYtMDg5Ni00YjkwLWEyYTgtYTAzZWU3ZDUwZDI5OmJwYXlpb3NAMTIz",
             },
         })
-        userTokenPromise.catch((err) => console.log(err))
-        let userToken = await userTokenPromise
-        let token = userToken.data.access_token
+        userTokenPromise.catch((err) => log.error(err))
+        const userToken = await userTokenPromise
+        const token = userToken.data.access_token
         return token
     }
 

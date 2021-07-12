@@ -33,7 +33,7 @@ export class ResidentialProposalService {
         let attempts = 2
         do {
             try {
-                let result: object[] = (
+                const result: any[] = (
                     await this.requestService.makeRequest(
                         this.requestService.ENDPOINTS.RESIDENTIAL_URL_ZIPCODE,
                         this.requestService.METHODS.GET,
@@ -79,7 +79,7 @@ export class ResidentialProposalService {
         let attempts = 2
         do {
             try {
-                let result: object[] = (
+                const result: any[] = (
                     await this.requestService.makeRequest(
                         this.requestService.ENDPOINTS.RESIDENTIAL_URL_PLANS,
                         this.requestService.METHODS.GET,
@@ -180,7 +180,7 @@ export class ResidentialProposalService {
 
     static detachProposal(amePayment) {
         if (amePayment.attributes?.customPayload?.proposal) {
-            let proposal = Object.assign({}, amePayment.attributes?.customPayload?.proposal)
+            const proposal = Object.assign({}, amePayment.attributes?.customPayload?.proposal)
             if (proposal.pagamento && proposal.pagamento.numeroParcelas) {
                 proposal.pagamento.numeroParcelas = ResidentialProposalService.processInstallments(amePayment)
             }
@@ -246,7 +246,7 @@ export class ResidentialProposalService {
     }
 
     static processInstallments(amePayment: any) {
-        let installments = amePayment.splits?.map((i) => i.installments).filter((i) => i)
+        const installments = amePayment.splits?.map((i) => i.installments).filter((i) => i)
         let installmentsInfo
         if (installments.length) {
             installmentsInfo = parseInt(`${installments[0]}`)
@@ -256,7 +256,7 @@ export class ResidentialProposalService {
         return installmentsInfo
     }
 
-    async checkPrice(price: number, planId: string): Promise<object> {
+    async checkPrice(price: number, planId: string): Promise<any> {
         try {
             log.debug(`Checking Price from: value=${price} planId=${planId}`)
             const selectedPlan = Plans?.find((p) => p["id"] === planId)
@@ -323,7 +323,7 @@ export class ResidentialProposalService {
                 .filter((x) => x) // Removing empty results
                 .sort((a, b) => a?.transactionDateTime?.timestamp - b?.transactionDateTime?.timestamp)
                 .map((response) => {
-                    let outputObject = {
+                    const outputObject = {
                         nome: response?.proposal?.nome,
                         email: response?.proposal?.email,
                         planoId: response?.proposal?.planoId,

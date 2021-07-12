@@ -54,8 +54,6 @@ export class PetProposalService {
         return getProposal
     }
 
-    async deleteFromId(proposalId: string) {}
-
     async descPlans(planId: string) {
         let result
         try {

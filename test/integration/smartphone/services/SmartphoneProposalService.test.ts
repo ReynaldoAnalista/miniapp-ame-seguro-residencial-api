@@ -9,9 +9,12 @@ import fs from "fs"
 import { Tenants } from "../../../../src/modules/default/model/Tenants"
 import { ParameterStore } from "../../../../src/configs/ParameterStore"
 import { SmartphoneProposalRepository } from "../../../../src/modules/smartphoneProposal/repository/SmartphoneProposalRepository"
+import { getLogger } from "../../../../src/server/Logger"
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
+
+const log = getLogger("PetProposalService:test")
 
 initDependencies()
 jest.setTimeout(20000)
@@ -27,11 +30,11 @@ describe("SmartphoneProposalService", () => {
         smartphoneProposalRepository = iocContainer.get("SmartphoneProposalRepository")
         parameterStore = iocContainer.get("ParameterStore")
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/smartphoneNotification.json"), "utf-8")
-        console.log("Leu o arquivo de callback")
+        log.debug("Leu o arquivo de callback")
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        console.log("Buscou o secret na AWS")
+        log.debug("Buscou o secret na AWS")
         const paymentObject = JSON.parse(payment)
-        console.log("Realizou o parse do arquivo de callback")
+        log.debug("Realizou o parse do arquivo de callback")
         paymentObject.id = uuidv4()
         paymentObject.attributes.customPayload.customerId = uuidv4()
         signedPayment = await sign(paymentObject, secret)
@@ -57,10 +60,10 @@ describe("SmartphoneProposalService", () => {
     })
 
     it("API para cancelamento", async () => {
-        let cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
-        let cancelObject = JSON.parse(cancel)
-        let cancelSecret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        let signedCancelProcess = await sign(cancelObject, cancelSecret)
+        const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
+        const cancelObject = JSON.parse(cancel)
+        const cancelSecret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
+        const signedCancelProcess = await sign(cancelObject, cancelSecret)
         const cancelProcess = await smartphoneProposalService.cancelationProcess(signedCancelProcess)
         expect(cancelProcess).toBeDefined()
     })

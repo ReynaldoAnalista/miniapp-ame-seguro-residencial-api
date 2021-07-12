@@ -5,11 +5,9 @@ import { TYPES } from "../../../inversify/inversify.types"
 import { ParameterStore } from "../../../configs/ParameterStore"
 import { SimpleEmail } from "../../default/model/SimpleEmail"
 import { MailSender } from "./MailSender"
-
-// import fs from "fs";
+import AWS from "aws-sdk"
 
 const logger = getLogger("MailService")
-const AWS = require("aws-sdk")
 AWS.config.update({
     region: "us-east-1",
 })
@@ -51,8 +49,8 @@ export class MailAwsService implements MailSender {
             logger.warn("Envio de email nao configurado")
             return Promise.resolve({})
         }
-        let mailFormat = await this.createRawMessage(email)
-        let params = {
+        const mailFormat = await this.createRawMessage(email)
+        const params = {
             RawMessage: { Data: mailFormat },
         }
 
@@ -62,19 +60,19 @@ export class MailAwsService implements MailSender {
     }
 
     async createRawMessage(email: SimpleEmail) {
-        let mimemessage = require("mimemessage")
+        const mimemessage = require("mimemessage")
 
-        let mailContent = mimemessage.factory({ contentType: "multipart/mixed", body: [] })
+        const mailContent = mimemessage.factory({ contentType: "multipart/mixed", body: [] })
         mailContent.header("From", email.from)
         mailContent.header("To", email.to)
         mailContent.header("Subject", email.subject)
 
-        let alternateEntity = mimemessage.factory({
+        const alternateEntity = mimemessage.factory({
             contentType: "multipart/alternate",
             body: [],
         })
 
-        let htmlEntity = mimemessage.factory({
+        const htmlEntity = mimemessage.factory({
             contentType: "text/html;charset=utf-8",
             body: email.body,
         })

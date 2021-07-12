@@ -49,9 +49,9 @@ export class PetProposalUtil {
     }
 
     async formatQuoteProposal(customPayload: any) {
-        var productId = 0
+        const productId = 0
         try {
-            let petsBirthDate = customPayload.proposal.pets.map((prop) => {
+            const petsBirthDate = customPayload.proposal.pets.map((prop) => {
                 return {
                     age:
                         typeof prop.age == "undefined"
@@ -71,25 +71,25 @@ export class PetProposalUtil {
             if (customPayload.ambiente === "prod") {
                 switch (customPayload.proposal.planId) {
                     case 48:
-                        var productId = 33
+                        let productId = 33
                         break
                     case 49:
-                        var productId = 34
+                        let productId = 34
                         break
                     case 50:
-                        var productId = 35
+                        let productId = 35
                         break
                 }
             } else {
                 switch (customPayload.proposal.planId) {
                     case 46:
-                        var productId = 28
+                        let productId = 28
                         break
                     case 47:
-                        var productId = 29
+                        let productId = 29
                         break
                     case 48:
-                        var productId = 30
+                        let productId = 30
                         break
                 }
             }

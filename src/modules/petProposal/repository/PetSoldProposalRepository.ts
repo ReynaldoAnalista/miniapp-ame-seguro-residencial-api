@@ -17,15 +17,15 @@ export class PetSoldProposalRepository {
     ) {}
     async create(soldProposal: PetSoldProposal) {
         log.debug("TRYING TO WRITE ON", TABLE)
-        let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
         await dynamoDocClient.put({ TableName: TABLE, Item: soldProposal }).promise()
-        console.log("REGISTER WROTE ON", TABLE)
+        log.debug("REGISTER WROTE ON", TABLE)
         return soldProposal
     }
 
     async findAllFromCustomer(customerId: string) {
         log.debug(`Searching for Proposals in Table: ${TABLE}, customerId: ${customerId}`)
-        let params = {
+        const params = {
             TableName: TABLE,
             KeyConditionExpression: "#customerId = :customerId",
             ExpressionAttributeNames: {
@@ -36,8 +36,8 @@ export class PetSoldProposalRepository {
             },
         }
         try {
-            let dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-            let result = await dynamoDocClient.query(params).promise()
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.PET)
         } catch (e) {

@@ -15,9 +15,12 @@ import { RequestService } from "../../../../src/modules/authToken/services/Reque
 import { ResidentialSoldProposalRepository } from "../../../../src/modules/residentialProposal/repository/ResidentialSoldProposalRepository"
 import moment from "moment"
 import Plans from "../../../../src/modules/residentialProposal/services/Plans"
+import { getLogger } from "../../../../src/server/Logger"
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
+
+const log = getLogger("PetProposalService:test")
 
 initDependencies()
 jest.setTimeout(20000)
@@ -43,7 +46,7 @@ describe("ResidentialProposalService", () => {
     })
 
     it("Recebe todos os planos e envia pra Previsul", async () => {
-        console.log("Buscando todos os planos")
+        log.debug("Buscando todos os planos")
         const allPlans = Plans.map((x) => {
             return {
                 id: x.id,
@@ -51,7 +54,7 @@ describe("ResidentialProposalService", () => {
                 premio: Number(x.premio.toString().replace(".", "")),
             }
         })
-        console.log("Filtrando todos os planos")
+        log.debug("Filtrando todos os planos")
 
         const filterPlans = await Promise.all(
             allPlans.map(async (x) => {
@@ -68,7 +71,7 @@ describe("ResidentialProposalService", () => {
         const errorPlains = filterPlans.filter((x) => {
             return x.error
         })
-        console.log("Erros dos planos", errorPlains)
+        log.debug("Erros dos planos", errorPlains)
         expect(errorPlains.length).toBe(0)
     })
 

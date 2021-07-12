@@ -6,7 +6,9 @@ import { v4 as uuidv4 } from "uuid"
 import { initDependencies, iocContainer } from "../../../../src/inversify/inversify.config"
 import { PetProposalService } from "../../../../src/modules/petProposal/services/PetProposalService"
 import { ParameterStore } from "../../../../src/configs/ParameterStore"
+import { getLogger } from "../../../../src/server/Logger"
 
+const log = getLogger("PetProposalService:test")
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
 
@@ -22,12 +24,12 @@ describe("PetProposalService", () => {
         petProposalService = iocContainer.get("PetProposalService")
         parameterStore = iocContainer.get("ParameterStore")
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/petNotification.json"), "utf-8")
-        console.log("Leu o arquivo de callback")
+        log.debug("Leu o arquivo de callback")
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        console.log("Buscou o secret na AWS")
+        log.debug("Buscou o secret na AWS")
         const paymentObject = Object()
         paymentObject.attributes = JSON.parse(payment)
-        console.log("Realizou o parse do arquivo de callback")
+        log.debug("Realizou o parse do arquivo de callback")
         paymentObject.attributes.id = uuidv4()
         signedPayment = await sign(paymentObject, secret)
     })

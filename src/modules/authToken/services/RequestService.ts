@@ -44,7 +44,7 @@ export class RequestService {
     METHODS = Methods
     ENDPOINTS = Endpoints
 
-    async makeRequest(url: Endpoints, method: Methods, body: object | null, tenant: string, queryString?: string) {
+    async makeRequest(url: Endpoints, method: Methods, body: any, tenant: string, queryString?: string) {
         log.debug(`Call to make a ${method} on ${url}`)
         const apiUrl = await this.parameterStore.getSecretValue(url)
         const token = await this.authTokenService.retrieveAuthorization(tenant)
@@ -79,14 +79,14 @@ export class RequestService {
             }
         }
 
-        let config = {
+        const config = {
             method: method,
             url: apiUrl + (queryString ? queryString : ""),
             headers,
             data: body != null ? JSON.stringify(body) : null,
         }
 
-        let result = await axios(config)
+        const result = await axios(config)
 
         log.debug("Request Successfully")
         if (result.headers && result.headers["x-b3-traceid"]) {
