@@ -1,7 +1,7 @@
-import 'reflect-metadata'
-import { ApiServer } from './server/ApiServer'
-import { initDependencies, iocContainer } from './inversify/inversify.config';
-import { TYPES } from './inversify/inversify.types';
+import "reflect-metadata"
+import { ApiServer } from "./server/ApiServer"
+import { initDependencies, iocContainer } from "./inversify/inversify.config"
+import { TYPES } from "./inversify/inversify.types"
 
 initDependencies()
 

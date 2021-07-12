@@ -9,7 +9,6 @@ export class GenericError {
         this.error = error
     }
 
-
     getHttpStatusCode = (): number => {
         return this.httpStatusCode
     }

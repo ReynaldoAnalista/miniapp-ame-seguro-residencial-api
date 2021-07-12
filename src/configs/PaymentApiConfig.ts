@@ -12,11 +12,11 @@ export class PaymentApiConfig {
         this._authorizePath = appConfig.paymentApiConfig.authorizePath
     }
 
-    public get url() : string {
+    public get url(): string {
         return this._url
     }
-    
-    public get authorizePath() : string {
+
+    public get authorizePath(): string {
         return this._authorizePath
     }
 }
