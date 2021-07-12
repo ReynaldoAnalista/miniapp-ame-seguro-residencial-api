@@ -1,7 +1,10 @@
-.idea
-node_modules
-/dist
-.vscode
+/node_modules/
+/.idea/
+/.vscode/
+/build/
+/dist/
+start.sh
+yarn-*.log
 newrelic_agent.log
-yarn.lock
-yarn-error.log
+src/routes.ts
+/coverage/
