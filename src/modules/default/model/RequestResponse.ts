@@ -1,9 +1,7 @@
-
 export class RequestResponse {
-
     _id: any
 
-    method?:string
+    method?: string
 
     url?: string
 

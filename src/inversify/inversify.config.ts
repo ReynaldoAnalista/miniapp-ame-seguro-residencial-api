@@ -1,16 +1,16 @@
-import 'reflect-metadata'
-import {Container} from 'inversify'
-import {AppConfig} from '../configs/AppConfig';
-import {TYPES} from './inversify.types';
-import {BlindGuardianConfig} from '../configs/BlindGuardianConfig';
-import {ApiServer} from '../server/ApiServer';
-import {ServerConfig} from '../configs/ServerConfig';
-import Axios, {AxiosInstance} from 'axios';
-import {ParameterStore} from "../configs/ParameterStore";
-import {Secrets} from "../configs/Secrets";
-import { DynamoHolder } from '../repository/DynamoHolder';
-import { MailSender } from '../modules/default/services/MailSender';
-import { MailAwsService } from '../modules/default/services/MailAwsService';
+import "reflect-metadata"
+import { Container } from "inversify"
+import { AppConfig } from "../configs/AppConfig"
+import { TYPES } from "./inversify.types"
+import { BlindGuardianConfig } from "../configs/BlindGuardianConfig"
+import { ApiServer } from "../server/ApiServer"
+import { ServerConfig } from "../configs/ServerConfig"
+import Axios, { AxiosInstance } from "axios"
+import { ParameterStore } from "../configs/ParameterStore"
+import { Secrets } from "../configs/Secrets"
+import { DynamoHolder } from "../repository/DynamoHolder"
+import { MailSender } from "../modules/default/services/MailSender"
+import { MailAwsService } from "../modules/default/services/MailAwsService"
 
 export const iocContainer = new Container()
 
@@ -20,7 +20,7 @@ export const initDependencies = () => {
     iocContainer.bind<MailSender>("MailSender").to(MailAwsService).inSingletonScope()
 
     /* Initialize Configs */
-    iocContainer.bind<AppConfig>(TYPES.AppConfig).to(AppConfig).inSingletonScope();
+    iocContainer.bind<AppConfig>(TYPES.AppConfig).to(AppConfig).inSingletonScope()
     iocContainer.bind<BlindGuardianConfig>(TYPES.BlindGuardianConfig).to(BlindGuardianConfig).inSingletonScope()
     iocContainer.bind<ServerConfig>(TYPES.ServerConfig).to(ServerConfig).inSingletonScope()
     iocContainer.bind<ParameterStore>(TYPES.ParameterStore).to(ParameterStore).inSingletonScope()
@@ -51,7 +51,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/petProposal/services")
     bindSingleton("../modules/lifeProposal/services")
 
-/* Initialize Repositories */
+    /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
     bindSingleton("../modules/residentialProposal/repository")
     bindSingleton("../modules/smartphoneProposal/repository")
@@ -61,18 +61,18 @@ export const initDependencies = () => {
 }
 
 function requireDir(relativePath: string): any[] {
-    const fs = require('fs')
-    const path = require('path')
+    const fs = require("fs")
+    const path = require("path")
     let fullPath = path.join(__dirname, relativePath)
-    return fs.readdirSync(fullPath).map(fileName => {
-        let withoutExtension = fileName.replace(/\.(ts|js)$/, '')
+    return fs.readdirSync(fullPath).map((fileName) => {
+        let withoutExtension = fileName.replace(/\.(ts|js)$/, "")
         let servicePath = `${relativePath}/${withoutExtension}`
         return require(servicePath)
     })
 }
 
 function bindControllers(relativePath: string) {
-    requireDir(relativePath).forEach(definitions => {
+    requireDir(relativePath).forEach((definitions) => {
         for (let identifier in definitions) {
             let clazz = definitions[identifier]
             if (identifier.endsWith("Controller")) {
@@ -83,7 +83,7 @@ function bindControllers(relativePath: string) {
 }
 
 function bindSingleton(relativePath: string) {
-    requireDir(relativePath).forEach(servicesDefinitions => {
+    requireDir(relativePath).forEach((servicesDefinitions) => {
         for (let serviceIdentifier in servicesDefinitions) {
             let clazz = servicesDefinitions[serviceIdentifier]
             iocContainer.bind(serviceIdentifier).to(clazz).inSingletonScope()

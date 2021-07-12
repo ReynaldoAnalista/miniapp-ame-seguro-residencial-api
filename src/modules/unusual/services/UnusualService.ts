@@ -1,20 +1,18 @@
-import { inject, injectable } from "inversify";
-import { getLogger } from "../../../server/Logger";
-import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository";
-import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService";
+import { inject, injectable } from "inversify"
+import { getLogger } from "../../../server/Logger"
+import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
+import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
 
 const log = getLogger("UnusualService")
 
 @injectable()
 export class UnusualService {
-
-    constructor(        
+    constructor(
         @inject("SmartphoneProposalRepository")
-        private smartphoneProposalRepository :  SmartphoneProposalRepository,
+        private smartphoneProposalRepository: SmartphoneProposalRepository,
         @inject("SmartphoneProposalMailService")
-        private smartphoneProposalMailService :  SmartphoneProposalMailService
-    ) {
-    }
+        private smartphoneProposalMailService: SmartphoneProposalMailService
+    ) {}
 
     async sendSellingEmailWithParams(pass: string, email: string) {
         log.debug(`Sending email: ${pass}`)
@@ -25,5 +23,4 @@ export class UnusualService {
         log.error("Order not found")
         throw new Error("Order not found")
     }
-
 }

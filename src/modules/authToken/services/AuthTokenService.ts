@@ -1,31 +1,27 @@
-import {inject, injectable} from "inversify";
-import {getLogger} from "../../../server/Logger";
-import {TYPES} from "../../../inversify/inversify.types";
-import {ParameterStore} from "../../../configs/ParameterStore";
-import axios from "axios";
-import qs from 'qs'
-import * as jwt from 'jsonwebtoken';
+import { inject, injectable } from "inversify"
+import { getLogger } from "../../../server/Logger"
+import { TYPES } from "../../../inversify/inversify.types"
+import { ParameterStore } from "../../../configs/ParameterStore"
+import axios from "axios"
+import qs from "qs"
+import * as jwt from "jsonwebtoken"
 
-import {AuthToken} from "../model/AuthToken";
-import {Tenants} from "../../default/model/Tenants";
+import { AuthToken } from "../model/AuthToken"
+import { Tenants } from "../../default/model/Tenants"
 
-const cache = require('memory-cache')
-const AWS = require('aws-sdk')
+const cache = require("memory-cache")
+const AWS = require("aws-sdk")
 const log = getLogger("AuthTokenService")
 
 AWS.config.update({
-    region: 'us-east-1'
+    region: "us-east-1",
 })
 
 @injectable()
 export class AuthTokenService {
+    constructor(@inject(TYPES.ParameterStore) private parameterStore: ParameterStore) {}
 
-    constructor(
-        @inject(TYPES.ParameterStore) private parameterStore: ParameterStore
-    ) {
-    }
-
-    private async retrieveConfig(configName: string): Promise<String> {
+    private async retrieveConfig(configName: string): Promise<string> {
         log.debug(`Searching for config: ${configName}`)
         if (configName) {
             try {
@@ -44,157 +40,158 @@ export class AuthTokenService {
         throw "Retrieving config with no configName"
     }
 
-    async getUrlBase(tenant : string) {
-        switch(tenant) {
-            case 'SMARTPHONE':
-                return 'SMARTPHONE_URL_AUTHORIZATION'                
-            case 'PET':
-                return 'PET_URL_BASE'
-            case 'LIFE':
-                return 'LIFE_URL_AUTHORIZATION'                
+    async getUrlBase(tenant: string) {
+        switch (tenant) {
+            case "SMARTPHONE":
+                return "SMARTPHONE_URL_AUTHORIZATION"
+            case "PET":
+                return "PET_URL_BASE"
+            case "LIFE":
+                return "LIFE_URL_AUTHORIZATION"
             default:
-                return 'URL_AUTHORIZATION'
+                return "URL_AUTHORIZATION"
         }
     }
 
     async retrieveAuthorization(tenant: string, resetCache = false): Promise<string | undefined> {
-        log.debug('Starting Authorization for ' + tenant)
+        log.debug("Starting Authorization for " + tenant)
         const AUTH_KEY = await this.getUrlBase(tenant)
-        const AUTH_URL = await this.parameterStore.getSecretValue(AUTH_KEY)        
+        const AUTH_URL = await this.parameterStore.getSecretValue(AUTH_KEY)
         const TOKEN_CACHE = `TOKENCACHE_${tenant}`
         if (resetCache) {
-            log.debug('Clearing Token from cache')
+            log.debug("Clearing Token from cache")
             cache.del(TOKEN_CACHE)
         }
         if (cache.get(TOKEN_CACHE)) {
-            log.debug('Authorization Token by Cache')
+            log.debug("Authorization Token by Cache")
             return cache.get(TOKEN_CACHE)
         }
-        log.debug('Authorization Token expired, requesting another one.')
+        log.debug("Authorization Token expired, requesting another one.")
         try {
-
             if (tenant === Tenants.RESIDENTIAL) {
-                log.debug('Trying to authorizate on ' + AUTH_URL)
-                let clientId = await this.retrieveConfig('CLIENT_ID')
-                let clientSecret = await this.retrieveConfig('CLIENT_SECRET')
-                let clientScope = await this.retrieveConfig('CLIENT_SCOPE')
-                const authorization = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64')
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                let clientId = await this.retrieveConfig("CLIENT_ID")
+                let clientSecret = await this.retrieveConfig("CLIENT_SECRET")
+                let clientScope = await this.retrieveConfig("CLIENT_SCOPE")
+                const authorization = Buffer.from(`${clientId}:${clientSecret}`, "utf8").toString("base64")
                 let config = {
                     headers: {
-                        'Authorization': `Basic ${authorization}`,
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'User-Agent': ''
-                    }
-                };
+                        Authorization: `Basic ${authorization}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "User-Agent": "",
+                    },
+                }
                 let body = qs.stringify({
-                    'grant_type': 'client_credentials',
-                    'scope': clientScope
+                    grant_type: "client_credentials",
+                    scope: clientScope,
                 })
-                let result: AuthToken = new AuthToken();
+                let result: AuthToken = new AuthToken()
 
-                await axios.post(AUTH_URL, body, config)
+                await axios
+                    .post(AUTH_URL, body, config)
                     .then((res) => {
-                        log.debug("AUTHORIZED");
-                        result = AuthToken.fromObject(res.data);
+                        log.debug("AUTHORIZED")
+                        result = AuthToken.fromObject(res.data)
                     })
                     .catch((err) => {
-                        log.error("ERROR ON AUTHORIZING");
-                        log.error("AXIOS ERROR: ", err);
-                    });
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
 
                 cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
-                return result.access_token;
-
+                return result.access_token
             }
 
             if (tenant === Tenants.SMARTPHONE) {
-                log.debug('Trying to authorizate on ' + AUTH_URL)
-                const API_KEY = await this.parameterStore.getSecretValue('SMARTPHONE_API_KEY')
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                const API_KEY = await this.parameterStore.getSecretValue("SMARTPHONE_API_KEY")
                 let config = {
                     headers: {
-                        'apikey': API_KEY,
-                        'Accept-Encoding': 'gzip, deflate, br',
-                        'Accept': '*/*',
-                        'Connection': 'keep-alive',
-                        'User-Agent': ''
-                    }
-                };
-                log.debug('Trying to authorizate')
+                        apikey: API_KEY,
+                        "Accept-Encoding": "gzip, deflate, br",
+                        Accept: "*/*",
+                        Connection: "keep-alive",
+                        "User-Agent": "",
+                    },
+                }
+                log.debug("Trying to authorizate")
                 let result
-                await axios.get(AUTH_URL, config)
+                await axios
+                    .get(AUTH_URL, config)
                     .then((res) => {
-                        log.debug("AUTHORIZED");
-                        result = res.headers['authorization']
+                        log.debug("AUTHORIZED")
+                        result = res.headers["authorization"]
                     })
                     .catch((err) => {
-                        log.error("ERROR ON AUTHORIZING");
-                        log.error("AXIOS ERROR: ", err);
-                    });
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
                 cache.put(TOKEN_CACHE, result, 1000 * 60)
                 return result
             }
 
             if (tenant === Tenants.PET) {
-                log.debug('Trying to authorizate on ' + AUTH_URL + 'auth/oauth/token?grant_type=client_credentials&scope=seguro-pet')
-                let clientId = await this.retrieveConfig('PET_CLIENT_ID')
-                let clientSecret = await this.retrieveConfig('PET_CLIENT_SECRET')
-                let clientScope = await this.retrieveConfig('PET_CLIENT_SCOPE')
-                const authorization = Buffer.from(`${clientId}:${clientSecret}`, 'utf8').toString('base64')
+                log.debug(
+                    "Trying to authorizate on " + AUTH_URL + "auth/oauth/token?grant_type=client_credentials&scope=seguro-pet"
+                )
+                let clientId = await this.retrieveConfig("PET_CLIENT_ID")
+                let clientSecret = await this.retrieveConfig("PET_CLIENT_SECRET")
+                let clientScope = await this.retrieveConfig("PET_CLIENT_SCOPE")
+                const authorization = Buffer.from(`${clientId}:${clientSecret}`, "utf8").toString("base64")
                 let config = {
                     headers: {
-                        'Authorization': `Basic ${authorization}`,
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'User-Agent': ''
-                    }
-                };
+                        Authorization: `Basic ${authorization}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "User-Agent": "",
+                    },
+                }
                 let body = qs.stringify({
-                    'grant_type': 'client_credentials',
-                    'scope': clientScope
+                    grant_type: "client_credentials",
+                    scope: clientScope,
                 })
-                let result: AuthToken = new AuthToken();
+                let result: AuthToken = new AuthToken()
 
-                await axios.post(AUTH_URL + 'auth/oauth/token?grant_type=client_credentials&scope=seguro-pet', body, config)
+                await axios
+                    .post(AUTH_URL + "auth/oauth/token?grant_type=client_credentials&scope=seguro-pet", body, config)
                     .then((res) => {
-                        log.debug("AUTHORIZED");
-                        result = AuthToken.fromObject(res.data);
+                        log.debug("AUTHORIZED")
+                        result = AuthToken.fromObject(res.data)
                     })
                     .catch((err) => {
-                        log.error("ERROR ON AUTHORIZING");
-                        log.error("AXIOS ERROR: ", err);
-                    });
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
 
                 cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
-                return result.access_token;
-
+                return result.access_token
             }
 
             if (tenant === Tenants.LIFE) {
-                log.debug('Trying to authorizate on ' + AUTH_URL)
-                let lifeKey = await this.retrieveConfig('LIFE_API_KEY')
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                let lifeKey = await this.retrieveConfig("LIFE_API_KEY")
                 let config = {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'apikey': lifeKey
-                    }
-                };                
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        apikey: lifeKey,
+                    },
+                }
                 let result
 
-                await axios.get(AUTH_URL, config)
+                await axios
+                    .get(AUTH_URL, config)
                     .then((res) => {
-                        log.debug("AUTHORIZED");
-                        result = res.headers;
+                        log.debug("AUTHORIZED")
+                        result = res.headers
                     })
                     .catch((err) => {
-                        log.error("ERROR ON AUTHORIZING");
-                        log.error("AXIOS ERROR: ", err);
-                    });
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
                 // cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
-                return result.authorization;
+                return result.authorization
             }
-
-
         } catch (err) {
-            return 'Erro ao tentar buscar um token para autenticação';
+            return "Erro ao tentar buscar um token para autenticação"
         }
     }
 
@@ -207,7 +204,7 @@ export class AuthTokenService {
                 } else {
                     resolve(decoded)
                 }
-            });
+            })
         })
     }
 }
