@@ -1,9 +1,7 @@
-
 export class RequestResponse {
-
     _id: any
 
-    method?:string
+    method?: string
 
     url?: string
 
@@ -20,7 +18,7 @@ export class RequestResponse {
     response?: any
 
     static build(method: string, url: string, data: any, options: any, user: any): RequestResponse {
-        let reqRes = new RequestResponse()
+        const reqRes = new RequestResponse()
         reqRes.method = method
         reqRes.url = url
         reqRes.user = user

@@ -19,5 +19,4 @@ export class ServerConfig {
     public get context(): string {
         return this._context
     }
-
 }
