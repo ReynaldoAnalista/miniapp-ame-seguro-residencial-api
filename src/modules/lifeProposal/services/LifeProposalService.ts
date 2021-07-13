@@ -1,10 +1,9 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
-import { TYPES } from "../../../inversify/inversify.types"
 import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
-import { ParameterStore } from "../../../configs/ParameterStore"
 import { Tenants } from "../../default/model/Tenants"
+import { LifeProposalUtil } from "./LifeProposalUtil"
 
 const log = getLogger("LifeProposalService")
 
@@ -12,8 +11,15 @@ const log = getLogger("LifeProposalService")
 export class LifeProposalService {
     constructor(
         @inject("AuthTokenService") private authTokenService: AuthTokenService,
-        @inject("RequestService") private requestService: RequestService
+        @inject("RequestService") private requestService: RequestService,
+        @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil
     ) {}
+
+    async cotation(proposal: any) {
+        const formatPropose = await this.lifeProposalUtil.formatProposal(proposal)
+        const sendCotation = await this.getCotation(formatPropose)
+        return sendCotation
+    }
 
     async getCotation(cotation: any) {
         log.debug("Sending proposal to Partner")
