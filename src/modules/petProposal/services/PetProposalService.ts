@@ -36,12 +36,11 @@ export class PetProposalService {
         const planId = proposal.attributes?.customPayload.proposal.planId
         const proposalPets = await this.petProposalUtil.formatQuoteProposal(proposal.attributes?.customPayload)
         log.info("Formatação dos campos para cotação")
-        const quotePlan = await this.quotePlans(planId, proposalPets)
+        const quotePlan = await this.quotePlans(planId, proposalPets)           
         log.info("Solicita a cotação dos planos")
         const formatProposal = await this.petProposalUtil.formatRequestProposal(proposal)
-        const quoteId = quotePlan.data.contract_uuid
+        const quoteId = quotePlan.data.contract_uuid        
         const getProposal = await this.requestProposal(quoteId, formatProposal)
-        log.info("Faz a requisição da proposta")
         const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, proposal, getProposal)
         await this.petProposalRepository.create(databaseProposalFormat)
         log.info("Salva a proposta no banco de dados")
@@ -111,13 +110,15 @@ export class PetProposalService {
                 `seguro-pet/v2/enroll/${contractId}`
             )
             result = response.data
-            log.info(`Success proposal :${contractId}`)
+            log.info(`Success proposal :${contractId}`)            
         } catch (e) {
             const status = e.response?.status
             result = null
             log.debug(`Error %j`, e.message)
             log.debug("Error when trying to proposal Plan")
             log.debug(`Status Code: ${status}`)
+            console.log('ERROR', e);
+            
         }
         return result
     }
