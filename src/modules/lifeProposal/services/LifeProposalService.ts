@@ -16,8 +16,9 @@ export class LifeProposalService {
     ) {}
 
     async cotation(proposal: any) {
-        const formatPropose = await this.lifeProposalUtil.formatProposal(proposal)
-        const sendCotation = await this.getCotation(formatPropose)
+        // TODO : RETORNAR A FORMATAÇÃO DEPOIS QUE A IZA RESOLVER NO FRONT
+        // const formatPropose = await this.lifeProposalUtil.formatProposal(proposal)
+        const sendCotation = await this.getCotation(proposal)
         return sendCotation
     }
 
