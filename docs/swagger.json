@@ -1539,41 +1539,6 @@
 				}
 			}
 		},
-		"/v1/smartphone/update_liquid_price": {
-			"post": {
-				"operationId": "UpdateLiquidPrice",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/v1/unusual/proposal_email/{pass}/{email}/sendEmail": {
 			"get": {
 				"operationId": "SendMailProposalWithParams",
