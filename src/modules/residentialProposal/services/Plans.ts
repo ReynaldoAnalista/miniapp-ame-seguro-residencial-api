@@ -6,8 +6,7 @@ export default [
         coberturas: [
             {
                 id: "538437",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 120000,
             },
             {
@@ -46,8 +45,7 @@ export default [
         coberturas: [
             {
                 id: "538533",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 250000,
             },
             {
@@ -84,8 +82,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 400000,
             },
             {
@@ -122,8 +119,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 600000,
             },
             {
@@ -148,8 +144,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -171,8 +166,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 750000,
             },
             {
@@ -197,8 +191,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -220,8 +213,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 1000000,
             },
             {
@@ -246,8 +238,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -269,8 +260,7 @@ export default [
         coberturas: [
             {
                 id: "538553",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 120000,
                 taxa: 0.46992,
                 premio: 56.39,
@@ -328,8 +318,7 @@ export default [
         coberturas: [
             {
                 id: "538564",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 250000,
                 taxa: 0.47043,
                 premio: 117.61,
@@ -387,8 +376,7 @@ export default [
         coberturas: [
             {
                 id: "538575",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 400000,
                 taxa: 0.47011,
                 premio: 188.04,
@@ -446,8 +434,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 600000,
             },
             {
@@ -472,8 +459,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -495,8 +481,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 750000,
             },
             {
@@ -521,8 +506,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -544,8 +528,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 1000000,
             },
             {
@@ -570,8 +553,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -593,8 +575,7 @@ export default [
         coberturas: [
             {
                 id: "538598",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 120000,
                 taxa: 0.78376,
                 premio: 94.05,
@@ -645,8 +626,7 @@ export default [
         coberturas: [
             {
                 id: "538608",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 250000,
                 taxa: 0.7839,
                 premio: 195.98,
@@ -697,8 +677,7 @@ export default [
         coberturas: [
             {
                 id: "538618",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 400000,
                 taxa: 0.78369,
                 premio: 313.48,
@@ -749,8 +728,7 @@ export default [
         coberturas: [
             {
                 id: "538639",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 250000,
                 taxa: 0.7839,
                 premio: 195.98,
@@ -808,8 +786,7 @@ export default [
         coberturas: [
             {
                 id: "538650",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 400000,
                 taxa: 0.78369,
                 premio: 313.48,
@@ -867,8 +844,7 @@ export default [
         coberturas: [
             {
                 id: "544904",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 120000,
                 taxa: 0.78376,
                 premio: 94.05,
@@ -926,8 +902,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 600000,
             },
             {
@@ -952,8 +927,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -975,8 +949,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 750000,
             },
             {
@@ -1001,8 +974,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -1024,8 +996,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 1000000,
             },
             {
@@ -1050,8 +1021,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -1073,8 +1043,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 600000,
             },
             {
@@ -1099,8 +1068,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -1122,8 +1090,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 750000,
             },
             {
@@ -1148,8 +1115,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -1171,8 +1137,7 @@ export default [
         coberturas: [
             {
                 id: "538588",
-                descricao:
-                    "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
+                descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 1000000,
             },
             {
@@ -1197,8 +1162,7 @@ export default [
             },
             {
                 id: "545183",
-                descricao:
-                    "Assistência Residencial Completa + Eletroassistência com peças",
+                descricao: "Assistência Residencial Completa + Eletroassistência com peças",
                 valor: 0,
             },
             {
@@ -1213,4 +1177,4 @@ export default [
             },
         ],
     },
-];
+]

@@ -1,37 +1,32 @@
-import {inject, injectable} from "inversify"
-import {ResidentialProposalService} from "../services/ResidentialProposalService"
-import {Get, Path, Route, SuccessResponse, Response, Request, Post, Body, Security} from "tsoa"
-import {getLogger} from "../../../server/Logger"
-import {ApiError} from "../../../errors/ApiError";
-import {ResidentialProposalNotification} from "../model/ResidentialProposalNotification";
+import { inject, injectable } from "inversify"
+import { ResidentialProposalService } from "../services/ResidentialProposalService"
+import { Get, Path, Route, SuccessResponse, Response, Request, Post, Body, Security } from "tsoa"
+import { getLogger } from "../../../server/Logger"
+import { ApiError } from "../../../errors/ApiError"
+import { ResidentialProposalNotification } from "../model/ResidentialProposalNotification"
 
 const logger = getLogger("ResidentialProposalController")
 
-@Route('/v1/residential')
+@Route("/v1/residential")
 @injectable()
 export class ResidentialProposalController {
-    constructor(
-        @inject("ResidentialProposalService") private residentialProposalService: ResidentialProposalService,
-    ) {
-    }
+    constructor(@inject("ResidentialProposalService") private residentialProposalService: ResidentialProposalService) {}
 
-    @Response(404, 'NotFound')
+    @Response(404, "NotFound")
     @Get("/proposal-report")
     @Security("jwt", ["list_proposal"])
     public async proposalReport(@Request() request) {
-        logger.info('Relatório de vendas')
-        const response = (<any>request).res;
-        response.contentType('text/plain');
-        response
-            .send((await this.residentialProposalService.proposalReport()).join('\n'))
-            .end();
+        logger.info("Relatório de vendas")
+        const response = (<any>request).res
+        response.contentType("text/plain")
+        response.send((await this.residentialProposalService.proposalReport()).join("\n")).end()
     }
 
-    @Response(404, 'NotFound')
+    @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Get("/{zipCode}/{buildType}")
     public async retrievePlans(@Path() zipCode: string, @Path() buildType: string) {
-        logger.debug(`Plans request starting for zipCode=${zipCode}`);
+        logger.debug(`Plans request starting for zipCode=${zipCode}`)
         try {
             const result: any = await this.residentialProposalService.retrievePlanList(buildType, zipCode)
             if (result.length === 0) {
@@ -39,15 +34,15 @@ export class ResidentialProposalController {
             }
             return result
         } catch (e) {
-            throw new ApiError("Error on retrieve plans", 404, JSON.stringify({trace: e.trace, apiStatus: e.status}))
+            throw new ApiError("Error on retrieve plans", 404, JSON.stringify({ trace: e.trace, apiStatus: e.status }))
         }
     }
 
-    @Response(404, 'NotFound')
+    @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
     public async sendProposal(@Body() signedPayment: ResidentialProposalNotification) {
-        logger.info('Sending Proposal %j', signedPayment);
+        logger.info("Sending Proposal %j", signedPayment)
         try {
             return await this.residentialProposalService.processProposal(signedPayment.signedPayment)
         } catch (e) {
@@ -59,10 +54,9 @@ export class ResidentialProposalController {
     @Get("/proposal")
     @Security("jwt", ["list_proposal"])
     public async listProposal() {
-        logger.info('Listando proposal')
+        logger.info("Listando proposal")
         const proposal = await this.residentialProposalService.listProposal()
-        logger.info('Retornando proposals %j', proposal.length)
+        logger.info("Retornando proposals %j", proposal.length)
         return proposal
     }
-
 }

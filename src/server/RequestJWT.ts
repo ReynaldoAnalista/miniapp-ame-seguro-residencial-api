@@ -1,5 +1,3 @@
-import { Request } from 'express'
+import { Request } from "express"
 
-export interface RequestJWT extends Request {
-
-}
+export type RequestJWT = Request

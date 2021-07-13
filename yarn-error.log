@@ -1,30 +1,25 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js tsoa:routes
+  /usr/local/bin/node /usr/local/bin/yarn install
 
 PATH: 
-  /home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/tmp/yarn--1621948100198-0.11365571592579493:/home/reynaldo/Projetos/miniapp-ame-seguro-residencial-api/node_modules/.bin:/home/reynaldo/.config/yarn/link/node_modules/.bin:/home/reynaldo/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /opt/local/bin:/opt/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
-  1.22.5
+  1.22.10
 
 Node version: 
-  10.19.0
+  14.17.2
 
 Platform: 
-  linux x64
+  darwin x64
 
 Trace: 
-  Error: EIO: i/o error, write
-      at writeSync (fs.js:573:3)
-      at SyncWriteStream._write (internal/fs/sync_write_stream.js:22:3)
-      at doWrite (_stream_writable.js:415:12)
-      at writeOrBuffer (_stream_writable.js:399:5)
-      at SyncWriteStream.Writable.write (_stream_writable.js:299:11)
-      at ConsoleReporter._log (/usr/share/yarn/lib/cli.js:96770:17)
-      at ConsoleReporter.log (/usr/share/yarn/lib/cli.js:96758:10)
-      at ConsoleReporter.command (/usr/share/yarn/lib/cli.js:96787:10)
-      at /usr/share/yarn/lib/cli.js:34545:16
+  SyntaxError: /Users/madera/Projetos/miniapps/ame-seguros/miniapp-ame-seguros-api/package.json: Unexpected token } in JSON at position 3164
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
       at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -44,7 +39,9 @@ npm manifest:
       "coverage": "jest --coverage",
       "tsoa:gen": "yarn tsoa swagger -c ./tsoa.json && yarn tsoa routes -c ./tsoa.json",
       "tsoa:routes": "yarn tsoa routes -c ./tsoa.json",
-      "generate-su-token": "node ./src/modules/card/tokenGenerator.ts"
+      "generate-su-token": "node ./src/modules/card/tokenGenerator.ts",
+      "lint": "yarn eslint --ext .ts --ext .js './src' './test' --quiet",
+      "lint:fix": "yarn lint --fix"
     },
     "devDependencies": {
       "@types/bcrypt": "^3.0.0",
@@ -59,7 +56,15 @@ npm manifest:
       "nock": "^13.0.5",
       "ts-jest": "^24.2.0",
       "ts-node": "^8.5.4",
-      "typescript": "^3.7.4"
+      "typescript": "^3.7.4",
+      "eslint": "^7.14.0",
+      "eslint-config-prettier": "^6.15.0",
+      "eslint-plugin-import": "^2.22.1",
+      "eslint-plugin-jest": "^24.3.5",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-prettier": "^3.1.4",
+      "eslint-plugin-promise": "^4.2.1",
+      "husky": "4.3.0"
     },
     "dependencies": {
       "@fnando/cpf": "^1.0.1",
@@ -97,7 +102,20 @@ npm manifest:
       "winston": "^3.2.1",
       "winston-cloudwatch": "^2.3.2",
       "xlsx": "^0.16.2"
-    }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/*.{js,ts}": [
+            "eslint --fix"
+        ],
+        "test/**/*.{js,ts}": [
+            "eslint --fix"
+        ]
+    },
   }
 
 yarn manifest: 
