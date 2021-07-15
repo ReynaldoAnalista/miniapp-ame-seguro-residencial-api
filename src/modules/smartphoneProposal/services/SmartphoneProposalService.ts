@@ -225,6 +225,7 @@ export class SmartphoneProposalService {
                 apiVersion,
                 status: SoldProposalStatus.create,
                 receivedPaymentNotification: proposal,
+                NSU: proposal.nsu,
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
