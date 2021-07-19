@@ -1,7 +1,6 @@
 export interface DigibeeConfirmation {
     control_data: {
-        key_contract_certificate_number: number
-        customer_identifier_code: string
+        key_contract_certificate_number: string
         processing_data: string
         acceptance_type: string
         shipping_file_number: number
