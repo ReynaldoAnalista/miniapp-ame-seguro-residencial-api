@@ -82,8 +82,7 @@ export class RequestService {
         if (tenant === Tenants.HEALTHCARE) {
             headers = {
                 "Content-Type": "application/json",
-                USUARIO: await this.parameterStore.getSecretValue("HEALTHCARE_USER"),
-                TOKEN: await this.parameterStore.getSecretValue("HEALTHCARE_TOKEN"),
+                Authorization: `Bearer ${token}`,
             }
         }
 
