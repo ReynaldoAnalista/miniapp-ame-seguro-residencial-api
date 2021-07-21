@@ -41,16 +41,15 @@ export class ResidentialMaintenanceService {
         return { proposalData }
     }
 
-    async generateSoldProposal(version: string, paymentId: string, customerId: string) {
+    async genSoldProposal(version: string, paymentId: string, customerId: string): Promise<any> {
         const proposalData = await this.residentialProposalRepository.findByEmail(paymentId)
         const successData = await this.residentialProposalRepository.findByEmail(`${paymentId}_success`)
-        const failData = await this.residentialProposalRepository.findByEmail(`${paymentId}_fail`)
         if (Array.isArray(proposalData) && proposalData.length) {
             return proposalData.map((data, index) => {
                 if (version === "1") {
                     // Trabalhando o primeiro modelo
                     return {
-                        tenant: "RESIDENTIAL",
+                        tenant: Tenants.RESIDENTIAL,
                         success: true,
                         status: "PROCESSED",
                         createdAt: new Date().toISOString(),
@@ -115,7 +114,7 @@ export class ResidentialMaintenanceService {
                 }
                 if (version === "2" && Array.isArray(successData)) {
                     return {
-                        tenant: "RESIDENTIAL",
+                        tenant: Tenants.RESIDENTIAL,
                         success: true,
                         status: "PROCESSED",
                         createdAt: new Date().toISOString(),
