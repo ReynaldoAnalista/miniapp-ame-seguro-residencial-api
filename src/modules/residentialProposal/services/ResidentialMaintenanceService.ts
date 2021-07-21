@@ -41,7 +41,7 @@ export class ResidentialMaintenanceService {
         return { proposalData }
     }
 
-    async genSoldProposal(version: string, paymentId: string, customerId: string): Promise<any> {
+    async genSoldProposal(version: string, paymentId: string, customerId: string, nsu: string): Promise<any> {
         const proposal = await this.residentialProposalRepository.findByEmail(paymentId)
         const success = await this.residentialProposalRepository.findByEmail(`${paymentId}_success`)
         const logArray: string[] = []
@@ -58,6 +58,7 @@ export class ResidentialMaintenanceService {
                 apiVersion: process.env.COMMIT_HASH || "unavailable",
                 customerId: customerId,
                 fromMigration: true,
+                NSU: nsu,
                 partnerResponse: {
                     result: proposal?.proposalProtocol,
                     trace: "LOST_IN_PROCESS",
@@ -72,7 +73,7 @@ export class ResidentialMaintenanceService {
                     description: "",
                     title: "",
                     type: "PAYMENT",
-                    nsu: "",
+                    nsu,
                     peer: null,
                     amountRefunded: 0,
                     name: "Compra on-line",
@@ -111,6 +112,7 @@ export class ResidentialMaintenanceService {
                     status: "AUTHORIZED",
                 },
             }
+            await this.residentialSoldProposalRepository.create(output.soldProposal as ResidentialSoldProposal)
         }
 
         if (version === "2") {
@@ -124,6 +126,7 @@ export class ResidentialMaintenanceService {
                 apiVersion: process.env.COMMIT_HASH || "unavailable",
                 customerId: customerId,
                 fromMigration: true,
+                NSU: nsu,
                 partnerResponse: success?.proposalResponse,
                 receivedPaymentNotification: {
                     date: [],
@@ -134,7 +137,7 @@ export class ResidentialMaintenanceService {
                     description: "",
                     title: "",
                     type: "PAYMENT",
-                    nsu: "",
+                    nsu,
                     peer: null,
                     amountRefunded: 0,
                     name: "Compra on-line",
@@ -173,6 +176,7 @@ export class ResidentialMaintenanceService {
                     status: "AUTHORIZED",
                 },
             }
+            await this.residentialSoldProposalRepository.create(output.soldProposal as ResidentialSoldProposal)
         }
         output.log = logArray
         return output
