@@ -44,11 +44,87 @@ export class ResidentialMaintenanceService {
     async genSoldProposal(version: string, paymentId: string, customerId: string): Promise<any> {
         const proposalData = await this.residentialProposalRepository.findByEmail(paymentId)
         const successData = await this.residentialProposalRepository.findByEmail(`${paymentId}_success`)
-        if (Array.isArray(proposalData) && proposalData.length) {
-            return proposalData.map((data, index) => {
-                if (version === "1") {
-                    // Trabalhando o primeiro modelo
-                    return {
+        const logArray: string[] = []
+        const output = { soldProposal: {}, log: {} }
+
+        if (Array.isArray(proposalData)) {
+            logArray.push("Possui proposta")
+            const proposal = proposalData[0]
+
+            if (version === "1") {
+                // Trabalhando o primeiro modelo
+                logArray.push("Versão 1 - Ativado")
+                output.soldProposal = {
+                    tenant: Tenants.RESIDENTIAL,
+                    success: true,
+                    status: "PROCESSED",
+                    createdAt: new Date().toISOString(),
+                    order: paymentId,
+                    apiVersion: process.env.COMMIT_HASH || "unavailable",
+                    customerId: customerId,
+                    fromMigration: true,
+                    partnerResponse: {
+                        result: proposal.proposalProtocol,
+                        trace: "LOST_IN_PROCESS",
+                        success: true,
+                    },
+                    receivedPaymentNotification: {
+                        date: [],
+                        cashType: "",
+                        amount: 0,
+                        debitWalletId: "",
+                        splits: [],
+                        description: "",
+                        title: "",
+                        type: "PAYMENT",
+                        nsu: "",
+                        peer: null,
+                        amountRefunded: 0,
+                        name: "Compra on-line",
+                        operationType: "",
+                        currency: "BRL",
+                        attributes: {
+                            vbaMethod: "",
+                            orderId: paymentId,
+                            isVerified: null,
+                            origin: "MINIAPP",
+                            miniApp: {
+                                id: "ame-seguro-residencial",
+                                hasOrderDetails: false,
+                            },
+                            paymentOnce: false,
+                            cashbackAmountValue: 0,
+                            items: [
+                                {
+                                    description: "Seguro",
+                                    amount: 0,
+                                    quantity: 1,
+                                },
+                            ],
+                            customPayload: {
+                                clientCallbackUrl: "https://miniapps.amedigital.com/ame-seguro-residencial/v1/plans/sendProposal",
+                                proposal,
+                                miniAppId: "559",
+                                isFrom: "mini-app-ame-seguro-residencial",
+                                customerId: customerId,
+                                timestamp: "",
+                            },
+                            transactionChangedCallbackUrl: "",
+                        },
+                        operationReference: null,
+                        id: paymentId,
+                        status: "AUTHORIZED",
+                    },
+                }
+            }
+
+            if (Array.isArray(successData)) {
+                logArray.push("Possui Sucesso")
+                const success = successData[0]
+
+                if (version === "2") {
+                    logArray.push("Versão 2 - Ativado")
+                    output.soldProposal = {
                         tenant: Tenants.RESIDENTIAL,
                         success: true,
                         status: "PROCESSED",
@@ -57,11 +133,7 @@ export class ResidentialMaintenanceService {
                         apiVersion: process.env.COMMIT_HASH || "unavailable",
                         customerId: customerId,
                         fromMigration: true,
-                        partnerResponse: {
-                            result: data.proposalProtocol,
-                            trace: "LOST_IN_PROCESS",
-                            success: true,
-                        },
+                        partnerResponse: success.proposalResponse,
                         receivedPaymentNotification: {
                             date: [],
                             cashType: "",
@@ -98,7 +170,7 @@ export class ResidentialMaintenanceService {
                                 customPayload: {
                                     clientCallbackUrl:
                                         "https://miniapps.amedigital.com/ame-seguro-residencial/v1/plans/sendProposal",
-                                    proposal: data.proposal,
+                                    proposal,
                                     miniAppId: "559",
                                     isFrom: "mini-app-ame-seguro-residencial",
                                     customerId: customerId,
@@ -112,68 +184,11 @@ export class ResidentialMaintenanceService {
                         },
                     }
                 }
-                if (version === "2" && Array.isArray(successData)) {
-                    return {
-                        tenant: Tenants.RESIDENTIAL,
-                        success: true,
-                        status: "PROCESSED",
-                        createdAt: new Date().toISOString(),
-                        order: paymentId,
-                        apiVersion: process.env.COMMIT_HASH || "unavailable",
-                        customerId: customerId,
-                        fromMigration: true,
-                        partnerResponse: successData[index].proposalResponse,
-                        receivedPaymentNotification: {
-                            date: [],
-                            cashType: "",
-                            amount: 0,
-                            debitWalletId: "",
-                            splits: [],
-                            description: "",
-                            title: "",
-                            type: "PAYMENT",
-                            nsu: "",
-                            peer: null,
-                            amountRefunded: 0,
-                            name: "Compra on-line",
-                            operationType: "",
-                            currency: "BRL",
-                            attributes: {
-                                vbaMethod: "",
-                                orderId: paymentId,
-                                isVerified: null,
-                                origin: "MINIAPP",
-                                miniApp: {
-                                    id: "ame-seguro-residencial",
-                                    hasOrderDetails: false,
-                                },
-                                paymentOnce: false,
-                                cashbackAmountValue: 0,
-                                items: [
-                                    {
-                                        description: "Seguro",
-                                        amount: 0,
-                                        quantity: 1,
-                                    },
-                                ],
-                                customPayload: {
-                                    clientCallbackUrl:
-                                        "https://miniapps.amedigital.com/ame-seguro-residencial/v1/plans/sendProposal",
-                                    proposal: data.proposal,
-                                    miniAppId: "559",
-                                    isFrom: "mini-app-ame-seguro-residencial",
-                                    customerId: customerId,
-                                    timestamp: "",
-                                },
-                                transactionChangedCallbackUrl: "",
-                            },
-                            operationReference: null,
-                            id: paymentId,
-                            status: "AUTHORIZED",
-                        },
-                    }
-                }
-            })
+            }
+        } else {
+            logArray.push("Sem proposta")
         }
+        output.log = logArray
+        return output
     }
 }
