@@ -2,7 +2,6 @@ import { inject, injectable } from "inversify"
 import { Get, Path, Route, SuccessResponse, Response, Post, Body, Security, Header } from "tsoa"
 import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
-import { ResidentialProposalNotification } from "../model/ResidentialProposalNotification"
 import { ResidentialMaintenanceService } from "../services/ResidentialMaintenanceService"
 
 const logger = getLogger("MaintenanceController")
@@ -33,17 +32,18 @@ export class MaintenanceController {
     }
 
     @Response(404, "NotFound")
-    @Get("/generateSoldProposal/{version}/{paymentId}/{customerId}")
-    public async generateSoldProposal(
-        @Path() version: string,
-        @Path() paymentId: string,
-        @Path() customerId: string,
-        @Header("x-partner") partner: string
+    @Post("/soldProposal/{customerId}")
+    public async genSoldProposal(
+        @Header("x-partner") partner: string,
+        @Header("x-version") ver: string,
+        @Header("x-paymentId") paymentId: string,
+        @Path() customerId: string
     ) {
         logger.info("Gerando um novo modelo de soldProposal")
         if (partner !== "c4075135-09cf-48ca-a114-1c2c425715b7") {
             throw new ApiError("Not Authorized", 403, `wrong header`)
         }
-        return await this.residentialMaintenanceService.generateSoldProposal(version, paymentId, customerId)
+        const soldProposal = await this.residentialMaintenanceService.genSoldProposal(ver, paymentId, customerId)
+        return { soldProposal }
     }
 }

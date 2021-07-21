@@ -591,6 +591,183 @@
 				}
 			}
 		},
+		"/v1/residential/maintenance/proposal/{paymentId}": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"proposalData": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"successData": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"failData": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"failData",
+										"successData",
+										"proposalData"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "paymentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/residential/maintenance/soldProposal/{customerId}": {
+			"get": {
+				"operationId": "SoldProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"proposalData": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"proposalData"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "GenSoldProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"soldProposal": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"soldProposal"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-paymentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/plans/proposal-report": {
 			"get": {
 				"operationId": "ProposalReport",
@@ -1507,41 +1684,6 @@
 		"/v1/smartphone/update_nsu_order_customer": {
 			"post": {
 				"operationId": "UpdateNsuByCustumerAndOrder",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/v1/smartphone/update_liquid_price": {
-			"post": {
-				"operationId": "UpdateLiquidPrice",
 				"responses": {
 					"200": {
 						"content": {
