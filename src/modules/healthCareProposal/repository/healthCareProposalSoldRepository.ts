@@ -1,12 +1,8 @@
 import { inject, injectable } from "inversify"
-import moment from "moment"
 import { DynamoHolder } from "../../../repository/DynamoHolder"
 import { getLogger } from "../../../server/Logger"
-import { AuthTokenService } from "../../authToken/services/AuthTokenService"
-import { RequestService } from "../../authToken/services/RequestService"
-import { Tenants } from "../../default/model/Tenants"
 
-const TABLE = `${process.env.DYNAMODB_ENV}_soldProposal`
+const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`
 
 const log = getLogger("healthCareProposalSoldRepository")
 
@@ -23,6 +19,14 @@ export class healthCareProposalSoldRepository {
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
         const params = { TableName: TABLE, Item: proposal }
         await dynamoDocClient.put(params).promise()
+        log.info("Salvando os registros na tabela soldProposal")
+        return proposal
+    }
+
+    async cancel(proposal: any, customerId) {
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const params = { TableName: TABLE, Key: customerId, Item: proposal }
+        await dynamoDocClient.update(params).promise()
         log.info("Salvando os registros na tabela soldProposal")
         return proposal
     }

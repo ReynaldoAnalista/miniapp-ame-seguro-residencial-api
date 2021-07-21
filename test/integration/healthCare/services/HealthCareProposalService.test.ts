@@ -25,7 +25,7 @@ describe("HealthCareProposalService", () => {
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/HealthCareNotification.json"), "utf-8")
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
         const paymentObject = JSON.parse(payment)
-        paymentObject.cpf = generate({ format: true })
+        paymentObject.attributes.customPayload.proposal.cpf = generate({ format: true })
         signedPayment = await sign(paymentObject, secret)
     })
 

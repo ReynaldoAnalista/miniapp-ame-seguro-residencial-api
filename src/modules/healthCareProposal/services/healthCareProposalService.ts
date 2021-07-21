@@ -24,15 +24,15 @@ export class HealthCareProposalService {
 
     async proposal(signedPayment: any) {
         const proposal = await this.authTokenService.unsignNotification(signedPayment)
-        const formatedCotation = await this.formatCotation(proposal)
+        const formatedCotation = await this.formatCotation(proposal.attributes.customPayload.proposal)
         const cotation = await this.cotation(formatedCotation)
         log.info("Enviano a Adesão de HeathCare para o Parceiro")
         let processProposal: any = null
         if (cotation.success) {
-            const formatedProposal = await this.formatProposal(signedPayment)
+            const formatedProposal = await this.formatProposal(proposal.attributes.customPayload.proposal)
             log.info("Enviano a Proposta de Pagamento do HeathCare para o Parceiro")
             processProposal = await this.proposalRequest(formatedProposal)
-            await this.saveProposalResponse(signedPayment.id, proposal)
+            await this.saveProposalResponse(proposal.id, proposal.attributes)
             await this.saveSoldProposal(proposal, processProposal)
         } else {
             processProposal = {
@@ -45,13 +45,12 @@ export class HealthCareProposalService {
     }
 
     async saveProposalResponse(id: any, proposalResponse: any) {
-        log.debug("saveProposalSentSuccess")
         try {
             await this.healthCareProposalRepository.create({
-                id: 1257,
+                id: id,
                 success: true,
                 proposalResponse,
-                transactionDateTime: moment(),
+                transactionDateTime: new Date().toISOString(),
             })
             log.debug("saveProposalSentSuccess:success")
         } catch (e) {
@@ -63,8 +62,8 @@ export class HealthCareProposalService {
     async saveSoldProposal(proposal: any, response: any) {
         log.debug("saveSoldProposal")
         const apiVersion = process.env.COMMIT_HASH || "unavailable"
-        await this.healthCareProposalRepository.create({
-            customerId: proposal.cpf,
+        await this.healthCareProposalSoldRepository.create({
+            customerId: proposal.attributes.customPayload.customerId,
             order: proposal.id,
             tenant: Tenants.HEALTHCARE,
             receivedPaymentNotification: proposal,
@@ -135,6 +134,65 @@ export class HealthCareProposalService {
         }
 
         return result
+    }
+
+    async cancel(request: any) {
+        const cancelPropose = await this.cancelPropose(request)
+        log.info("Send HealthCare CancelProposal do Partner")
+        if (cancelPropose.success) {
+            const cancelSoldProposal = await this.cancelSoldProposal(request)
+            return {
+                success: true,
+                message: "Usuario cancelado com sucesso",
+            }
+        } else {
+            return {
+                success: false,
+                message: "Não foi possível salvar os dados de HealthCare",
+            }
+        }
+    }
+
+    async cancelPropose(request: any) {
+        const requestCancel = {
+            ID_CONTRATO_PLANO: 100577816,
+            ID_CLIENTE: 10067,
+            CPF: request.cpf,
+            CODIGO_EXTERNO: request.customerId,
+        }
+
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.HEALTHCARE_URL_BASE,
+                this.requestService.METHODS.POST,
+                requestCancel,
+                Tenants.HEALTHCARE,
+                "/cancelamento"
+            )
+            if (response.data.status === "200") {
+                result = { success: true, content: response.data }
+                log.info("Success HeathCarea proposal sent")
+            } else {
+                result = { success: false, content: response.data }
+                log.error("HeathCarea proposal Error")
+            }
+        } catch (e) {
+            const status = e.response?.status
+            const statusText = e.response?.statusText
+            result = { success: false, status: status, message: statusText }
+            log.error(`Error %j`, statusText)
+            log.debug("Error when trying to send proposal")
+            log.debug(`Status Code: ${status}`)
+        }
+        return result
+    }
+
+    async cancelSoldProposal(request) {
+        const cancelPropose = { receivedCanceledNotification: request, status: "CANCELED" }
+        const cancelSoldProposal = await this.healthCareProposalSoldRepository.cancel(cancelPropose, request.costumerId)
+        log.info("Save HeatlCare proposal Cancel to soldProposal")
+        return cancelSoldProposal
     }
 
     async formatCotation(request: any) {

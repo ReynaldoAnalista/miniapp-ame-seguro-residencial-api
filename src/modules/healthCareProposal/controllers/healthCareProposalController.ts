@@ -3,7 +3,6 @@ import { Route, SuccessResponse, Response, Post, Body } from "tsoa"
 import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { HealthCareProposalService } from "../services/healthCareProposalService"
-import { HealthCareProposalNotification } from "../model/HealthCareProposalNotification"
 
 const log = getLogger("healthCareProposalController")
 
@@ -21,7 +20,20 @@ export class healthCareProposalController {
             return await this.healthCareProposalService.proposal(proposal)
         } catch (e) {
             log.error(e.message)
-            throw new ApiError("Life Model Not sent", 500)
+            throw new ApiError("HealthCare Model Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cancelProposal")
+    public async cancelProposal(@Body() request: any) {
+        log.info("Post HealthCare Proposal Cancel")
+        try {
+            return await this.healthCareProposalService.cancel(request)
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("HealthCare Cancel Not sent", 500)
         }
     }
 }
