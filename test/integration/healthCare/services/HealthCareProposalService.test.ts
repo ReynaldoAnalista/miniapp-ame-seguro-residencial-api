@@ -18,19 +18,29 @@ describe("HealthCareProposalService", () => {
     let healthCareProposalService: HealthCareProposalService
     let parameterStore: ParameterStore
     let signedPayment: any
+    let paymentObject: any
 
     beforeAll(async () => {
         healthCareProposalService = iocContainer.get("HealthCareProposalService")
         parameterStore = iocContainer.get("ParameterStore")
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/HealthCareNotification.json"), "utf-8")
         const secret = await parameterStore.getSecretValue("CALINDRA_JWT_SECRET")
-        const paymentObject = JSON.parse(payment)
+        paymentObject = JSON.parse(payment)
         paymentObject.attributes.customPayload.proposal.cpf = generate({ format: true })
         signedPayment = await sign(paymentObject, secret)
     })
 
     it("Teste Inicial de HealthCare", async () => {
         const proposalResponse = await healthCareProposalService.proposal(signedPayment)
+        expect(proposalResponse).toBeDefined()
+    })
+
+    it("Cancelamento da proposta de HealthCare", async () => {
+        const request = {
+            cpf: paymentObject.attributes.customPayload.proposal.cpf.replace(".", "").replace(".", "").replace("-", ""),
+            customerId: paymentObject.attributes.customPayload.customerId,
+        }
+        const proposalResponse = await healthCareProposalService.cancel(request)
         expect(proposalResponse).toBeDefined()
     })
 })
