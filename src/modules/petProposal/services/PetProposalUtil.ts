@@ -1,4 +1,4 @@
-import { inject, injectable } from "inversify"
+import { injectable } from "inversify"
 import moment from "moment"
 import { getLogger } from "../../../server/Logger"
 import { Tenants } from "../../default/model/Tenants"
@@ -14,7 +14,7 @@ export class PetProposalUtil {
             tenant: Tenants.PET,
             receivedPaymentNotification: proposal.enrollProposal,
             partnerResponse: proposal.quoteProposal,
-            success: proposal.enrollProposal.data == "Success" ? true : false,
+            success: proposal?.enrollProposal?.data == "Success" ? true : false,
             createdAt: moment().format("YYYY-MM-DD h:m:s"),
         }
     }
@@ -44,7 +44,7 @@ export class PetProposalUtil {
             date: moment().format("DD-MM-YYYY hh:mm:ss"),
             quoteProposal: quoteProposal,
             enrollProposal: requestProposal,
-            status: requestProposal.data == "Success" ? true : false,
+            status: requestProposal?.data == "Success" ? true : false,
         }
     }
 

@@ -1,13 +1,9 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
-import { TYPES } from "../../../inversify/inversify.types"
 import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
-import { ParameterStore } from "../../../configs/ParameterStore"
-import { SmartphoneSoldProposal } from "../../smartphoneProposal/model/SmartphoneSoldProposal"
 import { Tenants } from "../../default/model/Tenants"
 import Plans from "./Plans"
-import moment from "moment"
 import { PetProposalUtil } from "./PetProposalUtil"
 import { PetProposalRepository } from "../repository/PetProposalRepository"
 import { PetSoldProposalRepository } from "../repository/PetSoldProposalRepository"
@@ -25,8 +21,7 @@ export class PetProposalService {
     ) {}
 
     async listPlans() {
-        let result
-        result = Plans
+        const result = Plans
         log.debug("Debug Data " + result)
         return result
     }
@@ -41,7 +36,6 @@ export class PetProposalService {
         const formatProposal = await this.petProposalUtil.formatRequestProposal(proposal)
         const quoteId = quotePlan.data.contract_uuid
         const getProposal = await this.requestProposal(quoteId, formatProposal)
-        log.info("Faz a requisição da proposta")
         const databaseProposalFormat = await this.petProposalUtil.formatDatabaseProposal(quoteId, proposal, getProposal)
         await this.petProposalRepository.create(databaseProposalFormat)
         log.info("Salva a proposta no banco de dados")
@@ -118,6 +112,7 @@ export class PetProposalService {
             log.debug(`Error %j`, e.message)
             log.debug("Error when trying to proposal Plan")
             log.debug(`Status Code: ${status}`)
+            log.debug("ERROR", e)
         }
         return result
     }
