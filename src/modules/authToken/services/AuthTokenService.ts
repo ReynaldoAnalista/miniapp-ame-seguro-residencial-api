@@ -48,6 +48,8 @@ export class AuthTokenService {
                 return "PET_URL_BASE"
             case "LIFE":
                 return "LIFE_URL_AUTHORIZATION"
+            case "HEALTHCARE":
+                return "HEALTHCARE_URL_AUTHORIZATION"
             default:
                 return "URL_AUTHORIZATION"
         }
@@ -189,6 +191,41 @@ export class AuthTokenService {
                     })
                 // cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
                 return result.authorization
+            }
+
+            if (tenant === Tenants.HEALTHCARE) {
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                const clientId = await this.retrieveConfig("HEALTHCARE_CLIENT_ID")
+                const clientSecret = await this.retrieveConfig("HEALTHCARE_CLIENT_SECRET")
+                const clientScope = await this.retrieveConfig("HEALTHCARE_CLIENT_SCOPE")
+                const authorization = Buffer.from(`${clientId}:${clientSecret}`, "utf8").toString("base64")
+
+                const config = {
+                    headers: {
+                        Authorization: `Basic ${authorization}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "User-Agent": "",
+                    },
+                }
+                const body = qs.stringify({
+                    grant_type: "client_credentials",
+                    scope: clientScope,
+                })
+                let result: AuthToken = new AuthToken()
+
+                await axios
+                    .post(AUTH_URL, body, config)
+                    .then((res) => {
+                        log.debug("AUTHORIZED")
+                        result = AuthToken.fromObject(res.data)
+                    })
+                    .catch((err) => {
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
+
+                cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
+                return result.access_token
             }
         } catch (err) {
             return "Erro ao tentar buscar um token para autenticação"
