@@ -1,26 +1,24 @@
-import { MailSender } from "./MailSender";
-import { injectable, inject } from "inversify";
-import { TYPES } from "../../../inversify/inversify.types";
-import { ParameterStore } from "../../../configs/ParameterStore";
-import { SimpleEmail } from "../model/SimpleEmail";
+import { MailSender } from "./MailSender"
+import { injectable, inject } from "inversify"
+import { TYPES } from "../../../inversify/inversify.types"
+import { ParameterStore } from "../../../configs/ParameterStore"
+import { SimpleEmail } from "../model/SimpleEmail"
 
-
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer")
 
 @injectable()
 export class MailSmtpService implements MailSender {
     constructor(
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
-    ) {
-    }
+    ) {}
 
     async getConf() {
-        let host = process.env.MAIL_SMTP_HOST || await this.parameterStore.getSecretValue('MAIL_SMTP_HOST')
-        let port = process.env.MAIL_SMTP_PORT || await this.parameterStore.getSecretValue('MAIL_SMTP_PORT')
-        let user = process.env.MAIL_SMTP_USER || await this.parameterStore.getSecretValue('MAIL_SMTP_USER')
-        let pass = process.env.MAIL_SMTP_PASS || await this.parameterStore.getSecretValue('MAIL_SMTP_PASS')
-        let from = process.env.MAIL_SMTP_FROM || await this.parameterStore.getSecretValue('MAIL_SMTP_FROM')
+        const host = process.env.MAIL_SMTP_HOST || (await this.parameterStore.getSecretValue("MAIL_SMTP_HOST"))
+        const port = process.env.MAIL_SMTP_PORT || (await this.parameterStore.getSecretValue("MAIL_SMTP_PORT"))
+        const user = process.env.MAIL_SMTP_USER || (await this.parameterStore.getSecretValue("MAIL_SMTP_USER"))
+        const pass = process.env.MAIL_SMTP_PASS || (await this.parameterStore.getSecretValue("MAIL_SMTP_PASS"))
+        const from = process.env.MAIL_SMTP_FROM || (await this.parameterStore.getSecretValue("MAIL_SMTP_FROM"))
         return { host, port, user, pass, from }
     }
 
@@ -31,14 +29,14 @@ export class MailSmtpService implements MailSender {
             port: conf.port,
             auth: {
                 user: conf.user,
-                pass: conf.pass
-            }
+                pass: conf.pass,
+            },
         })
         await transporter.sendMail({
             from: conf.from,
             to: email.to,
             subject: email.subject,
-            html: email.body
+            html: email.body,
         })
     }
 }
