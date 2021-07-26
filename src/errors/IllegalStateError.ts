@@ -1,4 +1,4 @@
-import {GenericError} from "./GenericError";
+import { GenericError } from "./GenericError"
 
 export class IllegalStateError extends GenericError {
     constructor(message: string, error?: string, httpStatusCode?: number) {

@@ -4,52 +4,52 @@
     "amount": 67080,
     "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
     "customPayload": {
-        "isFrom": "PHONE_SEC",
+        "isFrom": "PET_ASSIST",
         "origin": "MINIAPP",
-        "customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+        "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
         "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/pet/sendProposal",
-        "clientEmail": "reynaldo.souza@calindra.com.br",
+        "clientEmail": "izabella.assad@calindra.com.br",
         "ambiente": "qa",
         "proposal": {
             "planId": 46,
             "pets": [
                 {
-                    "namePet": "Paçoca",
-                    "birthDatePet": "01022021",
-                    "color": "Pardo",
-                    "gender": "Macho",
+                    "namePet": "Bolinho",
+                    "birthDatePet": "20012021",
+                    "color": "Preto",
+                    "gender": "Fêmea",
                     "size": "p",
-                    "description": "",
+                    "description": "Asna",
                     "vaccined": "Não",
-                    "preexisting_condition": "Nao",
-                    "species": "Cachorro",
-                    "breed": "Shih-tzu",
-                    "id": 1619712878410
+                    "preexisting_condition": "Sim",
+                    "species": "Gato",
+                    "breed": "Himalaio",
+                    "id": 1626122980589
                 }
             ],
             "insurance_holder": {
                 "phones": [
                     {
                         "type": "mobile",
-                        "phone": "982875666",
-                        "area_code": "21"                        
+                        "phone": "968462664",
+                        "area_code": "21"
                     }
                 ],
                 "addresses": [
                     {
-                        "city": "Niterói",
+                        "city": "Rio de Janeiro",
                         "state": "RJ",
-                        "number": "108",
-                        "street": "Rua Barão do Amazonas",
-                        "zipcode": "24030111",
-                        "district": "Centro",
-                        "additional_details": "Apt 301"
+                        "number": "49",
+                        "street": "Rua Divisória",
+                        "zipcode": "21331250",
+                        "district": "Bento Ribeiro",
+                        "additional_details": "Apt 101"
                     }
                 ],
-                "cpf": "13701818762",
-                "name": "Reynaldo Paixão de Souza",
-                "email": "reynaldo.souza@calindra.com.br",
-                "birth_date": "19910529"
+                "cpf": "16286131736",
+                "name": "Izabella da Silva Assad",
+                "email": "izabella.assad@calindra.com.br",
+                "birth_date": "19970517"
             }
         },
         "payment": {

@@ -12,12 +12,11 @@ export class BlindGuardianConfig {
         this._authPath = _appConfig.blindGuardianConfig.authPath
     }
 
-    public get url() : string {
+    public get url(): string {
         return this._url
     }
-    
-    public get authPath() : string {
+
+    public get authPath(): string {
         return this._authPath
     }
-    
 }

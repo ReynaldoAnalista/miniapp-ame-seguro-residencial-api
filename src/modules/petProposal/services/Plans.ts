@@ -18,8 +18,7 @@ export default [
                 value: "Até R$ 200,00 por utilização",
             },
             {
-                description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
+                description: "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
                 value: "Até R$ 500,00 por utilização",
             },
             {
@@ -64,8 +63,7 @@ export default [
                 value: "Até R$ 250,00 por utilização",
             },
             {
-                description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
+                description: "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade)",
                 value: "Até R$ 750,00 por utilização",
             },
             {
@@ -114,8 +112,7 @@ export default [
                 value: "Até R$ 350,00 por utilização",
             },
             {
-                description:
-                    "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade",
+                description: "Exames (básicos, complexos, imagem, cardiológicos e de alta complexidade",
                 value: "Até R$ 1.000,00 por utilização",
             },
             {
@@ -137,4 +134,4 @@ export default [
             },
         ],
     },
-];
+]
