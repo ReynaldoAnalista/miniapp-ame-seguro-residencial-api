@@ -15,10 +15,10 @@ export class LifeProposalService {
         @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil
     ) {}
 
-    async cotation(proposal: any) {
-        const formatPropose = await this.lifeProposalUtil.formatProposal(proposal)
+    async cotation(cotationPropose: any) {
+        const formatPropose = await this.lifeProposalUtil.formatCotation(cotationPropose)
         const sendCotation = await this.getCotation(formatPropose)
-        return formatPropose
+        return sendCotation
     }
 
     async getCotation(cotation: any) {
@@ -41,6 +41,32 @@ export class LifeProposalService {
             log.error(`Error %j`, statusText)
             log.debug("Error when trying to send proposal")
             log.debug(`Status Code: ${status}`)
+        }
+        return result
+    }
+
+    async proposal(signedPayment: any) {
+        const formatProposal = await this.lifeProposalUtil.formatProposal(signedPayment)
+        log.info("Format Life Proposal")
+        const sendProposal = await this.sendProposal(formatProposal)
+        return sendProposal
+    }
+
+    async sendProposal(proposal: any) {
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.LIFE_URL_BASE,
+                this.requestService.METHODS.POST,
+                proposal,
+                Tenants.LIFE,
+                "/rest-seguro-vida/proposta?company_code=0514"
+            )
+            result = { success: true, content: response.data }
+            log.info("Success proposal sent")
+        } catch (e) {
+            result = e
+            log.debug("Error when trying to send proposal")
         }
         return result
     }
