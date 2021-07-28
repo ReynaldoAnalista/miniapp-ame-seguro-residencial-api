@@ -519,6 +519,16 @@ export default [
                 descricao: "Equipamentos eletrônicos",
                 valor: 4000,
             },
+            {
+                id: "538585",
+                descricao: "Roubo e Furto de Bens Mediante Arrombamento",
+                valor: 7000,
+            },
+            {
+                id: "538593",
+                descricao: "Sorteio",
+                valor: 5000,
+            },
         ],
     },
     {
@@ -564,6 +574,16 @@ export default [
             {
                 id: "545183B",
                 descricao: "Equipamentos eletrônicos",
+                valor: 5000,
+            },
+            {
+                id: "538585",
+                descricao: "Roubo e Furto de Bens Mediante Arrombamento",
+                valor: 10000,
+            },
+            {
+                id: "538593",
+                descricao: "Sorteio",
                 valor: 5000,
             },
         ],
@@ -1042,6 +1062,11 @@ export default [
         premio: 1093.53,
         coberturas: [
             {
+                id: '538585',
+                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                valor: 5000,
+            },
+            {
                 id: "538588",
                 descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 600000,
@@ -1089,6 +1114,11 @@ export default [
         premio: 1353.68,
         coberturas: [
             {
+                id: '538585',
+                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                valor: 7000,
+            },
+            {
                 id: "538588",
                 descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",
                 valor: 750000,
@@ -1135,6 +1165,11 @@ export default [
         descricao: "Premium",
         premio: 1804.45,
         coberturas: [
+            {
+                id: '538585',
+                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                valor: 10000,
+            },
             {
                 id: "538588",
                 descricao: "Incêndio, Queda de Raio e Explosão de Qualquer Natureza",

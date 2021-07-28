@@ -14,7 +14,7 @@ export class PetProposalUtil {
             tenant: Tenants.PET,
             receivedPaymentNotification: proposal.enrollProposal,
             partnerResponse: proposal.quoteProposal,
-            success: proposal.enrollProposal.data == "Success" ? true : false,
+            success: proposal?.enrollProposal?.data == "Success" ? true : false,
             createdAt: moment().format("YYYY-MM-DD h:m:s"),
         }
     }
@@ -38,13 +38,13 @@ export class PetProposalUtil {
         }
     }
 
-    async formatDatabaseProposal(quoteId: string, quoteProposal: any, requestProposal: any) {
+    async formatDatabaseProposal(quoteId: string, quoteProposal: any, requestProposal: any) {        
         return {
             id: quoteId,
             date: moment().format("DD-MM-YYYY hh:mm:ss"),
             quoteProposal: quoteProposal,
             enrollProposal: requestProposal,
-            status: requestProposal.data == "Success" ? true : false,
+            status: requestProposal?.data == "Success" ? true : false,
         }
     }
 

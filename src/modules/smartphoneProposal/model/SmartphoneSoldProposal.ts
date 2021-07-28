@@ -8,4 +8,5 @@ export interface SmartphoneSoldProposal {
     createdAt: string
     status: string
     apiVersion: string
+    NSU: string
 }
