@@ -3,4 +3,5 @@ export enum Tenants {
     RESIDENTIAL = "RESIDENTIAL",
     PET = "PET",
     LIFE = "LIFE",
+    HEALTHCARE = "HEALTHCARE",
 }
