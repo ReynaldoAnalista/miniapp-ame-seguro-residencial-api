@@ -25,7 +25,7 @@ runhomolog: build	commithash
 
 runtest:
 	@echo '=========== Testing ame-seguro-residencial ==========='
-	APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn test --watch
+	APPLICATION_NAME='ame-seguro-residencial' DEBUG=ame-seguro-residencial:* yarn test MainTenanceService --watch
 
 debugserver: build	commithash
 	@echo '=========== Starting ame-seguro-residencial ==========='
