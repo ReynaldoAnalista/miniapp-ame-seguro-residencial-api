@@ -15,9 +15,22 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotationPlan(@Body() cotation: any) {
-        logger.info("Get Life Model")
+        logger.info("Get Life Cotation")
         try {
             return await this.lifeProposalService.cotation(cotation)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Life Model Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/proposal")
+    public async propose(@Body() signedPayment: any) {
+        logger.info("Life Proposal")
+        try {
+            return await this.lifeProposalService.proposal(signedPayment)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Life Model Not sent", 500)

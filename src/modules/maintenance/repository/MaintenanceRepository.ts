@@ -2,18 +2,18 @@ import { inject, injectable } from "inversify"
 import { DynamoHolder } from "../../../repository/DynamoHolder"
 import { getLogger } from "../../../server/Logger"
 
-const log = getLogger("UnusualRepository")
+const log = getLogger("MaintenanceRepository")
 
 const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`
 
 @injectable()
-export class UnusualRepository {
+export class MaintenanceRepository {
     constructor(
         @inject("DynamoHolder")
         private dynamoHolder: DynamoHolder
     ) {}
 
-    async updateSoldProposal(soldProposal) {
+    async updateSoldProposalOrdersType(soldProposal) {
         try {
             log.debug("TRYING UPDATE ON", TABLE)
             const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()

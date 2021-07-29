@@ -1,20 +1,23 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
+import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
-import { UnusualRepository } from "../repository/UnusualRepository"
+import { MaintenanceRepository } from "../repository/MaintenanceRepository"
 
-const log = getLogger("UnusualService")
+const log = getLogger("MaintenanceService")
 
 @injectable()
-export class UnusualService {
+export class MaintenanceService {
     constructor(
         @inject("SmartphoneProposalRepository")
         private smartphoneProposalRepository: SmartphoneProposalRepository,
         @inject("SmartphoneProposalMailService")
         private smartphoneProposalMailService: SmartphoneProposalMailService,
-        @inject("UnusualRepository")
-        private unusualRepository: UnusualRepository
+        @inject("MaintenanceRepository")
+        private maintenanceRepository: MaintenanceRepository,
+        @inject("AuthTokenService")
+        private authTokenService: AuthTokenService
     ) {}
 
     async sendSellingEmailWithParams(pass: string, email: string) {
@@ -27,22 +30,23 @@ export class UnusualService {
         throw new Error("Order not found")
     }
 
-    async setPlanActiveCanceled(proposal: any) {
-        let numberOfSuccess = 0
+    async updateOrdersType(signedNotification: string) {
+        let ordersUpdated = 0
+        const unsignedNotification = await this.authTokenService.unsignNotification(signedNotification)
         try {
-            proposal.map(async (item) => {
-                const updateProposal = await this.updateSoldProposalActive(item)
-                if (updateProposal) {
-                    numberOfSuccess = numberOfSuccess + 1
-                }
+            unsignedNotification.attributes.map(async (item) => {
+                ordersUpdated = await this.maintenanceRepository.updateSoldProposalOrdersType(item)
             })
         } catch (e) {
             log.error("Erro no cadastro", e.message)
+            return {
+                success: false,
+                message: `Errors to updated`,
+            }
         }
-        return `Orders Updated: ${numberOfSuccess}`
-    }
-
-    async updateSoldProposalActive(proposal) {
-        return await this.unusualRepository.updateSoldProposal(proposal)
+        return {
+            success: true,
+            message: `Orders Updated`,
+        }
     }
 }
