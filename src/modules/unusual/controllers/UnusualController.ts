@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Path, Route, SuccessResponse, Response, Post, Get } from "tsoa"
+import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
@@ -36,6 +36,19 @@ export class UnusualController {
         logger.info("Proposal Id %j", proposalId)
         try {
             return await this.smartphoneProposalService.updateOldCustumersProposal(proposalId)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/update_plan_type")
+    public async updatePlanType(@Body() proposal: any) {
+        logger.info("Update Plan Type Active or Canceled")
+        try {
+            return await this.unusualService.setPlanActiveCanceled(proposal)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)

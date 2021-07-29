@@ -50,10 +50,6 @@
 					"control_data": {
 						"properties": {
 							"key_contract_certificate_number": {
-								"type": "number",
-								"format": "double"
-							},
-							"customer_identifier_code": {
 								"type": "string"
 							},
 							"processing_data": {
@@ -85,7 +81,6 @@
 							"shipping_file_number",
 							"acceptance_type",
 							"processing_data",
-							"customer_identifier_code",
 							"key_contract_certificate_number"
 						],
 						"type": "object"
@@ -276,7 +271,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"success": {
+											"type": "boolean"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
 									"type": "object"
 								}
 							}
@@ -1675,6 +1681,40 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/unusual/update_plan_type": {
+			"post": {
+				"operationId": "UpdatePlanType",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		}
 	},
