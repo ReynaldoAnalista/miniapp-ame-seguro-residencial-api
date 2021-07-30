@@ -13,6 +13,7 @@ import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 import Plans from "../../residentialProposal/services/Plans"
 import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldProposalRepository"
 import moment from "moment"
+import { healthCareProposalSoldRepository } from "../../healthCareProposal/repository/healthCareProposalSoldRepository"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -35,6 +36,8 @@ export class HubService {
         private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
         @inject("PetSoldProposalRepository")
         private petSoldProposalRepository: PetSoldProposalRepository,
+        @inject("healthCareProposalSoldRepository")
+        private healthCareProposalSoldRepository: healthCareProposalSoldRepository,
         @inject("SoldProposalRepository")
         private soldProposalRepository: SoldProposalRepository,
         @inject(TYPES.ParameterStore)
@@ -47,10 +50,12 @@ export class HubService {
         const residentialPlansFromDB = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
         const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
+        const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
 
         let smartphonePlans = []
         let residentialPlans = []
         let petPlans = []
+        let healthCarePlans = []
         if (residentialPlansFromDB) {
             if (raw) {
                 residentialPlans = Object.assign(residentialPlansFromDB)
@@ -111,7 +116,21 @@ export class HubService {
                 })
             }
         }
-        return { residentialPlans, smartphonePlans, petPlans }
+
+        if (healthCarePlansPlansFromDB) {
+            if (raw) {
+                healthCarePlans = Object.assign(healthCarePlansPlansFromDB)
+            } else {
+                healthCarePlans = Object.assign(healthCarePlansPlansFromDB).map((x) => {
+                    return {
+                        status: x.success ? "Contratado" : "Não Contratado",
+                        initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        partner: "Seguro Mais Saúde",
+                    }
+                })
+            }
+        }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans }
     }
 
     /**

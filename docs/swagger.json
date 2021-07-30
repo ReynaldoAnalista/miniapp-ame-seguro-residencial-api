@@ -276,7 +276,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"success": {
+											"type": "boolean"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
 									"type": "object"
 								}
 							}
