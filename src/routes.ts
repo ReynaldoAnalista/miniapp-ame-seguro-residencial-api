@@ -8,6 +8,8 @@ import { AuthTokenController } from './modules/authToken/controllers/AuthTokenCo
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HealthController } from './modules/default/controllers/HealthController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { healthCareProposalController } from './modules/healthCareProposal/controllers/healthCareProposalController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { HubController } from './modules/hub/controllers/HubController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LifeProposalController } from './modules/lifeProposal/controllers/LifeProposalController';
@@ -56,7 +58,7 @@ const models: TsoaRoute.Models = {
     "DigibeeConfirmation": {
         "dataType": "refObject",
         "properties": {
-            "control_data": { "dataType": "nestedObjectLiteral", "nestedProperties": { "rejection_description": { "dataType": "string", "required": true }, "rejection_reason_code": { "dataType": "double", "required": true }, "sequential_shipping_number": { "dataType": "double", "required": true }, "shipping_file_number": { "dataType": "double", "required": true }, "acceptance_type": { "dataType": "string", "required": true }, "processing_data": { "dataType": "string", "required": true }, "customer_identifier_code": { "dataType": "string", "required": true }, "key_contract_certificate_number": { "dataType": "double", "required": true } }, "required": true },
+            "control_data": { "dataType": "nestedObjectLiteral", "nestedProperties": { "rejection_description": { "dataType": "string", "required": true }, "rejection_reason_code": { "dataType": "double", "required": true }, "sequential_shipping_number": { "dataType": "double", "required": true }, "shipping_file_number": { "dataType": "double", "required": true }, "acceptance_type": { "dataType": "string", "required": true }, "processing_data": { "dataType": "string", "required": true }, "key_contract_certificate_number": { "dataType": "string", "required": true } }, "required": true },
         },
         "additionalProperties": true,
     },
@@ -116,6 +118,56 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.test.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/healthcare/sendProposal',
+        function(request: any, response: any, next: any) {
+            const args = {
+                proposal: { "in": "body", "name": "proposal", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<healthCareProposalController>(healthCareProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.sendProposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/healthcare/cancelProposal',
+        function(request: any, response: any, next: any) {
+            const args = {
+                request: { "in": "body", "name": "request", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<healthCareProposalController>(healthCareProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.cancelProposal.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
