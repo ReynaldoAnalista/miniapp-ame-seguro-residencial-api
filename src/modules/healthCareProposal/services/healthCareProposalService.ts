@@ -28,6 +28,7 @@ export class HealthCareProposalService {
         const cotation = await this.cotation(formatedCotation)
         log.info("Enviano a Adesão de HeathCare para o Parceiro")
         let processProposal: any = null
+
         if (cotation.success) {
             const formatedProposal = await this.formatProposal(proposal.attributes.customPayload.proposal)
             log.info("Enviano a Proposta de Pagamento do HeathCare para o Parceiro")
@@ -141,7 +142,7 @@ export class HealthCareProposalService {
         log.info("Send HealthCare CancelProposal do Partner")
         if (cancelPropose.success) {
             log.info("Success to send HealthCare CancelProposal do Partner")
-            const cancelSoldProposal = await this.cancelSoldProposal(request)
+            // const cancelSoldProposal = await this.cancelSoldProposal(request)
             return {
                 success: true,
                 message: "Usuario cancelado com sucesso",
@@ -207,7 +208,7 @@ export class HealthCareProposalService {
             ID_CLIENTE: 10067,
             CPF: request.cpf,
             RG: " ",
-            DATA_NASCIMENTO: request.birthDate,
+            DATA_NASCIMENTO: moment(request.birthDate, "YYYY-MM-DD").format("DDMMYYYY"),
             SEXO: request.sex,
             NOME_MAE: "",
             TELEFONE_FIXO: "",
@@ -221,7 +222,7 @@ export class HealthCareProposalService {
             BAIRRO: request.address.street,
             CIDADE: request.address.city,
             UF: request.address.uf,
-            TIPO_PLANO: request.planType,
+            TIPO_PLANO: "54",
         }
     }
 
@@ -232,7 +233,7 @@ export class HealthCareProposalService {
             NOME: request.name,
             CPF: request.cpf,
             STATUS_PAGAMENTO: "PG",
-            CODIGO_PLANO: request.planType,
+            CODIGO_PLANO: "54",
             DATA_PAGAMENTO: moment().format("DD/MM/YYYY"),
             ID_FORMA_PAGAMENTO: "30",
             VALOR_PAGAMENTO: "61,88",

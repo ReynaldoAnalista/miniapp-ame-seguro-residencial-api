@@ -50,10 +50,6 @@
 					"control_data": {
 						"properties": {
 							"key_contract_certificate_number": {
-								"type": "number",
-								"format": "double"
-							},
-							"customer_identifier_code": {
 								"type": "string"
 							},
 							"processing_data": {
@@ -85,7 +81,6 @@
 							"shipping_file_number",
 							"acceptance_type",
 							"processing_data",
-							"customer_identifier_code",
 							"key_contract_certificate_number"
 						],
 						"type": "object"
@@ -507,6 +502,75 @@
 								"schema": {
 									"additionalProperties": true,
 									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/proposal": {
+			"post": {
+				"operationId": "Propose",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/update-plan-type": {
+			"post": {
+				"operationId": "UpdatePlanType",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
 								}
 							}
 						},
@@ -1618,74 +1682,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/v1/unusual/proposal_email/{pass}/{email}/sendEmail": {
-			"get": {
-				"operationId": "SendMailProposalWithParams",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "pass",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "email",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/v1/unusual/update_old_clients/{proposalId}": {
-			"get": {
-				"operationId": "UpdateProposal",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "proposalId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		}
 	},
