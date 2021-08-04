@@ -405,7 +405,7 @@ export class SmartphoneProposalService {
 
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
         const dataInfo = digibeeConfirmation.control_data
-        const soldProposal = await this.smartphoneSoldProposalRepository.findByNsu(dataInfo.key_contract_certificate_number)
+        const soldProposal = await this.smartphoneSoldProposalRepository.findByNsu(dataInfo.customer_identifier_code)
         if (soldProposal) {
             log.info("Buscando informações na tabela SoldProposal")
             const requestProposal = soldProposal?.find(
@@ -416,7 +416,7 @@ export class SmartphoneProposalService {
                 requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
                 requestProposal.control_data = digibeeConfirmation
                 await this.smartphoneSoldProposalRepository.update(requestProposal)
-                log.info("Salvando atualização da DigiBee na tabela SoldProposal")
+                log.info("Salvando atualização na tabela SoldProposal")
                 return {
                     message: "Proposta atualizada com sucesso",
                     status: 200,

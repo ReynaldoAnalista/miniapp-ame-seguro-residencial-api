@@ -30,7 +30,6 @@ enum Endpoints {
     LIFE_URL_BASE = "LIFE_URL_BASE",
     SMARTPHONE_URL_CANCEL = "SMARTPHONE_URL_CANCEL",
     PET_URL_BASE = "PET_URL_BASE",
-    HEALTHCARE_URL_BASE = "HEALTHCARE_URL_BASE",
 }
 
 @injectable()
@@ -77,12 +76,6 @@ export class RequestService {
                 "Content-Type": "application/json",
                 apikey: await this.parameterStore.getSecretValue("LIFE_API_KEY"),
                 Authorization: `${token}`,
-            }
-        }
-        if (tenant === Tenants.HEALTHCARE) {
-            headers = {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             }
         }
 
