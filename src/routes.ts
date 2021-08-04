@@ -424,13 +424,14 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.post('/ame-seguro-residencial/v1/residential/maintenance/soldProposal/:customerId',
+    app.post('/ame-seguro-residencial/v1/residential/maintenance/soldProposal/migrate',
         function(request: any, response: any, next: any) {
             const args = {
                 partner: { "in": "header", "name": "x-partner", "required": true, "dataType": "string" },
                 ver: { "in": "header", "name": "x-version", "required": true, "dataType": "string" },
                 paymentId: { "in": "header", "name": "x-paymentId", "required": true, "dataType": "string" },
-                customerId: { "in": "path", "name": "customerId", "required": true, "dataType": "string" },
+                customerId: { "in": "header", "name": "x-customerId", "required": true, "dataType": "string" },
+                nsu: { "in": "header", "name": "x-NSU", "required": true, "dataType": "string" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

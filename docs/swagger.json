@@ -701,7 +701,9 @@
 						}
 					}
 				]
-			},
+			}
+		},
+		"/v1/residential/maintenance/soldProposal/migrate": {
 			"post": {
 				"operationId": "GenSoldProposal",
 				"responses": {
@@ -758,8 +760,16 @@
 						}
 					},
 					{
-						"in": "path",
-						"name": "customerId",
+						"in": "header",
+						"name": "x-customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-NSU",
 						"required": true,
 						"schema": {
 							"type": "string"
