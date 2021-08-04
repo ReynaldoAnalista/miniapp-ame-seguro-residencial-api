@@ -451,125 +451,6 @@
 				}
 			}
 		},
-		"/v1/maintenance/proposal_email/{pass}/{email}/sendEmail": {
-			"get": {
-				"operationId": "SendMailProposalWithParams",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "pass",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "email",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/v1/maintenance/update_old_clients/{proposalId}": {
-			"get": {
-				"operationId": "UpdateProposal",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "proposalId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/v1/maintenance/update-plan-type": {
-			"post": {
-				"operationId": "UpdatePlanType",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"success": {
-											"type": "boolean"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message",
-										"success"
-									],
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/v1/pet/planList": {
 			"get": {
 				"operationId": "PlanList",
@@ -708,137 +589,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/v1/plans/proposal-report": {
-			"get": {
-				"operationId": "ProposalReport",
-				"responses": {
-					"204": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "No content"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [
-					{
-						"jwt": [
-							"list_proposal"
-						]
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/v1/plans/{zipCode}/{buildType}": {
-			"get": {
-				"operationId": "RetrievePlans",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "zipCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "buildType",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/v1/plans/sendProposal": {
-			"post": {
-				"operationId": "SendProposal",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ResidentialProposalNotification"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/v1/plans/proposal": {
-			"get": {
-				"operationId": "ListProposal",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Ok"
-					}
-				},
-				"security": [
-					{
-						"jwt": [
-							"list_proposal"
-						]
-					}
-				],
-				"parameters": []
 			}
 		},
 		"/v1/residential/maintenance/proposal/{paymentId}": {
@@ -1099,6 +849,137 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/plans/proposal-report": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"204": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "No content"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/v1/plans/{zipCode}/{buildType}": {
+			"get": {
+				"operationId": "RetrievePlans",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "zipCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "buildType",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/plans/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ResidentialProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/plans/proposal": {
+			"get": {
+				"operationId": "ListProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"list_proposal"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/v1/residential/proposal-report": {
