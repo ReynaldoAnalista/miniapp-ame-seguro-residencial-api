@@ -4,11 +4,11 @@ import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { ResidentialMaintenanceService } from "../services/ResidentialMaintenanceService"
 
-const logger = getLogger("MaintenanceController")
+const logger = getLogger("ResidentialMaintenanceController")
 
 @Route("/v1/residential/maintenance")
 @injectable()
-export class MaintenanceController {
+export class ResidentialMaintenanceController {
     constructor(@inject("ResidentialMaintenanceService") private residentialMaintenanceService: ResidentialMaintenanceService) {}
 
     @Response(404, "NotFound")
