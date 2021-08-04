@@ -424,11 +424,22 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+<<<<<<< Updated upstream
     app.post('/ame-seguro-residencial/v1/pet/quote/:idPlan',
         function(request: any, response: any, next: any) {
             const args = {
                 idPlan: { "in": "path", "name": "idPlan", "required": true, "dataType": "string" },
                 petQuotationPlan: { "in": "body", "name": "petQuotationPlan", "required": true, "dataType": "any" },
+=======
+    app.post('/ame-seguro-residencial/v1/residential/maintenance/soldProposal/migrate',
+        function(request: any, response: any, next: any) {
+            const args = {
+                partner: { "in": "header", "name": "x-partner", "required": true, "dataType": "string" },
+                ver: { "in": "header", "name": "x-version", "required": true, "dataType": "string" },
+                paymentId: { "in": "header", "name": "x-paymentId", "required": true, "dataType": "string" },
+                customerId: { "in": "header", "name": "x-customerId", "required": true, "dataType": "string" },
+                nsu: { "in": "header", "name": "x-NSU", "required": true, "dataType": "string" },
+>>>>>>> Stashed changes
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
