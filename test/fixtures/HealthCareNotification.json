@@ -1,29 +1,46 @@
 {
 	"id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",	
-	"attributes": {	
+	"attributes": {
+		"title": "Rede Mais",
+		"description": "Individual",
+		"amount": 47880,
+		"callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
 		"customPayload": {
 			"isFrom": "SAUDE_ASSIST",
-			"origin": "MINIAPP",			
-			"customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
-			"proposal" : {
-				"name": "Reynaldo Cesar de Souza",	
-				"customerId": "1ce806fa-ed5e-938b-8130-c22b4f9eb8db",
-				"cpf": "719.945.505-34",	
-				"birthDate": "09041984",
-				"sex": "m",
-				"phoneNumber": "00000000000",
-				"email": "TESTE@TESTE.COM",	
-				"planType": "54",		
+			"origin": "MINIAPP",
+			"customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+			"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/healthcare/sendProposal",
+			"clientEmail": "izabella.assad@calindra.com.br",
+			"ambiente": "qa",
+			"proposal": {
+				"name": "Izabella da Silva Assad",
+				"customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+				"cpf": "16286131736",
+				"birthDate": "1997-05-17",
+				"sex": "F",
+				"civilState": "S",
+				"phoneNumber": "21968462664",
+				"email": "izabella.assad@calindra.com.br",
+				"planType": "3",
 				"address": {
-					"cep": "83602762",
-					"publicPlace": "RUA JOaO BONATO",
-					"number": "33",
-					"complement": "",
-					"street": "JARDIM CeU AZUL",
-					"city": "CAMPO LARGO",
-					"uf": "PR"
+					"cep": "21331-250",
+					"publicPlace": "Rua Divisória",
+					"number": "49",
+					"complement": "Apt 101",
+					"street": "Bento Ribeiro",
+					"city": "Rio de Janeiro",
+					"uf": "RJ"
 				}
+			},
+			"payment": {
+				"id_opcao_pagamento": 1
 			}
-		}		
+		},
+		"items": [
+			{
+				"quantity": 1,
+				"amount": 47880
+			}
+		]
 	}
   }
