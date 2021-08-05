@@ -31,6 +31,14 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "HealthCareProposalNotification": {
+        "dataType": "refObject",
+        "properties": {
+            "signedPayment": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PetProposalNotification": {
         "dataType": "refObject",
         "properties": {
@@ -124,7 +132,7 @@ export function RegisterRoutes(app: express.Express) {
     app.post('/ame-seguro-residencial/v1/healthcare/sendProposal',
         function(request: any, response: any, next: any) {
             const args = {
-                proposal: { "in": "body", "name": "proposal", "required": true, "dataType": "any" },
+                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "ref": "HealthCareProposalNotification" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
