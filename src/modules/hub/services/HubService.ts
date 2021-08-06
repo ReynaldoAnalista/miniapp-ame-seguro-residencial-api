@@ -126,7 +126,7 @@ export class HubService {
                     return {
                         status: x.success ? "Contratado" : "Não Contratado",
                         initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
-                        partner: "Seguro Mais Saúde",
+                        partner: "Rede Mais Saúde",
                     }
                 })
             }
