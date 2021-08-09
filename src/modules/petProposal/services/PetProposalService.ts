@@ -20,11 +20,11 @@ export class PetProposalService {
         @inject("PetSoldProposalRepository") private soldProposalRepository: PetSoldProposalRepository
     ) {}
 
-    async listPlans() {
-        const result = Plans
-        log.debug("Debug Data " + result)
-        return result
-    }
+    // async listPlans() {
+    //     const result = Plans
+    //     log.debug("Debug Data " + result)
+    //     return result
+    // }
 
     async sendProposal(signedPayment: any) {
         const proposal = await this.authTokenService.unsignNotification(signedPayment)
