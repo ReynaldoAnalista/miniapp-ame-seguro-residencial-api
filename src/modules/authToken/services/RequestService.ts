@@ -5,13 +5,8 @@ import { ParameterStore } from "../../../configs/ParameterStore"
 import { AuthTokenService } from "./AuthTokenService"
 import { getLogger } from "../../../server/Logger"
 import { Tenants } from "../../default/model/Tenants"
-import curlirize from "axios-curlirize"
 
 const log = getLogger("RequestService")
-
-if (process.env.NODE_ENV === "homolog" || process.env.NODE_ENV === "development") {
-    curlirize(axios)
-}
 
 enum Methods {
     GET = "GET",
@@ -27,9 +22,9 @@ enum Endpoints {
     RESIDENTIAL_URL_SALE = "URL_SALE",
     SMARTPHONE_URL_AUTHORIZATION = "SMARTPHONE_URL_AUTHORIZATION",
     SMARTPHONE_URL_SALE = "SMARTPHONE_URL_SALE",
-    LIFE_URL_BASE = "LIFE_URL_BASE",
     SMARTPHONE_URL_CANCEL = "SMARTPHONE_URL_CANCEL",
     PET_URL_BASE = "PET_URL_BASE",
+    LIFE_URL_BASE = "LIFE_URL_BASE",
     HEALTHCARE_URL_BASE = "HEALTHCARE_URL_BASE",
 }
 

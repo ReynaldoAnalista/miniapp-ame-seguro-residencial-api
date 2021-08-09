@@ -664,6 +664,35 @@
 				}
 			}
 		},
+		"/v1/pet/planList": {
+			"get": {
+				"operationId": "PlanList",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"additionalProperties": true,
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/v1/pet/petDescPlan/{idPlan}": {
 			"get": {
 				"operationId": "DescPetList",

@@ -12,18 +12,13 @@ const logger = getLogger("PetController")
 export class PetProposalController {
     constructor(@inject("PetProposalService") private petService: PetProposalService) {}
 
-    // @Response(404, "NotFound")
-    // @SuccessResponse("200", "Retrieved")
-    // @Get("/planList")
-    // public async planList() {
-    //     logger.info("Get Plan List")
-    //     try {
-    //         return await this.petService.listPlans()
-    //     } catch (e) {
-    //         logger.error(e.message)
-    //         throw new ApiError("List Plans Not sent", 500)
-    //     }
-    // }
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Get("/planList")
+    public planList(): any[] {
+        logger.info("Get Plan List")
+        return this.petService.listPlans()
+    }
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
