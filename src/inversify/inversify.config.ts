@@ -48,18 +48,18 @@ export const initDependencies = () => {
     bindSingleton("../modules/hub/services")
     bindSingleton("../modules/residentialProposal/services")
     bindSingleton("../modules/smartphoneProposal/services")
-    bindSingleton("../modules/petProposal/services")
     bindSingleton("../modules/maintenance/services")
-    bindSingleton("../modules/lifeProposal/services")
+    bindSingleton("../modules/petProposal/services")
     bindSingleton("../modules/healthCareProposal/services")
+    bindSingleton("../modules/lifeProposal/services")
 
     /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
     bindSingleton("../modules/residentialProposal/repository")
     bindSingleton("../modules/smartphoneProposal/repository")
     bindSingleton("../modules/petProposal/repository")
-    bindSingleton("../modules/maintenance/repository")
     bindSingleton("../modules/healthCareProposal/repository")
+    bindSingleton("../modules/maintenance/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

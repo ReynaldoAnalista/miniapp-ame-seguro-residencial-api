@@ -63,6 +63,10 @@
 					"control_data": {
 						"properties": {
 							"key_contract_certificate_number": {
+								"type": "number",
+								"format": "double"
+							},
+							"customer_identifier_code": {
 								"type": "string"
 							},
 							"processing_data": {
@@ -94,6 +98,7 @@
 							"shipping_file_number",
 							"acceptance_type",
 							"processing_data",
+							"customer_identifier_code",
 							"key_contract_certificate_number"
 						],
 						"type": "object"
@@ -540,41 +545,6 @@
 				}
 			}
 		},
-		"/v1/life/proposal": {
-			"post": {
-				"operationId": "Propose",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/v1/maintenance/proposal_email/{pass}/{email}/sendEmail": {
 			"get": {
 				"operationId": "SendMailProposalWithParams",
@@ -694,32 +664,6 @@
 				}
 			}
 		},
-		"/v1/pet/planList": {
-			"get": {
-				"operationId": "PlanList",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": []
-			}
-		},
 		"/v1/pet/petDescPlan/{idPlan}": {
 			"get": {
 				"operationId": "DescPetList",
@@ -832,6 +776,193 @@
 						}
 					}
 				}
+			}
+		},
+		"/v1/residential/maintenance/proposal/{paymentId}": {
+			"get": {
+				"operationId": "ProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"proposalData": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"successData": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"failData": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"failData",
+										"successData",
+										"proposalData"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "paymentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/residential/maintenance/soldProposal/{customerId}": {
+			"get": {
+				"operationId": "SoldProposalReport",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"proposalData": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"proposalData"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/residential/maintenance/soldProposal/migrate": {
+			"post": {
+				"operationId": "GenSoldProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"soldProposal": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"soldProposal"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-paymentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "header",
+						"name": "x-NSU",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/v1/plans/proposal-report": {
@@ -1780,6 +1911,74 @@
 						}
 					}
 				}
+			}
+		},
+		"/v1/unusual/proposal_email/{pass}/{email}/sendEmail": {
+			"get": {
+				"operationId": "SendMailProposalWithParams",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "pass",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "email",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/unusual/update_old_clients/{proposalId}": {
+			"get": {
+				"operationId": "UpdateProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "proposalId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

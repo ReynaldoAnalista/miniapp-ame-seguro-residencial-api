@@ -1,4 +1,4 @@
-import { inject, injectable } from "inversify"
+import { injectable } from "inversify"
 import moment from "moment"
 import { getLogger } from "../../../server/Logger"
 import { Tenants } from "../../default/model/Tenants"
@@ -38,7 +38,7 @@ export class PetProposalUtil {
         }
     }
 
-    async formatDatabaseProposal(quoteId: string, quoteProposal: any, requestProposal: any) {        
+    async formatDatabaseProposal(quoteId: string, quoteProposal: any, requestProposal: any) {
         return {
             id: quoteId,
             date: moment().format("DD-MM-YYYY hh:mm:ss"),
@@ -67,7 +67,7 @@ export class PetProposalUtil {
                     preexisting_condition: prop.preexisting_condition,
                     birth_date: moment(prop.birthDatePet, "DDMMYYYY").format("YYYY-MM-DD"),
                 }
-            })            
+            })
             if (customPayload.ambiente === "prod") {
                 switch (customPayload.proposal.planId) {
                     case 48:

@@ -1062,8 +1062,8 @@ export default [
         premio: 1093.53,
         coberturas: [
             {
-                id: '538585',
-                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                id: "538585",
+                descricao: "Roubo e Furto de Bens Mediante Arrombamento",
                 valor: 5000,
             },
             {
@@ -1114,8 +1114,8 @@ export default [
         premio: 1353.68,
         coberturas: [
             {
-                id: '538585',
-                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                id: "538585",
+                descricao: "Roubo e Furto de Bens Mediante Arrombamento",
                 valor: 7000,
             },
             {
@@ -1166,8 +1166,8 @@ export default [
         premio: 1804.45,
         coberturas: [
             {
-                id: '538585',
-                descricao: 'Roubo e Furto de Bens Mediante Arrombamento',
+                id: "538585",
+                descricao: "Roubo e Furto de Bens Mediante Arrombamento",
                 valor: 10000,
             },
             {

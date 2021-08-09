@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Route, SuccessResponse, Response, Post, Body } from "tsoa"
+import { Get, Path, Route, SuccessResponse, Response, Post, Body, Security } from "tsoa"
 import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { LifeProposalService } from "../services/LifeProposalService"
@@ -15,22 +15,9 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotationPlan(@Body() cotation: any) {
-        logger.info("Get Life Cotation")
+        logger.info("Get Life Model")
         try {
-            return await this.lifeProposalService.cotation(cotation)
-        } catch (e) {
-            logger.error(e.message)
-            throw new ApiError("Life Model Not sent", 500)
-        }
-    }
-
-    @Response(404, "NotFound")
-    @SuccessResponse("200", "Retrieved")
-    @Post("/proposal")
-    public async propose(@Body() signedPayment: any) {
-        logger.info("Life Proposal")
-        try {
-            return await this.lifeProposalService.proposal(signedPayment)
+            return await this.lifeProposalService.getCotation(cotation)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Life Model Not sent", 500)

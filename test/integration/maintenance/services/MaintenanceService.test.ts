@@ -16,7 +16,7 @@ initDependencies()
 jest.setTimeout(20000)
 
 let maintenanceService: MaintenanceService
-describe("MainTenanceService", () => {
+describe("MaintenanceService", () => {
     let parameterStore: ParameterStore
     let signedNotification: any
 
