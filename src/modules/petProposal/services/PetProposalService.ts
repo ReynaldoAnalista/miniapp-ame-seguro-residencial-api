@@ -20,9 +20,8 @@ export class PetProposalService {
         @inject("PetSoldProposalRepository") private soldProposalRepository: PetSoldProposalRepository
     ) {}
 
-    async listPlans() {
+    listPlans(): any[] {
         const result = Plans
-        log.debug("Debug Data " + result)
         return result
     }
 
