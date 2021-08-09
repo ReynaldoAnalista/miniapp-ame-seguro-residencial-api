@@ -21,6 +21,10 @@ export class PetProposalController {
             return await this.petService.listPlans()
         } catch (e) {
             logger.error(e.message)
+            return {
+                success: false,
+                message: "Error do process list",
+            }
             throw new ApiError("List Plans Not sent", 500)
         }
     }
