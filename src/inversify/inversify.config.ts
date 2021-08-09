@@ -50,7 +50,6 @@ export const initDependencies = () => {
     bindSingleton("../modules/smartphoneProposal/services")
     bindSingleton("../modules/maintenance/services")
     bindSingleton("../modules/petProposal/services")
-    bindSingleton("../modules/healthCareProposal/services")
     bindSingleton("../modules/lifeProposal/services")
 
     /* Initialize Repositories */

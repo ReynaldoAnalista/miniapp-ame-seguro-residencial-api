@@ -19,19 +19,6 @@
 				"type": "object",
 				"additionalProperties": true
 			},
-			"PetProposalNotification": {
-				"properties": {
-					"signedPayment": {
-						"type": "string",
-						"description": "Pagamento assinado"
-					}
-				},
-				"required": [
-					"signedPayment"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
 			"ResidentialProposalNotification": {
 				"properties": {
 					"signedPayment": {
