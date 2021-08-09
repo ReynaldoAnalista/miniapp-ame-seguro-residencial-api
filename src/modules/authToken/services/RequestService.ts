@@ -5,13 +5,8 @@ import { ParameterStore } from "../../../configs/ParameterStore"
 import { AuthTokenService } from "./AuthTokenService"
 import { getLogger } from "../../../server/Logger"
 import { Tenants } from "../../default/model/Tenants"
-import curlirize from "axios-curlirize"
 
 const log = getLogger("RequestService")
-
-if (process.env.NODE_ENV === "homolog" || process.env.NODE_ENV === "development") {
-    curlirize(axios)
-}
 
 enum Methods {
     GET = "GET",
