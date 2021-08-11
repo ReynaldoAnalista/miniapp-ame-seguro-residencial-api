@@ -142,17 +142,17 @@ export class HealthCareProposalService {
         log.info("Send HealthCare CancelProposal do Partner")
         if (cancelPropose.success) {
             log.info("Success to send HealthCare CancelProposal do Partner")
-            // const cancelSoldProposal = await this.cancelSoldProposal(request)
-            return {
-                success: true,
-                message: "Usuario cancelado com sucesso",
+            const cancelSoldProposal = await this.cancelSoldProposal(request)
+            if (cancelSoldProposal.success) {
+                return {
+                    success: true,
+                    message: "Usuario cancelado com sucesso",
+                }
             }
-        } else {
-            log.error("Error to send HealthCare CancelProposal do Partner")
-            return {
-                success: false,
-                message: "Não foi possível salvar os dados de HealthCare",
-            }
+        }
+        return {
+            success: false,
+            message: "Não foi possível salvar os dados de HealthCare",
         }
     }
 
@@ -192,9 +192,8 @@ export class HealthCareProposalService {
     }
 
     async cancelSoldProposal(request) {
-        const cancelPropose = { receivedCanceledNotification: request, status: "CANCELED" }
-        const cancelSoldProposal = await this.healthCareProposalSoldRepository.cancel(cancelPropose, request.customerId)
-        log.info("Save HeatlCare proposal Cancel to soldProposal")
+        const cancelSoldProposal = await this.healthCareProposalSoldRepository.cancel(request)
+        log.info("Update HealthCare proposal Cancel to soldProposal")
         return cancelSoldProposal
     }
 
