@@ -2,7 +2,9 @@ import { inject, injectable } from "inversify"
 import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
+import { ResidentialProposalService } from "../../residentialProposal/services/ResidentialProposalService"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
+import { MaintenanceProposalNotification } from "../model/MaintenanceProposalNotification"
 import { MaintenanceService } from "../services/MaintenanceService"
 
 const logger = getLogger("MaintenanceController")
@@ -14,7 +16,9 @@ export class MaintenanceController {
         @inject("MaintenanceService")
         private maintenanceService: MaintenanceService,
         @inject("SmartphoneProposalService")
-        private smartphoneProposalService: SmartphoneProposalService
+        private smartphoneProposalService: SmartphoneProposalService,
+        @inject("ResidentialProposalService")
+        private residentialProposalService: ResidentialProposalService
     ) {}
 
     @Response(404, "NotFound")
@@ -53,6 +57,19 @@ export class MaintenanceController {
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/residential-resend-proposal")
+    public async residentialResendProposal(@Body() proposal: MaintenanceProposalNotification) {
+        logger.info("Update Plan Type Active or Canceled")
+        try {
+            return await this.residentialProposalService.resendResidentialProposal(proposal.proposal)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)
         }
     }
 }
