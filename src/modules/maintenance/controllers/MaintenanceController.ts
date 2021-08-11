@@ -47,10 +47,10 @@ export class MaintenanceController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post("/update-plan-type")
-    public async updatePlanType(@Body() signedPayment: MaintenanceProposalNotification) {
+    public async updatePlanType(@Body() updatePlanStatus: MaintenanceProposalNotification) {
         logger.info("Update Plan Type Active or Canceled")
         try {
-            return await this.maintenanceService.updateOrdersType(signedPayment.signedPayment)
+            return await this.maintenanceService.updateOrdersType(updatePlanStatus.updatePlanStatus)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
