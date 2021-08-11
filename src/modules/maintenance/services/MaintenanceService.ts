@@ -30,7 +30,7 @@ export class MaintenanceService {
         throw new Error("Order not found")
     }
 
-    async updateOrdersType(signedNotification: string) {
+    async updateOrdersType(signedNotification: any) {
         let ordersUpdated = 0
         const unsignedNotification = await this.authTokenService.unsignNotification(signedNotification)
         try {

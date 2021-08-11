@@ -3,6 +3,7 @@ import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
+import { MaintenanceProposalNotification } from "../model/MaintenanceProposalNotification"
 import { MaintenanceService } from "../services/MaintenanceService"
 
 const logger = getLogger("MaintenanceController")
@@ -46,10 +47,10 @@ export class MaintenanceController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post("/update-plan-type")
-    public async updatePlanType(@Body() proposal: string) {
+    public async updatePlanType(@Body() signedPayment: MaintenanceProposalNotification) {
         logger.info("Update Plan Type Active or Canceled")
         try {
-            return await this.maintenanceService.updateOrdersType(proposal)
+            return await this.maintenanceService.updateOrdersType(signedPayment.signedPayment)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
