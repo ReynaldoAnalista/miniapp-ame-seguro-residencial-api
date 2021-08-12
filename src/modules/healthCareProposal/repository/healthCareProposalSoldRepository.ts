@@ -25,24 +25,35 @@ export class healthCareProposalSoldRepository {
         return proposal
     }
 
-    async cancel(proposal: any, customerId) {
-        const getOrderInfo = await this.findByCustomerId(customerId)
-        const getProposal = getOrderInfo?.map((item) => {
-            return item
-        })[0]
-        let cancelProposal: any
-
-        cancelProposal = getProposal
-        cancelProposal.canceledReceived = proposal
-        cancelProposal.order = getProposal?.order
-        cancelProposal.customerId = getProposal?.customerId
-        cancelProposal.status = SoldProposalStatus.cancel
-
-        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-        const params = { TableName: TABLE, Item: cancelProposal }
-        await dynamoDocClient.put(params).promise()
-        log.info("Atualizando os registros de HealthCare na tabela soldProposal")
-        return proposal
+    async cancel(proposal: any) {
+        try {
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const params = {
+                TableName: TABLE,
+                Key: {
+                    order: proposal.order,
+                    customerId: proposal.customerId,
+                },
+                UpdateExpression: "set #variavelStatus = :y",
+                ExpressionAttributeNames: {
+                    "#variavelStatus": "status",
+                },
+                ExpressionAttributeValues: {
+                    ":y": "CANCELED",
+                },
+            }
+            await dynamoDocClient.update(params).promise()
+            log.info("Atualizando os registros de HealthCare na tabela soldProposal")
+            return {
+                success: true,
+                message: "Proposta cancelada com sucesso",
+            }
+        } catch (e) {
+            return {
+                success: false,
+                message: `erro ao cancelar a proposta: ${e.message}`,
+            }
+        }
     }
 
     async findByCustomerId(customerId) {
