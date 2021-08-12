@@ -66,7 +66,7 @@ export class MaintenanceController {
     public async residentialResendProposal(@Body() proposal: MaintenanceProposalNotification) {
         logger.info("Update Plan Type Active or Canceled")
         try {
-            return await this.residentialProposalService.resendResidentialProposal(proposal.proposal)
+            return await this.residentialProposalService.resendResidentialProposal(proposal.updatePlanStatus)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)

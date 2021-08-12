@@ -19,6 +19,19 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"MaintenanceProposalNotification": {
+				"properties": {
+					"updatePlanStatus": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"updatePlanStatus"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"PetProposalNotification": {
 				"properties": {
 					"signedPayment": {
@@ -658,6 +671,58 @@
 						"application/json": {
 							"schema": {
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/residential-resend-proposal": {
+			"post": {
+				"operationId": "ResidentialResendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"result": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"trace": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"success",
+										"trace",
+										"result"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MaintenanceProposalNotification"
 							}
 						}
 					}
