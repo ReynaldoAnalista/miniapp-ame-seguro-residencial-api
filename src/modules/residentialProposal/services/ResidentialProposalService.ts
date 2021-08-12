@@ -299,6 +299,12 @@ export class ResidentialProposalService {
         }
     }
 
+    async resendResidentialProposal(signedProposal: string) {
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedProposal)
+        const proposalResponse = await this.sendProposalToPrevisul(unsignedPayment)
+        return proposalResponse
+    }
+
     async listProposal() {
         return this.residentialProposalRepository.listProposal()
     }
