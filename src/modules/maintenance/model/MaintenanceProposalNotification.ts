@@ -2,5 +2,5 @@ export interface MaintenanceProposalNotification {
     /**
      * Pagamento assinado
      */
-    proposal: string
+    updatePlanStatus: string
 }
