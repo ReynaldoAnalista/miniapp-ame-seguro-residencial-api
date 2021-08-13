@@ -74,6 +74,12 @@ export class RequestService {
                 Authorization: `${token}`,
             }
         }
+        if (tenant === Tenants.HEALTHCARE) {
+            headers = {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        }
 
         const config = {
             method: method,
