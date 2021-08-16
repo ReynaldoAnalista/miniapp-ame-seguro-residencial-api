@@ -10,6 +10,7 @@ import { Tenants } from "../../../../src/modules/default/model/Tenants"
 import { ParameterStore } from "../../../../src/configs/ParameterStore"
 import { SmartphoneProposalRepository } from "../../../../src/modules/smartphoneProposal/repository/SmartphoneProposalRepository"
 import { getLogger } from "../../../../src/server/Logger"
+import { SmartphoneSoldProposalRepository } from "../../../../src/modules/smartphoneProposal/repository/SmartphoneSoldProposalRepository"
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -22,10 +23,12 @@ jest.setTimeout(20000)
 describe("SmartphoneProposalService", () => {
     let smartphoneProposalService: SmartphoneProposalService
     let smartphoneProposalRepository: SmartphoneProposalRepository
+    let smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository
     let parameterStore: ParameterStore
     let signedPayment: any
 
     beforeAll(async () => {
+        smartphoneSoldProposalRepository = iocContainer.get("SmartphoneSoldProposalRepository")
         smartphoneProposalService = iocContainer.get("SmartphoneProposalService")
         smartphoneProposalRepository = iocContainer.get("SmartphoneProposalRepository")
         parameterStore = iocContainer.get("ParameterStore")
@@ -60,10 +63,12 @@ describe("SmartphoneProposalService", () => {
     })
 
     it("API para cancelamento", async () => {
-        // TODO : REFAZER OS TESTES DE CANCELAMENTO DO SMARTPHONE
-        // const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
-        // const cancelObject = JSON.parse(cancel)
-        // const cancelProcess = await smartphoneProposalService.cancelationProcess(cancelObject)
-        // expect(cancelProcess).toBeDefined()
+        const getLastProposal = await smartphoneSoldProposalRepository.listSoldProposal()
+        const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
+        const cancelObject = JSON.parse(cancel)
+        cancelObject.customerId = getLastProposal[0].customerId
+        cancelObject.order = getLastProposal[0].order
+        const cancelProcess = await smartphoneProposalService.cancelationProcess(cancelObject)
+        expect(cancelProcess).toBeDefined()
     })
 })

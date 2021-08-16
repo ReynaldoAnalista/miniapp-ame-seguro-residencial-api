@@ -368,9 +368,8 @@ export class SmartphoneProposalService {
         if (!signedPayment.unsigned || typeof signedPayment.unsigned == "undefined") {
             unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)
         } else {
-            unsignedPayment = signedPayment.cancelData
+            unsignedPayment = signedPayment
         }
-
         const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)
 
         if (!formatedCancelProposal) {
