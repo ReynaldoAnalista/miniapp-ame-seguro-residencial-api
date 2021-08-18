@@ -1,11 +1,9 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
-import { TYPES } from "../../../inversify/inversify.types"
 import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
 import { SmartphoneProposalRepository } from "../repository/SmartphoneProposalRepository"
 import { SmartphoneProposalResponseRepository } from "../repository/SmartphoneProposalResponseRepository"
-import { ParameterStore } from "../../../configs/ParameterStore"
 import { SmartphoneSoldProposal } from "../model/SmartphoneSoldProposal"
 import { SmartphoneSoldProposalRepository } from "../repository/SmartphoneSoldProposalRepository"
 import { Tenants } from "../../default/model/Tenants"
@@ -13,7 +11,9 @@ import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils"
 import { SmartphoneProposalMailService } from "./SmartphoneProposalMailService"
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 import { DigibeeConfirmation } from "../model/DigibeeConfirmation"
-import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository"
+import { AmePaymentService } from "../../ame/services/AmePaymentService"
+import moment from "moment"
+import { ParameterStore } from "../../../configs/ParameterStore"
 
 const log = getLogger("SmartphoneProposalService")
 
@@ -32,7 +32,9 @@ export class SmartphoneProposalService {
         private responseRepository: SmartphoneProposalResponseRepository,
         @inject("SmartphoneProposalMailService")
         private mailService: SmartphoneProposalMailService,
-        @inject(TYPES.ParameterStore)
+        @inject("AmePaymentService")
+        private amePaymentService: AmePaymentService,
+        @inject("ParameterStore")
         private parameterStore: ParameterStore
     ) {}
 
@@ -389,17 +391,39 @@ export class SmartphoneProposalService {
             )
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
             log.debug("Salvando o cancelamento na soldProposal")
+            await this.refundProcess(unsignedPayment)
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
-            // const message = e.message
             const result = { success: false, error: e.message }
             log.error(`Error %j`, e.message)
             log.debug("Error when trying to cancel proposal")
-            // log.debug(`Status Code: ${message}`)
             return result
         }
+    }
+
+    async refundProcess(unsignedPayment) {
+        const proposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(
+            unsignedPayment.customerId,
+            unsignedPayment.order
+        )
+        const refundedPayment = await this.refundPaymentProcess(proposal)
+        const refundContent = {
+            paymentId: unsignedPayment.order, // id da ordem
+            walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
+            amount: refundedPayment,
+        }
+        const refundToWallet = await this.amePaymentService.refund(refundContent)
+        return refundToWallet
+    }
+
+    async refundPaymentProcess(data) {
+        const soldDate = moment(data[0].createdAt)
+        const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
+        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate, "days")).toFixed(2)
+        const prizeBeRefunded = Math.abs(usedPrice - liquidPrice)
+        return prizeBeRefunded
     }
 
     async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {

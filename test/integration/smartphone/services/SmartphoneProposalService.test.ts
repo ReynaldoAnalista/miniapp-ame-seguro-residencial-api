@@ -15,7 +15,7 @@ import { SmartphoneSoldProposalRepository } from "../../../../src/modules/smartp
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
 
-const log = getLogger("PetProposalService:test")
+const log = getLogger("SmartphoneService:test")
 
 initDependencies()
 jest.setTimeout(20000)
@@ -48,26 +48,28 @@ describe("SmartphoneProposalService", () => {
         expect(proposalResponse.success).toEqual(true)
     })
 
-    it("Atualização da proposta de crédito", async () => {
-        const getProposal = await smartphoneProposalRepository.listProposal()
-        const proposalId = getProposal[0].id
-        const updateProposal = await smartphoneProposalService.updateProposal(proposalId)
-        expect(updateProposal).toBeDefined()
-    })
+    // it("Atualização da proposta de crédito", async () => {
+    //     const getProposal = await smartphoneProposalRepository.listProposal()
+    //     const proposalId = getProposal[0].id
+    //     const updateProposal = await smartphoneProposalService.updateProposal(proposalId)
+    //     expect(updateProposal).toBeDefined()
+    // })
 
-    it("Envio de proposta para DigiBee", async () => {
-        const getProposal = await smartphoneProposalRepository.listProposal()
-        const proposalId = getProposal[0].id
-        const digibeeProposal = await smartphoneProposalService.sendProposal(proposalId)
-        expect(digibeeProposal).toBeDefined()
-    })
+    // it("Envio de proposta para DigiBee", async () => {
+    //     const getProposal = await smartphoneProposalRepository.listProposal()
+    //     const proposalId = getProposal[0].id
+    //     const digibeeProposal = await smartphoneProposalService.sendProposal(proposalId)
+    //     expect(digibeeProposal).toBeDefined()
+    // })
 
     it("API para cancelamento", async () => {
-        const getLastProposal = await smartphoneSoldProposalRepository.listSoldProposal()
         const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/SmartphoneCancel.json"), "utf-8")
         const cancelObject = JSON.parse(cancel)
-        cancelObject.customerId = getLastProposal[0].customerId
-        cancelObject.order = getLastProposal[0].order
+
+        const getLastProposal = await smartphoneSoldProposalRepository.listSoldProposal()
+        getLastProposal[0].customerId = cancelObject.customerId
+        getLastProposal[0].order = cancelObject.order
+        await smartphoneSoldProposalRepository.update(getLastProposal[0])
         const cancelProcess = await smartphoneProposalService.cancelationProcess(cancelObject)
         expect(cancelProcess).toBeDefined()
     })
