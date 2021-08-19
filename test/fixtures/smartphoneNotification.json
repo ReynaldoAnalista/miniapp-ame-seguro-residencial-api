@@ -5,7 +5,7 @@
         "customPayload": {
             "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
             "clientEmail": "teste@email.com.br",
-            "customerId": "4c1b25a3-8470-43ae-b4dc-26d5ed3cdb32",
+            "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
             "isFrom": "PHONE_SEC",
             "miniAppId": "21644",
             "origin": "MINIAPP",
@@ -88,7 +88,7 @@
     ],
     "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
     "description": "Para: Samsung Galaxy_A02s 64GB",
-    "id": "81047477-5fac-4ced-8d1d-6a9b59800664",
+    "id": "22ca9ef9-dec8-4942-82d0-1f512029059b",
     "name": "Compra on-line",
     "nsu": "045368281759",
     "operationReference": null,
