@@ -432,7 +432,7 @@ export class SmartphoneProposalService {
         if (soldProposal) {
             log.info("Buscando informações na tabela SoldProposal")
             const requestProposal = soldProposal?.find(
-                (x) => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString()
+                (x) => x.receivedPaymentNotification.nsu === dataInfo.customer_identifier_code
             )
             log.info("Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente")
             if (requestProposal) {
