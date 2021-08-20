@@ -45,11 +45,11 @@
                 },
                 "portable_equipment_risk_data": {
                     "cpf_cnpj_by_risk": "16286131736",
-                    "risk_description": "LG K10 ",
-                    "product_description": "LG K10 ",
+                    "risk_description": "Notebook",
+                    "product_description": "Notebook",
                     "manufacturer_code": 1,
-                    "manufacturer_name": "LG",
-                    "model_description": "LG K10 ",
+                    "manufacturer_name": "Dell",
+                    "model_description": "Dell DellMax",
                     "equipment_type": 1,
                     "equipment_value": 1000,
                     "invoice_number": "",
@@ -66,7 +66,7 @@
         },
         "items": [
             {
-                "description": "Proteção do tipo Ame Proteção Básica para um smartphone modelo LG K10 (IMEI:0) avaliado em R$ 1.000,00",
+                "description": "Proteção do tipo Ame Proteção Básica para um Notebook modelo DellMax (IMEI:0) avaliado em R$ 5.000,00",
                 "quantity": 1,
                 "amount": 13877
             }
@@ -84,7 +84,7 @@
         281738000
     ],
     "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
-    "description": "Para: Samsung Galaxy_A02s 64GB",
+    "description": "Para: Notebok DellMax",
     "id": "81047477-5fac-4ced-8d1d-6a9b59800664",
     "name": "Compra on-line",
     "nsu": "045368281759",
