@@ -1,0 +1,115 @@
+{
+    "amount": 17842,
+    "amountRefunded": 0,
+    "attributes": {
+        "title": "Ame Proteção Básica",
+        "description": "Para: LG K10",
+        "amount": 13877,
+        "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe",
+        "customPayload": {
+            "isFrom": "PHONE_SEC",
+            "origin": "MINIAPP",
+            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+            "clientEmail": "izabella.assad@calindra.com.br",
+            "selectedPlan": {
+                "id": 1,
+                "description": "Ame Proteção Básica",
+                "percent": 12.9231,
+                "stolenFranchise": 0.2,
+                "brokenFranchise": 0.15,
+                "coverage": " Roubo ou furto qualificado e quebra acidental",
+                "guarantee": "Substituição ou reparo do bem.",
+                "totalPrice": "R$ 138,77",
+                "price": "R$ 0,39",
+                "priceInCents": 13877,
+                "franchise": "",
+                "installmentPrice": "R$ 11,57"
+            },
+            "proposal": {
+                "insured_data": {
+                    "insured_name": "Izabella da Silva Assad",
+                    "type_of_legal_person": "F",
+                    "cnpj_cpf": "16286131736",
+                    "date_of_birth": "17/05/1997",
+                    "gender": "M",
+                    "address_data": {
+                        "type_of_street": "01",
+                        "street": "Rua Divisória",
+                        "number": "49",
+                        "complement": "Apt 101",
+                        "district": "Bento Ribeiro",
+                        "city": "Rio de Janeiro",
+                        "zip_code": "21331250",
+                        "federal_unit": "RJ"
+                    }
+                },
+                "portable_equipment_risk_data": {
+                    "cpf_cnpj_by_risk": "16286131736",
+                    "risk_description": "LG K10 ",
+                    "product_description": "LG K10 ",
+                    "manufacturer_code": 1,
+                    "manufacturer_name": "LG",
+                    "model_description": "LG K10 ",
+                    "equipment_type": 1,
+                    "equipment_value": 1000,
+                    "invoice_number": "",
+                    "invoice_date": "05172021",
+                    "device_serial_code": 0
+                },
+                "coverage_data": {
+                    "policy_item_number": 1,
+                    "coverage_code": 1,
+                    "insured_amount": 1000,
+                    "liquid_prize": 129.23
+                }
+            }
+        },
+        "items": [
+            {
+                "description": "Proteção do tipo Ame Proteção Básica para um smartphone modelo LG K10 (IMEI:0) avaliado em R$ 1.000,00",
+                "quantity": 1,
+                "amount": 13877
+            }
+        ]
+    },
+    "cashType": "CASH",
+    "currency": "BRL",
+    "date": [
+        2021,
+        3,
+        24,
+        12,
+        36,
+        8,
+        281738000
+    ],
+    "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89",
+    "description": "Para: Samsung Galaxy_A02s 64GB",
+    "id": "81047477-5fac-4ced-8d1d-6a9b59800664",
+    "name": "Compra on-line",
+    "nsu": "045368281759",
+    "operationReference": null,
+    "operationType": "DEBIT",
+    "peer": null,
+    "splits": [{
+            "amount": 17842,
+        "cardBrand": null,
+        "cardMasked": null,
+        "cashType": "CASH",
+        "date": [
+            2021,
+            3,
+            24,
+            12,
+            36,
+            8,
+            281753000
+        ],
+        "id": "6e6b0812-bc05-4dc5-babc-bedbda04713b",
+        "installments": null,
+        "status": "AUTHORIZED"
+    }],
+    "status": "AUTHORIZED",
+    "title": "Ame Proteção Total",
+    "type": "PAYMENT"
+}
