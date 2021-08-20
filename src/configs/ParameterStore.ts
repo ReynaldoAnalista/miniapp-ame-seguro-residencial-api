@@ -38,7 +38,7 @@ if (configJsonOnEnv) {
                 if (err) {
                     //return reject(err)
                     log.warn(`PARAMETER_STORE_NAME ${PARAMETER_STORE_NAME} nao foi encontrado`)
-                    return resolve()
+                    return reject()
                 }
                 return resolve(JSON.parse(data.Parameter.Value))
             }

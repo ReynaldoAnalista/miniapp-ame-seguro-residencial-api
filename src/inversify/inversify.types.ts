@@ -6,6 +6,7 @@ const TYPES = {
     AuthenticationService: "AuthenticationService",
     ServerConfig: "ServerConfig",
     ParameterStore: "ParameterStore",
+    AmeApiConfig: "AmeApiConfig",
     HealthController: "HealthController",
     Controller: "Controller",
     ApiServer: "ApiServer",

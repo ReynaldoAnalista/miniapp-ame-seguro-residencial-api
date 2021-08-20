@@ -11,6 +11,7 @@ import { Secrets } from "../configs/Secrets"
 import { DynamoHolder } from "../repository/DynamoHolder"
 import { MailSender } from "../modules/default/services/MailSender"
 import { MailAwsService } from "../modules/default/services/MailAwsService"
+import { AmeApiConfig } from "../configs/AmeApiConfig"
 
 export const iocContainer = new Container()
 
@@ -24,6 +25,7 @@ export const initDependencies = () => {
     iocContainer.bind<BlindGuardianConfig>(TYPES.BlindGuardianConfig).to(BlindGuardianConfig).inSingletonScope()
     iocContainer.bind<ServerConfig>(TYPES.ServerConfig).to(ServerConfig).inSingletonScope()
     iocContainer.bind<ParameterStore>(TYPES.ParameterStore).to(ParameterStore).inSingletonScope()
+    iocContainer.bind<AmeApiConfig>(TYPES.AmeApiConfig).to(AmeApiConfig).inSingletonScope()
     iocContainer.bind<Secrets>(TYPES.Secrets).to(Secrets).inSingletonScope()
     iocContainer.bind(TYPES.DynamoHolder).to(DynamoHolder).inSingletonScope()
 
@@ -54,6 +56,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/healthCareProposal/services")
     bindSingleton("../modules/lifeProposal/services")
     bindSingleton("../modules/portableProposal/services")
+    bindSingleton("../modules/ame/services")
 
     /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")

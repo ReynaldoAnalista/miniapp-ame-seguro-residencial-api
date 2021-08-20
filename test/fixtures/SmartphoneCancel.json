@@ -1,8 +1,9 @@
 {
-    "customerId": "00eb490e-274d-48c4-a76b-d66f8d74c62d",
-    "order": "6d452a15-63ee-4876-a56a-2f5e4fe8047f",
-    "data": {
-        "cancellation_type": 2,
+    "unsigned": true,
+    "customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+    "order": "104de461-5cd6-4d01-a25d-b0027704ceaf",
+    "data": { 
+        "cancellation_type": 2, 
         "cancellation_reason": "DECISAO DO SEGURADO"
     }
 }

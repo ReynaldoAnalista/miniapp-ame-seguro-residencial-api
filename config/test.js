@@ -20,5 +20,9 @@ module.exports = {
     },
     "event": {
         "url": "https://miniapps.dev.amedigital.com/sandman/v1/p/events"
+    },
+    "ameApi": {
+        "blindGuardianUrl": "https://miniapps.hml.amedigital.com/blind-guardian-api/v1",
+        "paymentApi": "https://miniapps.hml.amedigital.com/payment-api"
     }
 }
