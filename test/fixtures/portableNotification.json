@@ -1,5 +1,5 @@
 {
-    "amount": 17842,
+    "amount": 13877,
     "amountRefunded": 0,
     "attributes": {
         "title": "Ame Proteção Básica",
@@ -92,7 +92,7 @@
     "operationType": "DEBIT",
     "peer": null,
     "splits": [{
-            "amount": 17842,
+            "amount": 13877,
         "cardBrand": null,
         "cardMasked": null,
         "cashType": "CASH",
