@@ -26,6 +26,10 @@
     {
       "AttributeName": "tenant",
       "AttributeType": "S"
+    },
+    {
+      "AttributeName": "NSU",
+      "AttributeType": "S"
     }
   ],
   "ProvisionedThroughput": {
@@ -79,6 +83,22 @@
       "ProvisionedThroughput": {
         "ReadCapacityUnits": 1,
         "WriteCapacityUnits": 1
+      }
+    },
+    {
+      "IndexName": "NSUIndex",
+      "KeySchema": [
+        {
+          "AttributeName": "NSU",
+          "KeyType": "HASH"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 5,
+        "WriteCapacityUnits": 5
       }
     }
   ]
