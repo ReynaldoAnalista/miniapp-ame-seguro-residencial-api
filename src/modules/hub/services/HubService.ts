@@ -9,6 +9,7 @@ import { ResidentialSoldProposalRepository } from "../../residentialProposal/rep
 import { SmartphoneSoldProposalRepository } from "../../smartphoneProposal/repository/SmartphoneSoldProposalRepository"
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
 import { SmartphoneProposalResponseRepository } from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository"
+import { PortableSoldProposalRepository } from "../../portableProposal/repository/PortableSoldProposalRepository"
 import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 import Plans from "../../residentialProposal/services/Plans"
 import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldProposalRepository"
@@ -40,6 +41,8 @@ export class HubService {
         private healthCareProposalSoldRepository: healthCareProposalSoldRepository,
         @inject("SoldProposalRepository")
         private soldProposalRepository: SoldProposalRepository,
+        @inject("PortableSoldProposalRepository")
+        private portableSoldProposalRepository: PortableSoldProposalRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {}
@@ -51,11 +54,13 @@ export class HubService {
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
         const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
         const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
+        const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomer(customerId)
 
         let smartphonePlans = []
         let residentialPlans = []
         let petPlans = []
         let healthCarePlans = []
+        let portablePlans = []
         if (residentialPlansFromDB) {
             if (raw) {
                 residentialPlans = Object.assign(residentialPlansFromDB)
@@ -117,7 +122,6 @@ export class HubService {
                 })
             }
         }
-
         if (healthCarePlansPlansFromDB) {
             if (raw) {
                 healthCarePlans = Object.assign(healthCarePlansPlansFromDB)
@@ -131,7 +135,35 @@ export class HubService {
                 })
             }
         }
-        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans }
+        if (portablePlansPlansFromDB) {
+            if (raw) {
+                portablePlans = Object.assign(portablePlansPlansFromDB)
+            } else {
+                portablePlans = Object.assign(portablePlansPlansFromDB).map((x) => {
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    const device = proposal?.portable_equipment_risk_data
+
+                    return {
+                        id: x.order,
+                        description: x.receivedPaymentNotification?.title,
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        diffDays: moment().diff(moment(x.createdAt), "days"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        device: device?.risk_description,
+                        deviceValue: device?.equipment_value ? device?.equipment_value * 100 : 0,
+                        imei: device?.device_serial_code,
+                        coverage: selectedPlan?.coverage,
+                        guarantee: selectedPlan?.guarantee,
+                        stolenFranchise: selectedPlan.stolenFranchise,
+                        brokenFranchise: selectedPlan.brokenFranchise,
+                        screenFranchise: selectedPlan.screenFranchise,
+                    }
+                })
+            }
+        }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans }
     }
 
     /**
