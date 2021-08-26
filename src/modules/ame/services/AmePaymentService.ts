@@ -23,16 +23,12 @@ export class AmePaymentService {
     ) {}
 
     private async getConfig() {
-        if (this._config) {
-            return this._config
-        } else {
-            return (this._config = {
-                client_id: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_CLIENT_ID"),
-                client_secret: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_CLIENT_SECRET"),
-                blindGuardianUrl: this.ameApiConfig.blindGuardianUrl,
-                paymentApi: this.ameApiConfig.paymentApi,
-            })
-        }
+        return (this._config = {
+            client_id: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_CLIENT_ID"),
+            client_secret: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_CLIENT_SECRET"),
+            blindGuardianUrl: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_URL"),
+            paymentApi: await this.parameterStore.getSecretValue("BLIND_GUARDIAN_API"),
+        })
     }
 
     async login() {
@@ -43,7 +39,6 @@ export class AmePaymentService {
             client_secret: cfg.client_secret,
             grant_type: "client_credentials",
         }
-
         try {
             const resAmeAuth = await Axios.post(`${cfg.blindGuardianUrl}/o/auth`, loginParams)
             this.tokenCode = resAmeAuth.data.accessToken
