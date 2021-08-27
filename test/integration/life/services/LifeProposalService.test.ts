@@ -30,10 +30,9 @@ describe("PetProposalService", () => {
         // paymentObject.id = uuidv4()
         // paymentObject.attributes.customPayload.customerId = uuidv4()
         // signedPayment = await sign(paymentObject, secret)
-    })    
+    })
 
     it("Teste Inicial de Life Proposal", async () => {
         expect(true).toBe(true)
     })
-
 })

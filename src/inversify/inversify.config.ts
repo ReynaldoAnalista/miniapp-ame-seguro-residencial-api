@@ -11,6 +11,7 @@ import { Secrets } from "../configs/Secrets"
 import { DynamoHolder } from "../repository/DynamoHolder"
 import { MailSender } from "../modules/default/services/MailSender"
 import { MailAwsService } from "../modules/default/services/MailAwsService"
+import { AmeApiConfig } from "../configs/AmeApiConfig"
 
 export const iocContainer = new Container()
 
@@ -24,6 +25,7 @@ export const initDependencies = () => {
     iocContainer.bind<BlindGuardianConfig>(TYPES.BlindGuardianConfig).to(BlindGuardianConfig).inSingletonScope()
     iocContainer.bind<ServerConfig>(TYPES.ServerConfig).to(ServerConfig).inSingletonScope()
     iocContainer.bind<ParameterStore>(TYPES.ParameterStore).to(ParameterStore).inSingletonScope()
+    iocContainer.bind<AmeApiConfig>(TYPES.AmeApiConfig).to(AmeApiConfig).inSingletonScope()
     iocContainer.bind<Secrets>(TYPES.Secrets).to(Secrets).inSingletonScope()
     iocContainer.bind(TYPES.DynamoHolder).to(DynamoHolder).inSingletonScope()
 
@@ -38,7 +40,9 @@ export const initDependencies = () => {
     bindControllers("../modules/smartphoneProposal/controllers")
     bindControllers("../modules/petProposal/controllers")
     bindControllers("../modules/lifeProposal/controllers")
-    // bindControllers("../modules/unusual/controllers")
+    bindControllers("../modules/healthCareProposal/controllers")
+    bindControllers("../modules/maintenance/controllers")
+    bindControllers("../modules/portableProposal/controllers")
 
     /* Initialize Services */
     iocContainer.bind<ApiServer>(TYPES.ApiServer).to(ApiServer).inSingletonScope()
@@ -47,16 +51,21 @@ export const initDependencies = () => {
     bindSingleton("../modules/hub/services")
     bindSingleton("../modules/residentialProposal/services")
     bindSingleton("../modules/smartphoneProposal/services")
-    bindSingleton("../modules/unusual/services")
+    bindSingleton("../modules/maintenance/services")
     bindSingleton("../modules/petProposal/services")
+    bindSingleton("../modules/healthCareProposal/services")
     bindSingleton("../modules/lifeProposal/services")
+    bindSingleton("../modules/portableProposal/services")
+    bindSingleton("../modules/ame/services")
 
     /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
     bindSingleton("../modules/residentialProposal/repository")
     bindSingleton("../modules/smartphoneProposal/repository")
     bindSingleton("../modules/petProposal/repository")
-    // bindSingleton("../modules/unusual/repository")
+    bindSingleton("../modules/healthCareProposal/repository")
+    bindSingleton("../modules/maintenance/repository")
+    bindSingleton("../modules/portableProposal/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

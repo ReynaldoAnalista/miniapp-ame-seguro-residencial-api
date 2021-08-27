@@ -20,5 +20,9 @@
     },
     "event": {
         "url": "https://miniapps.dev.amedigital.com/sandman/v1/p/events"
+    },
+    "ameApi": {
+        "blindGuardianUrl": "https://miniapps.amedigital.com/blind-guardian-api/v1",
+        "paymentApi": "https://miniapps.amedigital.com/payment-api"
     }
 }
