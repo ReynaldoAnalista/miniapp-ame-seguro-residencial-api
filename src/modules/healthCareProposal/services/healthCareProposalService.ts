@@ -29,7 +29,7 @@ export class HealthCareProposalService {
         await this.sendCotation(formatedCotation)
         const formatedProposal = await this.formatProposal(proposal)
         const proposalResponse = await this.sendProposal(formatedProposal)
-        await this.saveProposalResponse(unsignedPayment.id, unsignedPayment.attributes)
+        // await this.saveProposalResponse(unsignedPayment.id, unsignedPayment.attributes)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
         return proposalResponse
     }
