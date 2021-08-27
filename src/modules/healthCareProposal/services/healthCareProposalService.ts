@@ -23,45 +23,30 @@ export class HealthCareProposalService {
     ) {}
 
     async proposal(signedPayment: any) {
-        const proposal = await this.authTokenService.unsignNotification(signedPayment)
-        const formatedCotation = await this.formatCotation(proposal.attributes.customPayload.proposal)
-        const cotation = await this.cotation(formatedCotation)
-        log.info("Enviano a Adesão de HeathCare para o Parceiro")
-        let processProposal: any = null
-
-        if (cotation.success) {
-            const formatedProposal = await this.formatProposal(proposal.attributes.customPayload.proposal)
-            log.info("Enviano a Proposta de Pagamento do HeathCare para o Parceiro")
-            processProposal = await this.proposalRequest(formatedProposal)
-            await this.saveProposalResponse(proposal.id, proposal.attributes)
-            await this.saveSoldProposal(proposal, processProposal)
-        } else {
-            processProposal = {
-                success: false,
-                message: "Erro de cadastro do usuário",
-                error: cotation?.msg,
-            }
-        }
-        return processProposal
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        const { proposal } = unsignedPayment.attributes.customPayload
+        const formatedCotation = await this.formatCotation(proposal)
+        await this.sendCotation(formatedCotation)
+        const formatedProposal = await this.formatProposal(proposal)
+        const proposalResponse = await this.sendProposal(formatedProposal)
+        await this.saveProposalResponse(unsignedPayment.id, unsignedPayment.attributes)
+        await this.saveSoldProposal(unsignedPayment, proposalResponse)
+        return proposalResponse
     }
 
     async saveProposalResponse(id: any, proposalResponse: any) {
-        try {
-            await this.healthCareProposalRepository.create({
-                id: id,
-                success: true,
-                proposalResponse,
-                transactionDateTime: new Date().toISOString(),
-            })
-            log.debug("saveProposalSentSuccess:success")
-        } catch (e) {
-            log.debug("saveProposalSentSuccess:Fail")
-            log.debug(e.message)
-        }
+        log.info("Saving proposal response")
+        await this.healthCareProposalRepository.create({
+            id: id,
+            success: true,
+            proposalResponse,
+            transactionDateTime: new Date().toISOString(),
+        })
+        log.debug("saveProposalSentSuccess:success")
     }
 
     async saveSoldProposal(proposal: any, response: any) {
-        log.debug("saveSoldProposal")
+        log.debug("Saving soldProposal")
         const apiVersion = process.env.COMMIT_HASH || "unavailable"
         await this.healthCareProposalSoldRepository.create({
             customerId: proposal.attributes.customPayload.customerId,
@@ -77,64 +62,40 @@ export class HealthCareProposalService {
         log.debug("saveSoldProposal:success")
     }
 
-    async cotation(cotation: any) {
-        log.info("Sending HeatlCare Cotation to Partner")
-        let result
-        try {
-            const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.HEALTHCARE_URL_BASE,
-                this.requestService.METHODS.POST,
-                cotation,
-                Tenants.HEALTHCARE,
-                "/adesao"
-            )
-            if (response.data.status === "200") {
-                result = { success: true, content: response.data }
-                log.info("Success HeathCarea Cotation sent")
-            } else {
-                result = { success: false, content: response.data }
-                log.error("HeathCarea Cotation Error")
-            }
-        } catch (e) {
-            const status = e.response?.status
-            const statusText = e.response
-            result = { success: false, status: status, message: statusText }
-            log.error(`Error %j`, statusText)
-            log.debug("Error when trying to send Cotation")
-            log.debug(`Status Code: ${status}`)
+    async sendCotation(cotation: any) {
+        log.info("Sending HealthCare Cotation to Partner")
+        const response = await this.requestService.makeRequest(
+            this.requestService.ENDPOINTS.HEALTHCARE_URL_BASE,
+            this.requestService.METHODS.POST,
+            cotation,
+            Tenants.HEALTHCARE,
+            "/adesao"
+        )
+        if (response.data.status === "200") {
+            log.info("Success HeathCarea Cotation sent")
+            return { success: true, content: response.data }
+        } else {
+            log.error("HealthCarea Cotation Error")
+            throw new Error("HealthCarea Cotation Error")
         }
-
-        return result
     }
 
-    async proposalRequest(proposal: any) {
+    async sendProposal(proposal: any) {
         log.info("Sending HeatlCare proposal to Partner")
-        let result
-        try {
-            const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.HEALTHCARE_URL_BASE,
-                this.requestService.METHODS.POST,
-                proposal,
-                Tenants.HEALTHCARE,
-                "/pagamento"
-            )
-            if (response.data.status === "200") {
-                result = { success: true, content: response.data }
-                log.info("Success HeathCarea proposal sent")
-            } else {
-                result = { success: false, content: response.data }
-                log.error("HeathCarea proposal Error")
-            }
-        } catch (e) {
-            const status = e.response?.status
-            const statusText = e.response?.statusText
-            result = { success: false, status: status, message: statusText }
-            log.error(`Error %j`, statusText)
-            log.debug("Error when trying to send proposal")
-            log.debug(`Status Code: ${status}`)
+        const response = await this.requestService.makeRequest(
+            this.requestService.ENDPOINTS.HEALTHCARE_URL_BASE,
+            this.requestService.METHODS.POST,
+            proposal,
+            Tenants.HEALTHCARE,
+            "/pagamento"
+        )
+        if (response.data.status === "200") {
+            log.info("Success HeathCarea proposal sent")
+            return { success: true, content: response.data }
+        } else {
+            log.error("HeathCarea proposal Error")
+            throw new Error("HeathCarea proposal Error")
         }
-
-        return result
     }
 
     async cancel(request: any) {
@@ -198,6 +159,7 @@ export class HealthCareProposalService {
     }
 
     async formatCotation(request: any) {
+        log.info("Formatando cotação para envio")
         return {
             ID_CONTRATO_PLANO: 100577816,
             ID_BENEFICIARIO_TIPO: 1,
@@ -226,6 +188,7 @@ export class HealthCareProposalService {
     }
 
     async formatProposal(request: any) {
+        log.info("Formatando proposta para envio")
         return {
             ID_CLIENTE_CONTRATO: 100577816,
             ID_CLIENTE: 10067,
@@ -234,7 +197,7 @@ export class HealthCareProposalService {
             STATUS_PAGAMENTO: "PG",
             CODIGO_PLANO: "54",
             DATA_PAGAMENTO: moment().format("DD/MM/YYYY"),
-            ID_FORMA_PAGAMENTO: "30",
+            ID_FORMA_PAGAMENTO: "32",
             VALOR_PAGAMENTO: "61,88",
             MES_COMPETENCIA: moment().format("MM/YYYY"),
         }

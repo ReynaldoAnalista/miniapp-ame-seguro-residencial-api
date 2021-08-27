@@ -1,40 +1,38 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
+import { TYPES } from "../../../inversify/inversify.types"
 import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
-import { SmartphoneProposalRepository } from "../repository/SmartphoneProposalRepository"
-import { SmartphoneProposalResponseRepository } from "../repository/SmartphoneProposalResponseRepository"
-import { SmartphoneSoldProposal } from "../model/SmartphoneSoldProposal"
-import { SmartphoneSoldProposalRepository } from "../repository/SmartphoneSoldProposalRepository"
-import { Tenants } from "../../default/model/Tenants"
-import { SmartphoneProposalUtils } from "./SmartphoneProposalUtils"
-import { SmartphoneProposalMailService } from "./SmartphoneProposalMailService"
-import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
-import { DigibeeConfirmation } from "../model/DigibeeConfirmation"
-import { AmePaymentService } from "../../ame/services/AmePaymentService"
-import moment from "moment"
+import { PortableProposalRepository } from "../repository/PortableProposalRepository"
+import { PortableProposalResponseRepository } from "../repository/PortableProposalResponseRepository"
 import { ParameterStore } from "../../../configs/ParameterStore"
+import { PortableSoldProposal } from "../model/PortableSoldProposal"
+import { PortableSoldProposalRepository } from "../repository/PortableSoldProposalRepository"
+import { Tenants } from "../../default/model/Tenants"
+import { PortableProposalUtils } from "./PortableProposalUtils"
+import { PortableProposalMailService } from "./PortableProposalMailService"
+import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
+import { PortableDigibeeConfirmation } from "../model/PortableDigibeeConfirmation"
+import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository"
 
-const log = getLogger("SmartphoneProposalService")
+const log = getLogger("PortableProposalService")
 
 @injectable()
-export class SmartphoneProposalService {
+export class PortableProposalService {
     constructor(
         @inject("AuthTokenService")
         private authTokenService: AuthTokenService,
         @inject("RequestService")
         private requestService: RequestService,
-        @inject("SmartphoneProposalRepository")
-        private smartphoneProposalRepository: SmartphoneProposalRepository,
-        @inject("SmartphoneSoldProposalRepository")
-        private smartphoneSoldProposalRepository: SmartphoneSoldProposalRepository,
-        @inject("SmartphoneProposalResponseRepository")
-        private responseRepository: SmartphoneProposalResponseRepository,
-        @inject("SmartphoneProposalMailService")
-        private mailService: SmartphoneProposalMailService,
-        @inject("AmePaymentService")
-        private amePaymentService: AmePaymentService,
-        @inject("ParameterStore")
+        @inject("PortableProposalRepository")
+        private portableProposalRepository: PortableProposalRepository,
+        @inject("PortableSoldProposalRepository")
+        private portableSoldProposalRepository: PortableSoldProposalRepository,
+        @inject("PortableProposalResponseRepository")
+        private responseRepository: PortableProposalResponseRepository,
+        @inject("PortableProposalMailService")
+        private mailService: PortableProposalMailService,
+        @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {}
 
@@ -43,13 +41,13 @@ export class SmartphoneProposalService {
         log.info("Salvando o arquivo da notificação")
         await this.saveProposal(unsignedPayment)
         log.info("Separando o arquivo da proposta")
-        const proposal = SmartphoneProposalUtils.generateProposal(unsignedPayment)
+        const proposal = PortableProposalUtils.generateProposal(unsignedPayment)
         log.info("Enviando a proposta para a digibee")
         const proposalResponse = await this.sendProposal(proposal)
         log.info("Salvando a resposta da digibee")
         await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
         log.info("Salvando a compra")
-        await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.SMARTPHONE)
+        await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.PORTABLE)
         log.info("Enviando o email ao cliente")
         await this.mailService.sendSellingEmailByPaymentObject(unsignedPayment)
         log.info("Retornando a proposta")
@@ -57,9 +55,9 @@ export class SmartphoneProposalService {
     }
 
     async updateProposal(proposalId: string, notSendToDigibee = false) {
-        const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+        const proposalRequest = await this.portableProposalRepository.findByID(proposalId)
         log.info("Recebendo a proposta", proposalId)
-        const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
+        const proposal = PortableProposalUtils.generateProposal(proposalRequest)
         log.info("Enviando a proposta para a digibee")
         const proposalResponse = await this.sendProposal(proposal)
         if (notSendToDigibee == false) {
@@ -67,7 +65,7 @@ export class SmartphoneProposalService {
             log.info("Recebendo a resposta da digibee")
         }
         log.info("Atualizando a compra")
-        await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
+        await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.PORTABLE)
         log.info("Enviando o email ao cliente")
         await this.mailService.sendSellingEmailByPaymentObject(proposalRequest)
         log.info("Retornando a proposta")
@@ -75,12 +73,12 @@ export class SmartphoneProposalService {
     }
 
     async findFromCostumerOrder(customerId, order) {
-        const findFromCostumerOrder = this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+        const findFromCostumerOrder = this.portableSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
         return findFromCostumerOrder
     }
 
     async findByNsu(nsu) {
-        const findByNsu = await this.smartphoneSoldProposalRepository.findByNsu(nsu)
+        const findByNsu = await this.portableSoldProposalRepository.findByNsu(nsu)
         return findByNsu
     }
 
@@ -90,10 +88,10 @@ export class SmartphoneProposalService {
                 let successCount = 0
                 let missCount = 0
                 await proposal.ordersToSend.forEach(async (proposalId) => {
-                    const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+                    const proposalRequest = await this.portableProposalRepository.findByID(proposalId)
                     if (proposalRequest) {
                         log.info("Recebendo a proposta", proposalId)
-                        const proposal = SmartphoneProposalUtils.generateProposal(proposalRequest)
+                        const proposal = PortableProposalUtils.generateProposal(proposalRequest)
                         log.info("Enviando a proposta para a digibee")
                         const proposalResponse = await this.sendProposal(proposal)
                         if (proposalResponse.success) {
@@ -104,7 +102,7 @@ export class SmartphoneProposalService {
                         await this.updateProposalResponse(proposalRequest)
                         log.info("Recebendo a resposta da digibee")
                         log.info("Proposta validada pela digibee")
-                        await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.SMARTPHONE)
+                        await this.updateSoldProposal(proposalRequest, proposalResponse, Tenants.PORTABLE)
                         log.info("Atualizando a compra no SoldProposal")
                         log.info(`Ordem de Id: ${proposalId} Executada com sucesso`)
                     }
@@ -128,7 +126,7 @@ export class SmartphoneProposalService {
     }
 
     async updateOldCustumersProposal(proposalId: string) {
-        const proposalRequest = await this.smartphoneProposalRepository.findByID(proposalId)
+        const proposalRequest = await this.portableProposalRepository.findByID(proposalId)
         log.info("Recebendo a proposta de ID", proposalId)
 
         await this.updateProposalResponse(proposalRequest)
@@ -144,7 +142,7 @@ export class SmartphoneProposalService {
             },
         }
 
-        const soldProposal = await this.updateSoldProposal(proposalRequest, soldProposalResponse, Tenants.SMARTPHONE)
+        const soldProposal = await this.updateSoldProposal(proposalRequest, soldProposalResponse, Tenants.PORTABLE)
         log.info("Atualizando a SoldProposal")
 
         return soldProposal
@@ -153,7 +151,7 @@ export class SmartphoneProposalService {
     async saveProposal(proposal: any): Promise<void> {
         log.debug("Saving proposal to DynamoDB")
         try {
-            await this.smartphoneProposalRepository.create(proposal)
+            await this.portableProposalRepository.create(proposal)
         } catch (e) {
             log.error(e)
             throw "Erro ao criar registro no Dynamo DB"
@@ -185,10 +183,7 @@ export class SmartphoneProposalService {
     }
 
     async updateNsuByCustumerAndOrder(custumerInfo: any) {
-        return await this.smartphoneSoldProposalRepository.updateNsuByCustumerAndOrder(
-            custumerInfo.customerId,
-            custumerInfo.order
-        )
+        return await this.portableSoldProposalRepository.updateNsuByCustumerAndOrder(custumerInfo.customerId, custumerInfo.order)
     }
 
     async saveProposalResponse(proposal: any, id: string) {
@@ -217,7 +212,7 @@ export class SmartphoneProposalService {
         log.debug("saveSoldProposal")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
-            await this.smartphoneSoldProposalRepository.create({
+            await this.portableSoldProposalRepository.create({
                 customerId: proposal.attributes.customPayload.customerId,
                 order: proposal.id,
                 tenant: tenant,
@@ -228,7 +223,7 @@ export class SmartphoneProposalService {
                 status: SoldProposalStatus.create,
                 receivedPaymentNotification: proposal,
                 NSU: proposal?.nsu,
-            } as SmartphoneSoldProposal)
+            } as PortableSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
@@ -241,7 +236,7 @@ export class SmartphoneProposalService {
 
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
-            await this.smartphoneSoldProposalRepository.update({
+            await this.portableSoldProposalRepository.update({
                 customerId: proposal.customerId,
                 order: proposal.order,
                 tenant: tenant,
@@ -251,7 +246,7 @@ export class SmartphoneProposalService {
                 apiVersion,
                 status: SoldProposalStatus.cancel,
                 receivedPaymentNotification: proposal,
-            } as SmartphoneSoldProposal)
+            } as PortableSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
             log.debug("saveSoldProposal:Fail")
@@ -262,19 +257,19 @@ export class SmartphoneProposalService {
     async updateStatusSoldProposal(customerId: string, order: string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
-            const getResponse: any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            const getResponse: any = await this.portableSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
             const proposalRequest = getResponse[0]
-            await this.smartphoneSoldProposalRepository.update({
+            await this.portableSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
                 createdAt: proposalRequest?.createdAt,
                 apiVersion: proposalRequest?.apiVersion,
                 success: true,
                 customerId: proposalRequest?.customerId,
                 receivedPaymentNotification: proposalRequest?.receivedPaymentNotification,
-                tenant: Tenants.SMARTPHONE,
+                tenant: Tenants.PORTABLE,
                 order: proposalRequest?.order,
                 status: SoldProposalStatus.update,
-            } as SmartphoneSoldProposal)
+            } as PortableSoldProposal)
             log.debug("updateSoldProposal:success")
         } catch (e) {
             log.debug("updateSoldProposal:Fail")
@@ -284,9 +279,9 @@ export class SmartphoneProposalService {
 
     async sendSellingEmail(pass: string, forceEmail?: string) {
         log.debug(`Sending email: ${pass}`)
-        const paymentObject = await this.smartphoneProposalRepository.findByID(pass)
+        const paymentObject = await this.portableProposalRepository.findByID(pass)
         if (paymentObject) {
-            const proposal = SmartphoneProposalUtils.generateProposal(paymentObject)
+            const proposal = PortableProposalUtils.generateProposal(paymentObject)
 
             let proposalResponse = await this.responseRepository.findByID(pass)
             if (!proposalResponse) {
@@ -295,7 +290,7 @@ export class SmartphoneProposalService {
             }
 
             log.info("Atualizando a tabela SoldProposal")
-            await this.updateSoldProposal(proposal, proposalResponse, Tenants.SMARTPHONE)
+            await this.updateSoldProposal(proposal, proposalResponse, Tenants.PORTABLE)
 
             log.info("Enviando o E-mail")
             return await this.mailService.sendSellingEmailByPaymentObject(paymentObject, forceEmail)
@@ -307,7 +302,7 @@ export class SmartphoneProposalService {
     async updateSoldProposal(proposal: any, response: any, tenant: string) {
         log.debug("updateSoldProposal")
         try {
-            await this.smartphoneSoldProposalRepository.update({
+            await this.portableSoldProposalRepository.update({
                 customerId: proposal.attributes.customPayload.customerId,
                 order: proposal.id,
                 tenant: tenant,
@@ -315,7 +310,7 @@ export class SmartphoneProposalService {
                 partnerResponse: response,
                 success: response.success,
                 createdAt: new Date().toISOString(),
-            } as SmartphoneSoldProposal)
+            } as PortableSoldProposal)
             log.debug("updateSoldProposal:success")
         } catch (e) {
             log.debug("updateSoldProposal:Fail")
@@ -324,8 +319,8 @@ export class SmartphoneProposalService {
     }
 
     async validateMailProposal(proposalId: string) {
-        const proposal = await this.smartphoneProposalRepository.findByID(proposalId)
-        const validateMail = await this.smartphoneProposalRepository.validateProposal(proposal)
+        const proposal = await this.portableProposalRepository.findByID(proposalId)
+        const validateMail = await this.portableProposalRepository.validateProposal(proposal)
         if (validateMail.length > 0) {
             return {
                 message: "Campos inválidos",
@@ -341,11 +336,11 @@ export class SmartphoneProposalService {
     }
 
     async customerCertificateNumber() {
-        return await this.smartphoneSoldProposalRepository.findcertificateNumber()
+        return await this.portableSoldProposalRepository.findcertificateNumber()
     }
 
     async cancelationProcessWithOrder(orderProposal) {
-        const soldProposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(
+        const soldProposal = await this.portableSoldProposalRepository.findAllFromCustomerAndOrder(
             orderProposal.customerId,
             orderProposal.order
         )
@@ -357,12 +352,12 @@ export class SmartphoneProposalService {
                 createdAt: new Date().toISOString(),
                 success: true,
                 receivedPaymentNotification: x.receivedPaymentNotification,
-                tenant: Tenants.SMARTPHONE,
+                tenant: Tenants.PORTABLE,
                 status: "CANCELED",
                 NSU: x.receivedPaymentNotification?.nsu,
             }
         })[0]
-        return await this.smartphoneSoldProposalRepository.update(updateSoldProposal)
+        return await this.portableSoldProposalRepository.update(updateSoldProposal)
     }
 
     async cancelationProcess(signedPayment: any) {
@@ -370,9 +365,10 @@ export class SmartphoneProposalService {
         if (!signedPayment.unsigned || typeof signedPayment.unsigned == "undefined") {
             unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)
         } else {
-            unsignedPayment = signedPayment
+            unsignedPayment = signedPayment.cancelData
         }
-        const formatedCancelProposal = await this.smartphoneSoldProposalRepository.formatCancelProposal(unsignedPayment)
+
+        const formatedCancelProposal = await this.portableSoldProposalRepository.formatCancelProposal(unsignedPayment)
 
         if (!formatedCancelProposal) {
             return {
@@ -391,54 +387,32 @@ export class SmartphoneProposalService {
             )
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
             log.debug("Salvando o cancelamento na soldProposal")
-            await this.refundProcess(unsignedPayment)
-            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.PORTABLE)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
+            // const message = e.message
             const result = { success: false, error: e.message }
             log.error(`Error %j`, e.message)
             log.debug("Error when trying to cancel proposal")
+            // log.debug(`Status Code: ${message}`)
             return result
         }
     }
 
-    async refundProcess(unsignedPayment) {
-        const proposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(
-            unsignedPayment.customerId,
-            unsignedPayment.order
-        )
-        const refundedPayment = await this.refundPaymentProcess(proposal)
-        const refundContent = {
-            paymentId: unsignedPayment.order, // id da ordem
-            walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
-            amount: refundedPayment,
-        }
-        const refundToWallet = await this.amePaymentService.refund(refundContent)
-        return refundToWallet
-    }
-
-    async refundPaymentProcess(data) {
-        const soldDate = moment(data[0].createdAt)
-        const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
-        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate, "days")).toFixed(2)
-        const prizeBeRefunded = Math.abs(usedPrice - liquidPrice)
-        return prizeBeRefunded
-    }
-
-    async confirmProposal(digibeeConfirmation: DigibeeConfirmation) {
+    async confirmProposal(digibeeConfirmation: PortableDigibeeConfirmation) {
         const dataInfo = digibeeConfirmation.control_data
-        const soldProposal = await this.smartphoneSoldProposalRepository.findByNsu(dataInfo.customer_identifier_code)
+        const soldProposal = await this.portableSoldProposalRepository.findByNsu(dataInfo.customer_identifier_code)
         if (soldProposal) {
             log.info("Buscando informações na tabela SoldProposal")
             const requestProposal = soldProposal?.find(
-                (x) => x.receivedPaymentNotification.nsu === dataInfo.customer_identifier_code
+                (x) => x.receivedPaymentNotification.nsu === dataInfo.key_contract_certificate_number.toString()
             )
             log.info("Filtrando o dado que possuo o mesmo NSU e Codigo do Cliente")
             if (requestProposal) {
                 requestProposal.acceptance_type = dataInfo.acceptance_type == "Aceito" ? true : false
                 requestProposal.control_data = digibeeConfirmation
-                await this.smartphoneSoldProposalRepository.update(requestProposal)
+                await this.portableSoldProposalRepository.update(requestProposal)
                 log.info("Salvando atualização na tabela SoldProposal")
                 return {
                     message: "Proposta atualizada com sucesso",
@@ -461,13 +435,13 @@ export class SmartphoneProposalService {
     }
 
     async processIOF(compraId: string) {
-        const proposal = await this.smartphoneProposalRepository.findByID(compraId)
+        const proposal = await this.portableProposalRepository.findByID(compraId)
         const amount = proposal?.amount
         const withoutIOF = Math.round(amount / 1.0734) / 100
         if (amount) {
             if (proposal?.attributes?.customPayload?.proposal?.coverage_data) {
                 proposal.attributes.customPayload.proposal.coverage_data.liquid_prize = withoutIOF
-                this.smartphoneProposalRepository.update(proposal)
+                this.portableProposalRepository.update(proposal)
                 return {
                     id: proposal?.id,
                     preco_cobrado: (proposal?.attributes.customPayload.proposal.coverage_data.liquid_prize * 1.0734).toFixed(2),
