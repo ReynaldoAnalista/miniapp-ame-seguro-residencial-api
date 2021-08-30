@@ -422,7 +422,7 @@ export class SmartphoneProposalService {
         const soldDate = moment(data[0].createdAt)
         const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
         const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate, "days")).toFixed(2)
-        const prizeBeRefunded = Math.abs(usedPrice - liquidPrice)
+        const prizeBeRefunded = Math.abs(usedPrice - liquidPrice) * 100
         return prizeBeRefunded
     }
 
