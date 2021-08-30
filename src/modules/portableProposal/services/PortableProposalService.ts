@@ -39,13 +39,13 @@ export class PortableProposalService {
     async processProposal(signedPayment: string) {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         log.info("Salvando o arquivo da notificação")
-        await this.saveProposal(unsignedPayment)
+        // await this.saveProposal(unsignedPayment)
         log.info("Separando o arquivo da proposta")
         const proposal = PortableProposalUtils.generateProposal(unsignedPayment)
         log.info("Enviando a proposta para a digibee")
         const proposalResponse = await this.sendProposal(proposal)
         log.info("Salvando a resposta da digibee")
-        await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
+        // await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
         log.info("Salvando a compra")
         await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.PORTABLE)
         log.info("Enviando o email ao cliente")
@@ -151,7 +151,7 @@ export class PortableProposalService {
     async saveProposal(proposal: any): Promise<void> {
         log.debug("Saving proposal to DynamoDB")
         try {
-            await this.portableProposalRepository.create(proposal)
+            // await this.portableProposalRepository.create(proposal)
         } catch (e) {
             log.error(e)
             throw "Erro ao criar registro no Dynamo DB"
@@ -189,7 +189,7 @@ export class PortableProposalService {
     async saveProposalResponse(proposal: any, id: string) {
         log.debug("saveProposalResponse")
         try {
-            await this.responseRepository.create({ id, ...proposal })
+            // await this.responseRepository.create({ id, ...proposal })
             log.debug("saveProposalResponse:success")
         } catch (e) {
             log.debug("saveProposalResponse:Fail")
