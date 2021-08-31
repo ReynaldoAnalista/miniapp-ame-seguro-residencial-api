@@ -5,6 +5,7 @@ import { getLogger } from "../../../server/Logger"
 import { ResidentialProposalService } from "../../residentialProposal/services/ResidentialProposalService"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
 import { MaintenanceProposalNotification } from "../model/MaintenanceProposalNotification"
+import { MaintenanceUpdatePlanNotification } from "../model/MaintenanceUpdatePlanNotification"
 import { MaintenanceService } from "../services/MaintenanceService"
 
 const logger = getLogger("MaintenanceController")
@@ -50,10 +51,10 @@ export class MaintenanceController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post("/update-plan-type")
-    public async updatePlanType(@Body() proposal: string) {
+    public async updatePlanType(@Body() updatePlanStatus: MaintenanceUpdatePlanNotification) {
         logger.info("Update Plan Type Active or Canceled")
         try {
-            return await this.maintenanceService.updateOrdersType(proposal)
+            return await this.maintenanceService.updateOrdersType(updatePlanStatus.signedUpdatePlanStatus)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
