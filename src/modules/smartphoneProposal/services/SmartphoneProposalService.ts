@@ -392,7 +392,7 @@ export class SmartphoneProposalService {
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
             log.debug("Salvando o cancelamento na soldProposal")
             await this.refundProcess(unsignedPayment)
-            // await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
