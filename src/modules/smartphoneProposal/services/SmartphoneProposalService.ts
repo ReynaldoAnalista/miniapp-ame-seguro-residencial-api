@@ -392,7 +392,7 @@ export class SmartphoneProposalService {
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
             log.debug("Salvando o cancelamento na soldProposal")
             await this.refundProcess(unsignedPayment)
-            await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
+            // await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
@@ -409,6 +409,7 @@ export class SmartphoneProposalService {
             unsignedPayment.order
         )
         const refundedPayment = await this.refundPaymentProcess(proposal)
+
         const refundContent = {
             paymentId: unsignedPayment.order, // id da ordem
             walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
@@ -421,8 +422,11 @@ export class SmartphoneProposalService {
     async refundPaymentProcess(data) {
         const soldDate = moment(data[0].createdAt)
         const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
-        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate, "days")).toFixed(2)
+        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate.add(1, "days"), "days")).toFixed(2)
         const prizeBeRefunded = Math.abs(usedPrice - liquidPrice) * 100
+        if (moment().diff(soldDate, "days") <= 7) {
+            return liquidPrice * 100
+        }
         return prizeBeRefunded
     }
 
