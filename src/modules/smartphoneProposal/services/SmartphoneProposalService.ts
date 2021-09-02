@@ -416,6 +416,7 @@ export class SmartphoneProposalService {
             amount: refundedPayment,
         }
         const refundToWallet = await this.amePaymentService.refund(refundContent)
+
         return refundToWallet
     }
 
@@ -425,7 +426,7 @@ export class SmartphoneProposalService {
         const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate.add(1, "days"), "days")).toFixed(2)
         const prizeBeRefunded = Math.abs(usedPrice - liquidPrice) * 100
         if (moment().diff(soldDate, "days") <= 7) {
-            return liquidPrice * 100
+            return parseInt((liquidPrice * 100 * 1.0738).toFixed())
         }
         return prizeBeRefunded
     }
