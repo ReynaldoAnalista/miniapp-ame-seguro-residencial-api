@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
+import { Path, Route, SuccessResponse, Response, Post, Get, Body, Header } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { ResidentialProposalService } from "../../residentialProposal/services/ResidentialProposalService"
@@ -68,6 +68,19 @@ export class MaintenanceController {
         logger.info("Update Plan Type Active or Canceled")
         try {
             return await this.residentialProposalService.resendResidentialProposal(proposal.updatePlanStatus)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cancelled-orders")
+    public async canceledOrders(@Body() customer: any) {
+        logger.info("Canceled Orders")
+        try {
+            return await this.maintenanceService.getCancelledOrders(customer.customerId)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)

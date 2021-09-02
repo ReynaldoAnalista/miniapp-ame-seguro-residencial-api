@@ -45,4 +45,8 @@ export class MaintenanceService {
             message: `Orders Updated`,
         }
     }
+
+    async getCancelledOrders(customerId) {
+        return await this.maintenanceRepository.getCancelledOrder(customerId)
+    }
 }
