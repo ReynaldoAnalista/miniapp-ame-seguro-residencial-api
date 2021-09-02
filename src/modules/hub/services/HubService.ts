@@ -102,9 +102,9 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
-                        stolenFranchise: selectedPlan.stolenFranchise,
-                        brokenFranchise: selectedPlan.brokenFranchise,
-                        screenFranchise: selectedPlan.screenFranchise,
+                        stolenFranchise: selectedPlan?.stolenFranchise,
+                        brokenFranchise: selectedPlan?.brokenFranchise,
+                        screenFranchise: selectedPlan?.screenFranchise,
                     }
                 })
             }
@@ -156,9 +156,9 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
-                        stolenFranchise: selectedPlan.stolenFranchise,
-                        brokenFranchise: selectedPlan.brokenFranchise,
-                        screenFranchise: selectedPlan.screenFranchise,
+                        stolenFranchise: selectedPlan?.stolenFranchise,
+                        brokenFranchise: selectedPlan?.brokenFranchise,
+                        screenFranchise: selectedPlan?.screenFranchise,
                     }
                 })
             }
