@@ -425,7 +425,7 @@ export class SmartphoneProposalService {
         const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate.add(1, "days"), "days")).toFixed(2)
         const prizeBeRefunded = parseInt((Math.abs(usedPrice - liquidPrice) * 100).toFixed())
         if (moment().diff(soldDate, "days") <= 7) {
-            return parseInt((liquidPrice * 100).toFixed())
+            return parseInt((liquidPrice * 100 * 1.0738).toFixed())
         }
         return prizeBeRefunded
     }
