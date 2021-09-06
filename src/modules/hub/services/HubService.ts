@@ -77,6 +77,7 @@ export class HubService {
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
                         coverage: Plans.find((x) => x.id == selectedPlan?.planoId),
+                        name: "residencial",
                     }
                 })
             }
@@ -105,6 +106,7 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
+                        name: "celular",
                     }
                 })
             }
@@ -118,6 +120,7 @@ export class HubService {
                         status: x.success ? "Contratado" : "Não Contratado",
                         initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
                         partner: "Amigoo Pet",
+                        name: "pet",
                     }
                 })
             }
@@ -132,6 +135,7 @@ export class HubService {
                         status: x.success ? "Contratado" : "Não Contratado",
                         initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
                         partner: "Rede Mais Saúde",
+                        name: "mais_saude",
                     }
                 })
             }
@@ -160,6 +164,7 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
+                        name: "portateis",
                     }
                 })
             }
