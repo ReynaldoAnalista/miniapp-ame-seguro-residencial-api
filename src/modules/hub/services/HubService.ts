@@ -128,6 +128,7 @@ export class HubService {
             } else {
                 healthCarePlans = Object.assign(healthCarePlansPlansFromDB).map((x) => {
                     return {
+                        id: x?.order,
                         status: x.success ? "Contratado" : "Não Contratado",
                         initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
                         partner: "Rede Mais Saúde",
