@@ -15,6 +15,7 @@ import Plans from "../../residentialProposal/services/Plans"
 import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldProposalRepository"
 import moment from "moment"
 import { healthCareProposalSoldRepository } from "../../healthCareProposal/repository/healthCareProposalSoldRepository"
+import { Tenants } from "../../default/model/Tenants"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -77,7 +78,7 @@ export class HubService {
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
                         coverage: Plans.find((x) => x.id == selectedPlan?.planoId),
-                        name: "residencial",
+                        name: Tenants.RESIDENTIAL,
                     }
                 })
             }
@@ -106,7 +107,7 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: "celular",
+                        name: Tenants.SMARTPHONE,
                     }
                 })
             }
@@ -120,7 +121,7 @@ export class HubService {
                         status: x.success ? "Contratado" : "Não Contratado",
                         initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
                         partner: "Amigoo Pet",
-                        name: "pet",
+                        name: Tenants.PET,
                     }
                 })
             }
@@ -133,9 +134,16 @@ export class HubService {
                     return {
                         id: x?.order,
                         status: x.success ? "Contratado" : "Não Contratado",
-                        initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Rede Mais Saúde",
-                        name: "mais_saude",
+                        name: Tenants.HEALTHCARE,
+                        description: x.receivedPaymentNotification.attributes.description,
+                        planType: x.receivedPaymentNotification.attributes.customPayload.proposal.planType,
+                        paymentValue:
+                            x.receivedPaymentNotification.attributes.customPayload.proposal.planType == 3
+                                ? "R$ 286,80"
+                                : "R$ 358,80",
                     }
                 })
             }
@@ -164,7 +172,7 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: "portateis",
+                        name: Tenants.PORTABLE,
                     }
                 })
             }
