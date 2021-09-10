@@ -97,7 +97,8 @@ export class AmePaymentService {
             logger.debug("Estorno de pagamento efetuado com sucesso. Payment id ", input.paymentId)
         } catch (e) {
             logger.error("Erro ao estornar pagamento. Payment id ", input.paymentId)
-            throw new ApiError("error.refund.payment", 500)
+            logger.error(e)
+            throw new Error("error.refund.payment")
         }
     }
 
