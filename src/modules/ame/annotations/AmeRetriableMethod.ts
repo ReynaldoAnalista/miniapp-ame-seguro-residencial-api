@@ -17,24 +17,28 @@ export function AmeRetriableMethod(options: any = {}) {
                     const jwtDecode = require("jwt-decode")
                     const decodedToken = jwtDecode(token)
                     const now = new Date().getTime()
-
+                    log.debug("Decodificacao do token para logar", decodedToken)
                     if (now > decodedToken.exp * 1000) {
                         input.token = await amePaymentService.login()
+                        log.debug("Recebimento do token de login", input.token)
                         return await method.apply(this, arguments)
                     } else {
                         input.token = token
+                        log.debug("Recebimento do token de login", input.token)
                         return await method.apply(this, arguments)
                     }
                 } else {
                     input.token = await amePaymentService.login()
+                    log.debug("Recebimento do token de login", input.token)
                     return await method.apply(this, arguments)
                 }
             } catch (e) {
                 try {
                     input.token = await amePaymentService.login()
+                    log.debug("Recebimento do token de login", input.token)
                     return await method.apply(this, arguments)
                 } catch (e2) {
-                    log.error("errorOnRetry", e2)
+                    log.error("Erro no envio do token de login", e2)
                     throw e2
                 }
             }
