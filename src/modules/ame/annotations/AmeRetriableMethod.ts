@@ -20,22 +20,22 @@ export function AmeRetriableMethod(options: any = {}) {
                     log.debug("Decodificacao do token para logar", decodedToken)
                     if (now > decodedToken.exp * 1000) {
                         input.token = await amePaymentService.login()
-                        log.debug("Recebimento do token de login", input.token)
+                        log.debug("Recebimento do token de login (1)", input.token)
                         return await method.apply(this, arguments)
                     } else {
                         input.token = token
-                        log.debug("Recebimento do token de login", input.token)
+                        log.debug("Recebimento do token de login (2)", input.token)
                         return await method.apply(this, arguments)
                     }
                 } else {
                     input.token = await amePaymentService.login()
-                    log.debug("Recebimento do token de login", input.token)
+                    log.debug("Recebimento do token de login (3)", input.token)
                     return await method.apply(this, arguments)
                 }
             } catch (e) {
                 try {
                     input.token = await amePaymentService.login()
-                    log.debug("Recebimento do token de login", input.token)
+                    log.debug("Recebimento do token de login (4)", input.token)
                     return await method.apply(this, arguments)
                 } catch (e2) {
                     log.error("Erro no envio do token de login", e2)
