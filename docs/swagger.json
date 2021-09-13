@@ -175,6 +175,19 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"MaintenanceUpdatePlanNotification": {
+				"properties": {
+					"signedUpdatePlanStatus": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedUpdatePlanStatus"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"MaintenanceProposalNotification": {
 				"properties": {
 					"updatePlanStatus": {
@@ -332,7 +345,19 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"success": {
+											"type": "boolean"
+										},
+										"content": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"content",
+										"success"
+									],
 									"type": "object"
 								}
 							}
@@ -2620,6 +2645,41 @@
 				]
 			}
 		},
+		"/v1/renew-portable/portable-info/{customerId}": {
+			"get": {
+				"operationId": "PortableInfo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/maintenance/proposal_email/{pass}/{email}/sendEmail": {
 			"get": {
 				"operationId": "SendMailProposalWithParams",
@@ -2732,7 +2792,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object"
+								"$ref": "#/components/schemas/MaintenanceUpdatePlanNotification"
 							}
 						}
 					}
@@ -2785,6 +2845,41 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/MaintenanceProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/cancelled-orders": {
+			"post": {
+				"operationId": "CanceledOrders",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
 							}
 						}
 					}
