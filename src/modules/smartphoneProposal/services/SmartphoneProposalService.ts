@@ -409,6 +409,7 @@ export class SmartphoneProposalService {
             unsignedPayment.order
         )
         const refundedPayment = await this.refundPaymentProcess(proposal)
+
         const refundContent = {
             paymentId: unsignedPayment.order, // id da ordem
             walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
@@ -419,10 +420,13 @@ export class SmartphoneProposalService {
     }
 
     async refundPaymentProcess(data) {
-        const soldDate = moment(data[0].createdAt)
+        const soldDate = moment(data[0].createdAt, "YYYY-MM-DD")
         const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
-        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate, "days")).toFixed(2)
-        const prizeBeRefunded = Math.abs(usedPrice - liquidPrice) * 100
+        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate.add(1, "days"), "days")).toFixed(2)
+        const prizeBeRefunded = parseInt((Math.abs(usedPrice - liquidPrice) * 100).toFixed())
+        if (moment().diff(soldDate, "days") <= 7) {
+            return parseInt((liquidPrice * 100 * 1.0738).toFixed())
+        }
         return prizeBeRefunded
     }
 

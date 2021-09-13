@@ -30,23 +30,23 @@ export class MaintenanceService {
         throw new Error("Order not found")
     }
 
-    async updateOrdersType(signedNotification: any) {
-        let ordersUpdated = 0
-        const unsignedNotification = await this.authTokenService.unsignNotification(signedNotification)
+    async updateOrdersType(signedUpdatePlanStatus: string) {
+        const unsignedNotification = await this.authTokenService.unsignNotification(signedUpdatePlanStatus)
         try {
-            unsignedNotification.attributes.map(async (item) => {
-                ordersUpdated = await this.maintenanceRepository.updateSoldProposalOrdersType(item)
+            unsignedNotification.map(async (item) => {
+                await this.maintenanceRepository.updateSoldProposalOrdersType(item)
             })
         } catch (e) {
-            log.error("Erro no cadastro", e.message)
-            return {
-                success: false,
-                message: `Errors to updated`,
-            }
+            log.error("Erro na atualização", e.message)
+            throw new Error("Erro na atualização")
         }
         return {
             success: true,
             message: `Orders Updated`,
         }
+    }
+
+    async getCancelledOrders(customerId) {
+        return await this.maintenanceRepository.getCancelledOrder(customerId)
     }
 }
