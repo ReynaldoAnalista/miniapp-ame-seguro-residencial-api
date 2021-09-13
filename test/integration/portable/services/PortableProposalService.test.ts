@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from "uuid"
 import path from "path"
 import util from "util"
 import fs from "fs"
-import { Tenants } from "../../../../src/modules/default/model/Tenants"
 import { ParameterStore } from "../../../../src/configs/ParameterStore"
 import { PortableProposalRepository } from "../../../../src/modules/portableProposal/repository/PortableProposalRepository"
 import { getLogger } from "../../../../src/server/Logger"
+import { PortableSoldProposalRepository } from "../../../../src/modules/portableProposal/repository/PortableSoldProposalRepository"
 
 const readFile = util.promisify(fs.readFile)
 const sign = util.promisify(jwt.sign)
@@ -22,12 +22,14 @@ jest.setTimeout(20000)
 describe("PortableProposalService", () => {
     let portableProposalService: PortableProposalService
     let portableProposalRepository: PortableProposalRepository
+    let portableSoldProposalRepository: PortableSoldProposalRepository
     let parameterStore: ParameterStore
     let signedPayment: any
 
     beforeAll(async () => {
         portableProposalService = iocContainer.get("PortableProposalService")
         portableProposalRepository = iocContainer.get("PortableProposalRepository")
+        portableSoldProposalRepository = iocContainer.get("PortableSoldProposalRepository")
         parameterStore = iocContainer.get("ParameterStore")
         const payment = await readFile(path.resolve(__dirname, "../../../fixtures/portableNotification.json"), "utf-8")
         log.debug("Leu o arquivo de callback")
@@ -46,10 +48,14 @@ describe("PortableProposalService", () => {
     })
 
     it("API para cancelamento", async () => {
-        // TODO : REFAZER OS TESTES DE CANCELAMENTO DO PORTABLE
-        // const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/PortableCancel.json"), "utf-8")
-        // const cancelObject = JSON.parse(cancel)
-        // const cancelProcess = await portableProposalService.cancelationProcess(cancelObject)
-        // expect(cancelProcess).toBeDefined()
+        const cancel = await readFile(path.resolve(__dirname, "../../../fixtures/PortableCancel.json"), "utf-8")
+        const cancelObject = JSON.parse(cancel)
+
+        const getLastProposal = await portableSoldProposalRepository.listSoldProposal()
+        getLastProposal[0].customerId = cancelObject.customerId
+        getLastProposal[0].order = cancelObject.order
+        await portableSoldProposalRepository.update(getLastProposal[0])
+        const cancelProcess = await portableProposalService.cancelationProcess(cancelObject)
+        expect(cancelProcess.success).toBe(true)
     })
 })

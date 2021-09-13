@@ -13,7 +13,9 @@ import { PortableProposalUtils } from "./PortableProposalUtils"
 import { PortableProposalMailService } from "./PortableProposalMailService"
 import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 import { PortableDigibeeConfirmation } from "../model/PortableDigibeeConfirmation"
+import { AmePaymentService } from "../../ame/services/AmePaymentService"
 import { SoldProposalRepository } from "../../hub/repository/SoldProposalRepository"
+import moment from "moment"
 
 const log = getLogger("PortableProposalService")
 
@@ -32,6 +34,8 @@ export class PortableProposalService {
         private responseRepository: PortableProposalResponseRepository,
         @inject("PortableProposalMailService")
         private mailService: PortableProposalMailService,
+        @inject("AmePaymentService")
+        private amePaymentService: AmePaymentService,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {}
@@ -365,7 +369,7 @@ export class PortableProposalService {
         if (!signedPayment.unsigned || typeof signedPayment.unsigned == "undefined") {
             unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)
         } else {
-            unsignedPayment = signedPayment.cancelData
+            unsignedPayment = signedPayment
         }
 
         const formatedCancelProposal = await this.portableSoldProposalRepository.formatCancelProposal(unsignedPayment)
@@ -387,6 +391,7 @@ export class PortableProposalService {
             )
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
             log.debug("Salvando o cancelamento na soldProposal")
+            await this.refundProcess(unsignedPayment)
             await this.saveCancelProposal(unsignedPayment, result, Tenants.PORTABLE)
             log.info("Success proposal cancel")
             return result
@@ -398,6 +403,32 @@ export class PortableProposalService {
             // log.debug(`Status Code: ${message}`)
             return result
         }
+    }
+
+    async refundProcess(unsignedPayment) {
+        const proposal = await this.portableSoldProposalRepository.findAllFromCustomerAndOrder(
+            unsignedPayment.customerId,
+            unsignedPayment.order
+        )
+        const refundedPayment = await this.refundPaymentProcess(proposal)
+        const refundContent = {
+            paymentId: unsignedPayment.order, // id da ordem
+            walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
+            amount: refundedPayment,
+        }
+        const refundToWallet = await this.amePaymentService.refund(refundContent)
+        return refundToWallet
+    }
+
+    async refundPaymentProcess(data) {
+        const soldDate = moment(data[0].createdAt, "YYYY-MM-DD")
+        const liquidPrice = data[0].receivedPaymentNotification.attributes.customPayload.proposal.coverage_data.liquid_prize
+        const usedPrice: any = ((liquidPrice / 365) * moment().diff(soldDate.add(1, "days"), "days")).toFixed(2)
+        const prizeBeRefunded = parseInt((Math.abs(usedPrice - liquidPrice) * 100).toFixed())
+        if (moment().diff(soldDate, "days") <= 7) {
+            return parseInt((liquidPrice * 100 * 1.0738).toFixed())
+        }
+        return prizeBeRefunded
     }
 
     async confirmProposal(digibeeConfirmation: PortableDigibeeConfirmation) {

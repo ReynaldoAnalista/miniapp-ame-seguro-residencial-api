@@ -38,6 +38,18 @@ export class PortableSoldProposalRepository {
         return false
     }
 
+    async listSoldProposal() {
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const scanResult = await dynamoDocClient
+            .scan({
+                TableName: TABLE,
+                FilterExpression: "attribute_exists(customerId)",
+            })
+            .promise()
+        if (scanResult.Count && scanResult.Items && scanResult.Items.length) return scanResult.Items
+        else return []
+    }
+
     async findcertificateNumber() {
         const listProposal = await this.listSoldProposal()
         return listProposal
@@ -94,18 +106,6 @@ export class PortableSoldProposalRepository {
             log.error(e)
             return []
         }
-    }
-
-    async listSoldProposal() {
-        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-        const scanResult = await dynamoDocClient
-            .scan({
-                TableName: TABLE,
-                FilterExpression: "attribute_exists(customerId)",
-            })
-            .promise()
-        if (scanResult.Count && scanResult.Items && scanResult.Items.length) return scanResult.Items
-        else return []
     }
 
     async findAllFromCustomerAndOrder(customerId: string, order: string) {
