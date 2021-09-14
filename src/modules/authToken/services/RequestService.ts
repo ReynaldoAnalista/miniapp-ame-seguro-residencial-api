@@ -26,6 +26,7 @@ enum Endpoints {
     PET_URL_BASE = "PET_URL_BASE",
     LIFE_URL_BASE = "LIFE_URL_BASE",
     HEALTHCARE_URL_BASE = "HEALTHCARE_URL_BASE",
+    RENEW_PORTABLE_URL_BASE = "RENEW_PORTABLE_URL_BASE",
 }
 
 @injectable()
@@ -77,6 +78,11 @@ export class RequestService {
         if (tenant === Tenants.HEALTHCARE) {
             headers = {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        }
+        if (tenant === Tenants.RENEW_PORTABLE) {
+            headers = {
                 Authorization: `Bearer ${token}`,
             }
         }

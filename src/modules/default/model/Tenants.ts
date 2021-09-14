@@ -5,4 +5,5 @@ export enum Tenants {
     LIFE = "LIFE",
     HEALTHCARE = "HEALTHCARE",
     PORTABLE = "PORTABLE",
+    RENEW_PORTABLE = "RENEW_PORTABLE",
 }

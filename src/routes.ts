@@ -30,6 +30,8 @@ import { SmartphoneProposalController } from './modules/smartphoneProposal/contr
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UnusualController } from './modules/unusual/controllers/UnusualController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { RenewPortableController } from './modules/renewPortableProposal/controllers/RenewPortableController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MaintenanceController } from './modules/maintenance/controllers/MaintenanceController';
 import { expressAuthentication } from './middleware/authentication';
 import * as express from 'express';
@@ -89,6 +91,14 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "control_data": { "dataType": "nestedObjectLiteral", "nestedProperties": { "rejection_description": { "dataType": "string", "required": true }, "rejection_reason_code": { "dataType": "double", "required": true }, "sequential_shipping_number": { "dataType": "double", "required": true }, "shipping_file_number": { "dataType": "double", "required": true }, "acceptance_type": { "dataType": "string", "required": true }, "processing_data": { "dataType": "string", "required": true }, "customer_identifier_code": { "dataType": "string", "required": true }, "key_contract_certificate_number": { "dataType": "double", "required": true } }, "required": true },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MaintenanceUpdatePlanNotification": {
+        "dataType": "refObject",
+        "properties": {
+            "signedUpdatePlanStatus": { "dataType": "string", "required": true },
         },
         "additionalProperties": true,
     },
@@ -1579,6 +1589,31 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/ame-seguro-residencial/v1/renew-portable/portable-info/:customerId',
+        function(request: any, response: any, next: any) {
+            const args = {
+                customerId: { "in": "path", "name": "customerId", "required": true, "dataType": "string" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<RenewPortableController>(RenewPortableController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.portableInfo.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/ame-seguro-residencial/v1/maintenance/proposal_email/:pass/:email/sendEmail',
         function(request: any, response: any, next: any) {
             const args = {
@@ -1633,7 +1668,7 @@ export function RegisterRoutes(app: express.Express) {
     app.post('/ame-seguro-residencial/v1/maintenance/update-plan-type',
         function(request: any, response: any, next: any) {
             const args = {
-                proposal: { "in": "body", "name": "proposal", "required": true, "dataType": "string" },
+                updatePlanStatus: { "in": "body", "name": "updatePlanStatus", "required": true, "ref": "MaintenanceUpdatePlanNotification" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1677,6 +1712,31 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.residentialResendProposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/maintenance/cancelled-orders',
+        function(request: any, response: any, next: any) {
+            const args = {
+                customer: { "in": "body", "name": "customer", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<MaintenanceController>(MaintenanceController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.canceledOrders.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
