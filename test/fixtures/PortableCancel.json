@@ -1,0 +1,9 @@
+{
+    "unsigned": true,
+    "customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+    "order": "2be744e7-7b06-4124-b111-6600f6a021a9",
+    "data": {
+        "cancellation_type": 4,
+        "cancellation_reason": "ARREPENDIMENTO"
+    }
+}
