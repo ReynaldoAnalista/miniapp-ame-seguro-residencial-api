@@ -32,7 +32,7 @@ export function AmeRetriableMethod(options: any = {}) {
                     log.debug("Recebimento do token de login (3)", input.token)
                     return await method.apply(this, arguments)
                 }
-            } catch (e) {
+            } catch (e: any) {
                 try {
                     input.token = await amePaymentService.login()
                     log.debug("Recebimento do token de login (4)", input.token)

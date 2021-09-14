@@ -28,7 +28,7 @@ export class PortableProposalRepository {
                 })
                 .promise()
             return true
-        } catch (e) {
+        } catch (e: any) {
             log.error(`Table ${TABLE} not exists`)
             log.error(e)
         }

@@ -97,7 +97,7 @@ export class PetProposalUtil {
                 pets: petsBirthDate,
                 product_ids: [productId],
             }
-        } catch (e) {
+        } catch (e: any) {
             log.debug("Format Proposal error: " + e.message)
         }
     }

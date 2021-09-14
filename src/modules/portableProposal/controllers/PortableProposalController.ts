@@ -24,7 +24,7 @@ export class PortableProposalController {
         logger.info("Sending Proposal %j", signedPayment)
         try {
             return await this.planService.processProposal(signedPayment.signedPayment)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
         }
@@ -37,7 +37,7 @@ export class PortableProposalController {
         logger.info("Proposal Id %j", proposalId)
         try {
             return await this.planService.updateProposal(proposalId)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
@@ -50,7 +50,7 @@ export class PortableProposalController {
         logger.info("Enviando várias propostas para atualização")
         try {
             return await this.planService.updateManyProposal(proposal)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
@@ -63,7 +63,7 @@ export class PortableProposalController {
         try {
             logger.info("E-mail com o id de compra:", pass)
             await this.planService.sendSellingEmail(pass)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }
@@ -75,7 +75,7 @@ export class PortableProposalController {
         try {
             logger.info("E-mail com o id de compra:", pass)
             await this.planService.sendSellingEmail(pass, email)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }
@@ -87,7 +87,7 @@ export class PortableProposalController {
         try {
             logger.info("Atualização do status SoldProposal com o Id da compra:", customerId)
             await this.planService.updateStatusSoldProposal(customerId, order)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }
@@ -101,7 +101,7 @@ export class PortableProposalController {
             const validateProposal = await this.planService.validateMailProposal(pass)
             logger.info("E-mail validado", validateProposal)
             return validateProposal
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -122,7 +122,7 @@ export class PortableProposalController {
             } else {
                 return { authorization: false, message: "Partner not recognized" }
             }
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -139,7 +139,7 @@ export class PortableProposalController {
             } else {
                 return { authorization: false, message: "Partner not recognized" }
             }
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -151,7 +151,7 @@ export class PortableProposalController {
         try {
             logger.info("Iniciando o processo de cancelamento")
             return this.planService.cancelationProcess(signedPayment)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -163,7 +163,7 @@ export class PortableProposalController {
         try {
             logger.info("Iniciando o processo de cancelamento")
             return this.planService.cancelationProcessWithOrder(orderProposal)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -182,7 +182,7 @@ export class PortableProposalController {
                 )
                 return asyncRes
             }
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e)
         }
     }
@@ -194,7 +194,7 @@ export class PortableProposalController {
         try {
             const findFromNsu = await this.planService.findByNsu(nsu)
             return findFromNsu
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }
@@ -207,7 +207,7 @@ export class PortableProposalController {
             logger.info("Informações solicitadas de CustomerId e Order:", customerId)
             const findFromOrdeCustomer = await this.planService.findFromCostumerOrder(customerId, order)
             return findFromOrdeCustomer
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }
@@ -219,7 +219,7 @@ export class PortableProposalController {
         try {
             const findFromOrdeCustomer = await this.planService.updateNsuByCustumerAndOrder(custumerInfo)
             return findFromOrdeCustomer
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
         }
     }

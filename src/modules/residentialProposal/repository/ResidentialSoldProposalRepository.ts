@@ -42,7 +42,7 @@ export class ResidentialSoldProposalRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.RESIDENTIAL)
-        } catch (e) {
+        } catch (e: any) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
             return []
