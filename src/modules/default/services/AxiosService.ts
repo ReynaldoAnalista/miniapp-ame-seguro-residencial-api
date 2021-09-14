@@ -107,7 +107,7 @@ export class AxiosService {
             }
             logger.info("Requisicao com sucesso", request.url)
             await this.axiosRepository.updateRequest(request)
-        } catch (e) {
+        } catch (e: any) {
             logger.error("Erro ao atualizar/criar request", e.message)
         }
     }
@@ -124,7 +124,7 @@ export class AxiosService {
             }
             logger.warn("Erro na api do parceiro", request.url)
             await this.axiosRepository.updateRequest(request)
-        } catch (e) {
+        } catch (e: any) {
             logger.error("Erro ao atualizar/criar request", e.message)
         }
     }

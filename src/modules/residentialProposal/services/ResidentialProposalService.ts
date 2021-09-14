@@ -135,7 +135,7 @@ export class ResidentialProposalService {
                 success = true
                 log.info("Success proposal sent")
                 attempts = 0
-            } catch (e) {
+            } catch (e: any) {
                 const status = e.response?.status
                 if (status === 401) {
                     log.debug("Not authorized, next attempt.")
@@ -203,7 +203,7 @@ export class ResidentialProposalService {
             })
             log.debug("saveProposal:success")
             return true
-        } catch (e) {
+        } catch (e: any) {
             log.debug("saveProposal:Fail")
             throw `Error on saving proposal:${e.message}`
         }
@@ -219,7 +219,7 @@ export class ResidentialProposalService {
                 transactionDateTime: ResidentialProposalService.getDate(),
             })
             log.debug("saveProposalSentSuccess:success")
-        } catch (e) {
+        } catch (e: any) {
             log.debug("saveProposalSentSuccess:Fail")
             log.debug(e.message)
         }
@@ -235,7 +235,7 @@ export class ResidentialProposalService {
                 transactionDateTime: ResidentialProposalService.getDate(),
             })
             log.debug("saveProposalSentFail:success")
-        } catch (e) {
+        } catch (e: any) {
             log.debug("saveProposalSentFail:Fail")
             log.debug(e.message)
         }
@@ -269,7 +269,7 @@ export class ResidentialProposalService {
             }
             log.debug(`Price Check not Match`)
             return { checked: false, reason: "Plan not found" }
-        } catch (e) {
+        } catch (e: any) {
             return { checked: false, reason: "Error on price validation", error: e.toString() }
         }
     }
@@ -285,7 +285,7 @@ export class ResidentialProposalService {
             try {
                 proposalResponse = await this.sendProposalToPrevisul(proposal)
                 await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
-            } catch (e) {
+            } catch (e: any) {
                 await this.saveProposalFail(unsignedPayment.id, e.message ? e.message : e.toString())
             }
             log.info("Salvando a compra")

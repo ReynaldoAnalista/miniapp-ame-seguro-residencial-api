@@ -141,7 +141,7 @@ export class HealthCareProposalService {
                 result = { success: false, content: response.data }
                 log.error("HeathCarea Cancel proposal Error")
             }
-        } catch (e) {
+        } catch (e: any) {
             const status = e.response?.status
             const statusText = e.response?.statusText
             result = { success: false, status: status, message: statusText }

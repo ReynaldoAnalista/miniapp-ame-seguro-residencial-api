@@ -18,7 +18,7 @@ export class LifeProposalController {
         logger.info("Get Life Cotation")
         try {
             return await this.lifeProposalService.cotation(cotation)
-        } catch (e) {
+        } catch (e: any) {
             logger.error(e.message)
             throw new ApiError("Life Model Not sent", 500)
         }

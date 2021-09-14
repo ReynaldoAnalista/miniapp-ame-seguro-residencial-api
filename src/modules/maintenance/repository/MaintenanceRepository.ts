@@ -31,7 +31,7 @@ export class MaintenanceRepository {
             await dynamoDocClient.update(params).promise()
             log.debug("UPDATED ON", TABLE)
             return 1
-        } catch (e) {
+        } catch (e: any) {
             log.error(`ERROR on Updated ${TABLE}: ${e}`)
             return 0
         }
@@ -54,7 +54,7 @@ export class MaintenanceRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.status == "CANCELED")
-        } catch (e) {
+        } catch (e: any) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
             return []

@@ -23,7 +23,7 @@ export class ZipCodeController {
             }
             logger.debug("zipcode request ended")
             return result
-        } catch (e) {
+        } catch (e: any) {
             throw new ApiError("Error on retrieve zipcode", 404, JSON.stringify({ trace: e.trace, apiStatus: e.status }))
         }
     }

@@ -60,7 +60,7 @@ export class HealthController {
                     }
                     resolve(data.trim())
                 })
-            } catch (e) {
+            } catch (e: any) {
                 resolve("2001-01-01")
             }
         })

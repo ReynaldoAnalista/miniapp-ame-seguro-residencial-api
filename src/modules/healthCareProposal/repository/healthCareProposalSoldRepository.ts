@@ -48,7 +48,7 @@ export class healthCareProposalSoldRepository {
                 success: true,
                 message: "Proposta cancelada com sucesso",
             }
-        } catch (e) {
+        } catch (e: any) {
             return {
                 success: false,
                 message: `erro ao cancelar a proposta: ${e.message}`,
@@ -73,7 +73,7 @@ export class healthCareProposalSoldRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.HEALTHCARE)
-        } catch (e) {
+        } catch (e: any) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
             return []

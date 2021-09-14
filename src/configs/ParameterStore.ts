@@ -13,7 +13,7 @@ if (configJsonOnEnv) {
     // na Ame o Wendell esta colocando o json de config em uma variavel de ambiente
     try {
         paramsPromise = Promise.resolve(JSON.parse(configJsonOnEnv))
-    } catch (e) {
+    } catch (e: any) {
         log.debug("Erro ao ler a variavel de ambiente SF_CONF\nO valor deve conter um json valido\n", e.message)
     }
 } else {
