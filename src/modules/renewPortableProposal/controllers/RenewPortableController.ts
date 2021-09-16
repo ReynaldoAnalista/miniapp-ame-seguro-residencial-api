@@ -1,6 +1,7 @@
 import { injectable, inject } from "inversify"
-import { Get, Route, Response, SuccessResponse, Path } from "tsoa"
+import { Get, Route, Response, SuccessResponse, Path, Body } from "tsoa"
 import { getLogger } from "../../../server/Logger"
+import { RenewPortableProposalNotification } from "../model/PetProposalNotification"
 import { RenewPortableService } from "../services/RenewPortableService"
 
 const logger = getLogger("RenewPortableController")
@@ -21,6 +22,20 @@ export class RenewPortableController {
         } catch (error) {
             logger.error(`Erro ao tentar buscar as informações: ${error}`)
             throw `Erro ao obter as informações portateis de usuario ${error}`
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Get("/sendProposal")
+    public async sendProposal(@Body() proposal: RenewPortableProposalNotification) {
+        try {
+            logger.info("Buscando equipamentos portateis cadastrados para o usuário")
+            const showUserInfo = await this.renewPortableService.processProposal(proposal)
+            return showUserInfo
+        } catch (error) {
+            logger.error(`Erro ao tentar buscar as informações: ${error}`)
+            throw `Erro ao enviar a requisição ${error}`
         }
     }
 }

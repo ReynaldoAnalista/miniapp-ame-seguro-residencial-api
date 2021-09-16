@@ -1,5 +1,6 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
+import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 
@@ -9,7 +10,9 @@ const log = getLogger("RenewPortableService")
 export class RenewPortableService {
     constructor(
         @inject("RequestService")
-        private requestService: RequestService
+        private requestService: RequestService,
+        @inject("AuthTokenService")
+        private authTokenService: AuthTokenService
     ) {}
 
     async showUserInfo(customerId: string) {
@@ -26,5 +29,15 @@ export class RenewPortableService {
         } catch (error) {
             throw error
         }
+    }
+
+    async processProposal(signedPayment: any) {
+        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        log.info("Salvando o arquivo da notificação")
+        const proposalResponse = await this.sendProposal(unsignedPayment)
+    }
+
+    async sendProposal(proposal) {
+        return
     }
 }
