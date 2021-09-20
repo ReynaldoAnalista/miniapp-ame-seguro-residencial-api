@@ -68,6 +68,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/healthCareProposal/repository")
     bindSingleton("../modules/maintenance/repository")
     bindSingleton("../modules/portableProposal/repository")
+    bindSingleton("../modules/renewPortableProposal/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

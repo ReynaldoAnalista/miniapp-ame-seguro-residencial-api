@@ -83,6 +83,7 @@ export class RequestService {
         }
         if (tenant === Tenants.RENEW_PORTABLE) {
             headers = {
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             }
         }
