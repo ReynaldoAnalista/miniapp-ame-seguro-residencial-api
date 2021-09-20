@@ -1,5 +1,5 @@
 {
-	"id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",	
+	"id": "14b88d5e-44b6-404d-a400-22b900f3f3de",	
 	"attributes": {
 		"title": "Rede Mais",
 		"description": "Individual",
@@ -8,13 +8,13 @@
 		"customPayload": {
 			"isFrom": "SAUDE_ASSIST",
 			"origin": "MINIAPP",
-			"customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+			"customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
 			"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/healthcare/sendProposal",
 			"clientEmail": "izabella.assad@calindra.com.br",
 			"ambiente": "qa",
 			"proposal": {
 				"name": "Izabella da Silva Assad",
-				"customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+				"customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
 				"cpf": "16286131736",
 				"birthDate": "1997-05-17",
 				"sex": "F",

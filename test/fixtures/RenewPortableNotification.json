@@ -1,0 +1,39 @@
+{
+	"id": "14b88d5e-44b6-404d-a400-22b900f3f3de",	
+	"attributes": {
+		"title": "Renova Laza",
+		"description": "Individual",
+		"amount": 12800,
+		"callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
+		"customPayload": {
+			"isFrom": "RENEW_PORTABLE",
+			"origin": "MINIAPP",
+			"customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+			"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/renew_portable",
+			"clientEmail": "izabella.assad@calindra.com.br",
+			"ambiente": "qa",
+			"proposal": [
+				{
+					"status": "ACTIVE",
+					"date": "2021-05-10",
+					"store": "391",
+					"price": 461.67,
+					"certificate": "46087",
+					"cpf": "67930251802",
+					"type": "GE",
+					"coverage": {
+						"period": 24,
+						"effective_date": "2022-05-15",
+						"expiry_date": "2023-05-15"
+					},
+					"product": {
+						"id": 6529,
+						"description": "Iphone 8 SE",
+						"base_price": 7150.84,
+						"base_coverage_period": 12
+					}
+				}
+			]
+		}		
+	}
+  }

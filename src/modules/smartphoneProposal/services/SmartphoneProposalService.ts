@@ -118,7 +118,7 @@ export class SmartphoneProposalService {
                 message: "Nenhuma ordem foi encontrada",
                 status: 400,
             }
-        } catch (e: any) {
+        } catch (e) {
             log.error("Erro de execução: ", e.message)
             return {
                 message: "Erro na execução das ordens",
@@ -154,7 +154,7 @@ export class SmartphoneProposalService {
         log.debug("Saving proposal to DynamoDB")
         try {
             await this.smartphoneProposalRepository.create(proposal)
-        } catch (e: any) {
+        } catch (e) {
             log.error(e)
             throw "Erro ao criar registro no Dynamo DB"
         }
@@ -172,7 +172,7 @@ export class SmartphoneProposalService {
             )
             result = { success: true, content: response.data }
             log.info("Success proposal sent")
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             const statusText = e.response?.statusText
             result = { success: false, status: status, message: statusText }
@@ -196,7 +196,7 @@ export class SmartphoneProposalService {
         try {
             await this.responseRepository.create({ id, ...proposal })
             log.debug("saveProposalResponse:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveProposalResponse:Fail")
             log.error(e)
         }
@@ -207,13 +207,13 @@ export class SmartphoneProposalService {
         try {
             await this.responseRepository.update(proposal)
             log.debug("updateProposalResponse:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateProposalResponse:Fail")
             log.error(e)
         }
     }
 
-    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+    async saveSoldProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
@@ -230,13 +230,13 @@ export class SmartphoneProposalService {
                 NSU: proposal?.nsu,
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveSoldProposal:Fail")
             log.error(e)
         }
     }
 
-    async saveCancelProposal(proposal: any, response: any, tenant: string) {
+    async saveCancelProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
 
         try {
@@ -253,7 +253,7 @@ export class SmartphoneProposalService {
                 receivedPaymentNotification: proposal,
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveSoldProposal:Fail")
             log.error(e)
         }
@@ -262,7 +262,11 @@ export class SmartphoneProposalService {
     async updateStatusSoldProposal(customerId: string, order: string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
-            const getResponse: any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            const getResponse = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            if (typeof getResponse == "undefined") {
+                log.debug("updateSoldProposal:Fail")
+                return
+            }
             const proposalRequest = getResponse[0]
             await this.smartphoneSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
@@ -276,7 +280,7 @@ export class SmartphoneProposalService {
                 status: SoldProposalStatus.update,
             } as SmartphoneSoldProposal)
             log.debug("updateSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
@@ -304,7 +308,7 @@ export class SmartphoneProposalService {
         throw new Error("Order not found")
     }
 
-    async updateSoldProposal(proposal: any, response: any, tenant: string) {
+    async updateSoldProposal(proposal: any, response, tenant: string) {
         log.debug("updateSoldProposal")
         try {
             await this.smartphoneSoldProposalRepository.update({
@@ -317,7 +321,7 @@ export class SmartphoneProposalService {
                 createdAt: new Date().toISOString(),
             } as SmartphoneSoldProposal)
             log.debug("updateSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
@@ -395,7 +399,7 @@ export class SmartphoneProposalService {
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info("Success proposal cancel")
             return result
-        } catch (e: any) {
+        } catch (e) {
             const result = { success: false, error: e.message }
             log.error(`Error %j`, e.message)
             log.debug("Error when trying to cancel proposal")
