@@ -175,6 +175,19 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"RenewPortableProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"MaintenanceUpdatePlanNotification": {
 				"properties": {
 					"signedUpdatePlanStatus": {
@@ -2678,6 +2691,41 @@
 						}
 					}
 				]
+			}
+		},
+		"/v1/renew-portable/sendProposal": {
+			"post": {
+				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RenewPortableProposalNotification"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/v1/maintenance/proposal_email/{pass}/{email}/sendEmail": {
