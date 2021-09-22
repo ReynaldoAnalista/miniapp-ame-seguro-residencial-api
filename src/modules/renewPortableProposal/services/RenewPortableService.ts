@@ -51,10 +51,11 @@ export class RenewPortableService {
         let result
         try {
             const response = await this.requestService.makeRequest(
-                this.requestService.ENDPOINTS.RENEW_PORTABLE_URL_BASE,
+                this.requestService.ENDPOINTS.SMARTPHONE_URL_SALE,
                 this.requestService.METHODS.POST,
                 proposal,
-                Tenants.RENEW_PORTABLE
+                Tenants.SMARTPHONE,
+                "/garantia-estendida"
             )
             result = { success: true, content: response.status }
             log.info("Success proposal sent")
