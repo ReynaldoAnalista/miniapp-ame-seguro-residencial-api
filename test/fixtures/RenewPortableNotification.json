@@ -1,39 +1,72 @@
 {
-	"id": "14b88d5e-44b6-404d-a400-22b900f3f3de",	
-	"attributes": {
-		"title": "Renova Laza",
-		"description": "Individual",
-		"amount": 12800,
-		"callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/9dd5eb21-8e43-4d94-836b-397268625b02",
-		"customPayload": {
-			"isFrom": "RENEW_PORTABLE",
-			"origin": "MINIAPP",
-			"customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
-			"clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/renew_portable",
-			"clientEmail": "izabella.assad@calindra.com.br",
-			"ambiente": "qa",
-			"proposal": [
-				{
-					"status": "ACTIVE",
-					"date": "2021-05-10",
-					"store": "391",
-					"price": 461.67,
-					"certificate": "46087",
-					"cpf": "67930251802",
-					"type": "GE",
-					"coverage": {
-						"period": 24,
-						"effective_date": "2022-05-15",
-						"expiry_date": "2023-05-15"
-					},
-					"product": {
-						"id": 6529,
-						"description": "Iphone 8 SE",
-						"base_price": 7150.84,
-						"base_coverage_period": 12
-					}
-				}
-			]
-		}		
-	}
-  }
+    "id" : "19bcd684-4ac7-4779-aae0-b5706d9a33cc",
+    "title": "Ame Proteção Total",
+    "description": "Para: Galaxy A72",
+    "amount": 82845,
+    "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe",
+    "customPayload": {
+        "isFrom": "PHONE_SEC",
+        "origin": "MINIAPP",
+        "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+        "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/renew_portable/sendProposal",
+        "clientEmail": "izabella.assad@calindra.com.br",
+        "plan": {
+            "id": 1,
+            "description": "Ame Proteção Total",
+            "percent": 16.6154,
+            "stolenFranchise": 0.2,
+            "brokenFranchise": 0.15,
+            "screenFranchise": 0.1,
+            "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
+            "guarantee": "Substituição ou reparo do bem"
+        },
+        "proposal": {
+            "insured_data": {
+                "insured_name": "Izabella da Silva Assad",
+                "type_of_legal_person": "F",
+                "cpf": "16286131736",
+                "address_data": {
+                    "type_of_street": "01",
+                    "street": "Rua Divisória",
+                    "number": "49",
+                    "complement": "Apt 101",
+                    "district": "Bento Ribeiro",
+                    "city": "Rio de Janeiro",
+                    "zip_code": "21331250",
+                    "federal_unit": "RJ"
+                }
+            },
+            "extended_warranty": {
+                "certificate_number": "9979",
+                "sale_type": 1,
+                "modality_type": 1,
+                "effective_period": 2,
+                "effective_start_valid": "20210922",
+                "effective_end_valid": "20220922",
+                "extended_warranty_amount": 828.45,
+                "invoice_number": 0,
+                "extended_warranty_date": "20210922"
+            },
+            "product_data": {
+                "extended_warranty_code": 471569845,
+                "product_description": "Galaxy A72",
+                "manufacturer_warranty": 3,
+                "sale_price": 4643.38,
+                "sale_date": "20210523"
+            },
+            "coverage_data": {
+                "policy_item_number": 1,
+                "coverage_code": 1,
+                "insured_amount": 4643.38,
+                "liquid_prize": 771.52
+            }
+        }
+    },
+    "items": [
+        {
+            "description": "Proteção do tipo Ame Proteção Total para um smartphone modelo Galaxy A72  avaliado em R$ 4.643,38",
+            "quantity": 1,
+            "amount": 82845
+        }
+    ]
+}
