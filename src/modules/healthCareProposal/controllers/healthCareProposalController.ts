@@ -19,7 +19,7 @@ export class healthCareProposalController {
         log.info("Post HealthCare Proposal Service")
         try {
             return await this.healthCareProposalService.proposal(signedPayment.signedPayment)
-        } catch (e: any) {
+        } catch (e) {
             log.error(e.message)
             throw new ApiError("HealthCare Model Not sent", 500)
         }
@@ -32,7 +32,7 @@ export class healthCareProposalController {
         log.info("Post HealthCare Proposal Cancel")
         try {
             return await this.healthCareProposalService.cancel(request)
-        } catch (e: any) {
+        } catch (e) {
             log.error(e.message)
             throw new ApiError("HealthCare Cancel Not sent", 500)
         }

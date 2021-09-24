@@ -135,7 +135,7 @@ export class ResidentialProposalService {
                 success = true
                 log.info("Success proposal sent")
                 attempts = 0
-            } catch (e: any) {
+            } catch (e) {
                 const status = e.response?.status
                 if (status === 401) {
                     log.debug("Not authorized, next attempt.")
@@ -203,13 +203,13 @@ export class ResidentialProposalService {
             })
             log.debug("saveProposal:success")
             return true
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveProposal:Fail")
             throw `Error on saving proposal:${e.message}`
         }
     }
 
-    async saveProposalResponse(id: any, proposalResponse: any) {
+    async saveProposalResponse(id: any, proposalResponse) {
         log.debug("saveProposalSentSuccess")
         try {
             await this.residentialProposalRepository.create({
@@ -219,7 +219,7 @@ export class ResidentialProposalService {
                 transactionDateTime: ResidentialProposalService.getDate(),
             })
             log.debug("saveProposalSentSuccess:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveProposalSentSuccess:Fail")
             log.debug(e.message)
         }
@@ -235,7 +235,7 @@ export class ResidentialProposalService {
                 transactionDateTime: ResidentialProposalService.getDate(),
             })
             log.debug("saveProposalSentFail:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveProposalSentFail:Fail")
             log.debug(e.message)
         }
@@ -269,13 +269,13 @@ export class ResidentialProposalService {
             }
             log.debug(`Price Check not Match`)
             return { checked: false, reason: "Plan not found" }
-        } catch (e: any) {
+        } catch (e) {
             return { checked: false, reason: "Error on price validation", error: e.toString() }
         }
     }
 
     async processProposal(signedPayment: string) {
-        let proposalResponse: any
+        let proposalResponse
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const proposal = ResidentialProposalService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
@@ -285,7 +285,7 @@ export class ResidentialProposalService {
             try {
                 proposalResponse = await this.sendProposalToPrevisul(proposal)
                 await this.saveProposalResponse(unsignedPayment.id, proposalResponse)
-            } catch (e: any) {
+            } catch (e) {
                 await this.saveProposalFail(unsignedPayment.id, e.message ? e.message : e.toString())
             }
             log.info("Salvando a compra")
@@ -370,7 +370,7 @@ export class ResidentialProposalService {
         return response
     }
 
-    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+    async saveSoldProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
         const apiVersion = process.env.COMMIT_HASH || "unavailable"
         await this.residentialSoldProposalRepository.create({

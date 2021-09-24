@@ -8,7 +8,7 @@ const log = getLogger("LifeProposalService")
 export class LifeProposalService {
     constructor(@inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil) {}
 
-    async cotation(cotationPropose: any) {
+    async cotation(cotationPropose) {
         const formatPropose = await this.lifeProposalUtil.formatCotation(cotationPropose)
         const sendCotation = await this.lifeProposalUtil.getCotation(formatPropose)
         return sendCotation

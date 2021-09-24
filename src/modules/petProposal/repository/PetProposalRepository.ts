@@ -21,7 +21,7 @@ export class PetProposalRepository {
             await dynamoDocClient.put(params).promise()
             log.debug("REGISTER WROTE ON", TABLE)
             return proposal
-        } catch (e: any) {
+        } catch (e) {
             log.error(e)
         }
     }

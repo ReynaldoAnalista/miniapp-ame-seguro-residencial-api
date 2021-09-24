@@ -33,7 +33,7 @@ export class ResidentialProposalController {
                 throw new ApiError("Nothing to show", 404, `Plans not found`)
             }
             return result
-        } catch (e: any) {
+        } catch (e) {
             throw new ApiError("Error on retrieve plans", 404, JSON.stringify({ trace: e.trace, apiStatus: e.status }))
         }
     }
@@ -45,7 +45,7 @@ export class ResidentialProposalController {
         logger.info("Sending Proposal %j", signedPayment)
         try {
             return await this.residentialProposalService.processProposal(signedPayment.signedPayment)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
         }

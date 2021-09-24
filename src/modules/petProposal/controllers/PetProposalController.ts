@@ -27,7 +27,7 @@ export class PetProposalController {
         logger.info("Get Desc Plan")
         try {
             return await this.petService.descPlans(idPlan)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Desc Plans Not sent", 500)
         }
@@ -40,7 +40,7 @@ export class PetProposalController {
         logger.info("Send Proposal Plan")
         try {
             return await this.petService.sendProposal(signedPayment.signedPayment)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Proposal Not sent", 500)
         }
@@ -53,7 +53,7 @@ export class PetProposalController {
         logger.info("Get Quotation Plan")
         try {
             return await this.petService.quotePlans(idPlan, petQuotationPlan)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Desc Quotation Not sent", 500)
         }

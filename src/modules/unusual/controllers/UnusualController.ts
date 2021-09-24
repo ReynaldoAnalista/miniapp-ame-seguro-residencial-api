@@ -24,7 +24,7 @@ export class UnusualController {
         try {
             logger.info("E-mail com o id de compra:", pass)
             await this.unusualService.sendSellingEmailWithParams(pass, email)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
         }
     }
@@ -36,7 +36,7 @@ export class UnusualController {
         logger.info("Proposal Id %j", proposalId)
         try {
             return await this.smartphoneProposalService.updateOldCustumersProposal(proposalId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }

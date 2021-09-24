@@ -3,7 +3,7 @@ export interface PortableSoldProposal {
     order: string
     tenant: string
     receivedPaymentNotification: any
-    partnerResponse: any
+    partnerResponse
     success: boolean
     createdAt: string
     status: string

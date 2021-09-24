@@ -120,7 +120,7 @@ export class PortableProposalService {
                 message: "Nenhuma ordem foi encontrada",
                 status: 400,
             }
-        } catch (e: any) {
+        } catch (e) {
             log.error("Erro de execução: ", e.message)
             return {
                 message: "Erro na execução das ordens",
@@ -156,7 +156,7 @@ export class PortableProposalService {
         log.debug("Saving proposal to DynamoDB")
         try {
             // await this.portableProposalRepository.create(proposal)
-        } catch (e: any) {
+        } catch (e) {
             log.error(e)
             throw "Erro ao criar registro no Dynamo DB"
         }
@@ -174,7 +174,7 @@ export class PortableProposalService {
             )
             result = { success: true, content: response.data }
             log.info("Success proposal sent")
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             const statusText = e.response?.statusText
             result = { success: false, status: status, message: statusText }
@@ -195,7 +195,7 @@ export class PortableProposalService {
         try {
             // await this.responseRepository.create({ id, ...proposal })
             log.debug("saveProposalResponse:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveProposalResponse:Fail")
             log.error(e)
         }
@@ -206,13 +206,13 @@ export class PortableProposalService {
         try {
             await this.responseRepository.update(proposal)
             log.debug("updateProposalResponse:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateProposalResponse:Fail")
             log.error(e)
         }
     }
 
-    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+    async saveSoldProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
@@ -229,13 +229,13 @@ export class PortableProposalService {
                 NSU: proposal?.nsu,
             } as PortableSoldProposal)
             log.debug("saveSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveSoldProposal:Fail")
             log.error(e)
         }
     }
 
-    async saveCancelProposal(proposal: any, response: any, tenant: string) {
+    async saveCancelProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
 
         try {
@@ -252,7 +252,7 @@ export class PortableProposalService {
                 receivedPaymentNotification: proposal,
             } as PortableSoldProposal)
             log.debug("saveSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("saveSoldProposal:Fail")
             log.error(e)
         }
@@ -261,7 +261,12 @@ export class PortableProposalService {
     async updateStatusSoldProposal(customerId: string, order: string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
-            const getResponse: any = await this.portableSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            const getResponse = await this.portableSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            if (typeof getResponse == "undefined") {
+                log.debug("updateSoldProposal:Fail")
+                return
+            }
+
             const proposalRequest = getResponse[0]
             await this.portableSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
@@ -275,7 +280,7 @@ export class PortableProposalService {
                 status: SoldProposalStatus.update,
             } as PortableSoldProposal)
             log.debug("updateSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
@@ -303,7 +308,7 @@ export class PortableProposalService {
         throw new Error("Order not found")
     }
 
-    async updateSoldProposal(proposal: any, response: any, tenant: string) {
+    async updateSoldProposal(proposal: any, response, tenant: string) {
         log.debug("updateSoldProposal")
         try {
             await this.portableSoldProposalRepository.update({
@@ -316,7 +321,7 @@ export class PortableProposalService {
                 createdAt: new Date().toISOString(),
             } as PortableSoldProposal)
             log.debug("updateSoldProposal:success")
-        } catch (e: any) {
+        } catch (e) {
             log.debug("updateSoldProposal:Fail")
             log.error(e)
         }
@@ -395,7 +400,7 @@ export class PortableProposalService {
             await this.saveCancelProposal(unsignedPayment, result, Tenants.PORTABLE)
             log.info("Success proposal cancel")
             return result
-        } catch (e: any) {
+        } catch (e) {
             // const message = e.message
             const result = { success: false, error: e.message }
             log.error(`Error %j`, e.message)

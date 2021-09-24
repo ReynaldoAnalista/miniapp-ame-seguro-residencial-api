@@ -31,7 +31,7 @@ export class SmartphoneSoldProposalRepository {
                 })
                 .promise()
             return true
-        } catch (e: any) {
+        } catch (e) {
             log.error(`Table ${TABLE} not exists`)
             log.error(e)
         }
@@ -89,7 +89,7 @@ export class SmartphoneSoldProposalRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.SMARTPHONE && x.status != "CANCELED")
-        } catch (e: any) {
+        } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
             return []
@@ -126,7 +126,7 @@ export class SmartphoneSoldProposalRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.SMARTPHONE && x?.status != "CANCELED")
-        } catch (e: any) {
+        } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
             return []
@@ -169,7 +169,7 @@ export class SmartphoneSoldProposalRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.SMARTPHONE && x?.status != "CANCELED")
-        } catch (e: any) {
+        } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
         }

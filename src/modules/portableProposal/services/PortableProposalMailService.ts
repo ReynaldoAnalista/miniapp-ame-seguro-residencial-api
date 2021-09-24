@@ -90,7 +90,7 @@ export class PortableProposalMailService {
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             log.info("Email Enviado")
             return sendResult.MessageId
-        } catch (e: any) {
+        } catch (e) {
             log.error("Email not sent, error", e)
             throw "Error during sending email"
         }

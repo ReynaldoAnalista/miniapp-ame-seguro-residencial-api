@@ -59,7 +59,7 @@ export class PetProposalService {
             )
             result = response.data
             log.info(`Success Desc Plan :${planId}`)
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             result = null
             log.debug(`Error %j`, e)
@@ -82,7 +82,7 @@ export class PetProposalService {
             )
             result = response.data
             log.info(`Success Quotation Plan :${planId}`)
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             result = null
             log.debug(`Error %j`, e)
@@ -105,7 +105,7 @@ export class PetProposalService {
             )
             result = response.data
             log.info(`Success proposal :${contractId}`)
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             result = null
             log.debug(`Error %j`, e.message)
