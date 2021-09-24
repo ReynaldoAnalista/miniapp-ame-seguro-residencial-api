@@ -1,13 +1,21 @@
-FROM node:12-alpine
+FROM 355315421281.dkr.ecr.us-east-1.amazonaws.com/amedigital:ame-base-image-node-14
 
 ARG COMMIT_HASH
+
+ARG IMAGE_REPO_NAME
+ARG APP_VERSION
+ENV DD_VERSION $APP_VERSION
+ENV DD_SERVICE=$IMAGE_REPO_NAME
+ENV DD_ENV=homolog
+
+ENV CONTEXT_PATH=/miniapp-ame-seguro-residencial-api
+
 RUN mkdir -p /home/node/app/node_modules && mkdir -p /home/node/app/config && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 COPY tsoa.json .
 COPY package.json .
 COPY yarn.lock .
 COPY tsconfig.json .
-COPY newrelic.js .
 COPY config/homolog.json ./config/homolog.json
 COPY mail_template mail_template
 COPY src src
@@ -21,4 +29,5 @@ ENV DYNAMODB_ENV=hml
 ENV DEBUG=ame-seguro-residencial:*
 ENV TZ=America/Sao_Paulo
 ENV COMMIT_HASH=$COMMIT_HASH
+ENV BUILD_DATE=$BUILD_DATE
 CMD ["node", "dist/app.js"]
