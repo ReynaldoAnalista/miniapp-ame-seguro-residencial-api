@@ -1,8 +1,3 @@
-// Evitando memory leak nos testes
-if (process.env.NEW_RELIC_ENABLED !== "false") {
-    require("newrelic")
-}
-
 import express from "express"
 import bodyParser from "body-parser"
 import { inject, injectable, multiInject } from "inversify"

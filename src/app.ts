@@ -1,3 +1,4 @@
+import "./tracer" // must come before importing any instrumented module.
 import "reflect-metadata"
 import { ApiServer } from "./server/ApiServer"
 import { initDependencies, iocContainer } from "./inversify/inversify.config"
