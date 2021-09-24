@@ -10,7 +10,7 @@ let dynamoDocClient: AWS.DynamoDB.DocumentClient
 
 @injectable()
 export class DynamoHolder {
-    clientPromise: any
+    clientPromise
 
     constructor(
         @inject(TYPES.ParameterStore)

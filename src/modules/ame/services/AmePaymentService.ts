@@ -44,7 +44,7 @@ export class AmePaymentService {
             this.tokenCode = resAmeAuth.data.accessToken
 
             return this.tokenCode
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("error.login.blindguardian", 500)
         }
@@ -68,7 +68,7 @@ export class AmePaymentService {
         try {
             await Axios.put(`${cfg.paymentApi}/p/payment/authorize/${input.paymentId}/capture`, params, axiosOptions)
             logger.debug("Captura de pagamento efetuado com sucesso. Payment id ", input.paymentId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error("Erro ao capturar pagamento. Payment id ", input.paymentId)
             throw new ApiError("error.capture.payment", 500)
         }
@@ -95,7 +95,7 @@ export class AmePaymentService {
         try {
             await Axios.put(`${cfg.paymentApi}/p/payments/${input.paymentId}/refund`, params, axiosOptions)
             logger.debug("Estorno de pagamento efetuado com sucesso. Payment id ", input.paymentId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error("Erro ao estornar pagamento. Payment id ", input.paymentId)
             logger.error(e)
             throw new Error("error.refund.payment")
@@ -121,7 +121,7 @@ export class AmePaymentService {
         try {
             await Axios.put(`${cfg.paymentApi}/p/payment/authorize/${input.paymentId}/cancel`, params, axiosOptions)
             logger.debug("Cancelamento de pagamento efetuado com sucesso. Payment id ", input.paymentId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error("Erro ao cancelar pagamento. Payment id ", input.paymentId, e)
             throw new ApiError("error.cancel.payment", 500)
         }
@@ -143,7 +143,7 @@ export class AmePaymentService {
             const result = await Axios.get(`${cfg.paymentApi}/p/payments/${input.walletToken}/${input.paymentId}`, axiosOptions)
             logger.debug("Pagamento obtido com sucesso ", input.paymentId)
             return result.data
-        } catch (e: any) {
+        } catch (e) {
             logger.error("Erro ao buscar pagamento. Payment id ", input.paymentId, e)
             throw new ApiError("error.get.payment", 500)
         }

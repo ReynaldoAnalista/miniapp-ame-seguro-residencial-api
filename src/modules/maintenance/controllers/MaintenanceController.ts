@@ -29,7 +29,7 @@ export class MaintenanceController {
         try {
             logger.info("E-mail com o id de compra:", pass)
             return await this.maintenanceService.sendSellingEmailWithParams(pass, email)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Send email error", 500, `Send email error`)
         }
@@ -42,7 +42,7 @@ export class MaintenanceController {
         logger.info("Proposal Id %j", proposalId)
         try {
             return await this.smartphoneProposalService.updateOldCustumersProposal(proposalId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
@@ -55,7 +55,7 @@ export class MaintenanceController {
         logger.info("Update Plan Type Active or Canceled")
         try {
             return await this.maintenanceService.updateOrdersType(updatePlanStatus.signedUpdatePlanStatus)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
@@ -68,7 +68,7 @@ export class MaintenanceController {
         logger.info("Update Plan Type Active or Canceled")
         try {
             return await this.residentialProposalService.resendResidentialProposal(proposal.updatePlanStatus)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)
         }
@@ -81,7 +81,7 @@ export class MaintenanceController {
         logger.info("Canceled Orders")
         try {
             return await this.maintenanceService.getCancelledOrders(customer.customerId)
-        } catch (e: any) {
+        } catch (e) {
             logger.error(e.message)
             throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)
         }

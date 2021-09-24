@@ -66,7 +66,7 @@ export class LifeProposalUtil {
             )
             result = { success: true, content: response.data }
             log.info("Success proposal sent")
-        } catch (e: any) {
+        } catch (e) {
             const status = e.response?.status
             const statusText = e
             result = { success: false, status: status, message: statusText }

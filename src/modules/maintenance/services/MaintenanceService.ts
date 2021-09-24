@@ -36,7 +36,7 @@ export class MaintenanceService {
             unsignedNotification.map(async (item) => {
                 await this.maintenanceRepository.updateSoldProposalOrdersType(item)
             })
-        } catch (e: any) {
+        } catch (e) {
             log.error("Erro na atualização", e.message)
             throw new Error("Erro na atualização")
         }

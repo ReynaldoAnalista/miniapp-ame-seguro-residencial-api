@@ -98,7 +98,7 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateDateProposal(date: any) {
+    static generateDateProposal(date) {
         return new Date(date[0], date[1] - 1, date[2])
     }
 
