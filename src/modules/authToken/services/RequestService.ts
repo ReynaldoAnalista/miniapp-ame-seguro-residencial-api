@@ -27,6 +27,7 @@ enum Endpoints {
     LIFE_URL_BASE = "LIFE_URL_BASE",
     HEALTHCARE_URL_BASE = "HEALTHCARE_URL_BASE",
     RENEW_PORTABLE_URL_BASE = "RENEW_PORTABLE_URL_BASE",
+    FAQ = "FAQ",
 }
 
 @injectable()

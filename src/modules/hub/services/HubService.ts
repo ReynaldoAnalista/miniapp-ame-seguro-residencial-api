@@ -17,6 +17,10 @@ import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldP
 import moment from "moment"
 import { healthCareProposalSoldRepository } from "../../healthCareProposal/repository/healthCareProposalSoldRepository"
 import { Tenants } from "../../default/model/Tenants"
+import path from "path"
+import util from "util"
+import fs from "fs"
+const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("ResidentialProposalService")
 
@@ -252,6 +256,41 @@ export class HubService {
         result[SmartphoneProposalRepository.TABLE] = await this.smartphoneProposalRepository.checkTable()
         result[SmartphoneProposalResponseRepository.TABLE] = await this.smartphoneProposalResponseRepository.checkTable()
         result[SmartphoneSoldProposalRepository.TABLE] = await this.smartphoneSoldProposalRepository.checkTable()
+        return result
+    }
+
+    async faqInfo() {
+        return {
+            agreement: await this.agreementPlanFaq(),
+            pet: await this.faqInfoJson("seguro-pet"),
+            residencial: await this.faqInfoJson("seguro-residencial"),
+            smartphone: await this.faqInfoJson("seguro-celular"),
+            dental: await this.faqInfoJson("seguro-dental-ame"),
+            healthcare: await this.faqInfoJson("assistencia-saude-ame"),
+            devices: await this.faqInfoJson("seguro-eletroportatil"),
+        }
+    }
+
+    async agreementPlanFaq() {
+        const agreementJson = await readFile(path.resolve(__dirname, "../../../files/agreement_faq.json"), "utf-8")
+        const Object = JSON.parse(agreementJson)
+        return Object
+    }
+
+    async faqInfoJson(securyInfo) {
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.FAQ,
+                this.requestService.METHODS.GET,
+                null,
+                Tenants.FAQ,
+                `/${securyInfo}`
+            )
+            result = response.data.perguntas
+        } catch (error) {
+            log.error("Erro ao buscar os FAQ", error)
+        }
         return result
     }
 }
