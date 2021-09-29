@@ -93,4 +93,12 @@ export class HubController {
         }
         return {}
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Get("/faq")
+    public async faqInfo() {
+        logger.debug("Buscando informações do FAQ")
+        return await this.hubService.faqInfo()
+    }
 }

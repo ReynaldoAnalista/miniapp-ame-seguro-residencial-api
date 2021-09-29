@@ -626,6 +626,70 @@
 				]
 			}
 		},
+		"/v1/hub/faq": {
+			"get": {
+				"operationId": "FaqInfo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"agreement": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"pet": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"residencial": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"smartphone": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"dental": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"healthcare": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"devices": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"devices",
+										"healthcare",
+										"dental",
+										"smartphone",
+										"residencial",
+										"pet",
+										"agreement"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/v1/life/cotation": {
 			"post": {
 				"operationId": "CotationPlan",

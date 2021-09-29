@@ -6,4 +6,5 @@ export enum Tenants {
     HEALTHCARE = "HEALTHCARE",
     PORTABLE = "PORTABLE",
     RENEW_PORTABLE = "RENEW_PORTABLE",
+    FAQ = "FAQ",
 }
