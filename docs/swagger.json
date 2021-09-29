@@ -636,8 +636,22 @@
 								"schema": {
 									"properties": {
 										"agreement": {
-											"additionalProperties": true,
-											"type": "object"
+											"items": {
+												"properties": {
+													"title": {
+														"type": "string"
+													},
+													"resposta": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"resposta",
+													"title"
+												],
+												"type": "object"
+											},
+											"type": "array"
 										},
 										"pet": {
 											"additionalProperties": true,
