@@ -142,7 +142,7 @@ export class PortableProposalMailService {
                 selectedPlan.id == 1
                     ? equipamentRiskData?.equipment_value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
                     : "-",
-            posThieft: selectedPlan.id == 1 ? "20%" : "-",
+            posThieft: selectedPlan.id == 1 ? "25%" : "-",
             carencyThief: selectedPlan.id == 1 ? "Não há" : "-",
             prizeThieft:
                 selectedPlan.id == 1 && selectedPercent["thieft"] != 0
@@ -167,7 +167,7 @@ export class PortableProposalMailService {
                 style: "currency",
                 currency: "BRL",
             }),
-            glassProtectPos: selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3 ? "10%" : "-",
+            glassProtectPos: selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3 ? "15%" : "-",
             glassProtectCoverPrize:
                 selectedPercent["broken_glass"] != 0
                     ? "R$ " +
@@ -194,7 +194,7 @@ export class PortableProposalMailService {
             totalPrize:
                 "R$ " +
                 (parseFloat(this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value)) * 1.0738)
-                    .toFixed(2)
+                    .toFixed()
                     .replace(".", ","),
             securyDataRepresentation: (
                 (parseFloat(
@@ -234,19 +234,19 @@ export class PortableProposalMailService {
             switch (selectedPlan.id) {
                 case 1:
                     return {
-                        total: 17.8416,
-                        liquid_prize: 16.6154,
-                        thieft: 10.23,
-                        acidental_broken: 7.61,
-                        broken_glass: 0,
+                        total: 20.7,
+                        liquid_prize: 19.27,
+                        thieft: 9.43,
+                        acidental_broken: 6.6,
+                        broken_glass: 3.24,
                     }
-                case 3:
+                case 2:
                     return {
-                        total: 13.88,
-                        liquid_prize: 12.92,
+                        total: 18.5,
+                        liquid_prize: 17.23,
                         thieft: 0,
-                        acidental_broken: 0,
-                        broken_glass: 0,
+                        acidental_broken: 11.56,
+                        broken_glass: 5.67,
                     }
                 default:
                     return 0
