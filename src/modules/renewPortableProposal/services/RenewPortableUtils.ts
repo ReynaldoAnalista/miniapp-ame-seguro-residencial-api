@@ -19,7 +19,7 @@ export class RenewPortableUtils {
     static generateProposal(unsignedProposal) {
         if (unsignedProposal?.customPayload?.proposal) {
             const proposal = Object.assign(unsignedProposal.customPayload.proposal)
-            const motherPolicyNumber = "2716000020171"
+            const motherPolicyNumber = "2716000099071"
             const covarageData = unsignedProposal.customPayload.proposal.coverage_data
 
             proposal.mother_policy_number = motherPolicyNumber
@@ -35,7 +35,7 @@ export class RenewPortableUtils {
 
     static generateChargeData(firstInstalment) {
         // Não importa o parcelamento, foi acertado que será apenas em 1 parcela para a mapfre
-        const paymentPlanCode = this.getPaymentPlanCode(firstInstalment)
+        const paymentPlanCode = "00000723"
 
         // Quantidade de parcelas, informado pela AME
         const numberOfInstallments = 1
@@ -69,7 +69,7 @@ export class RenewPortableUtils {
 
     static generatePolicyData(contractNumber, dateProposal: Date = new Date()) {
         // Todas as apólices são ligadas à uma apólice mãe única
-        const motherPolicyNumber = "2716000020171"
+        const motherPolicyNumber = "2716000099071"
 
         // Início da Vigência da apólice
         const toDay = moment(dateProposal)
