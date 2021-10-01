@@ -1,79 +1,78 @@
 {
-    "amount": 20700,
+    "amount": 11500,
     "amountRefunded": 0,
     "attributes": {
+        "title": "Ame Proteção de Tela",
+        "description": "Para: Xiaomi MI 8 Lite",
+        "amount": 11500,
+        "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe",
         "customPayload": {
-            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
-            "clientEmail": "teste@email.com.br",
-            "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
             "isFrom": "PHONE_SEC",
-            "miniAppId": "21644",
             "origin": "MINIAPP",
+            "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+            "clientEmail": "izabella.assad@calindra.com.br",
+            "selectedPlan": {
+                "id": 3,
+                "description": "Ame Proteção de Tela",
+                "percent": 10.71,
+                "stolenFranchise": null,
+                "brokenFranchise": null,
+                "screenFranchise": 0.15,
+                "coverage": "Proteção de tela",
+                "guarantee": "Substituição da tela",
+                "totalPrice": "R$ 115,00",
+                "price": "R$ 0,32",
+                "priceInCents": 11500,
+                "franchise": "",
+                "installmentPrice": "R$ 9,59"
+            },
             "proposal": {
-                "coverage_data": {
-                    "coverage_code": 1,
-                    "insured_amount": 1000,
-                    "liquid_prize": 207.00,
-                    "policy_item_number": 1
-                },
                 "insured_data": {
-                    "address_data": {
-                        "city": "São Vicente",
-                        "district": "Jardim Independência",
-                        "federal_unit": "SP",
-                        "number": "50",
-                        "street": "Rua São Jorge",
-                        "type_of_street": "01",
-                        "zip_code": "11380310"
-                    },
-                    "cnpj_cpf": "09548913763",
-                    "date_of_birth": "01161982",
+                    "insured_name": "Izabella da Silva Assad",
+                    "type_of_legal_person": "F",
+                    "cnpj_cpf": "16286131736",
+                    "date_of_birth": "05171997",
                     "gender": "M",
-                    "insured_name": "Marcelo Madeira",
-                    "type_of_legal_person": "F"
+                    "address_data": {
+                        "type_of_street": "01",
+                        "street": "Rua Divisória",
+                        "number": "49",
+                        "complement": "Apt 101",
+                        "district": "Bento Ribeiro",
+                        "city": "Rio de Janeiro",
+                        "zip_code": "21331250",
+                        "federal_unit": "RJ"
+                    }
                 },
                 "portable_equipment_risk_data": {
-                    "cpf_cnpj_by_risk": "09548913763",
-                    "device_serial_code": "123456789123456",
+                    "cpf_cnpj_by_risk": "16286131736",
+                    "risk_description": "Xiaomi MI 8 Lite ",
+                    "product_description": "Xiaomi MI 8 Lite ",
+                    "manufacturer_code": 1,
+                    "manufacturer_name": "Xiaomi",
+                    "model_description": "Xiaomi MI 8 Lite ",
                     "equipment_type": 1,
                     "equipment_value": 1000,
-                    "invoice_date": "01012021",
-                    "invoice_number": "123456789",
-                    "manufacturer_code": 1,
-                    "manufacturer_name": "Samsung",
-                    "model_description": "Samsung Galaxy_A02s 64GB",
-                    "product_description": "Samsung Galaxy_A02s 64GB",
-                    "risk_description": "Samsung Galaxy_A02s 64GB"
+                    "invoice_number": "",
+                    "invoice_date": "01202021",
+                    "device_serial_code": "949497979976767"
+                },
+                "coverage_data": {
+                    "policy_item_number": 1,
+                    "coverage_code": 3,
+                    "insured_amount": 1000,
+                    "liquid_prize": 107.1
                 }
-            },
-            "selectedPlan": {
-                "brokenFranchise": 0.15,
-                "coverage": "Roubo ou furto qualificado, quebra acidental e proteção de tela",
-                "description": "Ame Proteção Total",
-                "guarantee": "Reparo ou em razão de impossibilidade, subtituição do bem",
-                "id": 1,
-                "installmentPrice": "R$ 20,70",
-                "percent": 20.7000,
-                "price": "R$ 0,49",
-                "priceInCents": 20700.0,
-                "screenFranchise": 0.1,
-                "stolenFranchise": 0.2,
-                "totalPrice": "R$ 207,00"
             }
         },
-        "items": [{
-                "amount": 20700,
-                "description": "Proteção do tipo Ame Proteção Total para um smartphone modelo Samsung Galaxy_A02s (IMEI:123456789123456) 64GB avaliado em R$ 1.000,00",
-            "quantity": 1
-        }],
-        "miniApp": {
-            "hasOrderDetails": false,
-            "id": "ame-seguro-smartphone"
-        },
-        "orderId": "f8be1d8e-85fa-42ca-bd79-7c3470b2c09b",
-        "origin": "MINIAPP",
-        "paymentOnce": false,
-        "transactionChangedCallbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe"
+        "items": [
+            {
+                "description": "Proteção do tipo Ame Proteção de Tela para um smartphone modelo Xiaomi MI 8 Lite (IMEI:949497979976767) avaliado em R$ 1.000,00",
+                "quantity": 1,
+                "amount": 11500
+            }
+        ]
     },
     "cashType": "CASH",
     "currency": "BRL",
@@ -90,12 +89,12 @@
     "description": "Para: Samsung Galaxy_A02s 64GB",
     "id": "22ca9ef9-dec8-4942-82d0-1f512029059b",
     "name": "Compra on-line",
-    "nsu": "045368281759",
+    "nsu": "045368281762",
     "operationReference": null,
     "operationType": "DEBIT",
     "peer": null,
     "splits": [{
-            "amount": 20700,
+            "amount": 11500,
         "cardBrand": null,
         "cardMasked": null,
         "cashType": "CASH",

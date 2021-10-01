@@ -1,29 +1,30 @@
 {
-    "amount": 13877,
+    "amount": 18502,
     "amountRefunded": 0,
     "attributes": {
         "title": "Ame Proteção Básica",
-        "description": "Para: LG K10",
-        "amount": 13877,
+        "description": "Para: Nikon N20",
+        "amount": 18502,
         "callbackUrl": "https://miniapps.hml.amedigital.com/notification-api/v1/notification/30e227d1-b804-461e-9d84-952ae88b1afe",
         "customPayload": {
             "isFrom": "PHONE_SEC",
             "origin": "MINIAPP",
-            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/smartphone/sendProposal",
+            "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
+            "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/portable/sendProposal",
             "clientEmail": "izabella.assad@calindra.com.br",
             "selectedPlan": {
-                "id": 1,
+                "id": 2,
                 "description": "Ame Proteção Básica",
-                "percent": 12.9231,
-                "stolenFranchise": 0.2,
+                "percent": 17.23,
+                "stolenFranchise": null,
                 "brokenFranchise": 0.15,
-                "coverage": " Roubo ou furto qualificado e quebra acidental",
-                "guarantee": "Substituição ou reparo do bem.",
-                "totalPrice": "R$ 138,77",
-                "price": "R$ 0,39",
-                "priceInCents": 13877,
+                "coverage": "Quebra acidental",
+                "guarantee": "Reparo ou substituição do bem em razão de impossibilidade de reparo.",
+                "totalPrice": "R$ 185,02",
+                "price": "R$ 0,51",
+                "priceInCents": 18502,
                 "franchise": "",
-                "installmentPrice": "R$ 11,57"
+                "installmentPrice": "R$ 15,42"
             },
             "proposal": {
                 "insured_data": {
@@ -45,30 +46,30 @@
                 },
                 "portable_equipment_risk_data": {
                     "cpf_cnpj_by_risk": "16286131736",
-                    "risk_description": "Notebook",
-                    "product_description": "Notebook",
+                    "risk_description": "Câmera fotográfica",
+                    "product_description": "Câmera fotográfica",
                     "manufacturer_code": 1,
-                    "manufacturer_name": "Dell",
-                    "model_description": "Dell DellMax",
+                    "manufacturer_name": "Nikon",
+                    "model_description": "Nikon N20 ",
                     "equipment_type": 1,
                     "equipment_value": 1000,
-                    "invoice_number": "",
-                    "invoice_date": "05172021",
+                    "invoice_number": 0,
+                    "invoice_date": "01202021",
                     "device_serial_code": 0
                 },
                 "coverage_data": {
                     "policy_item_number": 1,
-                    "coverage_code": 1,
+                    "coverage_code": 2,
                     "insured_amount": 1000,
-                    "liquid_prize": 129.23
+                    "liquid_prize": 172.3
                 }
             }
         },
         "items": [
             {
-                "description": "Proteção do tipo Ame Proteção Básica para um Notebook modelo DellMax (IMEI:0) avaliado em R$ 5.000,00",
+                "description": "Ame Proteção Básica de Câmera fotográfica avaliado em R$ 1.000,00",
                 "quantity": 1,
-                "amount": 13877
+                "amount": 18502
             }
         ]
     },
@@ -87,12 +88,12 @@
     "description": "Para: Notebok DellMax",
     "id": "81047477-5fac-4ced-8d1d-6a9b59800664",
     "name": "Compra on-line",
-    "nsu": "045368281759",
+    "nsu": "045368281768",
     "operationReference": null,
     "operationType": "DEBIT",
     "peer": null,
     "splits": [{
-            "amount": 13877,
+            "amount": 18502,
         "cardBrand": null,
         "cardMasked": null,
         "cashType": "CASH",

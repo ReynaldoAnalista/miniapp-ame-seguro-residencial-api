@@ -178,7 +178,7 @@ export class PortableProposalUtils {
         const paymentPlanCode = "00000723"
 
         // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 111293
+        const paymentManagerCode = 99990638
 
         // CPF ou CGC AME
         const documentType = "CGC"
