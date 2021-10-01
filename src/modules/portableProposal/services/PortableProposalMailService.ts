@@ -234,7 +234,7 @@ export class PortableProposalMailService {
             switch (selectedPlan.id) {
                 case 1:
                     return {
-                        total: 17.8416,
+                        total: 20.7,
                         liquid_prize: 16.6154,
                         thieft: 10.23,
                         acidental_broken: 7.61,
@@ -242,7 +242,7 @@ export class PortableProposalMailService {
                     }
                 case 3:
                     return {
-                        total: 13.88,
+                        total: 18.5,
                         liquid_prize: 12.92,
                         thieft: 0,
                         acidental_broken: 0,
