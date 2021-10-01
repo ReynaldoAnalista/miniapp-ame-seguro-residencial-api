@@ -76,7 +76,7 @@ export class SmartphoneProposalUtils {
 
     static generatePolicyData(contractNumber, dateProposal: Date = new Date()) {
         // Todas as apólices são ligadas à uma apólice mãe única
-        const motherPolicyNumber = "2716000020171"
+        const motherPolicyNumber = "2716000099071"
 
         // Início da Vigência da apólice
         const toDay = moment(dateProposal)
@@ -98,7 +98,7 @@ export class SmartphoneProposalUtils {
         }
     }
 
-    static generateDateProposal(date: any) {
+    static generateDateProposal(date) {
         return new Date(date[0], date[1] - 1, date[2])
     }
 
@@ -173,7 +173,7 @@ export class SmartphoneProposalUtils {
         const typeOfCollectionManager = "DF"
 
         // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
-        const paymentPlanCode = SmartphoneProposalUtils.getPaymentPlanCode(installments)
+        const paymentPlanCode = "00000723"
 
         // Mapfre ficou de enviar o código, estou aguardando
         const paymentManagerCode = 99990638
