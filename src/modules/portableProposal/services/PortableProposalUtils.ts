@@ -78,7 +78,7 @@ export class PortableProposalUtils {
 
     static generatePolicyData(contractNumber, dateProposal: Date = new Date()) {
         // Todas as apólices são ligadas à uma apólice mãe única
-        const motherPolicyNumber = "2716000020171"
+        const motherPolicyNumber = "2716000099071"
 
         // Início da Vigência da apólice
         const toDay = moment(dateProposal)
@@ -175,10 +175,10 @@ export class PortableProposalUtils {
         const typeOfCollectionManager = "DF"
 
         // Mapfre ficou de enviar os planos de pagamentos, estou aguardando
-        const paymentPlanCode = PortableProposalUtils.getPaymentPlanCode(installments)
+        const paymentPlanCode = "00000723"
 
         // Mapfre ficou de enviar o código, estou aguardando
-        const paymentManagerCode = 99990638
+        const paymentManagerCode = 111293
 
         // CPF ou CGC AME
         const documentType = "CGC"

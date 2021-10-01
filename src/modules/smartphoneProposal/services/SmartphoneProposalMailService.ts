@@ -234,7 +234,8 @@ export class SmartphoneProposalMailService {
             switch (selectedPlan.id) {
                 case 1:
                     return {
-                        total: 17.8416,
+                        // eslint-disable-next-line prettier/prettier
+                        total: 20.7000,
                         liquid_prize: 16.6154,
                         thieft: 8.73,
                         acidental_broken: 6.1114,
@@ -242,7 +243,8 @@ export class SmartphoneProposalMailService {
                     }
                 case 2:
                     return {
-                        total: 13.8768,
+                        // eslint-disable-next-line prettier/prettier
+                        total: 18.5000,
                         liquid_prize: 12.9231,
                         thieft: 0,
                         acidental_broken: 9.3066,
@@ -250,7 +252,8 @@ export class SmartphoneProposalMailService {
                     }
                 case 3:
                     return {
-                        total: 9.2512,
+                        // eslint-disable-next-line prettier/prettier
+                        total: 11.5000,
                         liquid_prize: 8.6154,
                         thieft: 0,
                         acidental_broken: 0,
