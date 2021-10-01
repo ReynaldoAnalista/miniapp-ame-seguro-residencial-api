@@ -142,7 +142,7 @@ export class SmartphoneProposalMailService {
                 selectedPlan.id == 1
                     ? equipamentRiskData?.equipment_value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
                     : "-",
-            posThieft: selectedPlan.id == 1 ? "20%" : "-",
+            posThieft: selectedPlan.id == 1 ? "25%" : "-",
             carencyThief: selectedPlan.id == 1 ? "Não há" : "-",
             prizeThieft:
                 selectedPlan.id == 1 && selectedPercent["thieft"] != 0
@@ -167,7 +167,7 @@ export class SmartphoneProposalMailService {
                 style: "currency",
                 currency: "BRL",
             }),
-            glassProtectPos: selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3 ? "10%" : "-",
+            glassProtectPos: selectedPlan.id == 1 || selectedPlan.id == 2 || selectedPlan.id == 3 ? "15%" : "-",
             glassProtectCoverPrize:
                 selectedPercent["broken_glass"] != 0
                     ? "R$ " +
@@ -194,7 +194,7 @@ export class SmartphoneProposalMailService {
             totalPrize:
                 "R$ " +
                 (parseFloat(this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value)) * 1.0738)
-                    .toFixed(2)
+                    .toFixed()
                     .replace(".", ","),
             securyDataRepresentation: (
                 (parseFloat(
@@ -236,7 +236,7 @@ export class SmartphoneProposalMailService {
                     return {
                         // eslint-disable-next-line prettier/prettier
                         total: 20.70,
-                        liquid_prize: 19.28,
+                        liquid_prize: 19.27,
                         thieft: 9.43,
                         acidental_broken: 6.6,
                         broken_glass: 3.24,
