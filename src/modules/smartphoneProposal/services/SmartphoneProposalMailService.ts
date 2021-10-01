@@ -236,28 +236,28 @@ export class SmartphoneProposalMailService {
                     return {
                         // eslint-disable-next-line prettier/prettier
                         total: 20.70,
-                        liquid_prize: 16.6154,
-                        thieft: 8.73,
-                        acidental_broken: 6.1114,
-                        broken_glass: 3,
+                        liquid_prize: 19.28,
+                        thieft: 9.43,
+                        acidental_broken: 6.6,
+                        broken_glass: 3.24,
                     }
                 case 2:
                     return {
                         // eslint-disable-next-line prettier/prettier
                         total: 18.50,
-                        liquid_prize: 12.9231,
+                        liquid_prize: 17.23,
                         thieft: 0,
-                        acidental_broken: 9.3066,
-                        broken_glass: 4.57,
+                        acidental_broken: 11.56,
+                        broken_glass: 5.67,
                     }
                 case 3:
                     return {
                         // eslint-disable-next-line prettier/prettier
                         total: 11.50,
-                        liquid_prize: 8.6154,
+                        liquid_prize: 10.71,
                         thieft: 0,
                         acidental_broken: 0,
-                        broken_glass: 9.2512,
+                        broken_glass: 10.71,
                     }
                 default:
                     return 0

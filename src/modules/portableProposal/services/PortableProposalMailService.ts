@@ -235,18 +235,18 @@ export class PortableProposalMailService {
                 case 1:
                     return {
                         total: 20.7,
-                        liquid_prize: 16.6154,
-                        thieft: 10.23,
-                        acidental_broken: 7.61,
-                        broken_glass: 0,
+                        liquid_prize: 19.28,
+                        thieft: 9.43,
+                        acidental_broken: 6.6,
+                        broken_glass: 3.24,
                     }
-                case 3:
+                case 2:
                     return {
                         total: 18.5,
-                        liquid_prize: 12.92,
+                        liquid_prize: 17.23,
                         thieft: 0,
-                        acidental_broken: 0,
-                        broken_glass: 0,
+                        acidental_broken: 11.56,
+                        broken_glass: 5.67,
                     }
                 default:
                     return 0
