@@ -32,7 +32,7 @@ export class RenewPortableService {
                 Tenants.RENEW_PORTABLE,
                 `/${customerId}`
             )
-            return response.data
+            return response.data.filter((x) => x.type == "RF")
         } catch (error) {
             throw error
         }
