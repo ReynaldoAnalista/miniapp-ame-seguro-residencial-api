@@ -22,6 +22,7 @@ enum Endpoints {
     RESIDENTIAL_URL_SALE = "URL_SALE",
     SMARTPHONE_URL_AUTHORIZATION = "SMARTPHONE_URL_AUTHORIZATION",
     SMARTPHONE_URL_SALE = "SMARTPHONE_URL_SALE",
+    RENEW_PORTABLE_URL_SALE = "RENEW_PORTABLE_URL_SALE",
     SMARTPHONE_URL_CANCEL = "SMARTPHONE_URL_CANCEL",
     PET_URL_BASE = "PET_URL_BASE",
     LIFE_URL_BASE = "LIFE_URL_BASE",
@@ -86,6 +87,13 @@ export class RequestService {
             headers = {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
+            }
+        }
+        if (tenant === Tenants.RENEW_PORTABLE_DIGIBEE) {
+            headers = {
+                "Content-Type": "application/json",
+                Authorization: token,
+                apikey: await this.parameterStore.getSecretValue("RENEW_PORTABLE_API_KEY"),
             }
         }
 
