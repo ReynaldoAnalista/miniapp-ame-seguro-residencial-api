@@ -73,7 +73,7 @@ export class HubService {
                     return {
                         id: x.order,
                         description: x.receivedPaymentNotification?.title,
-                        date: moment(proposal?.dataInicioVigencia).format("DD/MM/YYYY"),
+                        date: moment(proposal?.dataInicioVigencia, "YYYY-MM-DD").format("DD/MM/YYYY"),
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
