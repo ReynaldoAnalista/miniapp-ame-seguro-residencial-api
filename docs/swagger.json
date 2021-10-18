@@ -641,12 +641,12 @@
 													"title": {
 														"type": "string"
 													},
-													"resposta": {
+													"content": {
 														"type": "string"
 													}
 												},
 												"required": [
-													"resposta",
+													"content",
 													"title"
 												],
 												"type": "object"

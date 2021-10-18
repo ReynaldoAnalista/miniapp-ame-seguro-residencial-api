@@ -32,7 +32,7 @@
                     "complement": "Apt 101",
                     "district": "Bento Ribeiro",
                     "city": "Rio de Janeiro",
-                    "zip_code": "21331250",
+                    "zip_code": 21331250,
                     "federal_unit": "RJ"
                 }
             },
@@ -51,7 +51,7 @@
                 "extended_warranty_code": 471569845,
                 "product_description": "Galaxy A72",
                 "manufacturer_warranty": 3,
-                "sale_price": 4643.38,
+                "sale_price": 4643,
                 "sale_date": "20210523"
             },
             "coverage_data": {
