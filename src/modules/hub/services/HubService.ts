@@ -72,10 +72,15 @@ export class HubService {
                     const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
                     let dataInicioVigencia = null
                     if (proposal) {
-                        if (proposal.dataInicioVigencia) {
-                            dataInicioVigencia = proposal.dataInicioVigencia
-                        } else {
-                            dataInicioVigencia = proposal.proposal?.dataInicioVigencia
+                        try {
+                            if (proposal.dataInicioVigencia) {
+                                dataInicioVigencia = proposal.dataInicioVigencia
+                            } else {
+                                dataInicioVigencia = proposal.proposal?.dataInicioVigencia
+                            }
+                        } catch (e) {
+                            log.error("Erro ao informar dataInicioVigencia")
+                            log.error(e)
                         }
                     }
                     return {
