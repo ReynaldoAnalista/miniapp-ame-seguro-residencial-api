@@ -43,6 +43,7 @@ export const initDependencies = () => {
     bindControllers("../modules/healthCareProposal/controllers")
     bindControllers("../modules/maintenance/controllers")
     bindControllers("../modules/portableProposal/controllers")
+    bindControllers("../modules/renewPortableProposal/controllers")
 
     /* Initialize Services */
     iocContainer.bind<ApiServer>(TYPES.ApiServer).to(ApiServer).inSingletonScope()
@@ -57,6 +58,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/lifeProposal/services")
     bindSingleton("../modules/portableProposal/services")
     bindSingleton("../modules/ame/services")
+    bindSingleton("../modules/renewPortableProposal/services")
 
     /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
@@ -66,6 +68,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/healthCareProposal/repository")
     bindSingleton("../modules/maintenance/repository")
     bindSingleton("../modules/portableProposal/repository")
+    bindSingleton("../modules/renewPortableProposal/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

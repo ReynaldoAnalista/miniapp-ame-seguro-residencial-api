@@ -5,7 +5,7 @@ export class AuthToken {
     jti?: string
     expires_in?: number
 
-    static fromObject(source: any): AuthToken {
+    static fromObject(source): AuthToken {
         const auth = new AuthToken()
         return Object.assign(auth, source)
     }

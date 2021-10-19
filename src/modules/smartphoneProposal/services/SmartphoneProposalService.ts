@@ -213,7 +213,7 @@ export class SmartphoneProposalService {
         }
     }
 
-    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+    async saveSoldProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
@@ -236,7 +236,7 @@ export class SmartphoneProposalService {
         }
     }
 
-    async saveCancelProposal(proposal: any, response: any, tenant: string) {
+    async saveCancelProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
 
         try {
@@ -262,7 +262,11 @@ export class SmartphoneProposalService {
     async updateStatusSoldProposal(customerId: string, order: string) {
         log.debug("Buscando proposta pelo Id updateSoldProposal ")
         try {
-            const getResponse: any = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            const getResponse = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(customerId, order)
+            if (typeof getResponse == "undefined") {
+                log.debug("updateSoldProposal:Fail")
+                return
+            }
             const proposalRequest = getResponse[0]
             await this.smartphoneSoldProposalRepository.update({
                 partnerResponse: proposalRequest?.partnerResponse,
@@ -304,7 +308,7 @@ export class SmartphoneProposalService {
         throw new Error("Order not found")
     }
 
-    async updateSoldProposal(proposal: any, response: any, tenant: string) {
+    async updateSoldProposal(proposal: any, response, tenant: string) {
         log.debug("updateSoldProposal")
         try {
             await this.smartphoneSoldProposalRepository.update({

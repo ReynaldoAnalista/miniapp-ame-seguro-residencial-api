@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
 import { TYPES } from "../../../inversify/inversify.types"
@@ -10,12 +11,17 @@ import { SmartphoneSoldProposalRepository } from "../../smartphoneProposal/repos
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
 import { SmartphoneProposalResponseRepository } from "../../smartphoneProposal/repository/SmartphoneProposalResponseRepository"
 import { PortableSoldProposalRepository } from "../../portableProposal/repository/PortableSoldProposalRepository"
+import { RenewPortableSoldProposal } from "../../renewPortableProposal/repository/RenewPortableSoldProposal"
 import { SoldProposalRepository } from "../repository/SoldProposalRepository"
 import Plans from "../../residentialProposal/services/Plans"
 import { PetSoldProposalRepository } from "../../petProposal/repository/PetSoldProposalRepository"
 import moment from "moment"
 import { healthCareProposalSoldRepository } from "../../healthCareProposal/repository/healthCareProposalSoldRepository"
 import { Tenants } from "../../default/model/Tenants"
+import path from "path"
+import util from "util"
+import fs from "fs"
+const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("ResidentialProposalService")
 
@@ -44,6 +50,8 @@ export class HubService {
         private soldProposalRepository: SoldProposalRepository,
         @inject("PortableSoldProposalRepository")
         private portableSoldProposalRepository: PortableSoldProposalRepository,
+        @inject("RenewPortableSoldProposal")
+        private renewPortableSoldProposal: RenewPortableSoldProposal,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {}
@@ -56,12 +64,14 @@ export class HubService {
         const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
         const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
         const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomer(customerId)
+        const renewPortablePlansPlansFromDB = await this.renewPortableSoldProposal.findAllFromCustomer(customerId)
 
         let smartphonePlans = []
         let residentialPlans = []
         let petPlans = []
         let healthCarePlans = []
         let portablePlans = []
+        let renewPortablePlans = []
         if (residentialPlansFromDB) {
             if (raw) {
                 residentialPlans = Object.assign(residentialPlansFromDB)
@@ -190,7 +200,27 @@ export class HubService {
                 })
             }
         }
-        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans }
+        if (renewPortablePlansPlansFromDB) {
+            if (raw) {
+                renewPortablePlans = Object.assign(renewPortablePlansPlansFromDB)
+            } else {
+                renewPortablePlans = Object.assign(renewPortablePlansPlansFromDB).map((x) => {
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    const device = proposal?.portable_equipment_risk_data
+
+                    return {
+                        id: x?.order,
+                        status: x.success ? "Contratado" : "Não Contratado",
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        diffDays: moment().diff(moment(x.createdAt), "days"),
+                        partner: "Renova Laza",
+                        name: Tenants.RENEW_PORTABLE,
+                    }
+                })
+            }
+        }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans }
     }
 
     /**
@@ -240,6 +270,93 @@ export class HubService {
         result[SmartphoneProposalRepository.TABLE] = await this.smartphoneProposalRepository.checkTable()
         result[SmartphoneProposalResponseRepository.TABLE] = await this.smartphoneProposalResponseRepository.checkTable()
         result[SmartphoneSoldProposalRepository.TABLE] = await this.smartphoneSoldProposalRepository.checkTable()
+        return result
+    }
+
+    async faqInfo() {
+        return {
+            agreement: await this.agreementPlanFaq(),
+            pet: await this.faqInfoJson("seguro-pet"),
+            residencial: await this.faqInfoJson("seguro-residencial"),
+            smartphone: await this.faqInfoJson("seguro-celular"),
+            dental: await this.faqInfoJson("seguro-dental-ame"),
+            healthcare: await this.faqInfoJson("assistencia-saude-ame"),
+            devices: await this.faqInfoJson("seguro-eletroportatil"),
+        }
+    }
+
+    async agreementPlanFaq() {
+        return [
+            {
+                title: "Como funcionam os Seguros e Assistências da Ame?",
+                content:
+                    // eslint-disable-next-line prettier/prettier
+                    "Unimos a praticidade da Ame com a experiência de algumas das maiores seguradoras do Brasil pra você relaxar e deixar que a gente cuide dos imprevistos. Você faz a contratação e o pagamento dos Seguros e Assistências aqui na Ame e, quando precisar usar, é só falar com a seguradora."
+            },
+            {
+                title: "Por que contratar os Seguros e Assistências na Ame?",
+                content:
+                    // eslint-disable-next-line prettier/prettier
+                    "A gente facilita todo o processo, cuida das burocracias pra você e ainda te dá cashback na contratação de qualquer um dos seguros e assistências. Legal, né? E olha só, o dinheiro de volta fica disponível na sua conta Ame em 30 dias após a confirmação do pagamento ;)"
+            },
+            {
+                title: "Posso contratar um seguro pra outra pessoa?",
+                content:
+                    // eslint-disable-next-line prettier/prettier
+                    "Você pode contratar um seguro ou assistência apenas para o titular da conta Ame. Caso queira contratar em nome de outra pessoa, é só baixar o app da Ame no celular de quem você quer fazer a contratação, criar uma conta Ame em nome dessa pessoa e pronto, contrate o seguro e assistência que a pessoa precisa! "
+            },
+            {
+                title: "Contratei um dos seguros, mas ainda não recebi a confirmação. E agora?",
+                content:
+                    // eslint-disable-next-line prettier/prettier
+                    "Ah, depois de concluir o pagamento do seu seguro ou assistência aqui na Ame, a confirmação é enviada por e-mail com todas as informações em até 5 dias. Fique de olho na caixa de spam, beleza? Caso tenha passado desses prazos, entre em contato com a gente através dos números 4004-2120 (todas as regiões) ou 0800 229 7667 (somente RJ)."
+            },
+            {
+                title: "Quando recebo meu cashback?",
+                content:
+                    // eslint-disable-next-line prettier/prettier
+                    "Em até 30 dias após a aprovação do pagamento o cashback fica disponível pra você usar como quiser, é só acompanhar tudo no seu extrato."
+            },
+            {
+                title: "Como eu aciono o seguro que contratei?",
+                content:
+                    "Ah, é simples. Para acionar o seguro, em caso de sinistro (qualquer evento em que o bem segurado sofre um acidente ou prejuízo material), entre em contato com a seguradora e informe todos os dados sobre o serviço que você quer usar. Já para as assistências Pet e Dental, é só consultar as redes credenciadas e marcar suas consultas, exames e procedimentos normalmente."
+            },
+            {
+                title: "Como consulto a rede credenciada das assistências Pet ?",
+                content: "Para Assistência Pet, consulte em encontre clínicas parceiras e clínicas indicadas | Amigoo Pet"
+            },
+            {
+                title: "Como consulto a rede credenciada das assistências Dental?",
+                content: "Para Assistência Dental, consulte em encontre dentistas e clínicas do plano dental | W.Dental."
+            },
+        ]
+    }
+
+    async securyInfoFormatter(faqUnformated) {        
+
+        return faqUnformated.map(faq => {           
+            return {
+                "title" : faq.pergunta,
+                "content" : faq.resposta.replace(/<\/?[^>]+(>|$)/g, "").replace(/\&nbsp;/g, '').replace(/(\r\n|\n|\r)/gm, "")
+            }
+        })
+    }
+
+    async faqInfoJson(securyInfo) {
+        let result
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.FAQ,
+                this.requestService.METHODS.GET,
+                null,
+                Tenants.FAQ,
+                `/${securyInfo}`
+            )
+            result = await this.securyInfoFormatter(response.data.perguntas)
+        } catch (error) {
+            log.error("Erro ao buscar os FAQ", error)
+        }
         return result
     }
 }

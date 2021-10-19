@@ -3,7 +3,7 @@ export interface PetSoldProposal {
     order: string
     tenant: string
     receivedPaymentNotification: any
-    partnerResponse: any
+    partnerResponse
     success: boolean
     createdAt: string
 }

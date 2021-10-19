@@ -10,7 +10,7 @@ describe("AuthTokenService", () => {
     }
 
     beforeEach(() => {
-        const parameterStore: any = {
+        const parameterStore = {
             getSecretValue: (confName) => {
                 return conf[confName]
             },

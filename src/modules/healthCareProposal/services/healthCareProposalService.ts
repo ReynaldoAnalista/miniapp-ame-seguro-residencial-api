@@ -34,7 +34,7 @@ export class HealthCareProposalService {
         return proposalResponse
     }
 
-    async saveProposalResponse(id: any, proposalResponse: any) {
+    async saveProposalResponse(id: any, proposalResponse) {
         log.info("Saving proposal response")
         await this.healthCareProposalRepository.create({
             id: id,
@@ -45,7 +45,7 @@ export class HealthCareProposalService {
         log.debug("saveProposalSentSuccess:success")
     }
 
-    async saveSoldProposal(proposal: any, response: any) {
+    async saveSoldProposal(proposal: any, response) {
         log.debug("Saving soldProposal")
         const apiVersion = process.env.COMMIT_HASH || "unavailable"
         await this.healthCareProposalSoldRepository.create({

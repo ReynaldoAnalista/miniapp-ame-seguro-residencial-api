@@ -209,7 +209,7 @@ export class ResidentialProposalService {
         }
     }
 
-    async saveProposalResponse(id: any, proposalResponse: any) {
+    async saveProposalResponse(id: any, proposalResponse) {
         log.debug("saveProposalSentSuccess")
         try {
             await this.residentialProposalRepository.create({
@@ -275,7 +275,7 @@ export class ResidentialProposalService {
     }
 
     async processProposal(signedPayment: string) {
-        let proposalResponse: any
+        let proposalResponse
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const proposal = ResidentialProposalService.detachProposal(unsignedPayment)
         await this.saveProposalSent(unsignedPayment.id, proposal)
@@ -370,7 +370,7 @@ export class ResidentialProposalService {
         return response
     }
 
-    async saveSoldProposal(proposal: any, response: any, tenant: string) {
+    async saveSoldProposal(proposal: any, response, tenant: string) {
         log.debug("saveSoldProposal")
         const apiVersion = process.env.COMMIT_HASH || "unavailable"
         await this.residentialSoldProposalRepository.create({

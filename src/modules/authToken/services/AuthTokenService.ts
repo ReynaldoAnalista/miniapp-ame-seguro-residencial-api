@@ -50,6 +50,10 @@ export class AuthTokenService {
                 return "LIFE_URL_AUTHORIZATION"
             case "HEALTHCARE":
                 return "HEALTHCARE_URL_AUTHORIZATION"
+            case "RENEW_PORTABLE":
+                return "RENEW_PORTABLE_URL_AUTHORIZATION"
+            case "RENEW_PORTABLE_DIGIBEE":
+                return "RENEW_PORTABLE_DIGIBE_AUTHORIZATION"
             default:
                 return "URL_AUTHORIZATION"
         }
@@ -131,7 +135,6 @@ export class AuthTokenService {
                 cache.put(TOKEN_CACHE, result, 1000 * 60)
                 return result
             }
-
             if (tenant === Tenants.PET) {
                 log.debug(
                     "Trying to authorizate on " + AUTH_URL + "auth/oauth/token?grant_type=client_credentials&scope=seguro-pet"
@@ -226,6 +229,68 @@ export class AuthTokenService {
 
                 cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
                 return result.access_token
+            }
+
+            if (tenant === Tenants.RENEW_PORTABLE) {
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                const clientId = await this.retrieveConfig("RENEW_PORTABLE_CLIENT_ID")
+                const clientSecret = await this.retrieveConfig("RENEW_PORTABLE_CLIENT_SECRET")
+                const clientScope = await this.retrieveConfig("RENEW_PORTABLE_SCOPE")
+                const authorization = Buffer.from(`${clientId}:${clientSecret}`, "utf8").toString("base64")
+                const config = {
+                    headers: {
+                        Authorization: `Basic ${authorization}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "User-Agent": "",
+                    },
+                }
+                const body = qs.stringify({
+                    grant_type: "client_credentials",
+                    scope: clientScope,
+                })
+                let result: AuthToken = new AuthToken()
+
+                await axios
+                    .post(AUTH_URL, body, config)
+                    .then((res) => {
+                        log.debug("AUTHORIZED")
+                        result = AuthToken.fromObject(res.data)
+                    })
+                    .catch((err) => {
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
+
+                cache.put(TOKEN_CACHE, result.access_token, 1000 * 60 * 60 * 20)
+                return result.access_token
+            }
+
+            if (tenant === Tenants.RENEW_PORTABLE_DIGIBEE) {
+                log.debug("Trying to authorizate on " + AUTH_URL)
+                const API_KEY = await this.parameterStore.getSecretValue("RENEW_PORTABLE_API_KEY")
+                const config = {
+                    headers: {
+                        apikey: API_KEY,
+                        "Accept-Encoding": "gzip, deflate, br",
+                        Accept: "*/*",
+                        Connection: "keep-alive",
+                        "User-Agent": "",
+                    },
+                }
+                log.debug("Trying to authorizate")
+                let result
+                await axios
+                    .get(AUTH_URL, config)
+                    .then((res) => {
+                        log.debug("AUTHORIZED")
+                        result = res.headers["authorization"]
+                    })
+                    .catch((err) => {
+                        log.error("ERROR ON AUTHORIZING")
+                        log.error("AXIOS ERROR: ", err)
+                    })
+                cache.put(TOKEN_CACHE, result, 1000 * 60)
+                return result
             }
         } catch (err) {
             return "Erro ao tentar buscar um token para autenticação"
