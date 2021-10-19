@@ -32,7 +32,14 @@ export class RenewPortableService {
                 Tenants.RENEW_PORTABLE,
                 `/${customerId}`
             )
-            return response.data.filter((x) => x.type == "RF")
+            const data = response.data
+                .filter((x) => x.type == "RF")
+                .map((x) => {
+                    return { ...x, product: { ...x.product, base_price: parseFloat(x.product.base_price).toFixed(2) } }
+                })
+            // data.product
+
+            return data
         } catch (error) {
             throw error
         }
