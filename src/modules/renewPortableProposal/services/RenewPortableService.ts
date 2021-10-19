@@ -37,8 +37,6 @@ export class RenewPortableService {
                 .map((x) => {
                     return { ...x, product: { ...x.product, base_price: parseFloat(x.product.base_price).toFixed(2) } }
                 })
-            // data.product
-
             return data
         } catch (error) {
             throw error
