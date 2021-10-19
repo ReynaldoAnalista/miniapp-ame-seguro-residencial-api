@@ -4,6 +4,7 @@ import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
 import { UnusualService } from "../services/UnusualService"
+import { UnusualNotification } from "../model/UnusualNotification"
 
 const logger = getLogger("UnusualController")
 
@@ -36,6 +37,19 @@ export class UnusualController {
         logger.info("Proposal Id %j", proposalId)
         try {
             return await this.smartphoneProposalService.updateOldCustumersProposal(proposalId)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Get("/insert_dynamo")
+    public async insertDynamo(@Path() info: UnusualNotification) {
+        logger.info("Insert into DynamoDb Storage SoldProposal")
+        try {
+            return await this.unusualService.insertSoldProposal(info.signedInfo)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Update not sent", 500, `Update not sent`)
