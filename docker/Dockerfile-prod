@@ -1,6 +1,16 @@
-FROM node:12-alpine
+FROM 355315421281.dkr.ecr.us-east-1.amazonaws.com/amedigital:ame-base-image-node-14
 
 ARG COMMIT_HASH
+ARG BUILD_DATE
+
+ARG IMAGE_REPO_NAME
+ARG APP_VERSION
+ENV DD_VERSION $APP_VERSION
+ENV DD_SERVICE=$IMAGE_REPO_NAME
+ENV DD_ENV=production
+
+ENV CONTEXT_PATH=/ame-seguro-residencial
+
 RUN mkdir -p /home/node/app/node_modules && mkdir -p /home/node/app/config && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 COPY tsoa.json .
