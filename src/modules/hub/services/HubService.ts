@@ -80,10 +80,23 @@ export class HubService {
                     const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
                     const address = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
                     const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    let dataInicioVigencia = null
+                    if (proposal) {
+                        try {
+                            if (proposal.dataInicioVigencia) {
+                                dataInicioVigencia = proposal.dataInicioVigencia
+                            } else {
+                                dataInicioVigencia = proposal.proposal?.dataInicioVigencia
+                            }
+                        } catch (e) {
+                            log.error("Erro ao informar dataInicioVigencia")
+                            log.error(e)
+                        }
+                    }
                     return {
                         id: x.order,
                         description: x.receivedPaymentNotification?.title,
-                        date: moment(proposal?.dataInicioVigencia).format("DD/MM/YYYY"),
+                        date: moment(dataInicioVigencia, "YYYY-MM-DD").format("DD/MM/YYYY"),
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
