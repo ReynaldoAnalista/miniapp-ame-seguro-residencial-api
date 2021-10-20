@@ -4,6 +4,7 @@ import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
 import { MaintenanceRepository } from "../repository/MaintenanceRepository"
+import { MaintenanceSoldProposal } from "../model/MaintenanceSoldProposal"
 
 const log = getLogger("MaintenanceService")
 
@@ -48,5 +49,22 @@ export class MaintenanceService {
 
     async getCancelledOrders(customerId) {
         return await this.maintenanceRepository.getCancelledOrder(customerId)
+    }
+
+    async insertSoldProposal(signedProposal: string) {
+        const unsignedInfo = await this.authTokenService.unsignNotification(signedProposal)
+        const proposal = await this.maintenanceRepository.create({
+            customerId: unsignedInfo?.customerId,
+            order: unsignedInfo?.order,
+            tenant: unsignedInfo?.tenant,
+            receivedPaymentNotification: unsignedInfo?.receivedPaymentNotification,
+            partnerResponse: unsignedInfo?.partnerResponse,
+            success: true,
+            createdAt: unsignedInfo?.createdAt,
+            status: unsignedInfo?.status,
+            apiVersion: unsignedInfo?.apiVersion,
+            NSU: unsignedInfo?.NSU,
+        } as MaintenanceSoldProposal)
+        return proposal
     }
 }

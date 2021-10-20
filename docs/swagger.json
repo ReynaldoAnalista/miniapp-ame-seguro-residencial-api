@@ -175,7 +175,46 @@
 				"type": "object",
 				"additionalProperties": true
 			},
-			"UnusualSoldProposal": {
+			"RenewPortableProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"MaintenanceUpdatePlanNotification": {
+				"properties": {
+					"signedUpdatePlanStatus": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedUpdatePlanStatus"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"MaintenanceProposalNotification": {
+				"properties": {
+					"updatePlanStatus": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"updatePlanStatus"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"MaintenanceSoldProposal": {
 				"properties": {
 					"customerId": {
 						"type": "string"
@@ -225,7 +264,7 @@
 				"type": "object",
 				"additionalProperties": true
 			},
-			"UnusualNotification": {
+			"MaintenanceNotification": {
 				"properties": {
 					"signedInfo": {
 						"type": "string",
@@ -234,45 +273,6 @@
 				},
 				"required": [
 					"signedInfo"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"RenewPortableProposalNotification": {
-				"properties": {
-					"signedPayment": {
-						"type": "string",
-						"description": "Pagamento assinado"
-					}
-				},
-				"required": [
-					"signedPayment"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"MaintenanceUpdatePlanNotification": {
-				"properties": {
-					"signedUpdatePlanStatus": {
-						"type": "string",
-						"description": "Pagamento assinado"
-					}
-				},
-				"required": [
-					"signedUpdatePlanStatus"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"MaintenanceProposalNotification": {
-				"properties": {
-					"updatePlanStatus": {
-						"type": "string",
-						"description": "Pagamento assinado"
-					}
-				},
-				"required": [
-					"updatePlanStatus"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -2799,40 +2799,6 @@
 				]
 			}
 		},
-		"/v1/unusual/insert_dynamo": {
-			"post": {
-				"operationId": "InsertDynamo",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UnusualSoldProposal"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UnusualNotification"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/v1/renew-portable/portable-info/{customerId}": {
 			"get": {
 				"operationId": "PortableInfo",
@@ -3103,6 +3069,40 @@
 						"application/json": {
 							"schema": {
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/insert_dynamo": {
+			"post": {
+				"operationId": "InsertDynamo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MaintenanceSoldProposal"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MaintenanceNotification"
 							}
 						}
 					}

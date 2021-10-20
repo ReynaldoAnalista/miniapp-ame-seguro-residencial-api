@@ -60,7 +60,6 @@ export const initDependencies = () => {
     bindSingleton("../modules/portableProposal/services")
     bindSingleton("../modules/ame/services")
     bindSingleton("../modules/renewPortableProposal/services")
-    bindSingleton("../modules/unusual/services")
 
     /* Initialize Repositories */
     bindSingleton("../modules/hub/repository")
@@ -71,7 +70,6 @@ export const initDependencies = () => {
     bindSingleton("../modules/maintenance/repository")
     bindSingleton("../modules/portableProposal/repository")
     bindSingleton("../modules/renewPortableProposal/repository")
-    bindSingleton("../modules/unusual/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 

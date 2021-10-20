@@ -95,31 +95,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "UnusualSoldProposal": {
-        "dataType": "refObject",
-        "properties": {
-            "customerId": { "dataType": "string", "required": true },
-            "order": { "dataType": "string", "required": true },
-            "tenant": { "dataType": "string", "required": true },
-            "receivedPaymentNotification": { "dataType": "any", "required": true },
-            "partnerResponse": { "dataType": "any", "required": true },
-            "success": { "dataType": "boolean", "required": true },
-            "createdAt": { "dataType": "string", "required": true },
-            "status": { "dataType": "string", "required": true },
-            "apiVersion": { "dataType": "string", "required": true },
-            "NSU": { "dataType": "string", "required": true },
-        },
-        "additionalProperties": true,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "UnusualNotification": {
-        "dataType": "refObject",
-        "properties": {
-            "signedInfo": { "dataType": "string", "required": true },
-        },
-        "additionalProperties": true,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RenewPortableProposalNotification": {
         "dataType": "refObject",
         "properties": {
@@ -140,6 +115,31 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "updatePlanStatus": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MaintenanceSoldProposal": {
+        "dataType": "refObject",
+        "properties": {
+            "customerId": { "dataType": "string", "required": true },
+            "order": { "dataType": "string", "required": true },
+            "tenant": { "dataType": "string", "required": true },
+            "receivedPaymentNotification": { "dataType": "any", "required": true },
+            "partnerResponse": { "dataType": "any", "required": true },
+            "success": { "dataType": "boolean", "required": true },
+            "createdAt": { "dataType": "string", "required": true },
+            "status": { "dataType": "string", "required": true },
+            "apiVersion": { "dataType": "string", "required": true },
+            "NSU": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": true,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MaintenanceNotification": {
+        "dataType": "refObject",
+        "properties": {
+            "signedInfo": { "dataType": "string", "required": true },
         },
         "additionalProperties": true,
     },
@@ -1646,31 +1646,6 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.post('/ame-seguro-residencial/v1/unusual/insert_dynamo',
-        function(request: any, response: any, next: any) {
-            const args = {
-                info: { "in": "body", "name": "info", "required": true, "ref": "UnusualNotification" },
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller: any = iocContainer.get<UnusualController>(UnusualController);
-            if (typeof controller['setStatus'] === 'function') {
-                controller.setStatus(undefined);
-            }
-
-
-            const promise = controller.insertDynamo.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/ame-seguro-residencial/v1/renew-portable/portable-info/:customerId',
         function(request: any, response: any, next: any) {
             const args = {
@@ -1844,6 +1819,31 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.canceledOrders.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/maintenance/insert_dynamo',
+        function(request: any, response: any, next: any) {
+            const args = {
+                info: { "in": "body", "name": "info", "required": true, "ref": "MaintenanceNotification" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<MaintenanceController>(MaintenanceController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.insertDynamo.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

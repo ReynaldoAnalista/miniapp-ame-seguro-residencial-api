@@ -1,4 +1,4 @@
-export interface UnusualNotification {
+export interface MaintenanceNotification {
     /**
      * Pagamento assinado
      */

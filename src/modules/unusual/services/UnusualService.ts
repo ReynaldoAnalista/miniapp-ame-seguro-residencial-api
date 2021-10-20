@@ -30,22 +30,4 @@ export class UnusualService {
         log.error("Order not found")
         throw new Error("Order not found")
     }
-
-    async insertSoldProposal(signedProposal: string) {
-        const unsignedInfo = await this.authTokenService.unsignNotification(signedProposal)
-        const proposal = await this.unusualRepository.create({
-            customerId: unsignedInfo?.customerId,
-            order: unsignedInfo?.order,
-            tenant: unsignedInfo?.tenant,
-            receivedPaymentNotification: unsignedInfo?.receivedPaymentNotification,
-            partnerResponse: unsignedInfo?.partnerResponse,
-            success: true,
-            createdAt: unsignedInfo?.createdAt,
-            status: unsignedInfo?.status,
-            apiVersion: unsignedInfo?.apiVersion,
-            NSU: unsignedInfo?.NSU,
-        } as UnusualSoldProposal)
-        const soldProposal = this.unusualRepository.create(proposal)
-        return soldProposal
-    }
 }
