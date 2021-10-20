@@ -3,10 +3,10 @@ export interface UnusualSoldProposal {
     order: string
     tenant: string
     receivedPaymentNotification: any
-    partnerResponse
+    partnerResponse: any
     success: boolean
     createdAt: string
     status: string
     apiVersion: string
-    NSU?: string
+    NSU: string
 }

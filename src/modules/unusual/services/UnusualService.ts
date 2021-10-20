@@ -4,6 +4,7 @@ import { SmartphoneProposalRepository } from "../../smartphoneProposal/repositor
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
 import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { UnusualRepository } from "../repository/UnusualRepository"
+import { UnusualSoldProposal } from "../model/UnusualSoldProposal"
 
 const log = getLogger("UnusualService")
 
@@ -31,8 +32,20 @@ export class UnusualService {
     }
 
     async insertSoldProposal(signedProposal: string) {
-        const unsignedInfo = this.authTokenService.unsignNotification(signedProposal)
-        // const soldProposal = this.unusualRepository.create(unsignedInfo)
-        // return soldProposal
+        const unsignedInfo = await this.authTokenService.unsignNotification(signedProposal)
+        const proposal = await this.unusualRepository.create({
+            customerId: unsignedInfo?.customerId,
+            order: unsignedInfo?.order,
+            tenant: unsignedInfo?.tenant,
+            receivedPaymentNotification: unsignedInfo?.receivedPaymentNotification,
+            partnerResponse: unsignedInfo?.partnerResponse,
+            success: true,
+            createdAt: unsignedInfo?.createdAt,
+            status: unsignedInfo?.status,
+            apiVersion: unsignedInfo?.apiVersion,
+            NSU: unsignedInfo?.NSU,
+        } as UnusualSoldProposal)
+        const soldProposal = this.unusualRepository.create(proposal)
+        return soldProposal
     }
 }

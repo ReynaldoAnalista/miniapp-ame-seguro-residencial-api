@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Path, Route, SuccessResponse, Response, Post, Get } from "tsoa"
+import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"
@@ -45,8 +45,8 @@ export class UnusualController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Get("/insert_dynamo")
-    public async insertDynamo(@Path() info: UnusualNotification) {
+    @Post("/insert_dynamo")
+    public async insertDynamo(@Body() info: UnusualNotification) {
         logger.info("Insert into DynamoDb Storage SoldProposal")
         try {
             return await this.unusualService.insertSoldProposal(info.signedInfo)
