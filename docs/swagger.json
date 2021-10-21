@@ -213,6 +213,69 @@
 				],
 				"type": "object",
 				"additionalProperties": true
+			},
+			"MaintenanceSoldProposal": {
+				"properties": {
+					"customerId": {
+						"type": "string"
+					},
+					"order": {
+						"type": "string"
+					},
+					"tenant": {
+						"type": "string"
+					},
+					"receivedPaymentNotification": {
+						"additionalProperties": true,
+						"type": "object"
+					},
+					"partnerResponse": {
+						"additionalProperties": true,
+						"type": "object"
+					},
+					"success": {
+						"type": "boolean"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"apiVersion": {
+						"type": "string"
+					},
+					"NSU": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"customerId",
+					"order",
+					"tenant",
+					"receivedPaymentNotification",
+					"partnerResponse",
+					"success",
+					"createdAt",
+					"status",
+					"apiVersion",
+					"NSU"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"MaintenanceNotification": {
+				"properties": {
+					"signedInfo": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedInfo"
+				],
+				"type": "object",
+				"additionalProperties": true
 			}
 		},
 		"securitySchemes": {}
@@ -3006,6 +3069,40 @@
 						"application/json": {
 							"schema": {
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/insert_dynamo": {
+			"post": {
+				"operationId": "InsertDynamo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MaintenanceSoldProposal"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MaintenanceNotification"
 							}
 						}
 					}
