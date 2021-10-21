@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Path, Route, SuccessResponse, Response, Post, Get } from "tsoa"
+import { Path, Route, SuccessResponse, Response, Post, Get, Body } from "tsoa"
 import { ApiError } from "../../../errors/ApiError"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalService } from "../../smartphoneProposal/services/SmartphoneProposalService"

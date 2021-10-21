@@ -7,6 +7,7 @@ import { SmartphoneProposalService } from "../../smartphoneProposal/services/Sma
 import { MaintenanceProposalNotification } from "../model/MaintenanceProposalNotification"
 import { MaintenanceUpdatePlanNotification } from "../model/MaintenanceUpdatePlanNotification"
 import { MaintenanceService } from "../services/MaintenanceService"
+import { MaintenanceNotification } from "../model/MaintenanceNotification"
 
 const logger = getLogger("MaintenanceController")
 
@@ -84,6 +85,19 @@ export class MaintenanceController {
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Residential Update not sent", 500, `Residential Update not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/insert_dynamo")
+    public async insertDynamo(@Body() info: MaintenanceNotification) {
+        logger.info("Insert into DynamoDb Storage SoldProposal")
+        try {
+            return await this.maintenanceService.insertSoldProposal(info.signedInfo)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
         }
     }
 }

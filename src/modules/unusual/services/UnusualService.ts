@@ -2,6 +2,9 @@ import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
 import { SmartphoneProposalRepository } from "../../smartphoneProposal/repository/SmartphoneProposalRepository"
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
+import { AuthTokenService } from "../../authToken/services/AuthTokenService"
+import { UnusualRepository } from "../repository/UnusualRepository"
+import { UnusualSoldProposal } from "../model/UnusualSoldProposal"
 
 const log = getLogger("UnusualService")
 
@@ -11,7 +14,11 @@ export class UnusualService {
         @inject("SmartphoneProposalRepository")
         private smartphoneProposalRepository: SmartphoneProposalRepository,
         @inject("SmartphoneProposalMailService")
-        private smartphoneProposalMailService: SmartphoneProposalMailService
+        private smartphoneProposalMailService: SmartphoneProposalMailService,
+        @inject("AuthTokenService")
+        private authTokenService: AuthTokenService,
+        @inject("UnusualRepository")
+        private unusualRepository: UnusualRepository
     ) {}
 
     async sendSellingEmailWithParams(pass: string, email: string) {

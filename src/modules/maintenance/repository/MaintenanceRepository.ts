@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify"
 import { DynamoHolder } from "../../../repository/DynamoHolder"
 import { getLogger } from "../../../server/Logger"
+import { MaintenanceSoldProposal } from "../model/MaintenanceSoldProposal"
 
 const log = getLogger("MaintenanceRepository")
 
@@ -59,5 +60,14 @@ export class MaintenanceRepository {
             log.error(e)
             return []
         }
+    }
+
+    async create(soldProposal: MaintenanceSoldProposal) {
+        log.debug("TRYING TO WRITE ON", TABLE)
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const params = { TableName: TABLE, Item: soldProposal }
+        await dynamoDocClient.put(params).promise()
+        log.debug("REGISTER WROTE ON", TABLE)
+        return soldProposal
     }
 }
