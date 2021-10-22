@@ -59,4 +59,13 @@ export class ResidentialProposalController {
         logger.info("Retornando proposals %j", proposal.length)
         return proposal
     }
+
+    @Post("/renew_proposal")
+    @SuccessResponse("200", "Retrieved")
+    public async renewProposal(@Body() searchValue: any) {
+        logger.info("Listando proposal")
+        const proposal = await this.residentialProposalService.renewProposal(searchValue.customerId)
+        logger.info("Retornando proposals")
+        return proposal
+    }
 }
