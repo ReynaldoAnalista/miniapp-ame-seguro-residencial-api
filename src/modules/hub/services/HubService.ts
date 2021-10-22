@@ -276,12 +276,12 @@ export class HubService {
     async faqInfo() {
         return {
             agreement: await this.agreementPlanFaq(),
-            pet: await this.faqInfoJson("seguro-pet"),
+            pet: await this.faqInfoJson("assistencia-pet-ame"),
             residencial: await this.faqInfoJson("seguro-residencial"),
             smartphone: await this.faqInfoJson("seguro-celular"),
             dental: await this.faqInfoJson("seguro-dental-ame"),
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
-            devices: await this.faqInfoJson("seguro-eletroportatil"),
+            devices: await this.faqInfoJson("seguro-portateis"),
         }
     }
 
