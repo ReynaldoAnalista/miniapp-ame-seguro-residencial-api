@@ -322,17 +322,17 @@ export class ResidentialProposalService {
                 partner: "Previsul Seguradora",
                 proposal: {
                     contactInfo: {
-                        phone: x.receivedPaymentNotification.attributes.customPayload.proposal.telefone,
-                        name: x.receivedPaymentNotification.attributes.customPayload.proposal.nome,
-                        cpf: x.receivedPaymentNotification.attributes.customPayload.proposal.cpf,
-                        sex: x.receivedPaymentNotification.attributes.customPayload.proposal.sexo,
-                        birthDate: x.receivedPaymentNotification.attributes.customPayload.proposal.dataNascimento,
+                        phone: x.receivedPaymentNotification.attributes.customPayload.proposal?.telefone,
+                        name: x.receivedPaymentNotification.attributes.customPayload.proposal?.nome,
+                        cpf: x.receivedPaymentNotification.attributes.customPayload.proposal?.cpf,
+                        sex: x.receivedPaymentNotification.attributes.customPayload.proposal?.sexo,
+                        birthDate: x.receivedPaymentNotification.attributes.customPayload.proposal?.dataNascimento,
                     },
-                    addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal.imovel,
+                    addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal?.imovel,
                 },
                 planInfo: {
-                    ...x.receivedPaymentNotification.attributes.items[0],
-                    planoId: x.receivedPaymentNotification.attributes.customPayload.proposal.planoId,
+                    ...x.receivedPaymentNotification.attributes?.items,
+                    planoId: x.receivedPaymentNotification.attributes.customPayload.proposal?.planoId,
                 },
             }
         })
