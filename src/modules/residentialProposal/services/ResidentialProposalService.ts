@@ -309,6 +309,35 @@ export class ResidentialProposalService {
         return this.residentialProposalRepository.listProposal()
     }
 
+    async renewProposal(customerId: string) {
+        const results = await this.residentialSoldProposalRepository.findAllFromCustomer(customerId)
+
+        if (typeof results == "undefined") return
+
+        return results.map((x) => {
+            return {
+                createdAt: x.createdAt,
+                customerId: x.customerId,
+                order: x.order,
+                partner: "Previsul Seguradora",
+                proposal: {
+                    contactInfo: {
+                        phone: x.receivedPaymentNotification.attributes.customPayload.proposal?.telefone,
+                        name: x.receivedPaymentNotification.attributes.customPayload.proposal?.nome,
+                        cpf: x.receivedPaymentNotification.attributes.customPayload.proposal?.cpf,
+                        sex: x.receivedPaymentNotification.attributes.customPayload.proposal?.sexo,
+                        birthDate: x.receivedPaymentNotification.attributes.customPayload.proposal?.dataNascimento,
+                    },
+                    addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal?.imovel,
+                },
+                planInfo: {
+                    ...x.receivedPaymentNotification.attributes?.items,
+                    planoId: x.receivedPaymentNotification.attributes.customPayload.proposal?.planoId,
+                },
+            }
+        })
+    }
+
     async proposalReport(): Promise<Array<string>> {
         const proposalList = await this.residentialProposalRepository.listProposal()
         let proposalReport: Array<any>
