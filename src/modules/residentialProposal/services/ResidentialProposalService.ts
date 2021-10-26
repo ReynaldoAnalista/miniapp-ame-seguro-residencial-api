@@ -331,7 +331,7 @@ export class ResidentialProposalService {
                     addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal?.imovel,
                 },
                 planInfo: {
-                    ...x.receivedPaymentNotification.attributes?.items,
+                    ...x.receivedPaymentNotification.attributes?.items["0"],
                     planoId: x.receivedPaymentNotification.attributes.customPayload.proposal?.planoId,
                 },
             }
