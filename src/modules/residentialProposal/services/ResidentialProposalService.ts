@@ -10,6 +10,7 @@ import { SmartphoneSoldProposal } from "../../smartphoneProposal/model/Smartphon
 import { ResidentialSoldProposalRepository } from "../repository/ResidentialSoldProposalRepository"
 import { Tenants } from "../../default/model/Tenants"
 import { ResidentialSoldProposal } from "../model/ResidentialSoldProposal"
+import moment from "moment"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -316,7 +317,8 @@ export class ResidentialProposalService {
 
         return results.map((x) => {
             return {
-                createdAt: x.createdAt,
+                createdAt: moment(x.createdAt).format("YYYY-MM-DD"),
+                expiryDate: moment(x.createdAt).add(1, "year").format("YYYY-MM-DD"),
                 customerId: x.customerId,
                 order: x.order,
                 partner: "Previsul Seguradora",
