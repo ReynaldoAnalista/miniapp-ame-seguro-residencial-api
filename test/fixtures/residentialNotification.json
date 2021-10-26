@@ -1,9 +1,9 @@
 {
-  "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb8db",
+  "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb9ee",
   "date": [
     2020,
     11,
-    30,
+    27,
     17,
     32,
     30,
@@ -21,11 +21,11 @@
   "amountRefunded": 0,
   "splits": [
     {
-      "id": "02101354-cbf5-49d0-af03-203b0385797a",
+      "id": "1ce806fa-ed5e-438b-8130-b22b4f9eb9ee",
       "date": [
         2020,
         11,
-        30,
+        27,
         17,
         32,
         30,
@@ -47,34 +47,21 @@
       "isFrom": "mini-app-ame-seguro-residencial",
       "clientCallbackUrl": "https://miniapps.hml.amedigital.com/ame-seguro-residencial/v1/plans/sendProposal",
       "timestamp": "2021-07-12T15:06:52.704Z",
-      "customerId": "0bc2867a-6981-48d6-ab39-b63001604acd",
+      "customerId": "18bcd684-4ac7-4779-aae0-b5706d9a32dc",
       "proposal": {
         "contratoId": 11703,
         "corretorId": 6218,
         "comissao": 0,
         "comissaoCorretor": 0,
         "planoId": "117030723",
-        "nome": "Reynaldo Paixão de Souza",
+        "nome": "Rafa",
         "cpf": "13701818762",
         "sexo": "F",
         "dataNascimento": "1991-05-29",
         "telefone": "21982875666",
         "email": "reynaldo.souza@calindra.com.br",
-        "dataInicioVigencia": "2021-07-13",
-        "imovel": {
-          "tipo": 2,
-          "ocupacao": 1,
-          "construcao": 1,
-          "endereco": {
-            "cep": "24030111",
-            "numero": "108",
-            "complemento": "Apt 301",
-            "logradouro": "Rua Barão do Amazonas",
-            "bairro": "Centro",
-            "estado": "RJ",
-            "cidade": "Niterói"
-          }
-        },
+        "dataInicioVigencia": "2020-11-27",
+        "imovel": "",
         "pagamento": {
           "tipo": "AME",
           "dataVencimento": "2021-08-11",
@@ -93,6 +80,6 @@
   },
   "operationReference": null,
   "peer": null,
-  "nsu": "063150934412",
+  "nsu": "063150934415",
   "debitWalletId": "daae6851-4a32-4abc-8525-a19da82cbe89"
 }

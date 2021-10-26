@@ -317,8 +317,16 @@ export class ResidentialProposalService {
 
         return results.map((x) => {
             return {
-                createdAt: moment(x.createdAt).format("YYYY-MM-DD"),
-                expiryDate: moment(x.createdAt).add(1, "year").format("YYYY-MM-DD"),
+                createdAt: moment(
+                    x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
+                    "YYYY-MM-DD"
+                ).format("YYYY-MM-DD"),
+                expiryDate: moment(
+                    x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
+                    "YYYY-MM-DD"
+                )
+                    .add(1, "year")
+                    .format("YYYY-MM-DD"),
                 customerId: x.customerId,
                 order: x.order,
                 partner: "Previsul Seguradora",
