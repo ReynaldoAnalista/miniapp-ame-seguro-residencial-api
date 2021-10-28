@@ -315,37 +315,41 @@ export class ResidentialProposalService {
 
         if (typeof results == "undefined") return
 
-        return results.map((x) => {
-            return {
-                createdAt: moment(
+        return results
+            .filter((x) => typeof x.receivedPaymentNotification.attributes.customPayload.renovation == "undefined")
+            .map((x) => {
+                const formatedCreateData = moment(
                     x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
                     "YYYY-MM-DD"
-                ).format("YYYY-MM-DD"),
-                expiryDate: moment(
+                ).format("YYYY-MM-DD")
+                const expDate = moment(
                     x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
                     "YYYY-MM-DD"
                 )
                     .add(1, "year")
-                    .format("YYYY-MM-DD"),
-                customerId: x.customerId,
-                order: x.order,
-                partner: "Previsul Seguradora",
-                proposal: {
-                    contactInfo: {
-                        phone: x.receivedPaymentNotification.attributes.customPayload.proposal?.telefone,
-                        name: x.receivedPaymentNotification.attributes.customPayload.proposal?.nome,
-                        cpf: x.receivedPaymentNotification.attributes.customPayload.proposal?.cpf,
-                        sex: x.receivedPaymentNotification.attributes.customPayload.proposal?.sexo,
-                        birthDate: x.receivedPaymentNotification.attributes.customPayload.proposal?.dataNascimento,
+                    .format("YYYY-MM-DD")
+                return {
+                    createdAt: formatedCreateData,
+                    expiryDate: expDate,
+                    customerId: x.customerId,
+                    order: x.order,
+                    partner: "Previsul Seguradora",
+                    proposal: {
+                        contactInfo: {
+                            phone: x.receivedPaymentNotification.attributes.customPayload.proposal?.telefone,
+                            name: x.receivedPaymentNotification.attributes.customPayload.proposal?.nome,
+                            cpf: x.receivedPaymentNotification.attributes.customPayload.proposal?.cpf,
+                            sex: x.receivedPaymentNotification.attributes.customPayload.proposal?.sexo,
+                            birthDate: x.receivedPaymentNotification.attributes.customPayload.proposal?.dataNascimento,
+                        },
+                        addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal?.imovel,
                     },
-                    addresInfo: x.receivedPaymentNotification.attributes.customPayload.proposal?.imovel,
-                },
-                planInfo: {
-                    ...x.receivedPaymentNotification.attributes?.items["0"],
-                    planoId: x.receivedPaymentNotification.attributes.customPayload.proposal?.planoId,
-                },
-            }
-        })
+                    planInfo: {
+                        ...x.receivedPaymentNotification.attributes?.items["0"],
+                        planoId: x.receivedPaymentNotification.attributes.customPayload.proposal?.planoId,
+                    },
+                }
+            })
     }
 
     async proposalReport(): Promise<Array<string>> {
