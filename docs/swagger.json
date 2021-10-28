@@ -2045,6 +2045,35 @@
 				"parameters": []
 			}
 		},
+		"/v1/residential/renew_proposal": {
+			"post": {
+				"operationId": "RenewProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/zipcode/{zipCode}": {
 			"get": {
 				"operationId": "ConsultZipcode",
