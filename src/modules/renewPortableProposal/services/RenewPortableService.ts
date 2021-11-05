@@ -22,7 +22,7 @@ export class RenewPortableService {
         private renewPortableUtils: RenewPortableUtils
     ) {}
 
-    async showUserInfo(customerId: string) {
+    async showUserInfo(customerId: string, planType: string) {
         log.debug("Exibindo informação de portateis do usuario")
         try {
             const response = await this.requestService.makeRequest(
@@ -33,7 +33,7 @@ export class RenewPortableService {
                 `/${customerId}`
             )
             const data = response.data
-                .filter((x) => x.type == "RF")
+                .filter((x) => x.type == planType)
                 .map((x) => {
                     return { ...x, product: { ...x.product, base_price: parseFloat(x.product.base_price).toFixed(2) } }
                 })
