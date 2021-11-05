@@ -100,6 +100,7 @@ export class HubService {
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
+                        status_proposal: this.translateStatusPlan(x.status),
                         coverage: Plans.find((x) => x.id == selectedPlan?.planoId),
                         name: Tenants.RESIDENTIAL,
                     }
@@ -127,6 +128,7 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
+                        status_proposal: this.translateStatusPlan(x.status),
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
@@ -161,6 +163,7 @@ export class HubService {
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Rede Mais Saúde",
                         name: Tenants.HEALTHCARE,
+                        status_proposal: this.translateStatusPlan(x.status),
                         description: x.receivedPaymentNotification.attributes.description,
                         planType: x.receivedPaymentNotification.attributes.customPayload.proposal.planType,
                         paymentValue:
@@ -192,6 +195,7 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
+                        status_proposal: this.translateStatusPlan(x.status),
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
@@ -215,6 +219,7 @@ export class HubService {
                         date: moment(x.createdAt).format("DD/MM/YYYY"),
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Renova Laza",
+                        status_proposal: this.translateStatusPlan(x.status),
                         name: Tenants.RENEW_PORTABLE,
                     }
                 })
@@ -282,6 +287,19 @@ export class HubService {
             dental: await this.faqInfoJson("seguro-dental-ame"),
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
             devices: await this.faqInfoJson("seguro-portateis"),
+        }
+    }
+
+    translateStatusPlan(status) {
+        switch(status) {
+            case "PROCESSED":
+                return "Processado"
+            case "CANCELED":
+                return "Cancelado" 
+            case "PROCESSING":
+                return "Processando"                
+            default:
+                return ""                            
         }
     }
 

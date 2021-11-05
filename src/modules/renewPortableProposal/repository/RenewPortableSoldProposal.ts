@@ -38,7 +38,7 @@ export class RenewPortableSoldProposal {
             const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items?.filter((x) => x.tenant === Tenants.RENEW_PORTABLE && x.status != "CANCELED")
+            return result.Items?.filter((x) => x.tenant === Tenants.RENEW_PORTABLE)
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
