@@ -6,13 +6,7 @@ import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 import { Tenants } from "../../default/model/Tenants"
 import { RenewPortableSoldProposal } from "../repository/RenewPortableSoldProposal"
 import { RenewPortableUtils } from "./RenewPortableUtils"
-import path from "path"
-import util from "util"
-import fs from "fs"
-import https from "https"
 import axios from "axios"
-
-const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("RenewPortableService")
 
