@@ -9,6 +9,8 @@ import { RenewPortableUtils } from "./RenewPortableUtils"
 import path from "path"
 import util from "util"
 import fs from "fs"
+import https from "https"
+import axios from "axios"
 
 const readFile = util.promisify(fs.readFile)
 
@@ -63,8 +65,11 @@ export class RenewPortableService {
     }
 
     async prizeCalc(prizeInfo: any) {
-        const prize = await readFile(path.resolve(__dirname, "../../../files/calc_prize_api.json"), "utf-8")
-        const prizeObject = JSON.parse(prize)
+        const s3File = "https://s3.amazonaws.com/seguros.miniapp.ame/calc_prize_api.json"
+        const prize = await axios.get(s3File).then((response) => {
+            return response.data
+        })
+        const prizeObject = prize
         return prizeObject
             .filter((prize) => {
                 if (parseInt(prize.produto) == prizeInfo.product_type_id) {
