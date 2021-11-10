@@ -13,11 +13,11 @@ export class RenewPortableController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Get("/portable-info/{customerId}")
-    public async portableInfo(@Path() customerId: string) {
+    @Get("/portable-info/{customerId}/{planType}")
+    public async portableInfo(@Path() customerId: string, planType: string) {
         try {
             logger.info("Buscando equipamentos portateis cadastrados para o usuário")
-            const showUserInfo = await this.renewPortableService.showUserInfo(customerId)
+            const showUserInfo = await this.renewPortableService.showUserInfo(customerId, planType)
             return showUserInfo
         } catch (error) {
             logger.error(`Erro ao tentar buscar as informações: ${error}`)
