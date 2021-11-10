@@ -1671,10 +1671,11 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/ame-seguro-residencial/v1/renew-portable/portable-info/:customerId',
+    app.get('/ame-seguro-residencial/v1/renew-portable/portable-info/:customerId/:planType',
         function(request: any, response: any, next: any) {
             const args = {
                 customerId: { "in": "path", "name": "customerId", "required": true, "dataType": "string" },
+                planType: { "in": "path", "name": "planType", "required": true, "dataType": "string" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1718,6 +1719,31 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.sendProposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/renew-portable/prize_calc',
+        function(request: any, response: any, next: any) {
+            const args = {
+                infoJson: { "in": "body", "name": "infoJson", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<RenewPortableController>(RenewPortableController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.prizeCalc.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

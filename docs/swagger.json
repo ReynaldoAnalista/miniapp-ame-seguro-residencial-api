@@ -2828,7 +2828,7 @@
 				]
 			}
 		},
-		"/v1/renew-portable/portable-info/{customerId}": {
+		"/v1/renew-portable/portable-info/{customerId}/{planType}": {
 			"get": {
 				"operationId": "PortableInfo",
 				"responses": {
@@ -2855,6 +2855,14 @@
 					{
 						"in": "path",
 						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "planType",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -2892,6 +2900,41 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/RenewPortableProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/renew-portable/prize_calc": {
+			"post": {
+				"operationId": "PrizeCalc",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
 							}
 						}
 					}

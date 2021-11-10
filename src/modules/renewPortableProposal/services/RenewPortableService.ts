@@ -6,6 +6,11 @@ import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 import { Tenants } from "../../default/model/Tenants"
 import { RenewPortableSoldProposal } from "../repository/RenewPortableSoldProposal"
 import { RenewPortableUtils } from "./RenewPortableUtils"
+import path from "path"
+import util from "util"
+import fs from "fs"
+
+const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("RenewPortableService")
 
@@ -55,6 +60,35 @@ export class RenewPortableService {
             await this.deletePortableInfo(unsignedPayment.customPayload.proposal.extended_warranty.certificate_number)
         }
         return proposalResponse
+    }
+
+    async prizeCalc(prizeInfo: any) {
+        const prize = await readFile(path.resolve(__dirname, "../../../files/calc_prize_api.json"), "utf-8")
+        const prizeObject = JSON.parse(prize)
+        return prizeObject
+            .filter((prize) => {
+                if (parseInt(prize.produto) == prizeInfo.product_type_id) {
+                    if (
+                        parseInt(prizeInfo.price) >= parseInt(prize.faixa_minima) &&
+                        parseInt(prizeInfo.price) <= parseInt(prize.faixa_maxima)
+                    ) {
+                        return prize
+                    }
+                }
+            })
+            .map((x) => {
+                if (prizeInfo.guarantee_time == 12) {
+                    return {
+                        premio_liquido: x.premio_liquido_12,
+                        premio_bruto: x.premio_bruto_12,
+                    }
+                } else if (prizeInfo.guarantee_time == 24) {
+                    return {
+                        premio_liquido: x.premio_liquido_24,
+                        premio_bruto: x.premio_bruto_24,
+                    }
+                }
+            })
     }
 
     async sendProposal(proposal: any) {
