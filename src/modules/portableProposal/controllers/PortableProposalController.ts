@@ -6,6 +6,7 @@ import { ApiError } from "../../../errors/ApiError"
 import { PortableDigibeeConfirmation } from "../model/PortableDigibeeConfirmation"
 import { PortableProposalNotification } from "../model/PortableProposalNotification"
 import { PortableProposalMailService } from "../services/PortableProposalMailService"
+import { Tenants } from "../../default/model/Tenants"
 
 const logger = getLogger("PortableProposalController")
 
@@ -24,6 +25,19 @@ export class PortableProposalController {
         logger.info("Sending Proposal %j", signedPayment)
         try {
             return await this.planService.processProposal(signedPayment.signedPayment)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Plans not sent", 500, `Plans not sent`)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/sendProposal_ext_ge")
+    public async sendProposalExtGe(@Body() signedPayment: PortableProposalNotification) {
+        logger.info("Sending Proposal %j", signedPayment)
+        try {
+            return await this.planService.processProposal(signedPayment.signedPayment, Tenants.EXT_GE_AME)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Plans not sent", 500, `Plans not sent`)
