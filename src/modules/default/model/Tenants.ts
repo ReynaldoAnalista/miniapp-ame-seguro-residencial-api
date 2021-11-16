@@ -8,4 +8,5 @@ export enum Tenants {
     RENEW_PORTABLE = "RENEW_PORTABLE",
     FAQ = "FAQ",
     RENEW_PORTABLE_DIGIBEE = "RENEW_PORTABLE_DIGIBEE",
+    EXT_GE_AME = "EXT_GE_AME",
 }
