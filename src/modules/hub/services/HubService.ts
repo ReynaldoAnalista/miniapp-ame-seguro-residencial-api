@@ -297,7 +297,7 @@ export class HubService {
                 return "Contratado"
             case "CANCELED":
                 return "Cancelado" 
-            case "PROCESSING":
+            case "PROSSESSING":
                 return "Contratado"
             default:
                 return ""                            
