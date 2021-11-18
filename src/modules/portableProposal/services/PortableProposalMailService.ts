@@ -120,8 +120,8 @@ export class PortableProposalMailService {
             securityDataSocialReazon: "Mapfre Seguros Gerais SA",
             securityDataCpf: "61.074.175/0001-38",
 
-            brokerName: "Pulso Corretora de Seguros e Serviços de Internet Ltda.",
-            brokerCodSusep: "202037915",
+            brokerName: "TRR Corretora de Seguros Ltda.",
+            brokerCodSusep: "10.0110035",
 
             securyDataBranch: "071 – Riscos Diversos – Roubo ou Furto de Eletrônicos Portáteis",
             securyDataIndividualTicket: MailInfo?.nsu,
