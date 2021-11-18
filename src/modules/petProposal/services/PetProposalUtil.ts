@@ -2,6 +2,7 @@ import { injectable } from "inversify"
 import moment from "moment"
 import { getLogger } from "../../../server/Logger"
 import { Tenants } from "../../default/model/Tenants"
+import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 
 const log = getLogger("PetProposalUtil")
 
@@ -12,6 +13,7 @@ export class PetProposalUtil {
             customerId,
             order: proposal.id,
             tenant: Tenants.PET,
+            status: SoldProposalStatus.create,
             receivedPaymentNotification: proposal.enrollProposal,
             partnerResponse: proposal.quoteProposal,
             success: proposal?.enrollProposal?.data == "Success" ? true : false,
