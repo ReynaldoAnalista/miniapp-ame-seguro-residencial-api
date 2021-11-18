@@ -76,17 +76,18 @@ export class RenewPortableService {
                 }
             })
             .map((x) => {
-                if (prizeInfo.guarantee_time == 12) {
-                    return {
+                return [
+                    {
+                        id: 12,
                         premio_liquido: x.premio_liquido_12,
                         premio_bruto: x.premio_bruto_12,
-                    }
-                } else if (prizeInfo.guarantee_time == 24) {
-                    return {
+                    },
+                    {
+                        id: 24,
                         premio_liquido: x.premio_liquido_24,
                         premio_bruto: x.premio_bruto_24,
-                    }
-                }
+                    },
+                ]
             })
     }
 
