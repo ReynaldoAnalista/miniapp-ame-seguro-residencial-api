@@ -1,0 +1,3125 @@
+[
+    {
+        "produto": "1",
+        "faixa_minima": "0",
+        "faixa_maxima": "2000",
+        "premio_liquido_12": "6.83",
+        "premio_bruto_12": "7.34",
+        "premio_liquido_24": "9.96",
+        "premio_bruto_24": "10.70"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "2001",
+        "faixa_maxima": "3000",
+        "premio_liquido_12": "6.92",
+        "premio_bruto_12": "7.43",
+        "premio_liquido_24": "10.07",
+        "premio_bruto_24": "10.81"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "3001",
+        "faixa_maxima": "4000",
+        "premio_liquido_12": "8.52",
+        "premio_bruto_12": "9.15",
+        "premio_liquido_24": "12.66",
+        "premio_bruto_24": "13.59"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "4001",
+        "faixa_maxima": "5000",
+        "premio_liquido_12": "10.50",
+        "premio_bruto_12": "11.27",
+        "premio_liquido_24": "15.81",
+        "premio_bruto_24": "16.97"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "5001",
+        "faixa_maxima": "6000",
+        "premio_liquido_12": "12.27",
+        "premio_bruto_12": "13.18",
+        "premio_liquido_24": "17.14",
+        "premio_bruto_24": "18.40"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "6001",
+        "faixa_maxima": "7000",
+        "premio_liquido_12": "13.73",
+        "premio_bruto_12": "14.74",
+        "premio_liquido_24": "19.45",
+        "premio_bruto_24": "20.88"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "7001",
+        "faixa_maxima": "8000",
+        "premio_liquido_12": "15.81",
+        "premio_bruto_12": "16.97",
+        "premio_liquido_24": "22.77",
+        "premio_bruto_24": "24.45"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "8001",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "18.38",
+        "premio_bruto_12": "19.73",
+        "premio_liquido_24": "26.84",
+        "premio_bruto_24": "28.82"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "10001",
+        "faixa_maxima": "12000",
+        "premio_liquido_12": "21.25",
+        "premio_bruto_12": "22.82",
+        "premio_liquido_24": "29.22",
+        "premio_bruto_24": "31.37"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "12001",
+        "faixa_maxima": "14000",
+        "premio_liquido_12": "24.29",
+        "premio_bruto_12": "26.08",
+        "premio_liquido_24": "34.66",
+        "premio_bruto_24": "37.21"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "14001",
+        "faixa_maxima": "16000",
+        "premio_liquido_12": "25.81",
+        "premio_bruto_12": "27.71",
+        "premio_liquido_24": "36.99",
+        "premio_bruto_24": "39.72"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "16001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "28.98",
+        "premio_bruto_12": "31.12",
+        "premio_liquido_24": "43.72",
+        "premio_bruto_24": "46.94"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "30.20",
+        "premio_bruto_12": "32.43",
+        "premio_liquido_24": "45.64",
+        "premio_bruto_24": "49.01"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "31.38",
+        "premio_bruto_12": "33.70",
+        "premio_liquido_24": "50.19",
+        "premio_bruto_24": "53.89"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "30001",
+        "faixa_maxima": "35000",
+        "premio_liquido_12": "32.13",
+        "premio_bruto_12": "34.50",
+        "premio_liquido_24": "50.55",
+        "premio_bruto_24": "54.28"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "35001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "33.63",
+        "premio_bruto_12": "36.11",
+        "premio_liquido_24": "51.66",
+        "premio_bruto_24": "55.48"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "40001",
+        "faixa_maxima": "45000",
+        "premio_liquido_12": "34.76",
+        "premio_bruto_12": "37.33",
+        "premio_liquido_24": "57.51",
+        "premio_bruto_24": "61.76"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "45001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "40.78",
+        "premio_bruto_12": "43.79",
+        "premio_liquido_24": "67.90",
+        "premio_bruto_24": "72.91"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "43.97",
+        "premio_bruto_12": "47.22",
+        "premio_liquido_24": "73.43",
+        "premio_bruto_24": "78.84"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "49.89",
+        "premio_bruto_12": "53.57",
+        "premio_liquido_24": "83.62",
+        "premio_bruto_24": "89.79"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "70001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "60.08",
+        "premio_bruto_12": "64.52",
+        "premio_liquido_24": "101.27",
+        "premio_bruto_24": "108.74"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "70.75",
+        "premio_bruto_12": "75.97",
+        "premio_liquido_24": "119.69",
+        "premio_bruto_24": "128.52"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "100001",
+        "faixa_maxima": "125000",
+        "premio_liquido_12": "84.69",
+        "premio_bruto_12": "90.94",
+        "premio_liquido_24": "143.79",
+        "premio_bruto_24": "154.40"
+    },
+    {
+        "produto": "1",
+        "faixa_minima": "125001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "121.53",
+        "premio_bruto_12": "130.50",
+        "premio_liquido_24": "207.49",
+        "premio_bruto_24": "222.80"
+    },
+    {
+        "produto": "2",
+        "faixa_minima": "0",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "51.64",
+        "premio_bruto_12": "55.45",
+        "premio_liquido_24": "87.80",
+        "premio_bruto_24": "94.28"
+    },
+    {
+        "produto": "2",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "112.09",
+        "premio_bruto_12": "120.36",
+        "premio_liquido_24": "190.57",
+        "premio_bruto_24": "204.63"
+    },
+    {
+        "produto": "2",
+        "faixa_minima": "40001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "199.39",
+        "premio_bruto_12": "214.11",
+        "premio_liquido_24": "338.98",
+        "premio_bruto_24": "363.10"
+    },
+    {
+        "produto": "2",
+        "faixa_minima": "70001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "250.46",
+        "premio_bruto_12": "268.94",
+        "premio_liquido_24": "425.77",
+        "premio_bruto_24": "457.19"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "0",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "25.21",
+        "premio_bruto_12": "27.07",
+        "premio_liquido_24": "42.86",
+        "premio_bruto_24": "46.02"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "30001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "42.28",
+        "premio_bruto_12": "45.40",
+        "premio_liquido_24": "71.88",
+        "premio_bruto_24": "77.19"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "50001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "54.92",
+        "premio_bruto_12": "58.97",
+        "premio_liquido_24": "93.37",
+        "premio_bruto_24": "100.26"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "70001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "76.12",
+        "premio_bruto_12": "81.74",
+        "premio_liquido_24": "129.42",
+        "premio_bruto_24": "138.97"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "102.62",
+        "premio_bruto_12": "110.19",
+        "premio_liquido_24": "174.46",
+        "premio_bruto_24": "187.34"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "111.66",
+        "premio_bruto_12": "119.90",
+        "premio_liquido_24": "189.82",
+        "premio_bruto_24": "203.83"
+    },
+    {
+        "produto": "3",
+        "faixa_minima": "200001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "170.07",
+        "premio_bruto_12": "182.62",
+        "premio_liquido_24": "289.10",
+        "premio_bruto_24": "310.43"
+    },
+    {
+        "produto": "4",
+        "faixa_minima": "0",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "76.42",
+        "premio_bruto_12": "82.06",
+        "premio_liquido_24": "129.91",
+        "premio_bruto_24": "139.50"
+    },
+    {
+        "produto": "4",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "115.90",
+        "premio_bruto_12": "124.45",
+        "premio_liquido_24": "197.04",
+        "premio_bruto_24": "211.58"
+    },
+    {
+        "produto": "4",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "139.65",
+        "premio_bruto_12": "149.96",
+        "premio_liquido_24": "237.39",
+        "premio_bruto_24": "254.91"
+    },
+    {
+        "produto": "4",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "185.77",
+        "premio_bruto_12": "199.48",
+        "premio_liquido_24": "315.78",
+        "premio_bruto_24": "339.09"
+    },
+    {
+        "produto": "4",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "226.96",
+        "premio_bruto_12": "243.71",
+        "premio_liquido_24": "385.80",
+        "premio_bruto_24": "414.28"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "0",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "38.28",
+        "premio_bruto_12": "41.10",
+        "premio_liquido_24": "65.09",
+        "premio_bruto_24": "69.90"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "20001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "59.07",
+        "premio_bruto_12": "63.43",
+        "premio_liquido_24": "100.43",
+        "premio_bruto_24": "107.85"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "40001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "109.47",
+        "premio_bruto_12": "117.55",
+        "premio_liquido_24": "186.11",
+        "premio_bruto_24": "199.85"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "60001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "174.63",
+        "premio_bruto_12": "187.52",
+        "premio_liquido_24": "296.87",
+        "premio_bruto_24": "318.78"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "80001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "246.09",
+        "premio_bruto_12": "264.25",
+        "premio_liquido_24": "418.36",
+        "premio_bruto_24": "449.24"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "314.76",
+        "premio_bruto_12": "337.99",
+        "premio_liquido_24": "535.10",
+        "premio_bruto_24": "574.59"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "382.63",
+        "premio_bruto_12": "410.87",
+        "premio_liquido_24": "650.46",
+        "premio_bruto_24": "698.46"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "481.98",
+        "premio_bruto_12": "517.55",
+        "premio_liquido_24": "819.35",
+        "premio_bruto_24": "879.82"
+    },
+    {
+        "produto": "5",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "550.24",
+        "premio_bruto_12": "590.85",
+        "premio_liquido_24": "935.40",
+        "premio_bruto_24": "1,004.43"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "0",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "38.28",
+        "premio_bruto_12": "41.10",
+        "premio_liquido_24": "65.09",
+        "premio_bruto_24": "69.90"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "20001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "59.07",
+        "premio_bruto_12": "63.43",
+        "premio_liquido_24": "100.43",
+        "premio_bruto_24": "107.85"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "40001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "109.47",
+        "premio_bruto_12": "117.55",
+        "premio_liquido_24": "186.11",
+        "premio_bruto_24": "199.85"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "60001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "174.63",
+        "premio_bruto_12": "187.52",
+        "premio_liquido_24": "296.87",
+        "premio_bruto_24": "318.78"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "80001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "246.09",
+        "premio_bruto_12": "264.25",
+        "premio_liquido_24": "418.36",
+        "premio_bruto_24": "449.24"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "314.76",
+        "premio_bruto_12": "337.99",
+        "premio_liquido_24": "535.10",
+        "premio_bruto_24": "574.59"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "382.63",
+        "premio_bruto_12": "410.87",
+        "premio_liquido_24": "650.46",
+        "premio_bruto_24": "698.46"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "481.98",
+        "premio_bruto_12": "517.55",
+        "premio_liquido_24": "819.35",
+        "premio_bruto_24": "879.82"
+    },
+    {
+        "produto": "6",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "550.24",
+        "premio_bruto_12": "590.85",
+        "premio_liquido_24": "935.40",
+        "premio_bruto_24": "1,004.43"
+    },
+    {
+        "produto": "7",
+        "faixa_minima": "0",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "527.66",
+        "premio_bruto_12": "566.61",
+        "premio_liquido_24": "897.04",
+        "premio_bruto_24": "963.24"
+    },
+    {
+        "produto": "7",
+        "faixa_minima": "200001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "726.67",
+        "premio_bruto_12": "780.30",
+        "premio_liquido_24": "1,235.36",
+        "premio_bruto_24": "1,326.53"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "0",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "102.66",
+        "premio_bruto_12": "110.24",
+        "premio_liquido_24": "174.52",
+        "premio_bruto_24": "187.40"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "142.70",
+        "premio_bruto_12": "153.23",
+        "premio_liquido_24": "242.57",
+        "premio_bruto_24": "260.48"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "279.03",
+        "premio_bruto_12": "299.62",
+        "premio_liquido_24": "474.37",
+        "premio_bruto_24": "509.38"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "381.76",
+        "premio_bruto_12": "409.93",
+        "premio_liquido_24": "649.00",
+        "premio_bruto_24": "696.90"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "475.14",
+        "premio_bruto_12": "510.21",
+        "premio_liquido_24": "807.76",
+        "premio_bruto_24": "867.38"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "300001",
+        "faixa_maxima": "350000",
+        "premio_liquido_12": "539.72",
+        "premio_bruto_12": "579.55",
+        "premio_liquido_24": "917.54",
+        "premio_bruto_24": "985.25"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "350001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "612.10",
+        "premio_bruto_12": "657.27",
+        "premio_liquido_24": "1,040.57",
+        "premio_bruto_24": "1,117.36"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "400001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "688.29",
+        "premio_bruto_12": "739.08",
+        "premio_liquido_24": "1,170.07",
+        "premio_bruto_24": "1,256.42"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "500001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "801.81",
+        "premio_bruto_12": "860.98",
+        "premio_liquido_24": "1,363.06",
+        "premio_bruto_24": "1,463.65"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "600001",
+        "faixa_maxima": "700000",
+        "premio_liquido_12": "932.04",
+        "premio_bruto_12": "1,000.82",
+        "premio_liquido_24": "1,584.49",
+        "premio_bruto_24": "1,701.42"
+    },
+    {
+        "produto": "8",
+        "faixa_minima": "700001",
+        "faixa_maxima": "800000",
+        "premio_liquido_12": "1,075.44",
+        "premio_bruto_12": "1,154.81",
+        "premio_liquido_24": "1,828.24",
+        "premio_bruto_24": "1,963.16"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "0",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "27.59",
+        "premio_bruto_12": "29.62",
+        "premio_liquido_24": "43.27",
+        "premio_bruto_24": "46.46"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "20001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "33.35",
+        "premio_bruto_12": "35.81",
+        "premio_liquido_24": "52.48",
+        "premio_bruto_24": "56.35"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "42.86",
+        "premio_bruto_12": "46.02",
+        "premio_liquido_24": "67.68",
+        "premio_bruto_24": "72.68"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "54.68",
+        "premio_bruto_12": "58.72",
+        "premio_liquido_24": "86.60",
+        "premio_bruto_24": "92.99"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "63.96",
+        "premio_bruto_12": "68.68",
+        "premio_liquido_24": "101.40",
+        "premio_bruto_24": "108.88"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "68.69",
+        "premio_bruto_12": "73.76",
+        "premio_liquido_24": "109.00",
+        "premio_bruto_24": "117.05"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "70001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "86.68",
+        "premio_bruto_12": "93.08",
+        "premio_liquido_24": "137.77",
+        "premio_bruto_24": "147.94"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "126.74",
+        "premio_bruto_12": "136.09",
+        "premio_liquido_24": "201.90",
+        "premio_bruto_24": "216.80"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "167.63",
+        "premio_bruto_12": "179.10",
+        "premio_liquido_24": "267.31",
+        "premio_bruto_24": "287.04"
+    },
+    {
+        "produto": "9",
+        "faixa_minima": "200001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "225.63",
+        "premio_bruto_12": "242.28",
+        "premio_liquido_24": "360.12",
+        "premio_bruto_24": "386.70"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "0",
+        "faixa_maxima": "2000",
+        "premio_liquido_12": "4.91",
+        "premio_bruto_12": "5.27",
+        "premio_liquido_24": "8.59",
+        "premio_bruto_24": "9.22"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "2001",
+        "faixa_maxima": "4000",
+        "premio_liquido_12": "5.44",
+        "premio_bruto_12": "5.84",
+        "premio_liquido_24": "9.53",
+        "premio_bruto_24": "10.23"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "4001",
+        "faixa_maxima": "6000",
+        "premio_liquido_12": "10.50",
+        "premio_bruto_12": "11.27",
+        "premio_liquido_24": "18.36",
+        "premio_bruto_24": "19.71"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "6001",
+        "faixa_maxima": "8000",
+        "premio_liquido_12": "11.14",
+        "premio_bruto_12": "11.96",
+        "premio_liquido_24": "19.51",
+        "premio_bruto_24": "20.95"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "8001",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "14.61",
+        "premio_bruto_12": "15.69",
+        "premio_liquido_24": "25.57",
+        "premio_bruto_24": "27.46"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "10001",
+        "faixa_maxima": "12000",
+        "premio_liquido_12": "15.98",
+        "premio_bruto_12": "17.16",
+        "premio_liquido_24": "27.97",
+        "premio_bruto_24": "30.04"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "12001",
+        "faixa_maxima": "14000",
+        "premio_liquido_12": "19.15",
+        "premio_bruto_12": "20.56",
+        "premio_liquido_24": "33.50",
+        "premio_bruto_24": "35.97"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "14001",
+        "faixa_maxima": "16000",
+        "premio_liquido_12": "19.56",
+        "premio_bruto_12": "20.10",
+        "premio_liquido_24": "34.23",
+        "premio_bruto_24": "36.75"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "16001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "23.43",
+        "premio_bruto_12": "25.16",
+        "premio_liquido_24": "41.02",
+        "premio_bruto_24": "44.05"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "24.57",
+        "premio_bruto_12": "26.38",
+        "premio_liquido_24": "42.99",
+        "premio_bruto_24": "46.16"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "27.18",
+        "premio_bruto_12": "29.19",
+        "premio_liquido_24": "47.57",
+        "premio_bruto_24": "51.08"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "30001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "116.35",
+        "premio_bruto_12": "124.94",
+        "premio_liquido_24": "0.00",
+        "premio_bruto_24": "0.00"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "150001",
+        "faixa_maxima": "170000",
+        "premio_liquido_12": "120.63",
+        "premio_bruto_12": "129.54",
+        "premio_liquido_24": "192.99",
+        "premio_bruto_24": "207.23"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "170001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "139.46",
+        "premio_bruto_12": "149.75",
+        "premio_liquido_24": "223.15",
+        "premio_bruto_24": "239.61"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "169.62",
+        "premio_bruto_12": "182.14",
+        "premio_liquido_24": "271.40",
+        "premio_bruto_24": "291.43"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "207.30",
+        "premio_bruto_12": "222.59",
+        "premio_liquido_24": "331.70",
+        "premio_bruto_24": "356.18"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "300001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "263.84",
+        "premio_bruto_12": "283.31",
+        "premio_liquido_24": "422.17",
+        "premio_bruto_24": "453.33"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "400001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "376.96",
+        "premio_bruto_12": "404.78",
+        "premio_liquido_24": "603.08",
+        "premio_bruto_24": "647.59"
+    },
+    {
+        "produto": "10",
+        "faixa_minima": "600001",
+        "faixa_maxima": "800000",
+        "premio_liquido_12": "527.71",
+        "premio_bruto_12": "566.65",
+        "premio_liquido_24": "844.33",
+        "premio_bruto_24": "906.64"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "0",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "30.59",
+        "premio_bruto_12": "32.84",
+        "premio_liquido_24": "30.59",
+        "premio_bruto_24": "32.84"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "20001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "34.27",
+        "premio_bruto_12": "36.80",
+        "premio_liquido_24": "34.27",
+        "premio_bruto_24": "36.80"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "47.98",
+        "premio_bruto_12": "51.52",
+        "premio_liquido_24": "47.98",
+        "premio_bruto_24": "51.52"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "56.98",
+        "premio_bruto_12": "61.18",
+        "premio_liquido_24": "56.98",
+        "premio_bruto_24": "61.18"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "50001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "70.96",
+        "premio_bruto_12": "76.20",
+        "premio_liquido_24": "70.96",
+        "premio_bruto_24": "76.20"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "70001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "93.69",
+        "premio_bruto_12": "100.60",
+        "premio_liquido_24": "93.69",
+        "premio_bruto_24": "100.60"
+    },
+    {
+        "produto": "11",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "125.24",
+        "premio_bruto_12": "134.48",
+        "premio_liquido_24": "125.24",
+        "premio_bruto_24": "134.48"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "0",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "25.68",
+        "premio_bruto_12": "27.58",
+        "premio_liquido_24": "32.84",
+        "premio_bruto_24": "35.26"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "28.02",
+        "premio_bruto_12": "30.08",
+        "premio_liquido_24": "45.26",
+        "premio_bruto_24": "48.60"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "30001",
+        "faixa_maxima": "35000",
+        "premio_liquido_12": "32.84",
+        "premio_bruto_12": "35.26",
+        "premio_liquido_24": "53.23",
+        "premio_bruto_24": "57.16"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "35001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "37.66",
+        "premio_bruto_12": "40.43",
+        "premio_liquido_24": "61.17",
+        "premio_bruto_24": "65.69"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "40001",
+        "faixa_maxima": "45000",
+        "premio_liquido_12": "42.50",
+        "premio_bruto_12": "45.63",
+        "premio_liquido_24": "69.14",
+        "premio_bruto_24": "74.24"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "45001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "47.29",
+        "premio_bruto_12": "50.78",
+        "premio_liquido_24": "77.09",
+        "premio_bruto_24": "82.78"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "50001",
+        "faixa_maxima": "55000",
+        "premio_liquido_12": "52.13",
+        "premio_bruto_12": "55.98",
+        "premio_liquido_24": "85.03",
+        "premio_bruto_24": "91.31"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "55001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "56.95",
+        "premio_bruto_12": "61.16",
+        "premio_liquido_24": "92.98",
+        "premio_bruto_24": "99.84"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "64.19",
+        "premio_bruto_12": "68.93",
+        "premio_liquido_24": "104.93",
+        "premio_bruto_24": "112.68"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "73.83",
+        "premio_bruto_12": "79.28",
+        "premio_liquido_24": "120.83",
+        "premio_bruto_24": "129.74"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "83.47",
+        "premio_bruto_12": "89.63",
+        "premio_liquido_24": "136.76",
+        "premio_bruto_24": "146.85"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "94.52",
+        "premio_bruto_12": "101.50",
+        "premio_liquido_24": "154.99",
+        "premio_bruto_24": "166.43"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "100001",
+        "faixa_maxima": "110000",
+        "premio_liquido_12": "128.79",
+        "premio_bruto_12": "138.30",
+        "premio_liquido_24": "211.54",
+        "premio_bruto_24": "227.15"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "110001",
+        "faixa_maxima": "120000",
+        "premio_liquido_12": "141.99",
+        "premio_bruto_12": "152.47",
+        "premio_liquido_24": "233.32",
+        "premio_bruto_24": "250.54"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "120001",
+        "faixa_maxima": "130000",
+        "premio_liquido_12": "154.20",
+        "premio_bruto_12": "165.58",
+        "premio_liquido_24": "253.45",
+        "premio_bruto_24": "272.16"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "130001",
+        "faixa_maxima": "140000",
+        "premio_liquido_12": "166.43",
+        "premio_bruto_12": "178.71",
+        "premio_liquido_24": "273.61",
+        "premio_bruto_24": "293.80"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "140001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "178.64",
+        "premio_bruto_12": "191.82",
+        "premio_liquido_24": "293.79",
+        "premio_bruto_24": "315.47"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "150001",
+        "faixa_maxima": "160000",
+        "premio_liquido_12": "190.85",
+        "premio_bruto_12": "204.93",
+        "premio_liquido_24": "313.92",
+        "premio_bruto_24": "337.09"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "160001",
+        "faixa_maxima": "170000",
+        "premio_liquido_12": "203.05",
+        "premio_bruto_12": "218.04",
+        "premio_liquido_24": "334.10",
+        "premio_bruto_24": "358.75"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "170001",
+        "faixa_maxima": "180000",
+        "premio_liquido_12": "213.66",
+        "premio_bruto_12": "229.43",
+        "premio_liquido_24": "351.53",
+        "premio_bruto_24": "377.48"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "180001",
+        "faixa_maxima": "190000",
+        "premio_liquido_12": "223.19",
+        "premio_bruto_12": "239.66",
+        "premio_liquido_24": "367.28",
+        "premio_bruto_24": "394.38"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "190001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "232.44",
+        "premio_bruto_12": "249.60",
+        "premio_liquido_24": "382.55",
+        "premio_bruto_24": "410.78"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "200001",
+        "faixa_maxima": "210000",
+        "premio_liquido_12": "240.45",
+        "premio_bruto_12": "258.20",
+        "premio_liquido_24": "395.79",
+        "premio_bruto_24": "424.99"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "210001",
+        "faixa_maxima": "225000",
+        "premio_liquido_12": "252.10",
+        "premio_bruto_12": "270.71",
+        "premio_liquido_24": "415.02",
+        "premio_bruto_24": "445.65"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "225001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "265.13",
+        "premio_bruto_12": "284.69",
+        "premio_liquido_24": "436.48",
+        "premio_bruto_24": "468.69"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "250001",
+        "faixa_maxima": "275000",
+        "premio_liquido_12": "286.29",
+        "premio_bruto_12": "307.42",
+        "premio_liquido_24": "471.40",
+        "premio_bruto_24": "506.18"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "275001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "301.67",
+        "premio_bruto_12": "323.93",
+        "premio_liquido_24": "481.76",
+        "premio_bruto_24": "517.32"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "300001",
+        "faixa_maxima": "325000",
+        "premio_liquido_12": "323.22",
+        "premio_bruto_12": "347.07",
+        "premio_liquido_24": "520.19",
+        "premio_bruto_24": "558.58"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "325001",
+        "faixa_maxima": "350000",
+        "premio_liquido_12": "325.68",
+        "premio_bruto_12": "349.71",
+        "premio_liquido_24": "532.35",
+        "premio_bruto_24": "571.64"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "350001",
+        "faixa_maxima": "375000",
+        "premio_liquido_12": "349.69",
+        "premio_bruto_12": "375.50",
+        "premio_liquido_24": "558.61",
+        "premio_bruto_24": "599.84"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "375001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "355.97",
+        "premio_bruto_12": "382.24",
+        "premio_liquido_24": "568.66",
+        "premio_bruto_24": "610.63"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "400001",
+        "faixa_maxima": "425000",
+        "premio_liquido_12": "378.84",
+        "premio_bruto_12": "406.80",
+        "premio_liquido_24": "605.27",
+        "premio_bruto_24": "649.93"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "425001",
+        "faixa_maxima": "450000",
+        "premio_liquido_12": "423.95",
+        "premio_bruto_12": "455.24",
+        "premio_liquido_24": "677.43",
+        "premio_bruto_24": "727.42"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "450001",
+        "faixa_maxima": "475000",
+        "premio_liquido_12": "448.09",
+        "premio_bruto_12": "481.16",
+        "premio_liquido_24": "716.05",
+        "premio_bruto_24": "768.89"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "475001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "472.23",
+        "premio_bruto_12": "507.08",
+        "premio_liquido_24": "754.66",
+        "premio_bruto_24": "810.36"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "500001",
+        "faixa_maxima": "550000",
+        "premio_liquido_12": "508.43",
+        "premio_bruto_12": "545.95",
+        "premio_liquido_24": "812.60",
+        "premio_bruto_24": "872.57"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "550001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "556.73",
+        "premio_bruto_12": "597.82",
+        "premio_liquido_24": "889.86",
+        "premio_bruto_24": "955.53"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "600001",
+        "faixa_maxima": "800000",
+        "premio_liquido_12": "677.43",
+        "premio_bruto_12": "727.42",
+        "premio_liquido_24": "1,082.98",
+        "premio_bruto_24": "1,162.90"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "800001",
+        "faixa_maxima": "1000000",
+        "premio_liquido_12": "870.54",
+        "premio_bruto_12": "934.79",
+        "premio_liquido_24": "1,391.97",
+        "premio_bruto_24": "1,494.70"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "1000001",
+        "faixa_maxima": "1500000",
+        "premio_liquido_12": "1,208.52",
+        "premio_bruto_12": "1,297.71",
+        "premio_liquido_24": "1,932.70",
+        "premio_bruto_24": "2,075.34"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "1500001",
+        "faixa_maxima": "2000000",
+        "premio_liquido_12": "1,691.31",
+        "premio_bruto_12": "1,816.13",
+        "premio_liquido_24": "2,705.19",
+        "premio_bruto_24": "2,904.83"
+    },
+    {
+        "produto": "12",
+        "faixa_minima": "2000001",
+        "faixa_maxima": "3000000",
+        "premio_liquido_12": "2,288.46",
+        "premio_bruto_12": "2,457.34",
+        "premio_liquido_24": "3,660.64",
+        "premio_bruto_24": "3,930.79"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "0",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "10.45",
+        "premio_bruto_12": "11.22",
+        "premio_liquido_24": "15.83",
+        "premio_bruto_24": "16.10"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "10001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "14.95",
+        "premio_bruto_12": "16.05",
+        "premio_liquido_24": "23.00",
+        "premio_bruto_24": "24.70"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "20001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "23.93",
+        "premio_bruto_12": "25.69",
+        "premio_liquido_24": "33.22",
+        "premio_bruto_24": "35.67"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "32.88",
+        "premio_bruto_12": "35.30",
+        "premio_liquido_24": "42.17",
+        "premio_bruto_24": "45.29"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "41.85",
+        "premio_bruto_12": "44.94",
+        "premio_liquido_24": "51.15",
+        "premio_bruto_24": "54.92"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "50.81",
+        "premio_bruto_12": "54.56",
+        "premio_liquido_24": "60.10",
+        "premio_bruto_24": "64.54"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "59.76",
+        "premio_bruto_12": "64.17",
+        "premio_liquido_24": "69.06",
+        "premio_bruto_24": "74.15"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "68.76",
+        "premio_bruto_12": "73.83",
+        "premio_liquido_24": "78.05",
+        "premio_bruto_24": "83.81"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "77.71",
+        "premio_bruto_12": "83.44",
+        "premio_liquido_24": "87.01",
+        "premio_bruto_24": "93.43"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "86.68",
+        "premio_bruto_12": "93.08",
+        "premio_liquido_24": "95.98",
+        "premio_bruto_24": "103.06"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "100001",
+        "faixa_maxima": "125000",
+        "premio_liquido_12": "102.38",
+        "premio_bruto_12": "109.94",
+        "premio_liquido_24": "111.68",
+        "premio_bruto_24": "119.92"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "125001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "124.77",
+        "premio_bruto_12": "133.97",
+        "premio_liquido_24": "134.06",
+        "premio_bruto_24": "143.96"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "158.40",
+        "premio_bruto_12": "170.09",
+        "premio_liquido_24": "167.69",
+        "premio_bruto_24": "180.07"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "203.23",
+        "premio_bruto_12": "218.22",
+        "premio_liquido_24": "212.52",
+        "premio_bruto_24": "228.21"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "248.06",
+        "premio_bruto_12": "266.36",
+        "premio_liquido_24": "257.35",
+        "premio_bruto_24": "276.35"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "300001",
+        "faixa_maxima": "350000",
+        "premio_liquido_12": "288.17",
+        "premio_bruto_12": "309.44",
+        "premio_liquido_24": "297.47",
+        "premio_bruto_24": "319.42"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "350001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "332.28",
+        "premio_bruto_12": "356.80",
+        "premio_liquido_24": "341.57",
+        "premio_bruto_24": "366.78"
+    },
+    {
+        "produto": "13",
+        "faixa_minima": "400001",
+        "faixa_maxima": "450000",
+        "premio_liquido_12": "376.40",
+        "premio_bruto_12": "404.18",
+        "premio_liquido_24": "385.70",
+        "premio_bruto_24": "414.16"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "0",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "9.70",
+        "premio_bruto_12": "10.42",
+        "premio_liquido_24": "9.70",
+        "premio_bruto_24": "10.42"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "10001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "14.52",
+        "premio_bruto_12": "15.59",
+        "premio_liquido_24": "14.52",
+        "premio_bruto_24": "15.59"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "20001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "24.23",
+        "premio_bruto_12": "26.01",
+        "premio_liquido_24": "24.23",
+        "premio_bruto_24": "26.01"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "33.91",
+        "premio_bruto_12": "36.41",
+        "premio_liquido_24": "33.91",
+        "premio_bruto_24": "36.41"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "43.61",
+        "premio_bruto_12": "46.83",
+        "premio_liquido_24": "43.61",
+        "premio_bruto_24": "46.83"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "53.31",
+        "premio_bruto_12": "57.25",
+        "premio_liquido_24": "53.31",
+        "premio_bruto_24": "57.25"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "62.99",
+        "premio_bruto_12": "67.64",
+        "premio_liquido_24": "62.99",
+        "premio_bruto_24": "67.64"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "72.68",
+        "premio_bruto_12": "78.04",
+        "premio_liquido_24": "72.68",
+        "premio_bruto_24": "78.04"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "82.38",
+        "premio_bruto_12": "88.46",
+        "premio_liquido_24": "82.38",
+        "premio_bruto_24": "88.46"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "92.06",
+        "premio_bruto_12": "98.85",
+        "premio_liquido_24": "92.06",
+        "premio_bruto_24": "98.85"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "121.15",
+        "premio_bruto_12": "130.09",
+        "premio_liquido_24": "121.15",
+        "premio_bruto_24": "130.09"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "169.62",
+        "premio_bruto_12": "182.14",
+        "premio_liquido_24": "169.62",
+        "premio_bruto_24": "182.14"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "200001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "242.32",
+        "premio_bruto_12": "260.20",
+        "premio_liquido_24": "242.32",
+        "premio_bruto_24": "260.20"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "300001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "339.26",
+        "premio_bruto_12": "364.30",
+        "premio_liquido_24": "339.26",
+        "premio_bruto_24": "364.30"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "400001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "436.16",
+        "premio_bruto_12": "468.35",
+        "premio_liquido_24": "436.16",
+        "premio_bruto_24": "468.35"
+    },
+    {
+        "produto": "14",
+        "faixa_minima": "500001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "533.08",
+        "premio_bruto_12": "572.42",
+        "premio_liquido_24": "533.08",
+        "premio_bruto_24": "572.42"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "0",
+        "faixa_maxima": "100",
+        "premio_liquido_12": "20.56",
+        "premio_bruto_12": "22.08",
+        "premio_liquido_24": "20.56",
+        "premio_bruto_24": "22.08"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "100.01",
+        "faixa_maxima": "150",
+        "premio_liquido_12": "24.53",
+        "premio_bruto_12": "26.34",
+        "premio_liquido_24": "24.53",
+        "premio_bruto_24": "26.34"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "150.01",
+        "faixa_maxima": "200",
+        "premio_liquido_12": "33.22",
+        "premio_bruto_12": "35.67",
+        "premio_liquido_24": "33.22",
+        "premio_bruto_24": "35.67"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "200.01",
+        "faixa_maxima": "250",
+        "premio_liquido_12": "41.77",
+        "premio_bruto_12": "44.85",
+        "premio_liquido_24": "41.77",
+        "premio_bruto_24": "44.85"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "250.01",
+        "faixa_maxima": "300",
+        "premio_liquido_12": "48.75",
+        "premio_bruto_12": "52.35",
+        "premio_liquido_24": "48.75",
+        "premio_bruto_24": "52.35"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "300.01",
+        "faixa_maxima": "400",
+        "premio_liquido_12": "56.74",
+        "premio_bruto_12": "60.93",
+        "premio_liquido_24": "56.74",
+        "premio_bruto_24": "60.93"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "400.01",
+        "faixa_maxima": "500",
+        "premio_liquido_12": "65.82",
+        "premio_bruto_12": "70.68",
+        "premio_liquido_24": "65.82",
+        "premio_bruto_24": "70.68"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "500.01",
+        "faixa_maxima": "800",
+        "premio_liquido_12": "81.22",
+        "premio_bruto_12": "87.22",
+        "premio_liquido_24": "81.22",
+        "premio_bruto_24": "87.22"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "800.01",
+        "faixa_maxima": "1000",
+        "premio_liquido_12": "96.52",
+        "premio_bruto_12": "103.64",
+        "premio_liquido_24": "96.52",
+        "premio_bruto_24": "103.64"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "1000.01",
+        "faixa_maxima": "1500",
+        "premio_liquido_12": "112.86",
+        "premio_bruto_12": "121.19",
+        "premio_liquido_24": "112.86",
+        "premio_bruto_24": "121.19"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "1500.01",
+        "faixa_maxima": "2000",
+        "premio_liquido_12": "153.21",
+        "premio_bruto_12": "164.52",
+        "premio_liquido_24": "153.21",
+        "premio_bruto_24": "164.52"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "2000.01",
+        "faixa_maxima": "2500",
+        "premio_liquido_12": "196.97",
+        "premio_bruto_12": "211.51",
+        "premio_liquido_24": "196.97",
+        "premio_bruto_24": "211.51"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "2500.01",
+        "faixa_maxima": "3000",
+        "premio_liquido_12": "240.75",
+        "premio_bruto_12": "258.52",
+        "premio_liquido_24": "240.75",
+        "premio_bruto_24": "258.52"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "3000.01",
+        "faixa_maxima": "3500",
+        "premio_liquido_12": "280.01",
+        "premio_bruto_12": "300.68",
+        "premio_liquido_24": "280.01",
+        "premio_bruto_24": "300.68"
+    },
+    {
+        "produto": "15",
+        "faixa_minima": "3500.01",
+        "faixa_maxima": "5000",
+        "premio_liquido_12": "368.05",
+        "premio_bruto_12": "395.21",
+        "premio_liquido_24": "368.05",
+        "premio_bruto_24": "395.21"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "0",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "20.56",
+        "premio_bruto_12": "22.08",
+        "premio_liquido_24": "20.56",
+        "premio_bruto_24": "22.08"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "10001",
+        "faixa_maxima": "15000",
+        "premio_liquido_12": "24.53",
+        "premio_bruto_12": "26.34",
+        "premio_liquido_24": "24.53",
+        "premio_bruto_24": "26.34"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "15001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "33.22",
+        "premio_bruto_12": "35.67",
+        "premio_liquido_24": "33.22",
+        "premio_bruto_24": "35.67"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "41.77",
+        "premio_bruto_12": "44.85",
+        "premio_liquido_24": "41.77",
+        "premio_bruto_24": "44.85"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "48.75",
+        "premio_bruto_12": "52.35",
+        "premio_liquido_24": "48.75",
+        "premio_bruto_24": "52.35"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "56.74",
+        "premio_bruto_12": "60.93",
+        "premio_liquido_24": "56.74",
+        "premio_bruto_24": "60.93"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "65.82",
+        "premio_bruto_12": "70.68",
+        "premio_liquido_24": "65.82",
+        "premio_bruto_24": "70.68"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "50001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "81.22",
+        "premio_bruto_12": "87.22",
+        "premio_liquido_24": "81.22",
+        "premio_bruto_24": "87.22"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "80001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "164.07",
+        "premio_bruto_12": "176.18",
+        "premio_liquido_24": "164.07",
+        "premio_bruto_24": "176.18"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "112.86",
+        "premio_bruto_12": "121.19",
+        "premio_liquido_24": "112.86",
+        "premio_bruto_24": "121.19"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "153.21",
+        "premio_bruto_12": "164.52",
+        "premio_liquido_24": "153.21",
+        "premio_bruto_24": "164.52"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "196.97",
+        "premio_bruto_12": "211.51",
+        "premio_liquido_24": "196.97",
+        "premio_bruto_24": "211.51"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "240.75",
+        "premio_bruto_12": "258.52",
+        "premio_liquido_24": "240.75",
+        "premio_bruto_24": "258.52"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "300001",
+        "faixa_maxima": "350000",
+        "premio_liquido_12": "280.01",
+        "premio_bruto_12": "300.68",
+        "premio_liquido_24": "280.01",
+        "premio_bruto_24": "300.68"
+    },
+    {
+        "produto": "16",
+        "faixa_minima": "350001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "368.05",
+        "premio_bruto_12": "395.21",
+        "premio_liquido_24": "368.05",
+        "premio_bruto_24": "395.21"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "0",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "41.15",
+        "premio_bruto_12": "44.18",
+        "premio_liquido_24": "65.82",
+        "premio_bruto_24": "70.68"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "25001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "58.86",
+        "premio_bruto_12": "63.20",
+        "premio_liquido_24": "94.18",
+        "premio_bruto_24": "101.13"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "50001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "91.40",
+        "premio_bruto_12": "98.14",
+        "premio_liquido_24": "146.19",
+        "premio_bruto_24": "156.97"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "70001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "127.12",
+        "premio_bruto_12": "136.50",
+        "premio_liquido_24": "203.40",
+        "premio_bruto_24": "218.41"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "130.27",
+        "premio_bruto_12": "139.89",
+        "premio_liquido_24": "208.41",
+        "premio_bruto_24": "223.79"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "100001",
+        "faixa_maxima": "125000",
+        "premio_liquido_12": "145.95",
+        "premio_bruto_12": "156.72",
+        "premio_liquido_24": "233.56",
+        "premio_bruto_24": "250.79"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "125001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "168.25",
+        "premio_bruto_12": "180.66",
+        "premio_liquido_24": "269.18",
+        "premio_bruto_24": "289.04"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "203.03",
+        "premio_bruto_12": "218.02",
+        "premio_liquido_24": "324.87",
+        "premio_bruto_24": "348.84"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "242.06",
+        "premio_bruto_12": "259.92",
+        "premio_liquido_24": "387.30",
+        "premio_bruto_24": "415.89"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "295.86",
+        "premio_bruto_12": "317.70",
+        "premio_liquido_24": "473.37",
+        "premio_bruto_24": "508.30"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "300001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "350.70",
+        "premio_bruto_12": "376.58",
+        "premio_liquido_24": "561.12",
+        "premio_bruto_24": "602.53"
+    },
+    {
+        "produto": "17",
+        "faixa_minima": "400001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "427.16",
+        "premio_bruto_12": "458.69",
+        "premio_liquido_24": "683.49",
+        "premio_bruto_24": "733.93"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "0",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "14.63",
+        "premio_bruto_12": "15.71",
+        "premio_liquido_24": "27.74",
+        "premio_bruto_24": "29.79"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "10001",
+        "faixa_maxima": "12000",
+        "premio_liquido_12": "16.90",
+        "premio_bruto_12": "18.15",
+        "premio_liquido_24": "32.28",
+        "premio_bruto_24": "34.66"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "12001",
+        "faixa_maxima": "14000",
+        "premio_liquido_12": "20.28",
+        "premio_bruto_12": "21.78",
+        "premio_liquido_24": "39.05",
+        "premio_bruto_24": "41.93"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "14001",
+        "faixa_maxima": "16000",
+        "premio_liquido_12": "22.58",
+        "premio_bruto_12": "24.24",
+        "premio_liquido_24": "43.63",
+        "premio_bruto_24": "46.85"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "16001",
+        "faixa_maxima": "18000",
+        "premio_liquido_12": "27.78",
+        "premio_bruto_12": "29.83",
+        "premio_liquido_24": "53.96",
+        "premio_bruto_24": "57.94"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "18001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "30.69",
+        "premio_bruto_12": "32.96",
+        "premio_liquido_24": "59.78",
+        "premio_bruto_24": "64.19"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "34.19",
+        "premio_bruto_12": "36.71",
+        "premio_liquido_24": "66.76",
+        "premio_bruto_24": "71.69"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "39.41",
+        "premio_bruto_12": "42.32",
+        "premio_liquido_24": "77.22",
+        "premio_bruto_24": "82.92"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "48.66",
+        "premio_bruto_12": "52.26",
+        "premio_liquido_24": "95.74",
+        "premio_bruto_24": "102.81"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "67.90",
+        "premio_bruto_12": "72.91",
+        "premio_liquido_24": "133.16",
+        "premio_bruto_24": "142.99"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "80.75",
+        "premio_bruto_12": "86.71",
+        "premio_liquido_24": "154.39",
+        "premio_bruto_24": "165.78"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "97.29",
+        "premio_bruto_12": "104.47",
+        "premio_liquido_24": "182.21",
+        "premio_bruto_24": "195.66"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "112.02",
+        "premio_bruto_12": "120.29",
+        "premio_liquido_24": "209.97",
+        "premio_bruto_24": "225.47"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "112.02",
+        "premio_bruto_12": "120.29",
+        "premio_liquido_24": "237.80",
+        "premio_bruto_24": "255.35"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "141.50",
+        "premio_bruto_12": "151.94",
+        "premio_liquido_24": "265.58",
+        "premio_bruto_24": "285.18"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "100001",
+        "faixa_maxima": "120000",
+        "premio_liquido_12": "169.21",
+        "premio_bruto_12": "181.70",
+        "premio_liquido_24": "286.61",
+        "premio_bruto_24": "307.76"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "120001",
+        "faixa_maxima": "160000",
+        "premio_liquido_12": "207.83",
+        "premio_bruto_12": "223.17",
+        "premio_liquido_24": "352.26",
+        "premio_bruto_24": "378.26"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "160001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "263.14",
+        "premio_bruto_12": "282.56",
+        "premio_liquido_24": "446.27",
+        "premio_bruto_24": "479.20"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "328.53",
+        "premio_bruto_12": "352.77",
+        "premio_liquido_24": "557.46",
+        "premio_bruto_24": "598.60"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "364.88",
+        "premio_bruto_12": "391.81",
+        "premio_liquido_24": "619.23",
+        "premio_bruto_24": "664.93"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "300001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "439.07",
+        "premio_bruto_12": "471.48",
+        "premio_liquido_24": "745.37",
+        "premio_bruto_24": "800.38"
+    },
+    {
+        "produto": "18",
+        "faixa_minima": "400001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "611.35",
+        "premio_bruto_12": "656.47",
+        "premio_liquido_24": "1,038.26",
+        "premio_bruto_24": "1,114.88"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "0",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "73.10",
+        "premio_bruto_12": "78.50",
+        "premio_liquido_24": "126.82",
+        "premio_bruto_24": "136.18"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "80.26",
+        "premio_bruto_12": "86.18",
+        "premio_liquido_24": "139.35",
+        "premio_bruto_24": "149.64"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "94.61",
+        "premio_bruto_12": "101.59",
+        "premio_liquido_24": "164.39",
+        "premio_bruto_24": "176.53"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "108.92",
+        "premio_bruto_12": "116.95",
+        "premio_liquido_24": "189.47",
+        "premio_bruto_24": "203.46"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "140.90",
+        "premio_bruto_12": "151.29",
+        "premio_liquido_24": "200.16",
+        "premio_bruto_24": "214.94"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "128.39",
+        "premio_bruto_12": "137.86",
+        "premio_liquido_24": "223.55",
+        "premio_bruto_24": "240.05"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "100001",
+        "faixa_maxima": "110000",
+        "premio_liquido_12": "155.57",
+        "premio_bruto_12": "167.05",
+        "premio_liquido_24": "246.92",
+        "premio_bruto_24": "265.14"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "110001",
+        "faixa_maxima": "120000",
+        "premio_liquido_12": "170.22",
+        "premio_bruto_12": "182.78",
+        "premio_liquido_24": "270.31",
+        "premio_bruto_24": "290.26"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "120001",
+        "faixa_maxima": "130000",
+        "premio_liquido_12": "184.91",
+        "premio_bruto_12": "198.56",
+        "premio_liquido_24": "293.66",
+        "premio_bruto_24": "315.33"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "130001",
+        "faixa_maxima": "140000",
+        "premio_liquido_12": "199.58",
+        "premio_bruto_12": "214.31",
+        "premio_liquido_24": "317.05",
+        "premio_bruto_24": "340.45"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "140001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "214.26",
+        "premio_bruto_12": "230.07",
+        "premio_liquido_24": "340.42",
+        "premio_bruto_24": "365.54"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "150001",
+        "faixa_maxima": "160000",
+        "premio_liquido_12": "228.91",
+        "premio_bruto_12": "245.80",
+        "premio_liquido_24": "363.81",
+        "premio_bruto_24": "390.65"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "160001",
+        "faixa_maxima": "170000",
+        "premio_liquido_12": "243.60",
+        "premio_bruto_12": "261.58",
+        "premio_liquido_24": "387.17",
+        "premio_bruto_24": "415.75"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "170001",
+        "faixa_maxima": "180000",
+        "premio_liquido_12": "258.27",
+        "premio_bruto_12": "277.33",
+        "premio_liquido_24": "410.54",
+        "premio_bruto_24": "440.84"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "180001",
+        "faixa_maxima": "190000",
+        "premio_liquido_12": "272.95",
+        "premio_bruto_12": "293.09",
+        "premio_liquido_24": "433.91",
+        "premio_bruto_24": "465.93"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "190001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "287.60",
+        "premio_bruto_12": "308.82",
+        "premio_liquido_24": "457.28",
+        "premio_bruto_24": "491.03"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "200001",
+        "faixa_maxima": "220000",
+        "premio_liquido_12": "309.62",
+        "premio_bruto_12": "332.46",
+        "premio_liquido_24": "492.34",
+        "premio_bruto_24": "528.68"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "220001",
+        "faixa_maxima": "240000",
+        "premio_liquido_12": "338.96",
+        "premio_bruto_12": "363.98",
+        "premio_liquido_24": "539.10",
+        "premio_bruto_24": "578.89"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "240001",
+        "faixa_maxima": "260000",
+        "premio_liquido_12": "368.30",
+        "premio_bruto_12": "395.49",
+        "premio_liquido_24": "585.82",
+        "premio_bruto_24": "629.05"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "260001",
+        "faixa_maxima": "280000",
+        "premio_liquido_12": "397.65",
+        "premio_bruto_12": "426.10",
+        "premio_liquido_24": "632.57",
+        "premio_bruto_24": "679.26"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "280001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "426.99",
+        "premio_bruto_12": "458.50",
+        "premio_liquido_24": "679.33",
+        "premio_bruto_24": "729.47"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "300001",
+        "faixa_maxima": "350000",
+        "premio_liquido_12": "478.36",
+        "premio_bruto_12": "513.66",
+        "premio_liquido_24": "761.13",
+        "premio_bruto_24": "817.30"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "350001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "551.72",
+        "premio_bruto_12": "592.43",
+        "premio_liquido_24": "878.02",
+        "premio_bruto_24": "942.82"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "400001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "661.75",
+        "premio_bruto_12": "710.59",
+        "premio_liquido_24": "1,053.33",
+        "premio_bruto_24": "1,131.07"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "500001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "808.47",
+        "premio_bruto_12": "868.13",
+        "premio_liquido_24": "1,287.04",
+        "premio_bruto_24": "1,382.02"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "600001",
+        "faixa_maxima": "700000",
+        "premio_liquido_12": "955.19",
+        "premio_bruto_12": "1,025.68",
+        "premio_liquido_24": "1,520.81",
+        "premio_bruto_24": "1,633.05"
+    },
+    {
+        "produto": "19",
+        "faixa_minima": "700001",
+        "faixa_maxima": "800000",
+        "premio_liquido_12": "1,101.91",
+        "premio_bruto_12": "1,183.23",
+        "premio_liquido_24": "1,754.52",
+        "premio_bruto_24": "1,883.10"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "0",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "24.46",
+        "premio_bruto_12": "26.27",
+        "premio_liquido_24": "40.35",
+        "premio_bruto_24": "43.33"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "26.84",
+        "premio_bruto_12": "28.82",
+        "premio_liquido_24": "44.27",
+        "premio_bruto_24": "47.54"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "30001",
+        "faixa_maxima": "35000",
+        "premio_liquido_12": "31.72",
+        "premio_bruto_12": "34.06",
+        "premio_liquido_24": "52.33",
+        "premio_bruto_24": "56.19"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "35001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "36.58",
+        "premio_bruto_12": "39.28",
+        "premio_liquido_24": "60.38",
+        "premio_bruto_24": "64.84"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "40001",
+        "faixa_maxima": "45000",
+        "premio_liquido_12": "41.47",
+        "premio_bruto_12": "44.53",
+        "premio_liquido_24": "68.43",
+        "premio_bruto_24": "73.48"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "45001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "46.35",
+        "premio_bruto_12": "49.77",
+        "premio_liquido_24": "76.47",
+        "premio_bruto_24": "82.11"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "50001",
+        "faixa_maxima": "55000",
+        "premio_liquido_12": "51.23",
+        "premio_bruto_12": "55.02",
+        "premio_liquido_24": "84.52",
+        "premio_bruto_24": "90.76"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "55001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "56.10",
+        "premio_bruto_12": "60.24",
+        "premio_liquido_24": "92.57",
+        "premio_bruto_24": "99.41"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "70001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "63.42",
+        "premio_bruto_12": "68.10",
+        "premio_liquido_24": "104.65",
+        "premio_bruto_24": "112.38"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "73.19",
+        "premio_bruto_12": "78.59",
+        "premio_liquido_24": "120.74",
+        "premio_bruto_24": "129.65"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "82.94",
+        "premio_bruto_12": "89.06",
+        "premio_liquido_24": "136.85",
+        "premio_bruto_24": "146.95"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "94.12",
+        "premio_bruto_12": "101.06",
+        "premio_liquido_24": "155.31",
+        "premio_bruto_24": "166.77"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "100001",
+        "faixa_maxima": "110000",
+        "premio_liquido_12": "128.79",
+        "premio_bruto_12": "138.30",
+        "premio_liquido_24": "212.52",
+        "premio_bruto_24": "228.21"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "110001",
+        "faixa_maxima": "120000",
+        "premio_liquido_12": "142.16",
+        "premio_bruto_12": "152.65",
+        "premio_liquido_24": "234.54",
+        "premio_bruto_24": "251.85"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "120001",
+        "faixa_maxima": "130000",
+        "premio_liquido_12": "154.52",
+        "premio_bruto_12": "165.92",
+        "premio_liquido_24": "254.95",
+        "premio_bruto_24": "273.77"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "130001",
+        "faixa_maxima": "140000",
+        "premio_liquido_12": "166.88",
+        "premio_bruto_12": "179.19",
+        "premio_liquido_24": "275.34",
+        "premio_bruto_24": "295.67"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "140001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "179.24",
+        "premio_bruto_12": "192.46",
+        "premio_liquido_24": "295.74",
+        "premio_bruto_24": "317.56"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "150001",
+        "faixa_maxima": "160000",
+        "premio_liquido_12": "191.60",
+        "premio_bruto_12": "205.74",
+        "premio_liquido_24": "316.13",
+        "premio_bruto_24": "339.46"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "160001",
+        "faixa_maxima": "170000",
+        "premio_liquido_12": "203.95",
+        "premio_bruto_12": "219.01",
+        "premio_liquido_24": "336.52",
+        "premio_bruto_24": "361.35"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "170001",
+        "faixa_maxima": "180000",
+        "premio_liquido_12": "214.66",
+        "premio_bruto_12": "230.51",
+        "premio_liquido_24": "354.21",
+        "premio_bruto_24": "380.35"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "180001",
+        "faixa_maxima": "190000",
+        "premio_liquido_12": "224.30",
+        "premio_bruto_12": "240.86",
+        "premio_liquido_24": "370.12",
+        "premio_bruto_24": "397.44"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "190001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "233.68",
+        "premio_bruto_12": "250.93",
+        "premio_liquido_24": "385.57",
+        "premio_bruto_24": "414.02"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "200001",
+        "faixa_maxima": "210000",
+        "premio_liquido_12": "241.80",
+        "premio_bruto_12": "259.65",
+        "premio_liquido_24": "398.96",
+        "premio_bruto_24": "428.40"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "210001",
+        "faixa_maxima": "225000",
+        "premio_liquido_12": "253.58",
+        "premio_bruto_12": "272.30",
+        "premio_liquido_24": "418.43",
+        "premio_bruto_24": "449.31"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "225001",
+        "faixa_maxima": "250000",
+        "premio_liquido_12": "266.76",
+        "premio_bruto_12": "286.44",
+        "premio_liquido_24": "440.12",
+        "premio_bruto_24": "472.60"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "250001",
+        "faixa_maxima": "275000",
+        "premio_liquido_12": "288.15",
+        "premio_bruto_12": "309.42",
+        "premio_liquido_24": "475.46",
+        "premio_bruto_24": "510.55"
+    },
+    {
+        "produto": "20",
+        "faixa_minima": "275001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "325.53",
+        "premio_bruto_12": "349.55",
+        "premio_liquido_24": "537.13",
+        "premio_bruto_24": "576.77"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "0",
+        "faixa_maxima": "5000",
+        "premio_liquido_12": "9.53",
+        "premio_bruto_12": "10.23",
+        "premio_liquido_24": "14.33",
+        "premio_bruto_24": "15.39"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "5001",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "15.06",
+        "premio_bruto_12": "16.17",
+        "premio_liquido_24": "20.28",
+        "premio_bruto_24": "21.78"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "10001",
+        "faixa_maxima": "15000",
+        "premio_liquido_12": "15.27",
+        "premio_bruto_12": "16.40",
+        "premio_liquido_24": "22.25",
+        "premio_bruto_24": "23.90"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "15001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "22.58",
+        "premio_bruto_12": "24.24",
+        "premio_liquido_24": "28.62",
+        "premio_bruto_24": "30.73"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "29.49",
+        "premio_bruto_12": "31.67",
+        "premio_liquido_24": "35.06",
+        "premio_bruto_24": "37.65"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "32.69",
+        "premio_bruto_12": "35.10",
+        "premio_liquido_24": "37.95",
+        "premio_bruto_24": "40.76"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "30001",
+        "faixa_maxima": "35000",
+        "premio_liquido_12": "34.49",
+        "premio_bruto_12": "37.03",
+        "premio_liquido_24": "46.82",
+        "premio_bruto_24": "50.28"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "35001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "37.87",
+        "premio_bruto_12": "40.66",
+        "premio_liquido_24": "53.42",
+        "premio_bruto_24": "57.36"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "40001",
+        "faixa_maxima": "45000",
+        "premio_liquido_12": "49.46",
+        "premio_bruto_12": "53.11",
+        "premio_liquido_24": "60.62",
+        "premio_bruto_24": "65.09"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "45001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "50.27",
+        "premio_bruto_12": "53.98",
+        "premio_liquido_24": "65.05",
+        "premio_bruto_24": "69.85"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "63.70",
+        "premio_bruto_12": "68.40",
+        "premio_liquido_24": "78.31",
+        "premio_bruto_24": "84.09"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "60001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "64.60",
+        "premio_bruto_12": "69.37",
+        "premio_liquido_24": "91.05",
+        "premio_bruto_24": "97.77"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "70001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "75.74",
+        "premio_bruto_12": "81.33",
+        "premio_liquido_24": "98.74",
+        "premio_bruto_24": "106.03"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "80001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "79.06",
+        "premio_bruto_12": "84.89",
+        "premio_liquido_24": "111.23",
+        "premio_bruto_24": "119.44"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "82.98",
+        "premio_bruto_12": "89.10",
+        "premio_liquido_24": "125.86",
+        "premio_bruto_24": "135.15"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "100001",
+        "faixa_maxima": "110000",
+        "premio_liquido_12": "81.95",
+        "premio_bruto_12": "87.10",
+        "premio_liquido_24": "114.79",
+        "premio_bruto_24": "123.26"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "110001",
+        "faixa_maxima": "120000",
+        "premio_liquido_12": "98.53",
+        "premio_bruto_12": "105.80",
+        "premio_liquido_24": "137.73",
+        "premio_bruto_24": "147.89"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "120001",
+        "faixa_maxima": "130000",
+        "premio_liquido_12": "115.79",
+        "premio_bruto_12": "124.34",
+        "premio_liquido_24": "162.81",
+        "premio_bruto_24": "174.82"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "130001",
+        "faixa_maxima": "140000",
+        "premio_liquido_12": "134.43",
+        "premio_bruto_12": "144.35",
+        "premio_liquido_24": "188.58",
+        "premio_bruto_24": "202.49"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "140001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "154.43",
+        "premio_bruto_12": "165.83",
+        "premio_liquido_24": "217.64",
+        "premio_bruto_24": "233.70"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
+        "premio_liquido_12": "135.67",
+        "premio_bruto_12": "145.68",
+        "premio_liquido_24": "227.26",
+        "premio_bruto_24": "244.03"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "200001",
+        "faixa_maxima": "300000",
+        "premio_liquido_12": "193.24",
+        "premio_bruto_12": "207.51",
+        "premio_liquido_24": "324.09",
+        "premio_bruto_24": "348.01"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "300001",
+        "faixa_maxima": "400000",
+        "premio_liquido_12": "267.70",
+        "premio_bruto_12": "287.45",
+        "premio_liquido_24": "449.44",
+        "premio_bruto_24": "482.61"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "400001",
+        "faixa_maxima": "500000",
+        "premio_liquido_12": "339.28",
+        "premio_bruto_12": "364.32",
+        "premio_liquido_24": "570.01",
+        "premio_bruto_24": "612.08"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "500001",
+        "faixa_maxima": "600000",
+        "premio_liquido_12": "425.60",
+        "premio_bruto_12": "457.01",
+        "premio_liquido_24": "638.40",
+        "premio_bruto_24": "685.51"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "600001",
+        "faixa_maxima": "700000",
+        "premio_liquido_12": "496.28",
+        "premio_bruto_12": "532.91",
+        "premio_liquido_24": "744.43",
+        "premio_bruto_24": "799.37"
+    },
+    {
+        "produto": "21",
+        "faixa_minima": "700001",
+        "faixa_maxima": "800000",
+        "premio_liquido_12": "566.97",
+        "premio_bruto_12": "608.81",
+        "premio_liquido_24": "850.45",
+        "premio_bruto_24": "913.22"
+    },
+    {
+        "produto": "22",
+        "faixa_minima": "0",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "29.54",
+        "premio_bruto_12": "31.72",
+        "premio_liquido_24": "50.21",
+        "premio_bruto_24": "53.91"
+    },
+    {
+        "produto": "22",
+        "faixa_minima": "30001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "40.53",
+        "premio_bruto_12": "43.52",
+        "premio_liquido_24": "68.91",
+        "premio_bruto_24": "73.99"
+    },
+    {
+        "produto": "22",
+        "faixa_minima": "50001",
+        "faixa_maxima": "60000",
+        "premio_liquido_12": "52.03",
+        "premio_bruto_12": "55.87",
+        "premio_liquido_24": "88.46",
+        "premio_bruto_24": "94.99"
+    },
+    {
+        "produto": "22",
+        "faixa_minima": "60001",
+        "faixa_maxima": "80000",
+        "premio_liquido_12": "67.73",
+        "premio_bruto_12": "72.73",
+        "premio_liquido_24": "115.13",
+        "premio_bruto_24": "123.63"
+    },
+    {
+        "produto": "22",
+        "faixa_minima": "80001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "82.96",
+        "premio_bruto_12": "89.08",
+        "premio_liquido_24": "141.02",
+        "premio_bruto_24": "151.43"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "0",
+        "faixa_maxima": "10000",
+        "premio_liquido_12": "8.95",
+        "premio_bruto_12": "9.61",
+        "premio_liquido_24": "8.95",
+        "premio_bruto_24": "9.61"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "10001",
+        "faixa_maxima": "20000",
+        "premio_liquido_12": "13.45",
+        "premio_bruto_12": "14.44",
+        "premio_liquido_24": "13.45",
+        "premio_bruto_24": "14.44"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
+        "premio_liquido_12": "20.16",
+        "premio_bruto_12": "21.64",
+        "premio_liquido_24": "20.16",
+        "premio_bruto_24": "21.64"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
+        "premio_liquido_12": "24.65",
+        "premio_bruto_12": "26.47",
+        "premio_liquido_24": "24.65",
+        "premio_bruto_24": "26.47"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "30001",
+        "faixa_maxima": "35000",
+        "premio_liquido_12": "29.15",
+        "premio_bruto_12": "31.30",
+        "premio_liquido_24": "29.15",
+        "premio_bruto_24": "31.30"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "35001",
+        "faixa_maxima": "40000",
+        "premio_liquido_12": "33.61",
+        "premio_bruto_12": "36.09",
+        "premio_liquido_24": "33.61",
+        "premio_bruto_24": "36.09"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "40001",
+        "faixa_maxima": "45000",
+        "premio_liquido_12": "38.10",
+        "premio_bruto_12": "40.92",
+        "premio_liquido_24": "38.10",
+        "premio_bruto_24": "40.92"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "45001",
+        "faixa_maxima": "50000",
+        "premio_liquido_12": "42.58",
+        "premio_bruto_12": "45.72",
+        "premio_liquido_24": "42.58",
+        "premio_bruto_24": "45.72"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "50001",
+        "faixa_maxima": "70000",
+        "premio_liquido_12": "53.78",
+        "premio_bruto_12": "57.75",
+        "premio_liquido_24": "53.78",
+        "premio_bruto_24": "57.75"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "70001",
+        "faixa_maxima": "90000",
+        "premio_liquido_12": "71.71",
+        "premio_bruto_12": "77.00",
+        "premio_liquido_24": "71.71",
+        "premio_bruto_24": "77.00"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "90001",
+        "faixa_maxima": "100000",
+        "premio_liquido_12": "85.18",
+        "premio_bruto_12": "91.47",
+        "premio_liquido_24": "85.18",
+        "premio_bruto_24": "91.47"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "100001",
+        "faixa_maxima": "125000",
+        "premio_liquido_12": "100.88",
+        "premio_bruto_12": "108.33",
+        "premio_liquido_24": "100.88",
+        "premio_bruto_24": "108.33"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "125001",
+        "faixa_maxima": "150000",
+        "premio_liquido_12": "123.27",
+        "premio_bruto_12": "132.37",
+        "premio_liquido_24": "123.27",
+        "premio_bruto_24": "132.37"
+    },
+    {
+        "produto": "23",
+        "faixa_minima": "150001",
+        "faixa_maxima": "175000",
+        "premio_liquido_12": "145.67",
+        "premio_bruto_12": "156.42",
+        "premio_liquido_24": "145.67",
+        "premio_bruto_24": "156.42"
+    }
+]

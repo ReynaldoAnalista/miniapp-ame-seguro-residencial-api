@@ -96,10 +96,11 @@ export class HubService {
                     return {
                         id: x.order,
                         description: x.receivedPaymentNotification?.title,
-                        date: moment(dataInicioVigencia, "YYYY-MM-DD").format("DD/MM/YYYY"),
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         coverage: Plans.find((x) => x.id == selectedPlan?.planoId),
                         name: Tenants.RESIDENTIAL,
                     }
@@ -127,6 +128,7 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
@@ -141,8 +143,8 @@ export class HubService {
             } else {
                 petPlans = Object.assign(petPlansPlansFromDB).map((x) => {
                     return {
-                        status: x.success ? "Contratado" : "Não Contratado",
-                        initial_date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         partner: "Amigoo Pet",
                         name: Tenants.PET,
                     }
@@ -155,12 +157,12 @@ export class HubService {
             } else {
                 healthCarePlans = Object.assign(healthCarePlansPlansFromDB).map((x) => {
                     return {
-                        id: x?.order,
-                        status: x.success ? "Contratado" : "Não Contratado",
+                        id: x?.order,                        
                         date: moment(x.createdAt).format("DD/MM/YYYY"),
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Rede Mais Saúde",
                         name: Tenants.HEALTHCARE,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         description: x.receivedPaymentNotification.attributes.description,
                         planType: x.receivedPaymentNotification.attributes.customPayload.proposal.planType,
                         paymentValue:
@@ -192,6 +194,7 @@ export class HubService {
                         imei: device?.device_serial_code,
                         coverage: selectedPlan?.coverage,
                         guarantee: selectedPlan?.guarantee,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
@@ -210,11 +213,11 @@ export class HubService {
                     const device = proposal?.portable_equipment_risk_data
 
                     return {
-                        id: x?.order,
-                        status: x.success ? "Contratado" : "Não Contratado",
+                        id: x?.order,                        
                         date: moment(x.createdAt).format("DD/MM/YYYY"),
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Renova Laza",
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
                         name: Tenants.RENEW_PORTABLE,
                     }
                 })
@@ -282,6 +285,22 @@ export class HubService {
             dental: await this.faqInfoJson("seguro-dental-ame"),
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
             devices: await this.faqInfoJson("seguro-portateis"),
+        }
+    }
+
+    translateStatusPlan(status, createdDate) {
+        if(createdDate.diff(moment(), "years") < 0) {
+            return "Inativo"
+        }
+        switch(status) {
+            case "PROCESSED":
+                return "Contratado"
+            case "CANCELED":
+                return "Cancelado" 
+            case "PROSSESSING":
+                return "Contratado"
+            default:
+                return ""                            
         }
     }
 

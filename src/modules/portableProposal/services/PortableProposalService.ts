@@ -40,20 +40,18 @@ export class PortableProposalService {
         private parameterStore: ParameterStore
     ) {}
 
-    async processProposal(signedPayment: string) {
+    async processProposal(signedPayment: string, parseTenant = Tenants.PORTABLE) {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
-        log.info("Salvando o arquivo da notificação")
-        // await this.saveProposal(unsignedPayment)
         log.info("Separando o arquivo da proposta")
         const proposal = PortableProposalUtils.generateProposal(unsignedPayment)
         log.info("Enviando a proposta para a digibee")
         const proposalResponse = await this.sendProposal(proposal)
         log.info("Salvando a resposta da digibee")
-        // await this.saveProposalResponse(proposalResponse, unsignedPayment.id)
-        log.info("Salvando a compra")
-        await this.saveSoldProposal(unsignedPayment, proposalResponse, Tenants.PORTABLE)
-        log.info("Enviando o email ao cliente")
-        await this.mailService.sendSellingEmailByPaymentObject(unsignedPayment)
+        await this.saveSoldProposal(unsignedPayment, proposalResponse, parseTenant)
+        if (parseTenant == Tenants.PORTABLE) {
+            log.info("Enviando o email ao cliente")
+            await this.mailService.sendSellingEmailByPaymentObject(unsignedPayment)
+        }
         log.info("Retornando a proposta")
         return proposalResponse
     }
