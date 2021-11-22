@@ -172,6 +172,18 @@ export class PortableProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
+    @Post("/cancelation_security_ext_ge/{securyCancelType}")
+    public async cancelationSecurityExtGe(@Body() signedPayment: any, securyCancelType: string) {
+        try {
+            logger.info(`Iniciando o processo de cancelamento do ${securyCancelType}`)
+            return this.planService.cancelationProcess(signedPayment, securyCancelType)
+        } catch (e) {
+            logger.error(e)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
     @Post("/sold_proposal_cancel")
     public async cancelSoldProposal(@Body() orderProposal: any) {
         try {
