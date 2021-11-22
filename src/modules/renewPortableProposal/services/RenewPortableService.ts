@@ -150,7 +150,7 @@ export class RenewPortableService {
                 success: true,
                 partnerResponse: response,
                 apiVersion,
-                status: SoldProposalStatus.create,
+                status: SoldProposalStatus.renewed,
                 receivedPaymentNotification: proposal,
             })
             log.debug("saveSoldProposal:success")

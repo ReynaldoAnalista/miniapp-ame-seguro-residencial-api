@@ -11,6 +11,7 @@ import { ResidentialSoldProposalRepository } from "../repository/ResidentialSold
 import { Tenants } from "../../default/model/Tenants"
 import { ResidentialSoldProposal } from "../model/ResidentialSoldProposal"
 import moment from "moment"
+import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 
 const log = getLogger("ResidentialProposalService")
 
@@ -425,7 +426,10 @@ export class ResidentialProposalService {
             success: response?.success,
             createdAt: new Date().toISOString(),
             apiVersion,
-            status: "PROCESSED",
+            status:
+                typeof proposal.attributes.customPayload.renovation != "undefined"
+                    ? SoldProposalStatus.renewed
+                    : SoldProposalStatus.update,
         } as ResidentialSoldProposal)
         log.debug("saveSoldProposal:success")
     }
