@@ -172,7 +172,7 @@ export class PortableProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Post("/cancelation_security_ext_ge/{securyCancelType}")
+    @Post("/cancelation_security_ext_rf/{securyCancelType}")
     public async cancelationSecurityExtGe(@Body() signedPayment: any, securyCancelType: string) {
         try {
             logger.info(`Iniciando o processo de cancelamento do ${securyCancelType}`)
