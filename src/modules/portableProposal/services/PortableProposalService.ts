@@ -367,7 +367,7 @@ export class PortableProposalService {
         return await this.portableSoldProposalRepository.update(updateSoldProposal)
     }
 
-    async cancelationProcess(signedPayment: any) {
+    async cancelationProcess(signedPayment: any, securyCancelType: string = Tenants.PORTABLE) {
         let unsignedPayment: any
         if (!signedPayment.unsigned || typeof signedPayment.unsigned == "undefined") {
             unsignedPayment = await this.authTokenService.unsignNotification(signedPayment.signedPayment)
@@ -393,9 +393,9 @@ export class PortableProposalService {
                 Tenants.SMARTPHONE
             )
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
-            log.debug("Salvando o cancelamento na soldProposal")
+            log.debug(`Salvando o cancelamento do seguro ${securyCancelType} na soldProposal`)
             await this.refundProcess(unsignedPayment)
-            await this.saveCancelProposal(unsignedPayment, result, Tenants.PORTABLE)
+            await this.saveCancelProposal(unsignedPayment, result, securyCancelType)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
