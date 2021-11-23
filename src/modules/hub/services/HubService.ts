@@ -21,6 +21,7 @@ import { Tenants } from "../../default/model/Tenants"
 import path from "path"
 import util from "util"
 import fs from "fs"
+const cache = require("memory-cache")
 const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("ResidentialProposalService")
@@ -277,7 +278,11 @@ export class HubService {
     }
 
     async faqInfo() {
-        return {
+        const TOKEN_CACHE = `TOKENCACHE_FAQ`
+        if(cache.get(TOKEN_CACHE)){
+           return cache.get(TOKEN_CACHE)
+        }
+        const infoFaq = {
             agreement: await this.agreementPlanFaq(),
             pet: await this.faqInfoJson("assistencia-pet-ame"),
             residencial: await this.faqInfoJson("seguro-residencial"),
@@ -286,6 +291,8 @@ export class HubService {
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
             devices: await this.faqInfoJson("seguro-portateis"),
         }
+        cache.put(TOKEN_CACHE, infoFaq, 1000 * 60 * 60 * 20)        
+        return infoFaq
     }
 
     translateStatusPlan(status, createdDate) {
