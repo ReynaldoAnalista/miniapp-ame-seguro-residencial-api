@@ -157,7 +157,7 @@ export class HubService {
             } else {
                 healthCarePlans = Object.assign(healthCarePlansPlansFromDB).map((x) => {
                     return {
-                        id: x?.order,                        
+                        id: x?.order,
                         date: moment(x.createdAt).format("DD/MM/YYYY"),
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Rede Mais Saúde",
@@ -213,7 +213,7 @@ export class HubService {
                     const device = proposal?.portable_equipment_risk_data
 
                     return {
-                        id: x?.order,                        
+                        id: x?.order,
                         date: moment(x.createdAt).format("DD/MM/YYYY"),
                         diffDays: moment().diff(moment(x.createdAt), "days"),
                         partner: "Renova Laza",
@@ -289,18 +289,18 @@ export class HubService {
     }
 
     translateStatusPlan(status, createdDate) {
-        if(createdDate.diff(moment(), "years") < 0) {
+        if (createdDate.diff(moment(), "years") < 0) {
             return "Inativo"
         }
-        switch(status) {
+        switch (status) {
             case "PROCESSED":
-                return "Contratado"
+                return "Ativo"
             case "CANCELED":
-                return "Cancelado" 
+                return "Cancelado"
             case "PROSSESSING":
-                return "Contratado"
+                return "Ativo"
             default:
-                return ""                            
+                return ""
         }
     }
 
@@ -310,54 +310,56 @@ export class HubService {
                 title: "Como funcionam os Seguros e Assistências da Ame?",
                 content:
                     // eslint-disable-next-line prettier/prettier
-                    "Unimos a praticidade da Ame com a experiência de algumas das maiores seguradoras do Brasil pra você relaxar e deixar que a gente cuide dos imprevistos. Você faz a contratação e o pagamento dos Seguros e Assistências aqui na Ame e, quando precisar usar, é só falar com a seguradora."
+                    "Unimos a praticidade da Ame com a experiência de algumas das maiores seguradoras do Brasil pra você relaxar e deixar que a gente cuide dos imprevistos. Você faz a contratação e o pagamento dos Seguros e Assistências aqui na Ame e, quando precisar usar, é só falar com a seguradora.",
             },
             {
                 title: "Por que contratar os Seguros e Assistências na Ame?",
                 content:
                     // eslint-disable-next-line prettier/prettier
-                    "A gente facilita todo o processo, cuida das burocracias pra você e ainda te dá cashback na contratação de qualquer um dos seguros e assistências. Legal, né? E olha só, o dinheiro de volta fica disponível na sua conta Ame em 30 dias após a confirmação do pagamento ;)"
+                    "A gente facilita todo o processo, cuida das burocracias pra você e ainda te dá cashback na contratação de qualquer um dos seguros e assistências. Legal, né? E olha só, o dinheiro de volta fica disponível na sua conta Ame em 30 dias após a confirmação do pagamento ;)",
             },
             {
                 title: "Posso contratar um seguro pra outra pessoa?",
                 content:
                     // eslint-disable-next-line prettier/prettier
-                    "Você pode contratar um seguro ou assistência apenas para o titular da conta Ame. Caso queira contratar em nome de outra pessoa, é só baixar o app da Ame no celular de quem você quer fazer a contratação, criar uma conta Ame em nome dessa pessoa e pronto, contrate o seguro e assistência que a pessoa precisa! "
+                    "Você pode contratar um seguro ou assistência apenas para o titular da conta Ame. Caso queira contratar em nome de outra pessoa, é só baixar o app da Ame no celular de quem você quer fazer a contratação, criar uma conta Ame em nome dessa pessoa e pronto, contrate o seguro e assistência que a pessoa precisa! ",
             },
             {
                 title: "Contratei um dos seguros, mas ainda não recebi a confirmação. E agora?",
                 content:
                     // eslint-disable-next-line prettier/prettier
-                    "Ah, depois de concluir o pagamento do seu seguro ou assistência aqui na Ame, a confirmação é enviada por e-mail com todas as informações em até 5 dias. Fique de olho na caixa de spam, beleza? Caso tenha passado desses prazos, entre em contato com a gente através dos números 4004-2120 (todas as regiões) ou 0800 229 7667 (somente RJ)."
+                    "Ah, depois de concluir o pagamento do seu seguro ou assistência aqui na Ame, a confirmação é enviada por e-mail com todas as informações em até 5 dias. Fique de olho na caixa de spam, beleza? Caso tenha passado desses prazos, entre em contato com a gente através dos números 4004-2120 (todas as regiões) ou 0800 229 7667 (somente RJ).",
             },
             {
                 title: "Quando recebo meu cashback?",
                 content:
                     // eslint-disable-next-line prettier/prettier
-                    "Em até 30 dias após a aprovação do pagamento o cashback fica disponível pra você usar como quiser, é só acompanhar tudo no seu extrato."
+                    "Em até 30 dias após a aprovação do pagamento o cashback fica disponível pra você usar como quiser, é só acompanhar tudo no seu extrato.",
             },
             {
                 title: "Como eu aciono o seguro que contratei?",
                 content:
-                    "Ah, é simples. Para acionar o seguro, em caso de sinistro (qualquer evento em que o bem segurado sofre um acidente ou prejuízo material), entre em contato com a seguradora e informe todos os dados sobre o serviço que você quer usar. Já para as assistências Pet e Dental, é só consultar as redes credenciadas e marcar suas consultas, exames e procedimentos normalmente."
+                    "Ah, é simples. Para acionar o seguro, em caso de sinistro (qualquer evento em que o bem segurado sofre um acidente ou prejuízo material), entre em contato com a seguradora e informe todos os dados sobre o serviço que você quer usar. Já para as assistências Pet e Dental, é só consultar as redes credenciadas e marcar suas consultas, exames e procedimentos normalmente.",
             },
             {
                 title: "Como consulto a rede credenciada das assistências Pet ?",
-                content: "Para Assistência Pet, consulte em encontre clínicas parceiras e clínicas indicadas | Amigoo Pet"
+                content: "Para Assistência Pet, consulte em encontre clínicas parceiras e clínicas indicadas | Amigoo Pet",
             },
             {
                 title: "Como consulto a rede credenciada das assistências Dental?",
-                content: "Para Assistência Dental, consulte em encontre dentistas e clínicas do plano dental | W.Dental."
+                content: "Para Assistência Dental, consulte em encontre dentistas e clínicas do plano dental | W.Dental.",
             },
         ]
     }
 
-    async securyInfoFormatter(faqUnformated) {        
-
-        return faqUnformated.map(faq => {           
+    async securyInfoFormatter(faqUnformated) {
+        return faqUnformated.map((faq) => {
             return {
-                "title" : faq.pergunta,
-                "content" : faq.resposta.replace(/<\/?[^>]+(>|$)/g, "").replace(/\&nbsp;/g, '').replace(/(\r\n|\n|\r)/gm, "")
+                title: faq.pergunta,
+                content: faq.resposta
+                    .replace(/<\/?[^>]+(>|$)/g, "")
+                    .replace(/\&nbsp;/g, "")
+                    .replace(/(\r\n|\n|\r)/gm, ""),
             }
         })
     }
