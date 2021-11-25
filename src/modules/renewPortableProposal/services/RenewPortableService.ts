@@ -64,7 +64,6 @@ export class RenewPortableService {
             return response.data
         })
         const prizeObject = prize
-        return prizeObject
             .filter((prize) => {
                 if (parseInt(prize.produto) == prizeInfo.product_type_id) {
                     if (
@@ -89,6 +88,7 @@ export class RenewPortableService {
                     },
                 ]
             })
+        return prizeObject[0]
     }
 
     async sendProposal(proposal: any) {
