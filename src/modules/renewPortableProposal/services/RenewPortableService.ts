@@ -94,7 +94,7 @@ export class RenewPortableService {
                 status: false,
             }
         }
-        return prizeObject
+        return prizeObject[0]
     }
 
     async sendProposal(proposal: any) {
