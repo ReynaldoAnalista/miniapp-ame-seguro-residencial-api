@@ -88,6 +88,12 @@ export class RenewPortableService {
                     },
                 ]
             })
+        if (typeof prizeObject[0] == "undefined") {
+            return {
+                message: "Valor excede o limite",
+                status: false,
+            }
+        }
         return prizeObject[0]
     }
 
