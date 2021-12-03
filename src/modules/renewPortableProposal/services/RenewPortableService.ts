@@ -77,6 +77,10 @@ export class RenewPortableService {
             .map((x) => {
                 return [
                     {
+                        message: "Valor recebido com suceso",
+                        status: true,
+                    },
+                    {
                         id: 12,
                         premio_liquido: x.premio_liquido_12,
                         premio_bruto: x.premio_bruto_12,
