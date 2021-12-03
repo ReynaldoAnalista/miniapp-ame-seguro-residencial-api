@@ -37,4 +37,17 @@ export class healthCareProposalController {
             throw new ApiError("HealthCare Cancel Not sent", 500)
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cotation")
+    public async cotation(@Body() request: any) {
+        log.info("HealthCare Cotation")
+        try {
+            return await this.healthCareProposalService.cotation(request)
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("HealthCare Cotation Not sent", 500)
+        }
+    }
 }

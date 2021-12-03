@@ -6,6 +6,11 @@ import { RequestService } from "../../authToken/services/RequestService"
 import { healthCareProposalRepository } from "../repository/healthCareProposalRepository"
 import { healthCareProposalSoldRepository } from "../repository/healthCareProposalSoldRepository"
 import { Tenants } from "../../default/model/Tenants"
+import path from "path"
+import util from "util"
+import fs from "fs"
+
+const readFile = util.promisify(fs.readFile)
 
 const log = getLogger("healthCareProposalService")
 
@@ -115,6 +120,15 @@ export class HealthCareProposalService {
             success: false,
             message: "Não foi possível salvar os dados de HealthCare",
         }
+    }
+
+    async cotation(request: any) {
+        const cotation = await readFile(path.resolve(__dirname, "../../../files/health_care_cotation.json"), "utf-8")
+        const cotationObject = JSON.parse(cotation)
+        const finalCotation = cotationObject.filter(function (x) {
+            return request.age >= x.min && request.age <= x.max
+        })
+        return finalCotation
     }
 
     async cancelPropose(request: any) {
