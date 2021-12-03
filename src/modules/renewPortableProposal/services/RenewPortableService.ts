@@ -7,6 +7,7 @@ import { Tenants } from "../../default/model/Tenants"
 import { RenewPortableSoldProposal } from "../repository/RenewPortableSoldProposal"
 import { RenewPortableUtils } from "./RenewPortableUtils"
 import axios from "axios"
+import { ApiError } from "../../../errors/ApiError"
 
 const log = getLogger("RenewPortableService")
 
@@ -77,10 +78,6 @@ export class RenewPortableService {
             .map((x) => {
                 return [
                     {
-                        message: "Valor recebido com suceso",
-                        status: true,
-                    },
-                    {
                         id: 12,
                         premio_liquido: x.premio_liquido_12,
                         premio_bruto: x.premio_bruto_12,
@@ -93,10 +90,7 @@ export class RenewPortableService {
                 ]
             })
         if (typeof prizeObject[0] == "undefined") {
-            return {
-                message: "Valor excede o limite",
-                status: false,
-            }
+            throw new ApiError("Valor excede o limite", 500, `Valor excede o limite`)
         }
         return prizeObject[0]
     }
