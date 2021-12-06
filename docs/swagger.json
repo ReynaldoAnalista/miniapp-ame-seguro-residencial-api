@@ -697,59 +697,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"agreement": {
-											"items": {
-												"properties": {
-													"title": {
-														"type": "string"
-													},
-													"content": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"content",
-													"title"
-												],
-												"type": "object"
-											},
-											"type": "array"
-										},
-										"pet": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"residencial": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"smartphone": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"dental": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"healthcare": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"devices": {
-											"additionalProperties": true,
-											"type": "object"
-										}
-									},
-									"required": [
-										"devices",
-										"healthcare",
-										"dental",
-										"smartphone",
-										"residencial",
-										"pet",
-										"agreement"
-									],
+									"additionalProperties": true,
 									"type": "object"
 								}
 							}
@@ -948,6 +896,41 @@
 		"/v1/portable/sendProposal": {
 			"post": {
 				"operationId": "SendProposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PortableProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/portable/sendProposal_ext_ge": {
+			"post": {
+				"operationId": "SendProposalExtGe",
 				"responses": {
 					"200": {
 						"content": {
@@ -1378,6 +1361,50 @@
 				},
 				"security": [],
 				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/portable/cancelation_security_ext_rf/{securyCancelType}": {
+			"post": {
+				"operationId": "CancelationSecurityExtGe",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "securyCancelType",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {

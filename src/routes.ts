@@ -552,6 +552,31 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/portable/sendProposal_ext_ge',
+        function(request: any, response: any, next: any) {
+            const args = {
+                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "ref": "PortableProposalNotification" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<PortableProposalController>(PortableProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.sendProposalExtGe.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.post('/ame-seguro-residencial/v1/portable/updateProposal/:proposalId',
         function(request: any, response: any, next: any) {
             const args = {
@@ -777,6 +802,32 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.cancelationSecurity.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/portable/cancelation_security_ext_rf/:securyCancelType',
+        function(request: any, response: any, next: any) {
+            const args = {
+                signedPayment: { "in": "body", "name": "signedPayment", "required": true, "dataType": "any" },
+                securyCancelType: { "in": "path", "name": "securyCancelType", "required": true, "dataType": "string" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<PortableProposalController>(PortableProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.cancelationSecurityExtGe.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
