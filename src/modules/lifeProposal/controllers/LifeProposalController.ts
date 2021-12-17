@@ -23,4 +23,17 @@ export class LifeProposalController {
             throw new ApiError("Life Model Not sent", 500)
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/luck_number")
+    public async luckNumber() {
+        logger.info("Get First Luck Number")
+        try {
+            return await this.lifeProposalService.luckNumber()
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("First Luck Number Not sent", 500)
+        }
+    }
 }

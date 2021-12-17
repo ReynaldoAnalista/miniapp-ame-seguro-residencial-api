@@ -13,4 +13,8 @@ export class LifeProposalService {
         const sendCotation = await this.lifeProposalUtil.getCotation(formatPropose)
         return sendCotation
     }
+
+    async luckNumber() {
+        return
+    }
 }
