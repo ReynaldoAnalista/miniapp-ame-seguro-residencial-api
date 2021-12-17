@@ -122,10 +122,50 @@ export class HealthCareProposalService {
         }
     }
 
+    async healthCareCotationInfo() {
+        return [
+            {
+                min: 0,
+                max: 30,
+                morte: 1.9,
+                ipa: 1.28,
+                diha: 0.65,
+                funeral: 0.46,
+                sorteio_liquido: 0.48,
+            },
+            {
+                min: 31,
+                max: 40,
+                morte: 3.08,
+                ipa: 1.28,
+                diha: 0.65,
+                funeral: 0.7,
+                sorteio_liquido: 0.48,
+            },
+            {
+                min: 41,
+                max: 50,
+                morte: 8.88,
+                ipa: 1.28,
+                diha: 0.65,
+                funeral: 1.87,
+                sorteio_liquido: 0.48,
+            },
+            {
+                min: 51,
+                max: 60,
+                morte: 18.37,
+                ipa: 1.28,
+                diha: 0.65,
+                funeral: 3.78,
+                sorteio_liquido: 0.48,
+            },
+        ]
+    }
+
     async cotation(request: any) {
-        const cotation = await readFile(path.resolve(__dirname, "../../../files/health_care_cotation.json"), "utf-8")
-        const cotationObject = JSON.parse(cotation)
-        const finalCotation = cotationObject
+        const cotation = await this.healthCareCotationInfo()
+        const finalCotation = cotation
             .filter((x) => request.age >= x.min && request.age <= x.max)
             .map((x) => {
                 return {
