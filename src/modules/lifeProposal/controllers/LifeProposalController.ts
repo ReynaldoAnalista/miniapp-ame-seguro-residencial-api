@@ -4,7 +4,7 @@ import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { LifeProposalService } from "../services/LifeProposalService"
 
-const logger = getLogger("LifeController")
+const log = getLogger("LifeController")
 
 @Route("/v1/life")
 @injectable()
@@ -14,13 +14,13 @@ export class LifeProposalController {
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
-    public async cotationPlan(@Body() cotation: any) {
-        logger.info("Get Life Cotation")
+    public async cotation(@Body() request: any) {
+        log.info("HealthCare Cotation")
         try {
-            return await this.lifeProposalService.cotation(cotation)
+            return await this.lifeProposalService.cotation(request)
         } catch (e) {
-            logger.error(e.message)
-            throw new ApiError("Life Model Not sent", 500)
+            log.error(e.message)
+            throw new ApiError("HealthCare Cotation Not sent", 500)
         }
     }
 
@@ -28,11 +28,11 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/luck_number")
     public async luckNumber() {
-        logger.info("Get First Luck Number")
+        log.info("Get First Luck Number")
         try {
             return await this.lifeProposalService.luckNumber()
         } catch (e) {
-            logger.error(e.message)
+            log.error(e.message)
             throw new ApiError("First Luck Number Not sent", 500)
         }
     }
