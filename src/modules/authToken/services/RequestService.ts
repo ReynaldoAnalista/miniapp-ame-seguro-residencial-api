@@ -74,7 +74,6 @@ export class RequestService {
             headers = {
                 "Content-Type": "application/json",
                 apikey: await this.parameterStore.getSecretValue("LIFE_API_KEY"),
-                Authorization: `${token}`,
             }
         }
         if (tenant === Tenants.HEALTHCARE) {
