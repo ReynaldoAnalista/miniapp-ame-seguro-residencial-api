@@ -23,7 +23,23 @@ export class LuckNumberRepository {
         return luckNumber
     }
 
-    async update(customerId: any, order: any) {
-        return
+    async findFirstLuckNumber(orderNumber) {
+        const params = {
+            TableName: TABLE,
+            Key: {
+                order_number: orderNumber,
+            },
+        }
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const result = await dynamoDocClient.get(params).promise()
+        return result.Item
+    }
+
+    async assocLuckNumber(proposal: any) {
+        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+        const params = { Key: proposal.id, TableName: TABLE, Item: proposal }
+        await dynamoDocClient.update(params).promise()
+        log.info("Salvando os registros HealthCare na tabela soldProposal")
+        return proposal
     }
 }

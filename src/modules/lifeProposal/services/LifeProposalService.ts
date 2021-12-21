@@ -9,6 +9,7 @@ import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
+import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -19,7 +20,8 @@ export class LifeProposalService {
         @inject("AuthTokenService") private authTokenService: AuthTokenService,
         @inject("RequestService") private requestService: RequestService,
         @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil,
-        @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository
+        @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository,
+        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository
     ) {}
 
     async healthCareCotationInfo() {
@@ -87,7 +89,12 @@ export class LifeProposalService {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
+        await this.luckNumberAssoc(unsignedPayment)
         return proposalResponse
+    }
+
+    async findLuckNumber(number) {
+        return await this.luckNumberRepository.findFirstLuckNumber(number)
     }
 
     async sendProposal(payment: any) {
@@ -125,7 +132,7 @@ export class LifeProposalService {
         log.debug("saveSoldProposal:success")
     }
 
-    async luckNumber() {
-        return
+    async luckNumberAssoc(proposal) {
+        return this.luckNumberRepository.assocLuckNumber(proposal)
     }
 }

@@ -19,6 +19,19 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"LifeProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"PetProposalNotification": {
 				"properties": {
 					"signedPayment": {
@@ -715,16 +728,77 @@
 				"parameters": []
 			}
 		},
-		"/v1/life/cotation": {
+		"/v1/life/sendProposal": {
 			"post": {
-				"operationId": "CotationPlan",
+				"operationId": "Proposal",
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"success": {
+											"type": "boolean"
+										},
+										"content": {
+											"additionalProperties": true,
+											"type": "object"
+										}
+									},
+									"required": [
+										"content",
+										"success"
+									],
 									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LifeProposalNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/cotation": {
+			"post": {
+				"operationId": "Cotation",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"voce": {
+												"type": "string"
+											},
+											"familia": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"familia",
+											"voce"
+										],
+										"type": "object"
+									},
+									"type": "array"
 								}
 							}
 						},
@@ -748,6 +822,27 @@
 						}
 					}
 				}
+			}
+		},
+		"/v1/life/luck_number": {
+			"post": {
+				"operationId": "LuckNumber",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/v1/pet/planList": {
@@ -3202,6 +3297,52 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/MaintenanceNotification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/maintenance/insert_luck_number": {
+			"post": {
+				"operationId": "InsertLuckNumber",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"success": {
+											"type": "boolean"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
 							}
 						}
 					}
