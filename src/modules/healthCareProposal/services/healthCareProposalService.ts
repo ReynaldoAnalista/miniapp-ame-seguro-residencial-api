@@ -170,17 +170,18 @@ export class HealthCareProposalService {
             .map((x) => {
                 return {
                     voce: (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2),
-                    familia: (
-                        x.morte / 2 +
-                        x.morte * request.range +
-                        x.ipa * request.range +
-                        x.diha +
-                        x.funeral +
-                        x.sorteio_liquido
-                    ).toFixed(2),
+                    familia: {
+                        // eslint-disable-next-line prettier/prettier
+                        total: ((x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido) / 2).toFixed(2),
+                        morte: x.morte / 2,
+                        ipa: x.ipa,
+                        diha: x.diha,
+                        funeral: x.funeral,
+                        sorteio_liquido: x.sorteio_liquido,
+                    },
                 }
             })
-        return finalCotation
+        return finalCotation[0]
     }
 
     async cancelPropose(request: any) {
