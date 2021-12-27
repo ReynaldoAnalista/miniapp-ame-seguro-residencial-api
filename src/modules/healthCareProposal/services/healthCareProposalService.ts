@@ -196,7 +196,7 @@ export class HealthCareProposalService {
                     },
                 }
             })
-        return finalCotation
+        return finalCotation[0]
     }
 
     async cancelPropose(request: any) {
