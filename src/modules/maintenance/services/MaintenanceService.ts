@@ -82,6 +82,8 @@ export class MaintenanceService {
                     plan_number: x.plan_number,
                     order_number: x.order_number,
                     register_number: x.register_number,
+                    keyRegister: x.keyRegister,
+                    used: x.used,
                 })
             })
             return {

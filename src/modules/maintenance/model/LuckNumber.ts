@@ -5,4 +5,6 @@ export interface LuckNumber {
     plan_number: number
     order_number: number
     register_number: number
+    keyRegister: string
+    used: boolean
 }

@@ -87,14 +87,16 @@ export class LifeProposalService {
 
     async proposal(signedPayment: any) {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+        const firstLuckNumber = await this.findLuckNumber()
+        unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
         const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
-        await this.luckNumberAssoc(unsignedPayment)
+        await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
         return proposalResponse
     }
 
-    async findLuckNumber(number) {
-        return await this.luckNumberRepository.findFirstLuckNumber(number)
+    async findLuckNumber() {
+        return await this.luckNumberRepository.findFirstLuckNumber()
     }
 
     async sendProposal(payment: any) {
@@ -132,7 +134,7 @@ export class LifeProposalService {
         log.debug("saveSoldProposal:success")
     }
 
-    async luckNumberAssoc(proposal) {
-        return this.luckNumberRepository.assocLuckNumber(proposal)
+    async setUsedLuckNumber(proposal, luckNumberInfo) {
+        return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
     }
 }

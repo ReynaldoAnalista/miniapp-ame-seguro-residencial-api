@@ -23,27 +23,40 @@ export class LuckNumberRepository {
         return luckNumber
     }
 
-    async findFirstLuckNumber(id) {
+    async findFirstLuckNumber() {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "#serial_number = :serial_number",
-            ExpressionAttributeNames: {
-                "#serial_number": "serial_number",
-            },
+            IndexName: "keyRegisterIndex",
+            KeyConditionExpression: "keyRegister = :keyRegister",
             ExpressionAttributeValues: {
-                ":serial_number": 1,
+                ":keyRegister": "A01",
             },
         }
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
         const result = await dynamoDocClient.query(params).promise()
-        return result.Items
+        return result.Items?.filter((x) => x.used == false).shift()
     }
 
-    async assocLuckNumber(proposal: any) {
+    async setUsedLuckNumber(proposal: any, luckNumberInfo: any) {
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-        const params = { Key: proposal.id, TableName: TABLE, Item: proposal }
+        const params = {
+            TableName: TABLE,
+            Key: {
+                id: luckNumberInfo.id,
+                keyRegister: "A01",
+            },
+            UpdateExpression: "set #variavelUsed = :y, #variavelCpf = :z",
+            ExpressionAttributeNames: {
+                "#variavelUsed": "used",
+                "#variavelCpf": "cpf",
+            },
+            ExpressionAttributeValues: {
+                ":y": true,
+                ":z": proposal.insured.cpf,
+            },
+        }
         await dynamoDocClient.update(params).promise()
-        log.info("Salvando os registros HealthCare na tabela soldProposal")
+        log.info(`Atualizando os registros de LuckNumber para true na tabela ${TABLE}`)
         return proposal
     }
 }

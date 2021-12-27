@@ -6,8 +6,8 @@
             "KeyType": "HASH"
         },
         {
-            "AttributeName": "serial_number",
-            "KeyType": "N"
+            "AttributeName": "keyRegister",
+            "KeyType": "RANGE"
         }
     ],
     "AttributeDefinitions": [
@@ -16,12 +16,30 @@
             "AttributeType": "S"
         },
         {
-            "AttributeName": "serial_number",
-            "AttributeType": "N"
+            "AttributeName": "keyRegister",
+            "AttributeType": "S"
         }
     ],
     "ProvisionedThroughput": {
         "ReadCapacityUnits": 5,
         "WriteCapacityUnits": 5
-    }
+    },
+    "GlobalSecondaryIndexes": [
+        {
+            "IndexName": "keyRegisterIndex",
+            "KeySchema": [
+              {
+                "AttributeName": "keyRegister",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            }
+        }
+    ]
 }

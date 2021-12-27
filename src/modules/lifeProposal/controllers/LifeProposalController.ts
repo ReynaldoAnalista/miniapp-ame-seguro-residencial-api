@@ -37,17 +37,4 @@ export class LifeProposalController {
             throw new ApiError("HealthCare Cotation Not sent", 500)
         }
     }
-
-    @Response(404, "NotFound")
-    @SuccessResponse("200", "Retrieved")
-    @Post("/first_luck_number")
-    public async firstLuckNumber(@Body() number: any) {
-        log.info("HealthCare Cotation")
-        try {
-            return await this.lifeProposalService.findLuckNumber(number.number)
-        } catch (e) {
-            log.error(e.message)
-            throw new ApiError("HealthCare Cotation Not sent", 500)
-        }
-    }
 }
