@@ -185,7 +185,9 @@ export class HealthCareProposalService {
             .filter((x) => request.age >= x.min && request.age <= x.max)
             .map((x) => {
                 return {
-                    voce: x.morte * request.range + x.ipa + x.diha + x.funeral + x.sorteio_liquido,
+                    voce: parseFloat(
+                        (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
+                    ),
                     familia: {
                         morte_conjuge: x.morte_conjuge * request.range,
                         funeral_conjuge: x.funeral_conjuge,
