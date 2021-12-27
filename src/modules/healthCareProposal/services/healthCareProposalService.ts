@@ -129,8 +129,12 @@ export class HealthCareProposalService {
                 max: 30,
                 morte: 1.9,
                 ipa: 1.28,
+                morte_conjuge: 0.95,
                 diha: 0.65,
                 funeral: 0.46,
+                funeral_conjuge: 0.7,
+                funeral_pais: 4.93,
+                funeral_sogros: 4.93,
                 sorteio_liquido: 0.48,
             },
             {
@@ -138,8 +142,12 @@ export class HealthCareProposalService {
                 max: 40,
                 morte: 3.08,
                 ipa: 1.28,
+                morte_conjuge: 1.54,
                 diha: 0.65,
                 funeral: 0.7,
+                funeral_conjuge: 0.96,
+                funeral_pais: 6.61,
+                funeral_sogros: 6.61,
                 sorteio_liquido: 0.48,
             },
             {
@@ -147,8 +155,12 @@ export class HealthCareProposalService {
                 max: 50,
                 morte: 8.88,
                 ipa: 1.28,
+                morte_conjuge: 4.44,
                 diha: 0.65,
                 funeral: 1.87,
+                funeral_conjuge: 2.25,
+                funeral_pais: 15.56,
+                funeral_sogros: 15.56,
                 sorteio_liquido: 0.48,
             },
             {
@@ -156,8 +168,12 @@ export class HealthCareProposalService {
                 max: 60,
                 morte: 18.37,
                 ipa: 1.28,
+                morte_conjuge: 9.19,
                 diha: 0.65,
                 funeral: 3.78,
+                funeral_conjuge: 4.2,
+                funeral_pais: 37.79,
+                funeral_sogros: 37.79,
                 sorteio_liquido: 0.48,
             },
         ]
@@ -169,15 +185,14 @@ export class HealthCareProposalService {
             .filter((x) => request.age >= x.min && request.age <= x.max)
             .map((x) => {
                 return {
-                    voce: (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2),
+                    voce: parseFloat(
+                        (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
+                    ),
                     familia: {
-                        // eslint-disable-next-line prettier/prettier
-                        total: ((x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido) / 2).toFixed(2),
-                        morte: x.morte / 2,
-                        ipa: x.ipa,
-                        diha: x.diha,
-                        funeral: x.funeral,
-                        sorteio_liquido: x.sorteio_liquido,
+                        morte_conjuge: x.morte_conjuge * request.range,
+                        funeral_conjuge: x.funeral_conjuge,
+                        funeral_pais: x.funeral_pais,
+                        funeral_sogros: x.funeral_sogros,
                     },
                 }
             })
