@@ -4,12 +4,20 @@
         {
             "AttributeName": "id",
             "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "serial_number",
+            "KeyType": "N"
         }
     ],
     "AttributeDefinitions": [
         {
             "AttributeName": "id",
             "AttributeType": "S"
+        },
+        {
+            "AttributeName": "serial_number",
+            "AttributeType": "N"
         }
     ],
     "ProvisionedThroughput": {

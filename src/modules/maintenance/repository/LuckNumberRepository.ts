@@ -23,16 +23,20 @@ export class LuckNumberRepository {
         return luckNumber
     }
 
-    async findFirstLuckNumber(orderNumber) {
+    async findFirstLuckNumber(id) {
         const params = {
             TableName: TABLE,
-            Key: {
-                order_number: orderNumber,
+            KeyConditionExpression: "#serial_number = :serial_number",
+            ExpressionAttributeNames: {
+                "#serial_number": "serial_number",
+            },
+            ExpressionAttributeValues: {
+                ":serial_number": 1,
             },
         }
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-        const result = await dynamoDocClient.get(params).promise()
-        return result.Item
+        const result = await dynamoDocClient.query(params).promise()
+        return result.Items
     }
 
     async assocLuckNumber(proposal: any) {
