@@ -100,4 +100,17 @@ export class MaintenanceController {
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/insert_luck_number")
+    public async insertLuckNumber(@Body() info: any) {
+        logger.info("Insert into DynamoDb Storage SoldProposal")
+        try {
+            return await this.maintenanceService.insertLuckNumber(info.signedInfo)
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
 }

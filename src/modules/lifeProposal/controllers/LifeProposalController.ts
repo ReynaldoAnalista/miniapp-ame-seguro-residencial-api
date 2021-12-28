@@ -3,8 +3,9 @@ import { Route, SuccessResponse, Response, Post, Body } from "tsoa"
 import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { LifeProposalService } from "../services/LifeProposalService"
+import { LifeProposalNotification } from "../model/LifeProposalNotification"
 
-const logger = getLogger("LifeController")
+const log = getLogger("LifeController")
 
 @Route("/v1/life")
 @injectable()
@@ -13,14 +14,27 @@ export class LifeProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Post("/cotation")
-    public async cotationPlan(@Body() cotation: any) {
-        logger.info("Get Life Cotation")
+    @Post("/sendProposal")
+    public async proposal(@Body() signedPayment: LifeProposalNotification) {
+        log.info("HealthCare Cotation")
         try {
-            return await this.lifeProposalService.cotation(cotation)
+            return await this.lifeProposalService.proposal(signedPayment.signedPayment)
         } catch (e) {
-            logger.error(e.message)
-            throw new ApiError("Life Model Not sent", 500)
+            log.error(e.message)
+            throw new ApiError("HealthCare Cotation Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/cotation")
+    public async cotation(@Body() request: any) {
+        log.info("HealthCare Cotation")
+        try {
+            return await this.lifeProposalService.cotation(request)
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("HealthCare Cotation Not sent", 500)
         }
     }
 }
