@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            body {
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 14px;
+            }
+            .proposalInfo {
+                color: blue;                
+            }
+            table > tbody > tr > td {
+                padding: 5px 0;
+            }
+            .tableCoberturas {
+                width: 100%;
+            }
+            .tableCoberturas > thead > tr > th,
+            .tableCoberturas > tbody > tr > td
+            {
+                padding: 7px 0;                
+                font-size: 12px;
+                text-align: center;   
+            }
+            .tableCoberturas > thead > tr {
+                background-color: #2a6099;
+                color: white;
+                border: none; 
+            }
+        </style>
+    </head>
+    <body>
+        <div style="margin-left: auto; margin-right: auto; width: 60%">
+            <div>
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <td>
+                                <img
+                                    width="150px"
+                                    src="https://www.shipay.com.br/wp-content/uploads/2020/07/ame-logo-colorida-2.png"
+                                    alt=""
+                                />
+                            </td>
+                            <td style="width: 50%; position: relative">
+                                <img
+                                    style="position: absolute; right: 0; top: 0"
+                                    width="200px"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Metlife_logo.jpg"
+                                    alt=""
+                                />
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div style="padding-top: 10px;">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr style="font: bold 20px;" class="proposalInfo">
+                            <th>APÓLICE INDIVIDUAL</th>
+                            <th>SEGURO DE VIDA</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding-top: 10px;">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td>Seguro: <span class="proposalInfo">Ame Vida </span></td>
+                            <td>Ramo do Seguro: <span class="proposalInfo">09|91</span></td>
+                        </tr>
+                        <tr>
+                            <td>Número da Proposta: <span class="proposalInfo">@@numero_proposta@@</span>  </td>
+                            <td>Data de Emissão: <span class="proposalInfo">@@data_emissao@@</span>  </td>
+                        </tr>
+                        <tr>
+                            <td>Nº Apólice: <span class="proposalInfo">@@numero_apolice@@</span>  </td>
+                        </tr>
+                        <tr>
+                            <td>Segurado: <span class="proposalInfo">@@nome_segurado@@</span>  </td>
+                            <td>CPF: <span class="proposalInfo">@@cpf_segurado@@</span>  </td>
+                        </tr>
+                        <tr>
+                            <td>Logradouro: <span class="proposalInfo">@@nome_logradouro@@</span>  </td>
+                            <td>Cidade: <span class="proposalInfo">@@nome_cidade@@</span>  </td>
+                        </tr>
+                        <tr>
+                            <td>Complemento: <span class="proposalInfo">@@complemento_endereco@@</span>  </td>
+                            <td>CEP: <span class="proposalInfo">@@cep_endereco@@</span>  </td>
+                            <td>UF: <span class="proposalInfo">@@uf_endereco@@</span>  </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding-top: 15px; padding-bottom: 15px;">
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>Início de vigência: <span class="proposalInfo">@@inicio_vigencia@@</span></td>
+                            <td>Fim de vigência: <span class="proposalInfo">@@fim_vigencia@@</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <table style="border-collapse: collapse; width: 100%;" class="tableCoberturas">
+                    <thead>
+                        <tr style="background-color: #2a6099; color: white; border: none; ">
+                            <th>Coberturas</th>
+                            <th>Importância Segurada (R$)</th>
+                            <th>IOF (R$)</th>
+                            <th>Prêmio Bruto (R$)</th>
+                            <th>Franquia</th>
+                            <th>Carência</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Morte</td>
+                            <td>@@importancia_segurada_morte@@</td>                            
+                            <td>@@iof_morte@@</td>                            
+                            <td>@@premio_bruto_morte@@</td>                            
+                            <td>-</td>                            
+                            <td>-</td>                            
+                        </tr>
+                        <tr>
+                            <td>Invalidez por Acidente (até)</td>
+                            <td>@@importancia_segurada_invalidez@@</td>                            
+                            <td>@@iof_invalidez@@</td>                            
+                            <td>@@premio_bruto_invalidez@@</td>                            
+                            <td>-</td>                            
+                            <td>-</td>                            
+                        </tr>
+                        <tr>
+                            <td>Diária Por Internação Hospitalar por Acidente (DIHA)</td>
+                            <td>@@importancia_segurada_diha@@</td>                            
+                            <td>@@iof_diha@@</td>                            
+                            <td>@@premio_bruto_diha@@</td>                            
+                            <td>-</td>                            
+                            <td>-</td>                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding-top: 10px;">
+                <table style="border-collapse: collapse; width: 100%;" class="tableCoberturas">
+                    <thead>
+                        <tr>
+                            <th>Serviços</th>
+                            <th>Limite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@@servico_assistencia@@</td>                            
+                            <td>@@limite_assistencia@@</td>                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="padding-top: 10px;">
+                <table class="tableCoberturas">
+                    <thead>
+                        <tr>
+                            <th colspan="4">Sorteio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nº da Série/Sorte: @@numero_sorte@@</td>
+                            <td>Periodicidade: Mensal</td>
+                            <td>valor Líquido: 10.000,00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>CAPEMISA Capitalização S/A</td>
+                            <td>CNPJ: 14.056.028/0001-55</td>
+                            <td>Processo SUSEP: 15414.609828/2021-76</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
