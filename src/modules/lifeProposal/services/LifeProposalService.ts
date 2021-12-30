@@ -10,6 +10,9 @@ import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
+import { ParameterStore } from "../../../configs/ParameterStore"
+import EmailSender from "./EmailSender"
+import moment from "moment"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -21,7 +24,8 @@ export class LifeProposalService {
         @inject("RequestService") private requestService: RequestService,
         @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil,
         @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository,
-        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository
+        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository,
+        @inject("ParameterStore") private parameterStore: ParameterStore
     ) {}
 
     async healthCareCotationInfo() {
@@ -105,10 +109,12 @@ export class LifeProposalService {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const firstLuckNumber = await this.findLuckNumber()
         unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
-        const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
-        await this.saveSoldProposal(unsignedPayment, proposalResponse)
-        await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
-        return proposalResponse
+        // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+        // await this.saveSoldProposal(unsignedPayment, proposalResponse)
+        // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+        // await this.sendSellingEmailByPaymentObject(unsignedPayment)
+        // return proposalResponse
+        return unsignedPayment
     }
 
     async findLuckNumber() {
@@ -152,5 +158,45 @@ export class LifeProposalService {
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
         return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
+    }
+
+    async sendSellingEmailByPaymentObject(unsignedPayment) {
+        const email = unsignedPayment?.attributes?.customPayload?.clientEmail
+        log.info("Preparando o layout do e-mail")
+        const emailTemplate = path.resolve(__dirname, "../../../../mail_template/smartphone_mail.html")
+
+        const dataToSendMail = unsignedPayment.attributes.customPayload.proposal
+        const template = await readFile(emailTemplate, "utf-8")
+        const body = template
+            .replace(/@@data_emissao@@/g, moment(dataToSendMail.operation_date, "MMDDYYYY").format("DD/MM/YYYY"))
+            .replace(/@@nome_segurado@@/g, dataToSendMail.insured.name)
+            .replace(/@@cpf_segurado@@/g, dataToSendMail.insured.cpf)
+            .replace(/@@nome_logradouro@@/g, dataToSendMail.insured.district)
+            .replace(/@@nome_cidade@@/g, dataToSendMail.insured.city)
+            .replace(/@@complemento_endereco@@/g, dataToSendMail.insured.complement)
+            .replace(/@@cep_endereco@@/g, dataToSendMail.insured.zipcode)
+            .replace(/@@uf_endereco@@/g, dataToSendMail.insured.state)
+            .replace(/@@inicio_vigencia@@/g, moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").format("DD/MM/YYYY"))
+            .replace(
+                /@@inicio_vigencia@@/g,
+                moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").add(1, "year").format("DD/MM/YYYY")
+            )
+            .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
+        // .replace(/@@numero_apolice@@/g, moment(, "MMDDYYYY").format("DD/MM/YYYY")) // TODO: Pegar o numero da apolice
+        // .replace(/@@numero_proposta@@/g, `${dataToSendMail.securityName}`) // TODO : Buscar o número da proposta
+        const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
+        const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
+        const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
+        const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
+        log.debug(`EmailFrom:${emailFrom}`)
+
+        try {
+            const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
+            log.info("Email Enviado")
+            return sendResult.MessageId
+        } catch (e) {
+            log.error("Email not sent, error", e)
+            throw "Error during sending email"
+        }
     }
 }
