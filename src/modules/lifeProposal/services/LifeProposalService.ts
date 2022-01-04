@@ -28,7 +28,7 @@ export class LifeProposalService {
         @inject("ParameterStore") private parameterStore: ParameterStore
     ) {}
 
-    async healthCareCotationInfo() {
+    async lifeCotationInfo() {
         return [
             {
                 min: 0,
@@ -86,7 +86,7 @@ export class LifeProposalService {
     }
 
     async cotation(request: any) {
-        const cotation = await this.healthCareCotationInfo()
+        const cotation = await this.lifeCotationInfo()
         const finalCotation = cotation
             .filter((x) => request.age >= x.min && request.age <= x.max)
             .map((x) => {
@@ -109,11 +109,11 @@ export class LifeProposalService {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const firstLuckNumber = await this.findLuckNumber()
         unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
-        // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+        const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
         // await this.saveSoldProposal(unsignedPayment, proposalResponse)
         // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
         // await this.sendSellingEmailByPaymentObject(unsignedPayment)
-        // return proposalResponse
+        return proposalResponse
         return unsignedPayment
     }
 
@@ -123,18 +123,20 @@ export class LifeProposalService {
 
     async sendProposal(payment: any) {
         log.info("Sending Life Proposal to Partner")
-        const response = await this.requestService.makeRequest(
-            this.requestService.ENDPOINTS.LIFE_URL_BASE,
-            this.requestService.METHODS.POST,
-            payment,
-            Tenants.LIFE,
-            "/rest-seguro-vida-metlife/contratacao"
-        )
-        if (response.data.success) {
-            log.info("Success Life Proposal sent")
-            return { success: true, content: response.data }
-        } else {
-            log.error("Life Proposal Error")
+        try {
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.LIFE_URL_BASE,
+                this.requestService.METHODS.POST,
+                payment,
+                Tenants.LIFE,
+                "/rest-seguro-vida-metlife/contratacao"
+            )
+            if (response.data.success) {
+                log.info("Success Life Proposal sent")
+                return { success: true, content: response.data }
+            }
+        } catch (e) {
+            log.error("Life Proposal Error" + e)
             throw new Error("Life Proposal Error")
         }
     }
@@ -181,6 +183,7 @@ export class LifeProposalService {
                 /@@inicio_vigencia@@/g,
                 moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").add(1, "year").format("DD/MM/YYYY")
             )
+            .replace(/@@importancia_segurada_morte@@/g, dataToSendMail.insured.state)
             .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
         // .replace(/@@numero_apolice@@/g, moment(, "MMDDYYYY").format("DD/MM/YYYY")) // TODO: Pegar o numero da apolice
         // .replace(/@@numero_proposta@@/g, `${dataToSendMail.securityName}`) // TODO : Buscar o número da proposta

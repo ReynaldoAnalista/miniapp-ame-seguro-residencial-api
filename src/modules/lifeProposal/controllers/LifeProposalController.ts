@@ -16,12 +16,12 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
     public async proposal(@Body() signedPayment: LifeProposalNotification) {
-        log.info("HealthCare Cotation")
+        log.info("Life Send Proposal")
         try {
             return await this.lifeProposalService.proposal(signedPayment.signedPayment)
         } catch (e) {
             log.error(e.message)
-            throw new ApiError("HealthCare Cotation Not sent", 500)
+            throw new ApiError("Life Proposal Not sent", 500)
         }
     }
 
@@ -29,12 +29,12 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotation(@Body() request: any) {
-        log.info("HealthCare Cotation")
+        log.info("Life Cotation")
         try {
             return await this.lifeProposalService.cotation(request)
         } catch (e) {
             log.error(e.message)
-            throw new ApiError("HealthCare Cotation Not sent", 500)
+            throw new ApiError("Life Cotation Not sent", 500)
         }
     }
 }

@@ -1,8 +1,6 @@
 import { inject, injectable } from "inversify"
 import { DynamoHolder } from "../../../repository/DynamoHolder"
 import { getLogger } from "../../../server/Logger"
-import { Tenants } from "../../default/model/Tenants"
-import { SoldProposalStatus } from "../../default/model/SoldProposalStatus"
 
 const TABLE = `${process.env.DYNAMODB_ENV}_sold_proposal`
 

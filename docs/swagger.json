@@ -736,19 +736,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"success": {
-											"type": "boolean"
-										},
-										"content": {
-											"additionalProperties": true,
-											"type": "object"
-										}
-									},
-									"required": [
-										"content",
-										"success"
-									],
+									"additionalProperties": true,
 									"type": "object"
 								}
 							}
@@ -783,22 +771,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"properties": {
-											"voce": {
-												"type": "string"
-											},
-											"familia": {
-												"type": "string"
-											}
+									"properties": {
+										"voce": {
+											"type": "number",
+											"format": "double"
 										},
-										"required": [
-											"familia",
-											"voce"
-										],
-										"type": "object"
+										"familia": {
+											"properties": {
+												"morte_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_pais": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_sogros": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"funeral_sogros",
+												"funeral_pais",
+												"funeral_conjuge",
+												"morte_conjuge"
+											],
+											"type": "object"
+										}
 									},
-									"type": "array"
+									"required": [
+										"familia",
+										"voce"
+									],
+									"type": "object"
 								}
 							}
 						},
@@ -822,27 +832,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/v1/life/luck_number": {
-			"post": {
-				"operationId": "LuckNumber",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": []
 			}
 		},
 		"/v1/pet/planList": {
