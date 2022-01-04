@@ -21,6 +21,7 @@ import { Tenants } from "../../default/model/Tenants"
 import path from "path"
 import util from "util"
 import fs from "fs"
+import { lifeProposalSoldRepository } from "../../lifeProposal/repository/lifeProposalSoldRepository"
 const cache = require("memory-cache")
 const readFile = util.promisify(fs.readFile)
 
@@ -53,6 +54,8 @@ export class HubService {
         private portableSoldProposalRepository: PortableSoldProposalRepository,
         @inject("RenewPortableSoldProposal")
         private renewPortableSoldProposal: RenewPortableSoldProposal,
+        @inject("lifeProposalSoldRepository")
+        private lifeProposalSoldRepository: lifeProposalSoldRepository,
         @inject(TYPES.ParameterStore)
         private parameterStore: ParameterStore
     ) {}
@@ -66,6 +69,7 @@ export class HubService {
         const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
         const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomer(customerId)
         const renewPortablePlansPlansFromDB = await this.renewPortableSoldProposal.findAllFromCustomer(customerId)
+        const lifePlansFromDB = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
 
         let smartphonePlans = []
         let residentialPlans = []
@@ -73,6 +77,7 @@ export class HubService {
         let healthCarePlans = []
         let portablePlans = []
         let renewPortablePlans = []
+        let lifePlans = []
         if (residentialPlansFromDB) {
             if (raw) {
                 residentialPlans = Object.assign(residentialPlansFromDB)
@@ -224,7 +229,19 @@ export class HubService {
                 })
             }
         }
-        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans }
+        if (lifePlansFromDB) {            
+            lifePlans = Object.assign(lifePlansFromDB).map((x) => {
+                return {
+                    id: x?.order,
+                    date: moment(x.createdAt).format("DD/MM/YYYY"),
+                    diffDays: moment().diff(moment(x.createdAt), "days"),
+                    partner: "Meetlife",
+                    status: this.translateStatusPlan(x.status, moment(x.createdAt)),
+                    name: Tenants.LIFE,
+                }
+            })            
+        }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans, lifePlans }
     }
 
     /**
