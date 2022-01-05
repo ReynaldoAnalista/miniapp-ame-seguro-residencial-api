@@ -235,8 +235,10 @@ export class HubService {
                     id: x?.order,
                     date: moment(x.createdAt).format("DD/MM/YYYY"),
                     diffDays: moment().diff(moment(x.createdAt), "days"),
+                    people_name: x.receivedPaymentNotification.attributes.customPayload.proposal.insured.name,
                     partner: "Meetlife",
                     status: this.translateStatusPlan(x.status, moment(x.createdAt)),
+                    coverage: x.receivedPaymentNotification.attributes.customPayload.proposal.coverage,
                     name: Tenants.LIFE,
                 }
             })            
