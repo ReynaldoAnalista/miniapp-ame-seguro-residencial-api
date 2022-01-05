@@ -91,10 +91,10 @@ export class LifeProposalService {
                         (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
                     ),
                     familia: {
-                        morte_conjuge: x.morte_conjuge * request.range,
-                        funeral_conjuge: x.funeral_conjuge,
-                        funeral_pais: x.funeral_pais,
-                        funeral_sogros: x.funeral_sogros,
+                        morte_conjuge: parseFloat((x.morte_conjuge * request.range).toFixed(2)),
+                        funeral_conjuge: parseFloat(x.funeral_conjuge.toFixed(2)),
+                        funeral_pais: parseFloat(x.funeral_pais.toFixed(2)),
+                        funeral_sogros: parseFloat(x.funeral_sogros.toFixed(2)),
                     },
                 }
             })
