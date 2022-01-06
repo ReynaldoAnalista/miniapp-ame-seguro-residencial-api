@@ -105,6 +105,7 @@ export class LifeProposalService {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
         const firstLuckNumber = await this.findLuckNumber()
         unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
+        unsignedPayment.attributes.customPayload.proposal.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
         const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
         await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)

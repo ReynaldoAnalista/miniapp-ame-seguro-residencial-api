@@ -16,7 +16,7 @@ export class LifeProposalController {
     @SuccessResponse("200", "Retrieved")
     @Post("/sendProposal")
     public async proposal(@Body() signedPayment: LifeProposalNotification) {
-        log.info("HealthCare Cotation")
+        log.info("Life Send Proposal")
         try {
             return await this.lifeProposalService.proposal(signedPayment.signedPayment)
         } catch (e) {
