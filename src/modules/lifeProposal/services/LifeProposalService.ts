@@ -103,12 +103,12 @@ export class LifeProposalService {
 
     async proposal(signedPayment: any) {
         const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
-        const firstLuckNumber = await this.findLuckNumber()
+        // const firstLuckNumber = await this.findLuckNumber()
         unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
         unsignedPayment.attributes.customPayload.proposal.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
         const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
-        await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+        // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
         return proposalResponse
     }
 
