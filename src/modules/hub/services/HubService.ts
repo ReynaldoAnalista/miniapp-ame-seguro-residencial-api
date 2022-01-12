@@ -402,7 +402,7 @@ export class HubService {
             )
             result = await this.securyInfoFormatter(response.data.perguntas)
         } catch (error) {
-            log.error("Erro ao buscar os FAQ", error)
+            log.error("Erro ao buscar os FAQ", error.message)
         }
         return result
     }
