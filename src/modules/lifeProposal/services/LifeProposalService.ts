@@ -113,7 +113,7 @@ export class LifeProposalService {
     }
 
     async findLuckNumber() {
-        return await this.luckNumberRepository.findFirstLuckNumber()
+        // return await this.luckNumberRepository.findFirstLuckNumber()
     }
 
     async sendProposal(payment: any) {
@@ -152,6 +152,6 @@ export class LifeProposalService {
     }
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
-        return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
+        // return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
     }
 }
