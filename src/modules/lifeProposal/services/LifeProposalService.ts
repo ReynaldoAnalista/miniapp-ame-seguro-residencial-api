@@ -82,34 +82,42 @@ export class LifeProposalService {
     }
 
     async cotation(request: any) {
-        const cotation = await this.healthCareCotationInfo()
-        const finalCotation = cotation
-            .filter((x) => request.age >= x.min && request.age <= x.max)
-            .map((x) => {
-                return {
-                    voce: parseFloat(
-                        (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
-                    ),
-                    familia: {
-                        morte_conjuge: parseFloat((x.morte_conjuge * request.range).toFixed(2)),
-                        funeral_conjuge: parseFloat(x.funeral_conjuge.toFixed(2)),
-                        funeral_pais: parseFloat(x.funeral_pais.toFixed(2)),
-                        funeral_sogros: parseFloat(x.funeral_sogros.toFixed(2)),
-                    },
-                }
-            })
-        return finalCotation[0]
+        try {
+            const cotation = await this.healthCareCotationInfo()
+            const finalCotation = cotation
+                .filter((x) => request.age >= x.min && request.age <= x.max)
+                .map((x) => {
+                    return {
+                        voce: parseFloat(
+                            (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
+                        ),
+                        familia: {
+                            morte_conjuge: parseFloat((x.morte_conjuge * request.range).toFixed(2)),
+                            funeral_conjuge: parseFloat(x.funeral_conjuge.toFixed(2)),
+                            funeral_pais: parseFloat(x.funeral_pais.toFixed(2)),
+                            funeral_sogros: parseFloat(x.funeral_sogros.toFixed(2)),
+                        },
+                    }
+                })
+            return finalCotation[0]
+        } catch (e) {
+            log.error("Erro ao realizar a cotacao do vida", e)
+        }
     }
 
     async proposal(signedPayment: any) {
-        const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
-        // const firstLuckNumber = await this.findLuckNumber()
-        unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
-        unsignedPayment.attributes.customPayload.proposal.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
-        const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
-        await this.saveSoldProposal(unsignedPayment, proposalResponse)
-        // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
-        return proposalResponse
+        try {
+            const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+            // const firstLuckNumber = this.findLuckNumber()
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
+            unsignedPayment.attributes.customPayload.proposal.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
+            const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+            await this.saveSoldProposal(unsignedPayment, proposalResponse)
+            // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            return proposalResponse
+        } catch (e) {
+            log.error("Erro ao realizar o pagamento do seguro vida", e)
+        }
     }
 
     async findLuckNumber() {
@@ -117,20 +125,24 @@ export class LifeProposalService {
     }
 
     async sendProposal(payment: any) {
-        log.info("Sending Life Proposal to Partner")
-        const response = await this.requestService.makeRequest(
-            this.requestService.ENDPOINTS.LIFE_URL_BASE,
-            this.requestService.METHODS.POST,
-            payment,
-            Tenants.LIFE,
-            "/rest-seguro-vida-metlife/contratacao"
-        )
-        if (response.data.success) {
-            log.info("Success Life Proposal sent")
-            return { success: true, content: response.data }
-        } else {
-            log.error("Life Proposal Error")
-            throw new Error("Life Proposal Error")
+        try {
+            log.info("Sending Life Proposal to Partner")
+            const response = await this.requestService.makeRequest(
+                this.requestService.ENDPOINTS.LIFE_URL_BASE,
+                this.requestService.METHODS.POST,
+                payment,
+                Tenants.LIFE,
+                "/rest-seguro-vida-metlife/contratacao"
+            )
+            if (response.data.success) {
+                log.info("Success Life Proposal sent")
+                return { success: true, content: response.data }
+            } else {
+                log.error("Life Proposal Error")
+                throw new Error("Life Proposal Error")
+            }
+        } catch (e) {
+            log.error("Erro no envio da proposta do vida para a Digibe", e)
         }
     }
 
