@@ -70,6 +70,7 @@ export const initDependencies = () => {
     bindSingleton("../modules/maintenance/repository")
     bindSingleton("../modules/portableProposal/repository")
     bindSingleton("../modules/renewPortableProposal/repository")
+    bindSingleton("../modules/lifeProposal/repository")
     //bindSingleton("../modules/voucher/repository")
 }
 
