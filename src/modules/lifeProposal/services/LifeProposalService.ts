@@ -107,9 +107,12 @@ export class LifeProposalService {
     async proposal(signedPayment: any) {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+            const customerIdFromObject = unsignedPayment.attributes.customPayload.customerId
             // const firstLuckNumber = this.findLuckNumber()
             unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
-            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
+            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
+                .substring(customerIdFromObject.length, 20)
+                .replace(/-/g, "")
             unsignedPayment.attributes.customPayload.proposal.beneficiary = [] // TODO: Remover o campo beneficiario, depois que a Carol resolver na API
             const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
             await this.saveSoldProposal(unsignedPayment, proposalResponse)
