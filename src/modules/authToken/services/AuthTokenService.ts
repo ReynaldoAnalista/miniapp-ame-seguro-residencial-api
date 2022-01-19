@@ -173,7 +173,7 @@ export class AuthTokenService {
 
             if (tenant === Tenants.LIFE) {
                 log.debug("Trying to authorizate on " + AUTH_URL)
-                const lifeKey = await this.retrieveConfig("LIFE_API_KEY")
+                const lifeKey = await this.retrieveConfig("LIFE_API_AUTH_KEY")
                 const config = {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
