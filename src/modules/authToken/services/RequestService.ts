@@ -73,7 +73,7 @@ export class RequestService {
         if (tenant === Tenants.LIFE) {
             headers = {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: token,
                 apikey: await this.parameterStore.getSecretValue("LIFE_API_KEY"),
             }
         }
