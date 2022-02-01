@@ -106,14 +106,16 @@ export class LifeProposalService {
     async proposal(signedPayment: any) {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
-            // const firstLuckNumber = this.findLuckNumber()
-            unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
-            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = 123456 // TODO: Remover o mock depois que a Calor fechar os ajustes
-            unsignedPayment.attributes.customPayload.proposal.beneficiary = [] // TODO: Remover o campo beneficiario, depois que a Carol resolver na API
-            const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
-            await this.saveSoldProposal(unsignedPayment, proposalResponse)
+            const firstLuckNumber = await this.findLuckNumber()
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
+            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = unsignedPayment.id
+            unsignedPayment.attributes.insured_id = unsignedPayment.id
+            unsignedPayment.attributes.customPayload.proposal.beneficiary = []
+            return unsignedPayment
+            // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+            // await this.saveSoldProposal(unsignedPayment, proposalResponse)
             // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
-            return proposalResponse
+            // return proposalResponse
         } catch (e) {
             log.error("Erro ao realizar o pagamento do seguro vida", e)
         }
@@ -155,7 +157,7 @@ export class LifeProposalService {
     }
 
     async findLuckNumber() {
-        // return await this.luckNumberRepository.findFirstLuckNumber()
+        return await this.luckNumberRepository.findFirstLuckNumber()
     }
 
     async sendProposal(payment: any) {
