@@ -29,20 +29,8 @@ export class HealthCareProposalService {
         await this.sendCotation(formatedCotation)
         const formatedProposal = await this.formatProposal(proposal)
         const proposalResponse = await this.sendProposal(formatedProposal)
-        // await this.saveProposalResponse(unsignedPayment.id, unsignedPayment.attributes)
         await this.saveSoldProposal(unsignedPayment, proposalResponse)
         return proposalResponse
-    }
-
-    async saveProposalResponse(id: any, proposalResponse) {
-        log.info("Saving proposal response")
-        await this.healthCareProposalRepository.create({
-            id: id,
-            success: true,
-            proposalResponse,
-            transactionDateTime: new Date().toISOString(),
-        })
-        log.debug("saveProposalSentSuccess:success")
     }
 
     async saveSoldProposal(proposal: any, response) {

@@ -435,6 +435,57 @@ export function RegisterRoutes(app: express.Express) {
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/life/response_proposal',
+        function(request: any, response: any, next: any) {
+            const args = {
+                responseJson: { "in": "body", "name": "responseJson", "required": true, "dataType": "any" },
+                partnerId: { "in": "header", "name": "x-partner", "required": true, "dataType": "string" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<LifeProposalController>(LifeProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.response_proposal.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/ame-seguro-residencial/v1/life/sendProposalMail',
+        function(request: any, response: any, next: any) {
+            const args = {
+                responseJson: { "in": "body", "name": "responseJson", "required": true, "dataType": "any" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller: any = iocContainer.get<LifeProposalController>(LifeProposalController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.sendProposalMail.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.post('/ame-seguro-residencial/v1/life/cotation',
         function(request: any, response: any, next: any) {
             const args = {
@@ -457,31 +508,6 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.cotation.apply(controller, validatedArgs as any);
-            promiseHandler(controller, promise, response, next);
-        });
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.post('/ame-seguro-residencial/v1/life/first_luck_number',
-        function(request: any, response: any, next: any) {
-            const args = {
-                number: { "in": "body", "name": "number", "required": true, "dataType": "any" },
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request);
-            } catch (err) {
-                return next(err);
-            }
-
-            const controller: any = iocContainer.get<LifeProposalController>(LifeProposalController);
-            if (typeof controller['setStatus'] === 'function') {
-                controller.setStatus(undefined);
-            }
-
-
-            const promise = controller.firstLuckNumber.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -1,6 +1,5 @@
 import { inject, injectable } from "inversify"
 import { getLogger } from "../../../server/Logger"
-import { LifeProposalUtil } from "./LifeProposalUtil"
 
 import path from "path"
 import util from "util"
@@ -22,7 +21,6 @@ export class LifeProposalService {
     constructor(
         @inject("AuthTokenService") private authTokenService: AuthTokenService,
         @inject("RequestService") private requestService: RequestService,
-        @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil,
         @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository,
         @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository,
         @inject("ParameterStore") private parameterStore: ParameterStore
@@ -110,11 +108,44 @@ export class LifeProposalService {
         const firstLuckNumber = await this.findLuckNumber()
         unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
         const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
-        // await this.saveSoldProposal(unsignedPayment, proposalResponse)
-        // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
-        // await this.sendSellingEmailByPaymentObject(unsignedPayment)
+        await this.saveSoldProposal(unsignedPayment, proposalResponse)
+        await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
         return proposalResponse
-        return unsignedPayment
+    }
+
+    async sendMail(response: any) {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromCustomerAndOrder(
+            response.customerId,
+            response.order
+        )
+        if (typeof verifyProposal != "undefined" && verifyProposal?.length > 0) {
+            return verifyProposal[0].receivedPaymentNotification
+        }
+        return {
+            message: "register not found",
+            status: 400,
+        }
+        // await this.sendSellingEmailByPaymentObject(response)
+    }
+
+    async responseProposal(responseJson: any) {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromCustomerAndOrder(
+            responseJson.customerId,
+            responseJson.order
+        )
+        if (verifyProposal?.length == 0) {
+            return {
+                message: "register not found",
+                status: 400,
+            }
+        }
+        const updateSoldProposal = await this.lifeProposalSoldRepository.update(responseJson)
+        if (updateSoldProposal) {
+            return {
+                message: "Updated register",
+                status: 200,
+            }
+        }
     }
 
     async findLuckNumber() {
