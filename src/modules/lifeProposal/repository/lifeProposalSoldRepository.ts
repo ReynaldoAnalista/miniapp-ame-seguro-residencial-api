@@ -49,6 +49,29 @@ export class lifeProposalSoldRepository {
         }
     }
 
+    async findAllFromCustomer(customerId: string) {
+        const params = {
+            TableName: TABLE,
+            KeyConditionExpression: "#customerId = :customerId",
+            ExpressionAttributeNames: {
+                "#customerId": "customerId",
+            },
+            ExpressionAttributeValues: {
+                ":customerId": customerId,
+            },
+        }
+        try {
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
+            log.debug(`Have found ${result.Items?.length} items`)
+            return result.Items?.filter((x) => x.tenant === Tenants.LIFE && x?.status != "CANCELED")
+        } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
+            return []
+        }
+    }
+
     async update(proposal: any) {
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
         const params = {
