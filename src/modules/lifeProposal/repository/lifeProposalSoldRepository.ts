@@ -24,24 +24,41 @@ export class lifeProposalSoldRepository {
         return proposal
     }
 
-    async findAllFromCustomerAndOrder(customerId: string, order: string) {
-        const params = {
-            TableName: TABLE,
-            KeyConditionExpression: "#customerId = :customerId AND #order = :order",
-            ExpressionAttributeNames: {
-                "#customerId": "customerId",
-                "#order": "order",
-            },
-            ExpressionAttributeValues: {
-                ":customerId": customerId,
-                ":order": order,
-            },
-        }
+    async findAllFromInsuredId(insuredId: any) {
         try {
+            const params = {
+                TableName: TABLE,
+                IndexName: "insuredIdIndex",
+                KeyConditionExpression: "insuredId = :insuredId",
+                ExpressionAttributeValues: {
+                    ":insuredId": insuredId,
+                },
+            }
             const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items?.filter((x) => x.tenant === Tenants.LIFE && x?.status != "CANCELED")
+            return result.Items?.filter((x) => x.tenant === Tenants.LIFE && x?.status == "PROCESSED")
+        } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
+            return []
+        }
+    }
+
+    async findAllFromStatusApproved() {
+        try {
+            const params = {
+                TableName: TABLE,
+                IndexName: "tenantIndex",
+                KeyConditionExpression: "tenant = :tenant",
+                ExpressionAttributeValues: {
+                    ":tenant": "LIFE",
+                },
+            }
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
+            log.debug(`Have found ${result.Items?.length} items`)
+            return result.Items?.filter((x) => x.status === "APROVED")
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
@@ -72,7 +89,7 @@ export class lifeProposalSoldRepository {
         }
     }
 
-    async update(proposal: any) {
+    async update(proposal: any, status = "APROVED") {
         const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
         const params = {
             TableName: TABLE,
@@ -80,12 +97,14 @@ export class lifeProposalSoldRepository {
                 order: proposal.order,
                 customerId: proposal.customerId,
             },
-            UpdateExpression: "set #variavelStatus = :y",
+            UpdateExpression: "set #variavelStatus = :y, #variavelPolicy = :policy",
             ExpressionAttributeNames: {
                 "#variavelStatus": "status",
+                "#variavelPolicy": "policy_number",
             },
             ExpressionAttributeValues: {
-                ":y": "APROVED",
+                ":y": status,
+                ":policy": proposal.policyNumber,
             },
         }
         const updateData = await dynamoDocClient.update(params).promise()

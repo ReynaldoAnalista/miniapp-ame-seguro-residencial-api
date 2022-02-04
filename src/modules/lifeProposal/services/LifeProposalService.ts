@@ -106,48 +106,65 @@ export class LifeProposalService {
     async proposal(signedPayment: any) {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
+            const customerIdFromObject = unsignedPayment.attributes.customPayload.customerId
+                .substring(unsignedPayment.attributes.customPayload.customerId.length, 20)
+                .replace(/-/g, "")
             const firstLuckNumber = await this.findLuckNumber()
             unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
-            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = unsignedPayment.id
-            unsignedPayment.attributes.insured_id = unsignedPayment.id
+            unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
             unsignedPayment.attributes.customPayload.proposal.beneficiary = []
-            return unsignedPayment
-            // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
-            // await this.saveSoldProposal(unsignedPayment, proposalResponse)
-            // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
-            // return proposalResponse
+            const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+            await this.saveSoldProposal(unsignedPayment, proposalResponse)
+            await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            return proposalResponse
         } catch (e) {
             log.error("Erro ao realizar o pagamento do seguro vida", e)
         }
     }
 
     async sendMail(response: any) {
-        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromCustomerAndOrder(
-            response.customerId,
-            response.order
-        )
-        if (typeof verifyProposal != "undefined" && verifyProposal?.length > 0) {
-            return verifyProposal[0].receivedPaymentNotification
-        }
-        return {
-            message: "register not found",
-            status: 400,
-        }
-        // await this.sendSellingEmailByPaymentObject(response)
+        // console.log(response)
+
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response.insured_id)
+        if (typeof verifyProposal == "undefined" && verifyProposal == []) return
+
+        // console.log(verifyProposal)
+        // const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0].receivedPaymentNotification)
+        // return {
+        //     message: sendMail,
+        //     status: 200,
+        // }
+    }
+
+    async sendAutomaticMail() {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromStatusApproved()
+        // const proposalInfo = await Promise.all(
+        //     verifyProposal?.map(async (item) => {
+        //         await this.sendMail(item.partnerResponse.content.insured_id)
+        //         const proposalMailer = {
+        //             customerId: item.customerId,
+        //             order: item.order,
+        //         }
+        //         await this.updateStatusSendMailer(proposalMailer)
+        //     })
+        // )
+        // return proposalInfo
     }
 
     async responseProposal(responseJson: any) {
-        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromCustomerAndOrder(
-            responseJson.customerId,
-            responseJson.order
-        )
-        if (verifyProposal?.length == 0) {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(responseJson.insured_id)
+        if (verifyProposal?.length == 0 || typeof verifyProposal == "undefined") {
             return {
                 message: "register not found",
                 status: 400,
             }
         }
-        const updateSoldProposal = await this.lifeProposalSoldRepository.update(responseJson)
+        const proposalInfoData = {
+            order: verifyProposal[0].order,
+            customerId: verifyProposal[0].customerId,
+            policyNumber: responseJson.policy_number,
+        }
+        const updateSoldProposal = await this.lifeProposalSoldRepository.update(proposalInfoData)
         if (updateSoldProposal) {
             return {
                 message: "Updated register",
@@ -158,6 +175,10 @@ export class LifeProposalService {
 
     async findLuckNumber() {
         return await this.luckNumberRepository.findFirstLuckNumber()
+    }
+
+    async updateStatusSendMailer(proposal) {
+        await this.lifeProposalSoldRepository.update(proposal, "MAILED")
     }
 
     async sendProposal(payment: any) {
@@ -193,6 +214,8 @@ export class LifeProposalService {
             createdAt: new Date().toISOString(),
             apiVersion,
             status: "PROCESSED",
+            insuredId: proposal.attributes.customPayload.proposal.insured.insured_id,
+            policy_number: "",
         })
         log.debug("saveSoldProposal:success")
     }
@@ -231,7 +254,6 @@ export class LifeProposalService {
         const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
         const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
         log.debug(`EmailFrom:${emailFrom}`)
-
         try {
             const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
             log.info("Email Enviado")

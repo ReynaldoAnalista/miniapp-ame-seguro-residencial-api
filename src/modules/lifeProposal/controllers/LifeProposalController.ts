@@ -57,6 +57,19 @@ export class LifeProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
+    @Post("/sendProposalMultipleMail")
+    public async sendProposalMultipleMail() {
+        log.info("Life Send Proposal")
+        try {
+            return await this.lifeProposalService.sendAutomaticMail()
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("Life Proposal Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotation(@Body() request: any) {
         log.info("Life Cotation")

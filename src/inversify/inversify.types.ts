@@ -14,6 +14,7 @@ const TYPES = {
     AuthTokenService: "AuthTokenService",
     VoucherRepository: "VoucherRepository",
     DynamoHolder: "DynamoHolder",
+    lifeCronService: "lifeCronService",
 }
 
 export { TYPES }
