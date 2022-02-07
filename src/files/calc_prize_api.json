@@ -94,7 +94,7 @@
         "faixa_minima": "14001",
         "faixa_maxima": "16000",
         "premio_liquido_12": "25.81",
-        "premio_bruto_12": "27.71",
+        "premio_bruto_12": "27.72",
         "premio_liquido_24": "36.99",
         "premio_bruto_24": "39.72"
     },
@@ -627,7 +627,7 @@
         "premio_liquido_12": "932.04",
         "premio_bruto_12": "1,000.82",
         "premio_liquido_24": "1,584.49",
-        "premio_bruto_24": "1,701.42"
+        "premio_bruto_24": "1,701.43"
     },
     {
         "produto": "8",
@@ -636,7 +636,7 @@
         "premio_liquido_12": "1,075.44",
         "premio_bruto_12": "1,154.81",
         "premio_liquido_24": "1,828.24",
-        "premio_bruto_24": "1,963.16"
+        "premio_bruto_24": "1,963.17"
     },
     {
         "produto": "9",
