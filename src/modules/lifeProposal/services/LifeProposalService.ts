@@ -123,32 +123,27 @@ export class LifeProposalService {
     }
 
     async sendMail(response: any) {
-        // console.log(response)
-
-        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response.insured_id)
-        if (typeof verifyProposal == "undefined" && verifyProposal == []) return
-
-        // console.log(verifyProposal)
-        // const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0].receivedPaymentNotification)
-        // return {
-        //     message: sendMail,
-        //     status: 200,
-        // }
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response)
+        if (typeof verifyProposal == "undefined" || verifyProposal == []) return
+        const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0])
+        return {
+            message: sendMail,
+            status: 200,
+        }
     }
 
     async sendAutomaticMail() {
         const verifyProposal = await this.lifeProposalSoldRepository.findAllFromStatusApproved()
-        // const proposalInfo = await Promise.all(
-        //     verifyProposal?.map(async (item) => {
-        //         await this.sendMail(item.partnerResponse.content.insured_id)
-        //         const proposalMailer = {
-        //             customerId: item.customerId,
-        //             order: item.order,
-        //         }
-        //         await this.updateStatusSendMailer(proposalMailer)
-        //     })
-        // )
-        // return proposalInfo
+        if (verifyProposal?.length == 0) return
+        const proposalInfo = verifyProposal?.map(async (item) => {
+            await this.sendMail(item.insuredId)
+            const proposalMailer = {
+                customerId: item.customerId,
+                order: item.order,
+            }
+            await this.updateStatusSendMailer(proposalMailer)
+        })
+        return proposalInfo
     }
 
     async responseProposal(responseJson: any) {
@@ -177,7 +172,7 @@ export class LifeProposalService {
         return await this.luckNumberRepository.findFirstLuckNumber()
     }
 
-    async updateStatusSendMailer(proposal) {
+    async updateStatusSendMailer(proposal: any) {
         await this.lifeProposalSoldRepository.update(proposal, "MAILED")
     }
 
@@ -221,34 +216,37 @@ export class LifeProposalService {
     }
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
-        // return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
+        return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
     }
 
     async sendSellingEmailByPaymentObject(unsignedPayment) {
-        const email = unsignedPayment?.attributes?.customPayload?.clientEmail
+        const email = unsignedPayment?.receivedPaymentNotification.attributes?.customPayload?.clientEmail
         log.info("Preparando o layout do e-mail")
-        const emailTemplate = path.resolve(__dirname, "../../../../mail_template/smartphone_mail.html")
+        const emailTemplate = path.resolve(__dirname, "../../../../mail_template/life_mail.html")
 
-        const dataToSendMail = unsignedPayment.attributes.customPayload.proposal
+        const dataToSendMail = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal
+
+        const coverageValue = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal.amount_insured
+
         const template = await readFile(emailTemplate, "utf-8")
         const body = template
             .replace(/@@data_emissao@@/g, moment(dataToSendMail.operation_date, "MMDDYYYY").format("DD/MM/YYYY"))
             .replace(/@@nome_segurado@@/g, dataToSendMail.insured.name)
             .replace(/@@cpf_segurado@@/g, dataToSendMail.insured.cpf)
-            .replace(/@@nome_logradouro@@/g, dataToSendMail.insured.district)
-            .replace(/@@nome_cidade@@/g, dataToSendMail.insured.city)
-            .replace(/@@complemento_endereco@@/g, dataToSendMail.insured.complement)
-            .replace(/@@cep_endereco@@/g, dataToSendMail.insured.zipcode)
-            .replace(/@@uf_endereco@@/g, dataToSendMail.insured.state)
+            .replace(/@@nome_logradouro@@/g, dataToSendMail.insured.address.district)
+            .replace(/@@nome_cidade@@/g, dataToSendMail.insured.address.city)
+            .replace(/@@complemento_endereco@@/g, dataToSendMail.insured.address.complement)
+            .replace(/@@cep_endereco@@/g, dataToSendMail.insured.address.zipcode)
+            .replace(/@@uf_endereco@@/g, dataToSendMail.insured.address.state)
             .replace(/@@inicio_vigencia@@/g, moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").format("DD/MM/YYYY"))
             .replace(
-                /@@inicio_vigencia@@/g,
+                /@@fim_vigencia@@/g,
                 moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").add(1, "year").format("DD/MM/YYYY")
             )
-            .replace(/@@importancia_segurada_morte@@/g, dataToSendMail.insured.state)
-            .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
-        // .replace(/@@numero_apolice@@/g, moment(, "MMDDYYYY").format("DD/MM/YYYY")) // TODO: Pegar o numero da apolice
-        // .replace(/@@numero_proposta@@/g, `${dataToSendMail.securityName}`) // TODO : Buscar o número da proposta
+            .replace(/@@importancia_segurada_morte@@/g, `${coverageValue}`)
+            // .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
+            .replace(/@@numero_apolice@@/g, unsignedPayment.policy_number)
+            .replace(/@@numero_proposta@@/g, unsignedPayment.insuredId)
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
         const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
         const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")

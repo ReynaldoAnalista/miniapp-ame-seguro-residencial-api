@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify"
-import { ParameterStore } from "../../../configs/ParameterStore"
 import { getLogger } from "../../../server/Logger"
 import { CronJob } from "cron"
 import { LifeProposalService } from "../services/LifeProposalService"
@@ -15,11 +14,10 @@ export class lifeCronService {
 
     async startCronJobs() {
         logger.info("startCronJobs.start")
-        const sendMultipleMail = await this.lifeProposalService.sendAutomaticMail()
         const job = new CronJob(
-            "* * 6 * * *",
-            function () {
-                return sendMultipleMail
+            "0 1 * * *",
+            async () => {
+                await this.lifeProposalService.sendAutomaticMail()
             },
             null,
             true,

@@ -858,7 +858,20 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"message": {
+											"additionalProperties": true,
+											"type": "object"
+										},
+										"status": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"status",
+										"message"
+									],
 									"type": "object"
 								}
 							}
@@ -883,6 +896,32 @@
 						}
 					}
 				}
+			}
+		},
+		"/v1/life/sendProposalMultipleMail": {
+			"post": {
+				"operationId": "SendProposalMultipleMail",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/v1/life/cotation": {
