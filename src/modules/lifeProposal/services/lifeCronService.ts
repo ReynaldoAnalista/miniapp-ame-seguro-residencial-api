@@ -15,7 +15,7 @@ export class lifeCronService {
     async startCronJobs() {
         logger.info("startCronJobs.start")
         const job = new CronJob(
-            "0 1 * * *",
+            "* * * * *",
             async () => {
                 await this.lifeProposalService.sendAutomaticMail()
             },

@@ -92,6 +92,12 @@ export class LifeProposalService {
                     voce: parseFloat(
                         (x.morte * request.range + x.ipa * request.range + x.diha + x.funeral + x.sorteio_liquido).toFixed(2)
                     ),
+                    voce_desc: {
+                        morte: x.morte,
+                        ipa: x.ipa,
+                        diha: x.diha,
+                        funeral: x.funeral,
+                    },
                     familia: {
                         morte_conjuge: x.morte_conjuge * request.range,
                         funeral_conjuge: x.funeral_conjuge,
@@ -247,6 +253,7 @@ export class LifeProposalService {
             // .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
             .replace(/@@numero_apolice@@/g, unsignedPayment.policy_number)
             .replace(/@@numero_proposta@@/g, unsignedPayment.insuredId)
+            .replace(/@@numero_sorte@@/g, dataToSendMail.lucky_number)
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
         const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
         const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
