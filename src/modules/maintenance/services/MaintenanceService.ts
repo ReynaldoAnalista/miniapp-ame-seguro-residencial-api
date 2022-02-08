@@ -67,4 +67,8 @@ export class MaintenanceService {
         } as MaintenanceSoldProposal)
         return proposal
     }
+
+    async insertLuckNumber(signedInfo: any) {
+        return
+    }
 }
