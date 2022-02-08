@@ -5,7 +5,7 @@ import { SmartphoneProposalRepository } from "../../smartphoneProposal/repositor
 import { SmartphoneProposalMailService } from "../../smartphoneProposal/services/SmartphoneProposalMailService"
 import { MaintenanceRepository } from "../repository/MaintenanceRepository"
 import { MaintenanceSoldProposal } from "../model/MaintenanceSoldProposal"
-
+import { LuckNumberRepository } from "../repository/LuckNumberRepository"
 const log = getLogger("MaintenanceService")
 
 @injectable()
@@ -18,7 +18,9 @@ export class MaintenanceService {
         @inject("MaintenanceRepository")
         private maintenanceRepository: MaintenanceRepository,
         @inject("AuthTokenService")
-        private authTokenService: AuthTokenService
+        private authTokenService: AuthTokenService,
+        @inject("LuckNumberRepository")
+        private luckNumberRepository: LuckNumberRepository
     ) {}
 
     async sendSellingEmailWithParams(pass: string, email: string) {
@@ -66,5 +68,32 @@ export class MaintenanceService {
             NSU: unsignedInfo?.NSU,
         } as MaintenanceSoldProposal)
         return proposal
+    }
+
+    async insertLuckNumber(signedInfo: any) {
+        try {
+            const unsignedInfo = await this.authTokenService.unsignNotification(signedInfo)
+            unsignedInfo.map(async (x) => {
+                await this.luckNumberRepository.create({
+                    id: Math.random().toString(30).slice(2),
+                    serial_number: x.serial_number,
+                    luck_number: x.luck_number,
+                    plan_number: x.plan_number,
+                    order_number: x.order_number,
+                    register_number: x.register_number,
+                    keyRegister: x.keyRegister,
+                    used: x.used,
+                })
+            })
+            return {
+                success: true,
+                message: "Luck Number Registed",
+            }
+        } catch (e) {
+            return {
+                success: false,
+                message: `Error to Register Luck Number: ${e}`,
+            }
+        }
     }
 }
