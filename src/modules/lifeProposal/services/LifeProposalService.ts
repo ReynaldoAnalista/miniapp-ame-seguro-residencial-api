@@ -9,7 +9,7 @@ import { AuthTokenService } from "../../authToken/services/AuthTokenService"
 import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
-// import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
+import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -20,7 +20,8 @@ export class LifeProposalService {
         @inject("AuthTokenService") private authTokenService: AuthTokenService,
         @inject("RequestService") private requestService: RequestService,
         @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil,
-        @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository // @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository
+        @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository,
+        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository
     ) {}
 
     async healthCareCotationInfo() {
@@ -108,15 +109,15 @@ export class LifeProposalService {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
             const customerIdFromObject = unsignedPayment.attributes.customPayload.customerId
-            // const firstLuckNumber = this.findLuckNumber()
-            unsignedPayment.attributes.customPayload.proposal.lucky_number = 1375 // TODO: O número da sorte será passado pela Metlife a principio
+            const firstLuckNumber = await this.findLuckNumber()
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
             unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
                 .substring(customerIdFromObject.length, 20)
                 .replace(/-/g, "")
-            unsignedPayment.attributes.customPayload.proposal.beneficiary = [] // TODO: Remover o campo beneficiario, depois que a Carol resolver na API
+            unsignedPayment.attributes.customPayload.proposal.beneficiary = []
             const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
             await this.saveSoldProposal(unsignedPayment, proposalResponse)
-            // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
             return proposalResponse
         } catch (e) {
             log.error("Erro ao realizar o pagamento do seguro vida", e)
@@ -124,7 +125,7 @@ export class LifeProposalService {
     }
 
     async findLuckNumber() {
-        // return await this.luckNumberRepository.findFirstLuckNumber()
+        return await this.luckNumberRepository.findFirstLuckNumber()
     }
 
     async sendProposal(payment: any) {
@@ -167,6 +168,6 @@ export class LifeProposalService {
     }
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
-        // return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
+        return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
     }
 }
