@@ -401,6 +401,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "0",
         "faixa_maxima": "20000",
         "premio_liquido_12": "38.28",
@@ -410,6 +411,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "20001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "59.07",
@@ -419,6 +421,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "40001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "109.47",
@@ -428,6 +431,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "60001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "174.63",
@@ -437,6 +441,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "80001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "246.09",
@@ -446,6 +451,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "314.76",
@@ -455,6 +461,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "382.63",
@@ -464,6 +471,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "481.98",
@@ -473,6 +481,7 @@
     },
     {
         "produto": "5",
+        "description": "Lavadora de Roupa",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "550.24",
@@ -480,8 +489,9 @@
         "premio_liquido_24": "935.40",
         "premio_bruto_24": "1,004.43"
     },
-     {
+    {
         "produto": "6",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "0",
         "faixa_maxima": "200000",
         "premio_liquido_12": "527.66",
@@ -491,6 +501,7 @@
     },
     {
         "produto": "6",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "200001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "726.67",
@@ -500,6 +511,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "0",
         "faixa_maxima": "100000",
         "premio_liquido_12": "102.66",
@@ -509,6 +521,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "142.70",
@@ -518,6 +531,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "279.03",
@@ -527,6 +541,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "381.76",
@@ -536,6 +551,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "475.14",
@@ -545,6 +561,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "300001",
         "faixa_maxima": "350000",
         "premio_liquido_12": "539.72",
@@ -554,6 +571,7 @@
     },
     {
         "produto": "7",
+        "description": "Lavadora com Secador de Roupa",
         "faixa_minima": "350001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "612.10",
@@ -563,6 +581,7 @@
     },
     {
         "produto": "7",
+        "description": "Refrigerador",
         "faixa_minima": "400001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "688.29",
@@ -572,6 +591,7 @@
     },
     {
         "produto": "7",
+        "description": "Refrigerador",
         "faixa_minima": "500001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "801.81",
@@ -581,6 +601,7 @@
     },
     {
         "produto": "7",
+        "description": "Refrigerador",
         "faixa_minima": "600001",
         "faixa_maxima": "700000",
         "premio_liquido_12": "932.04",
@@ -590,6 +611,7 @@
     },
     {
         "produto": "7",
+        "description": "Refrigerador",
         "faixa_minima": "700001",
         "faixa_maxima": "800000",
         "premio_liquido_12": "1,075.44",
@@ -599,6 +621,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "0",
         "faixa_maxima": "20000",
         "premio_liquido_12": "27.59",
@@ -608,6 +631,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "20001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "33.35",
@@ -617,6 +641,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "42.86",
@@ -626,6 +651,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "54.68",
@@ -635,6 +661,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "63.96",
@@ -644,6 +671,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "68.69",
@@ -653,6 +681,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "70001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "86.68",
@@ -662,6 +691,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "126.74",
@@ -671,6 +701,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "167.63",
@@ -680,6 +711,7 @@
     },
     {
         "produto": "8",
+        "description": "Microondas",
         "faixa_minima": "200001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "225.63",
@@ -689,6 +721,7 @@
     },
     {
         "produto": "9",
+        "description": "Microondas",
         "faixa_minima": "0",
         "faixa_maxima": "2000",
         "premio_liquido_12": "4.91",
@@ -698,6 +731,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "2001",
         "faixa_maxima": "4000",
         "premio_liquido_12": "5.44",
@@ -707,6 +741,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "4001",
         "faixa_maxima": "6000",
         "premio_liquido_12": "10.50",
@@ -716,6 +751,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "6001",
         "faixa_maxima": "8000",
         "premio_liquido_12": "11.14",
@@ -725,6 +761,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "8001",
         "faixa_maxima": "10000",
         "premio_liquido_12": "14.61",
@@ -734,6 +771,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "10001",
         "faixa_maxima": "12000",
         "premio_liquido_12": "15.98",
@@ -743,6 +781,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "12001",
         "faixa_maxima": "14000",
         "premio_liquido_12": "19.15",
@@ -752,6 +791,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "14001",
         "faixa_maxima": "16000",
         "premio_liquido_12": "19.56",
@@ -761,6 +801,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "16001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "23.43",
@@ -770,6 +811,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "20001",
         "faixa_maxima": "25000",
         "premio_liquido_12": "24.57",
@@ -779,6 +821,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "27.18",
@@ -788,6 +831,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "30001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "116.35",
@@ -797,6 +841,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "150001",
         "faixa_maxima": "170000",
         "premio_liquido_12": "120.63",
@@ -806,6 +851,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "170001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "139.46",
@@ -815,6 +861,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "169.62",
@@ -824,6 +871,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "207.30",
@@ -833,6 +881,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "300001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "263.84",
@@ -842,6 +891,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "400001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "376.96",
@@ -851,6 +901,7 @@
     },
     {
         "produto": "9",
+        "description": "Forno Elétrico",
         "faixa_minima": "600001",
         "faixa_maxima": "800000",
         "premio_liquido_12": "527.71",
@@ -860,6 +911,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "0",
         "faixa_maxima": "20000",
         "premio_liquido_12": "30.59",
@@ -869,6 +921,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "20001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "34.27",
@@ -878,6 +931,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "47.98",
@@ -887,6 +941,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "56.98",
@@ -896,6 +951,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "50001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "70.96",
@@ -905,6 +961,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "70001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "93.69",
@@ -914,6 +971,7 @@
     },
     {
         "produto": "10",
+        "description": "Bebedouro Elétrico",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "125.24",
@@ -923,6 +981,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "0",
         "faixa_maxima": "25000",
         "premio_liquido_12": "25.68",
@@ -932,6 +991,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "28.02",
@@ -941,6 +1001,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "30001",
         "faixa_maxima": "35000",
         "premio_liquido_12": "32.84",
@@ -950,6 +1011,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "35001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "37.66",
@@ -959,6 +1021,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "40001",
         "faixa_maxima": "45000",
         "premio_liquido_12": "42.50",
@@ -968,6 +1031,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "45001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "47.29",
@@ -977,6 +1041,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "50001",
         "faixa_maxima": "55000",
         "premio_liquido_12": "52.13",
@@ -986,6 +1051,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "55001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "56.95",
@@ -995,6 +1061,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "64.19",
@@ -1004,6 +1071,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "73.83",
@@ -1013,6 +1081,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "83.47",
@@ -1022,6 +1091,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "94.52",
@@ -1040,6 +1110,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "110001",
         "faixa_maxima": "120000",
         "premio_liquido_12": "141.99",
@@ -1049,6 +1120,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "120001",
         "faixa_maxima": "130000",
         "premio_liquido_12": "154.20",
@@ -1058,6 +1130,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "130001",
         "faixa_maxima": "140000",
         "premio_liquido_12": "166.43",
@@ -1067,6 +1140,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "140001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "178.64",
@@ -1076,6 +1150,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "150001",
         "faixa_maxima": "160000",
         "premio_liquido_12": "190.85",
@@ -1085,6 +1160,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "160001",
         "faixa_maxima": "170000",
         "premio_liquido_12": "203.05",
@@ -1094,6 +1170,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "170001",
         "faixa_maxima": "180000",
         "premio_liquido_12": "213.66",
@@ -1103,6 +1180,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "180001",
         "faixa_maxima": "190000",
         "premio_liquido_12": "223.19",
@@ -1112,6 +1190,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "190001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "232.44",
@@ -1121,6 +1200,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "200001",
         "faixa_maxima": "210000",
         "premio_liquido_12": "240.45",
@@ -1130,6 +1210,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "210001",
         "faixa_maxima": "225000",
         "premio_liquido_12": "252.10",
@@ -1139,6 +1220,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "225001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "265.13",
@@ -1148,6 +1230,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "250001",
         "faixa_maxima": "275000",
         "premio_liquido_12": "286.29",
@@ -1157,6 +1240,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "275001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "301.67",
@@ -1166,6 +1250,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "300001",
         "faixa_maxima": "325000",
         "premio_liquido_12": "323.22",
@@ -1175,6 +1260,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "325001",
         "faixa_maxima": "350000",
         "premio_liquido_12": "325.68",
@@ -1193,6 +1279,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "375001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "355.97",
@@ -1202,6 +1289,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "400001",
         "faixa_maxima": "425000",
         "premio_liquido_12": "378.84",
@@ -1211,6 +1299,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "425001",
         "faixa_maxima": "450000",
         "premio_liquido_12": "423.95",
@@ -1220,6 +1309,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "450001",
         "faixa_maxima": "475000",
         "premio_liquido_12": "448.09",
@@ -1229,6 +1319,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "475001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "472.23",
@@ -1238,6 +1329,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "500001",
         "faixa_maxima": "550000",
         "premio_liquido_12": "508.43",
@@ -1247,6 +1339,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "550001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "556.73",
@@ -1256,6 +1349,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "600001",
         "faixa_maxima": "800000",
         "premio_liquido_12": "677.43",
@@ -1265,6 +1359,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "800001",
         "faixa_maxima": "1000000",
         "premio_liquido_12": "870.54",
@@ -1274,6 +1369,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "1000001",
         "faixa_maxima": "1500000",
         "premio_liquido_12": "1,208.52",
@@ -1283,6 +1379,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "1500001",
         "faixa_maxima": "2000000",
         "premio_liquido_12": "1,691.31",
@@ -1292,6 +1389,7 @@
     },
     {
         "produto": "11",
+        "description": "Televisor",
         "faixa_minima": "2000001",
         "faixa_maxima": "3000000",
         "premio_liquido_12": "2,288.46",
@@ -1301,6 +1399,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "0",
         "faixa_maxima": "10000",
         "premio_liquido_12": "10.45",
@@ -1310,6 +1409,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "10001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "14.95",
@@ -1319,6 +1419,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "20001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "23.93",
@@ -1328,6 +1429,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "32.88",
@@ -1337,6 +1439,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "41.85",
@@ -1346,6 +1449,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "50.81",
@@ -1355,6 +1459,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "59.76",
@@ -1364,6 +1469,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "68.76",
@@ -1373,6 +1479,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "77.71",
@@ -1382,6 +1489,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "86.68",
@@ -1391,6 +1499,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "100001",
         "faixa_maxima": "125000",
         "premio_liquido_12": "102.38",
@@ -1400,6 +1509,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "125001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "124.77",
@@ -1409,6 +1519,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "158.40",
@@ -1427,6 +1538,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "248.06",
@@ -1436,6 +1548,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "300001",
         "faixa_maxima": "350000",
         "premio_liquido_12": "288.17",
@@ -1445,6 +1558,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "350001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "332.28",
@@ -1454,6 +1568,7 @@
     },
     {
         "produto": "12",
+        "description": "Video Game",
         "faixa_minima": "400001",
         "faixa_maxima": "450000",
         "premio_liquido_12": "376.40",
@@ -1463,6 +1578,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "0",
         "faixa_maxima": "10000",
         "premio_liquido_12": "9.70",
@@ -1472,6 +1588,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "10001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "14.52",
@@ -1481,6 +1598,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "20001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "24.23",
@@ -1490,6 +1608,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "33.91",
@@ -1499,6 +1618,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "43.61",
@@ -1508,6 +1628,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "53.31",
@@ -1517,6 +1638,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "62.99",
@@ -1526,6 +1648,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "72.68",
@@ -1535,6 +1658,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "82.38",
@@ -1544,6 +1668,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "92.06",
@@ -1553,6 +1678,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "121.15",
@@ -1562,6 +1688,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "169.62",
@@ -1571,6 +1698,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "200001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "242.32",
@@ -1580,6 +1708,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "300001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "339.26",
@@ -1589,6 +1718,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "400001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "436.16",
@@ -1598,6 +1728,7 @@
     },
     {
         "produto": "13",
+        "description": "Home Theater",
         "faixa_minima": "500001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "533.08",
@@ -1607,8 +1738,9 @@
     },
     {
         "produto": "14",
+        "description": "Blue Ray",
         "faixa_minima": "0",
-        "faixa_maxima": "100",
+        "faixa_maxima": "10000",
         "premio_liquido_12": "20.56",
         "premio_bruto_12": "22.08",
         "premio_liquido_24": "20.56",
@@ -1616,8 +1748,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "100.01",
-        "faixa_maxima": "150",
+        "description": "Blue Ray",
+        "faixa_minima": "10001",
+        "faixa_maxima": "15000",
         "premio_liquido_12": "24.53",
         "premio_bruto_12": "26.34",
         "premio_liquido_24": "24.53",
@@ -1625,8 +1758,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "150.01",
-        "faixa_maxima": "200",
+        "description": "Blue Ray",
+        "faixa_minima": "15001",
+        "faixa_maxima": "20000",
         "premio_liquido_12": "33.22",
         "premio_bruto_12": "35.67",
         "premio_liquido_24": "33.22",
@@ -1634,8 +1768,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "200.01",
-        "faixa_maxima": "250",
+        "description": "Blue Ray",
+        "faixa_minima": "20001",
+        "faixa_maxima": "25000",
         "premio_liquido_12": "41.77",
         "premio_bruto_12": "44.85",
         "premio_liquido_24": "41.77",
@@ -1643,8 +1778,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "250.01",
-        "faixa_maxima": "300",
+        "description": "Blue Ray",
+        "faixa_minima": "25001",
+        "faixa_maxima": "30000",
         "premio_liquido_12": "48.75",
         "premio_bruto_12": "52.35",
         "premio_liquido_24": "48.75",
@@ -1652,8 +1788,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "300.01",
-        "faixa_maxima": "400",
+        "description": "Blue Ray",
+        "faixa_minima": "30001",
+        "faixa_maxima": "40000",
         "premio_liquido_12": "56.74",
         "premio_bruto_12": "60.93",
         "premio_liquido_24": "56.74",
@@ -1661,8 +1798,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "400.01",
-        "faixa_maxima": "500",
+        "description": "Blue Ray",
+        "faixa_minima": "40001",
+        "faixa_maxima": "50000",
         "premio_liquido_12": "65.82",
         "premio_bruto_12": "70.68",
         "premio_liquido_24": "65.82",
@@ -1670,8 +1808,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "500.01",
-        "faixa_maxima": "800",
+        "description": "Blue Ray",
+        "faixa_minima": "50001",
+        "faixa_maxima": "80000",
         "premio_liquido_12": "81.22",
         "premio_bruto_12": "87.22",
         "premio_liquido_24": "81.22",
@@ -1679,8 +1818,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "800.01",
-        "faixa_maxima": "1000",
+        "description": "Blue Ray",
+        "faixa_minima": "80001",
+        "faixa_maxima": "100000",
         "premio_liquido_12": "96.52",
         "premio_bruto_12": "103.64",
         "premio_liquido_24": "96.52",
@@ -1688,8 +1828,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "1000.01",
-        "faixa_maxima": "1500",
+        "description": "Blue Ray",
+        "faixa_minima": "100001",
+        "faixa_maxima": "150000",
         "premio_liquido_12": "112.86",
         "premio_bruto_12": "121.19",
         "premio_liquido_24": "112.86",
@@ -1697,8 +1838,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "1500.01",
-        "faixa_maxima": "2000",
+        "description": "Blue Ray",
+        "faixa_minima": "150001",
+        "faixa_maxima": "200000",
         "premio_liquido_12": "153.21",
         "premio_bruto_12": "164.52",
         "premio_liquido_24": "153.21",
@@ -1706,8 +1848,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "2000.01",
-        "faixa_maxima": "2500",
+        "description": "Blue Ray",
+        "faixa_minima": "200001",
+        "faixa_maxima": "250000",
         "premio_liquido_12": "196.97",
         "premio_bruto_12": "211.51",
         "premio_liquido_24": "196.97",
@@ -1715,8 +1858,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "2500.01",
-        "faixa_maxima": "3000",
+        "description": "Blue Ray",
+        "faixa_minima": "250001",
+        "faixa_maxima": "300000",
         "premio_liquido_12": "240.75",
         "premio_bruto_12": "258.52",
         "premio_liquido_24": "240.75",
@@ -1724,8 +1868,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "3000.01",
-        "faixa_maxima": "3500",
+        "description": "Blue Ray",
+        "faixa_minima": "300001",
+        "faixa_maxima": "350000",
         "premio_liquido_12": "280.01",
         "premio_bruto_12": "300.68",
         "premio_liquido_24": "280.01",
@@ -1733,8 +1878,9 @@
     },
     {
         "produto": "14",
-        "faixa_minima": "3500.01",
-        "faixa_maxima": "5000",
+        "description": "Blue Ray",
+        "faixa_minima": "350001",
+        "faixa_maxima": "500000",
         "premio_liquido_12": "368.05",
         "premio_bruto_12": "395.21",
         "premio_liquido_24": "368.05",
@@ -1742,6 +1888,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "0",
         "faixa_maxima": "10000",
         "premio_liquido_12": "20.56",
@@ -1751,6 +1898,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "10001",
         "faixa_maxima": "15000",
         "premio_liquido_12": "24.53",
@@ -1760,6 +1908,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "15001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "33.22",
@@ -1769,6 +1918,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "20001",
         "faixa_maxima": "25000",
         "premio_liquido_12": "41.77",
@@ -1778,6 +1928,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "48.75",
@@ -1787,6 +1938,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "56.74",
@@ -1796,6 +1948,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "65.82",
@@ -1805,6 +1958,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "50001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "81.22",
@@ -1814,6 +1968,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "80001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "164.07",
@@ -1823,6 +1978,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "100001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "112.86",
@@ -1832,6 +1988,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "153.21",
@@ -1841,6 +1998,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "196.97",
@@ -1850,6 +2008,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "240.75",
@@ -1859,6 +2018,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "300001",
         "faixa_maxima": "350000",
         "premio_liquido_12": "280.01",
@@ -1868,6 +2028,7 @@
     },
     {
         "produto": "15",
+        "description": "DVD",
         "faixa_minima": "350001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "368.05",
@@ -1877,6 +2038,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "0",
         "faixa_maxima": "25000",
         "premio_liquido_12": "41.15",
@@ -1886,6 +2048,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "25001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "58.86",
@@ -1895,6 +2058,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "50001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "91.40",
@@ -1904,6 +2068,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "70001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "127.12",
@@ -1913,6 +2078,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "130.27",
@@ -1922,6 +2088,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "100001",
         "faixa_maxima": "125000",
         "premio_liquido_12": "145.95",
@@ -1931,6 +2098,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "125001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "168.25",
@@ -1940,6 +2108,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "203.03",
@@ -1949,6 +2118,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "242.06",
@@ -1958,6 +2128,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "295.86",
@@ -1967,6 +2138,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "300001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "350.70",
@@ -1976,6 +2148,7 @@
     },
     {
         "produto": "16",
+        "description": "Filmadora",
         "faixa_minima": "400001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "427.16",
@@ -1985,6 +2158,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "0",
         "faixa_maxima": "10000",
         "premio_liquido_12": "14.63",
@@ -1994,6 +2168,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "10001",
         "faixa_maxima": "12000",
         "premio_liquido_12": "16.90",
@@ -2003,6 +2178,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "12001",
         "faixa_maxima": "14000",
         "premio_liquido_12": "20.28",
@@ -2012,6 +2188,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "14001",
         "faixa_maxima": "16000",
         "premio_liquido_12": "22.58",
@@ -2021,6 +2198,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "16001",
         "faixa_maxima": "18000",
         "premio_liquido_12": "27.78",
@@ -2030,6 +2208,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "18001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "30.69",
@@ -2039,6 +2218,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "20001",
         "faixa_maxima": "25000",
         "premio_liquido_12": "34.19",
@@ -2048,6 +2228,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "39.41",
@@ -2057,6 +2238,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "30001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "48.66",
@@ -2066,6 +2248,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "40001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "67.90",
@@ -2075,6 +2258,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "80.75",
@@ -2084,6 +2268,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "97.29",
@@ -2093,6 +2278,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "112.02",
@@ -2102,6 +2288,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "112.02",
@@ -2111,6 +2298,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "141.50",
@@ -2120,6 +2308,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "100001",
         "faixa_maxima": "120000",
         "premio_liquido_12": "169.21",
@@ -2129,6 +2318,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "120001",
         "faixa_maxima": "160000",
         "premio_liquido_12": "207.83",
@@ -2138,6 +2328,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "160001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "263.14",
@@ -2147,6 +2338,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "200001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "328.53",
@@ -2156,6 +2348,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "250001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "364.88",
@@ -2165,6 +2358,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "300001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "439.07",
@@ -2174,6 +2368,7 @@
     },
     {
         "produto": "17",
+        "description": "Tablet",
         "faixa_minima": "400001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "611.35",
@@ -2183,6 +2378,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "0",
         "faixa_maxima": "50000",
         "premio_liquido_12": "73.10",
@@ -2192,6 +2388,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "80.26",
@@ -2201,6 +2398,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "94.61",
@@ -2210,6 +2408,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "108.92",
@@ -2219,6 +2418,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "140.90",
@@ -2228,6 +2428,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "128.39",
@@ -2237,6 +2438,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "100001",
         "faixa_maxima": "110000",
         "premio_liquido_12": "155.57",
@@ -2246,6 +2448,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "110001",
         "faixa_maxima": "120000",
         "premio_liquido_12": "170.22",
@@ -2255,6 +2458,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "120001",
         "faixa_maxima": "130000",
         "premio_liquido_12": "184.91",
@@ -2264,6 +2468,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "130001",
         "faixa_maxima": "140000",
         "premio_liquido_12": "199.58",
@@ -2273,6 +2478,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "140001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "214.26",
@@ -2282,6 +2488,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "150001",
         "faixa_maxima": "160000",
         "premio_liquido_12": "228.91",
@@ -2291,6 +2498,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "160001",
         "faixa_maxima": "170000",
         "premio_liquido_12": "243.60",
@@ -2300,6 +2508,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "170001",
         "faixa_maxima": "180000",
         "premio_liquido_12": "258.27",
@@ -2309,6 +2518,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "180001",
         "faixa_maxima": "190000",
         "premio_liquido_12": "272.95",
@@ -2318,6 +2528,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "190001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "287.60",
@@ -2327,6 +2538,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "200001",
         "faixa_maxima": "220000",
         "premio_liquido_12": "309.62",
@@ -2336,6 +2548,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "220001",
         "faixa_maxima": "240000",
         "premio_liquido_12": "338.96",
@@ -2345,6 +2558,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "240001",
         "faixa_maxima": "260000",
         "premio_liquido_12": "368.30",
@@ -2354,6 +2568,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "260001",
         "faixa_maxima": "280000",
         "premio_liquido_12": "397.65",
@@ -2363,6 +2578,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "280001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "426.99",
@@ -2372,6 +2588,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "300001",
         "faixa_maxima": "350000",
         "premio_liquido_12": "478.36",
@@ -2381,6 +2598,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "350001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "551.72",
@@ -2390,6 +2608,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "400001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "661.75",
@@ -2399,6 +2618,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "500001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "808.47",
@@ -2408,6 +2628,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "600001",
         "faixa_maxima": "700000",
         "premio_liquido_12": "955.19",
@@ -2417,6 +2638,7 @@
     },
     {
         "produto": "18",
+        "description": "Computador/Notebook",
         "faixa_minima": "700001",
         "faixa_maxima": "800000",
         "premio_liquido_12": "1,101.91",
@@ -2426,6 +2648,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "0",
         "faixa_maxima": "25000",
         "premio_liquido_12": "24.46",
@@ -2435,6 +2658,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "26.84",
@@ -2444,6 +2668,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "30001",
         "faixa_maxima": "35000",
         "premio_liquido_12": "31.72",
@@ -2453,6 +2678,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "35001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "36.58",
@@ -2462,6 +2688,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "40001",
         "faixa_maxima": "45000",
         "premio_liquido_12": "41.47",
@@ -2471,6 +2698,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "45001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "46.35",
@@ -2480,6 +2708,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "50001",
         "faixa_maxima": "55000",
         "premio_liquido_12": "51.23",
@@ -2489,6 +2718,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "55001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "56.10",
@@ -2498,6 +2728,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "70001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "63.42",
@@ -2507,6 +2738,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "73.19",
@@ -2516,6 +2748,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "82.94",
@@ -2525,6 +2758,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "94.12",
@@ -2534,6 +2768,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "100001",
         "faixa_maxima": "110000",
         "premio_liquido_12": "128.79",
@@ -2543,6 +2778,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "110001",
         "faixa_maxima": "120000",
         "premio_liquido_12": "142.16",
@@ -2552,6 +2788,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "120001",
         "faixa_maxima": "130000",
         "premio_liquido_12": "154.52",
@@ -2561,6 +2798,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "130001",
         "faixa_maxima": "140000",
         "premio_liquido_12": "166.88",
@@ -2570,6 +2808,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "140001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "179.24",
@@ -2579,6 +2818,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "150001",
         "faixa_maxima": "160000",
         "premio_liquido_12": "191.60",
@@ -2588,6 +2828,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "160001",
         "faixa_maxima": "170000",
         "premio_liquido_12": "203.95",
@@ -2597,6 +2838,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "170001",
         "faixa_maxima": "180000",
         "premio_liquido_12": "214.66",
@@ -2606,6 +2848,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "180001",
         "faixa_maxima": "190000",
         "premio_liquido_12": "224.30",
@@ -2615,6 +2858,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "190001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "233.68",
@@ -2624,6 +2868,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "200001",
         "faixa_maxima": "210000",
         "premio_liquido_12": "241.80",
@@ -2633,6 +2878,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "210001",
         "faixa_maxima": "225000",
         "premio_liquido_12": "253.58",
@@ -2642,6 +2888,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "225001",
         "faixa_maxima": "250000",
         "premio_liquido_12": "266.76",
@@ -2651,6 +2898,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "250001",
         "faixa_maxima": "275000",
         "premio_liquido_12": "288.15",
@@ -2660,6 +2908,7 @@
     },
     {
         "produto": "19",
+        "description": "Monitor LCD",
         "faixa_minima": "275001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "325.53",
@@ -2669,6 +2918,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "0",
         "faixa_maxima": "5000",
         "premio_liquido_12": "9.53",
@@ -2678,6 +2928,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "5001",
         "faixa_maxima": "10000",
         "premio_liquido_12": "15.06",
@@ -2687,6 +2938,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "10001",
         "faixa_maxima": "15000",
         "premio_liquido_12": "15.27",
@@ -2696,6 +2948,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "15001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "22.58",
@@ -2705,6 +2958,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "20001",
         "faixa_maxima": "25000",
         "premio_liquido_12": "29.49",
@@ -2714,6 +2968,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "32.69",
@@ -2723,6 +2978,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "30001",
         "faixa_maxima": "35000",
         "premio_liquido_12": "34.49",
@@ -2732,6 +2988,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "35001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "37.87",
@@ -2741,6 +2998,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "40001",
         "faixa_maxima": "45000",
         "premio_liquido_12": "49.46",
@@ -2750,6 +3008,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "45001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "50.27",
@@ -2759,6 +3018,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "63.70",
@@ -2768,6 +3028,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "60001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "64.60",
@@ -2777,6 +3038,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "70001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "75.74",
@@ -2786,6 +3048,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "80001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "79.06",
@@ -2795,6 +3058,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "82.98",
@@ -2804,6 +3068,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "100001",
         "faixa_maxima": "110000",
         "premio_liquido_12": "81.95",
@@ -2813,6 +3078,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "110001",
         "faixa_maxima": "120000",
         "premio_liquido_12": "98.53",
@@ -2822,6 +3088,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "120001",
         "faixa_maxima": "130000",
         "premio_liquido_12": "115.79",
@@ -2831,6 +3098,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "130001",
         "faixa_maxima": "140000",
         "premio_liquido_12": "134.43",
@@ -2840,6 +3108,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "140001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "154.43",
@@ -2849,6 +3118,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "150001",
         "faixa_maxima": "200000",
         "premio_liquido_12": "135.67",
@@ -2858,6 +3128,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "200001",
         "faixa_maxima": "300000",
         "premio_liquido_12": "193.24",
@@ -2867,6 +3138,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "300001",
         "faixa_maxima": "400000",
         "premio_liquido_12": "267.70",
@@ -2876,6 +3148,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "400001",
         "faixa_maxima": "500000",
         "premio_liquido_12": "339.28",
@@ -2885,6 +3158,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "500001",
         "faixa_maxima": "600000",
         "premio_liquido_12": "425.60",
@@ -2894,6 +3168,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "600001",
         "faixa_maxima": "700000",
         "premio_liquido_12": "496.28",
@@ -2903,6 +3178,7 @@
     },
     {
         "produto": "20",
+        "description": "Celular",
         "faixa_minima": "700001",
         "faixa_maxima": "800000",
         "premio_liquido_12": "566.97",
@@ -2912,6 +3188,7 @@
     },
     {
         "produto": "21",
+        "description": "Frigobar/Adega",
         "faixa_minima": "0",
         "faixa_maxima": "30000",
         "premio_liquido_12": "29.54",
@@ -2921,6 +3198,7 @@
     },
     {
         "produto": "21",
+        "description": "Frigobar/Adega",
         "faixa_minima": "30001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "40.53",
@@ -2930,6 +3208,7 @@
     },
     {
         "produto": "21",
+        "description": "Frigobar/Adega",
         "faixa_minima": "50001",
         "faixa_maxima": "60000",
         "premio_liquido_12": "52.03",
@@ -2939,6 +3218,7 @@
     },
     {
         "produto": "21",
+        "description": "Frigobar/Adega",
         "faixa_minima": "60001",
         "faixa_maxima": "80000",
         "premio_liquido_12": "67.73",
@@ -2948,6 +3228,7 @@
     },
     {
         "produto": "21",
+        "description": "Frigobar/Adega",
         "faixa_minima": "80001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "82.96",
@@ -2957,6 +3238,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "0",
         "faixa_maxima": "10000",
         "premio_liquido_12": "8.95",
@@ -2966,6 +3248,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "10001",
         "faixa_maxima": "20000",
         "premio_liquido_12": "13.45",
@@ -2975,6 +3258,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "20001",
         "faixa_maxima": "25000",
         "premio_liquido_12": "20.16",
@@ -2984,6 +3268,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "25001",
         "faixa_maxima": "30000",
         "premio_liquido_12": "24.65",
@@ -2993,6 +3278,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "30001",
         "faixa_maxima": "35000",
         "premio_liquido_12": "29.15",
@@ -3002,6 +3288,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "35001",
         "faixa_maxima": "40000",
         "premio_liquido_12": "33.61",
@@ -3020,6 +3307,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "45001",
         "faixa_maxima": "50000",
         "premio_liquido_12": "42.58",
@@ -3029,6 +3317,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "50001",
         "faixa_maxima": "70000",
         "premio_liquido_12": "53.78",
@@ -3038,6 +3327,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "70001",
         "faixa_maxima": "90000",
         "premio_liquido_12": "71.71",
@@ -3047,6 +3337,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "90001",
         "faixa_maxima": "100000",
         "premio_liquido_12": "85.18",
@@ -3056,6 +3347,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "100001",
         "faixa_maxima": "125000",
         "premio_liquido_12": "100.88",
@@ -3065,6 +3357,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "125001",
         "faixa_maxima": "150000",
         "premio_liquido_12": "123.27",
@@ -3074,6 +3367,7 @@
     },
     {
         "produto": "22",
+        "description": "Bicicleta",
         "faixa_minima": "150001",
         "faixa_maxima": "175000",
         "premio_liquido_12": "145.67",
