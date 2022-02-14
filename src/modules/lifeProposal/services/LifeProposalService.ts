@@ -131,7 +131,7 @@ export class LifeProposalService {
     async sendMail(response: any) {
         const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response)
         if (typeof verifyProposal == "undefined" || verifyProposal == []) return
-        const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0])
+        const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0]) // TODO: Preciso do layout do e-mail preenchido completo
         return {
             message: sendMail,
             status: 200,

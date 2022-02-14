@@ -16,9 +16,9 @@ apiServer.start()
 startCronJobs()
 
 function startCronJobs() {
-    // if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-    //     return
-    // }
+    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+        return
+    }
     try {
         const lifeCronService = iocContainer.get<lifeCronService>(TYPES.lifeCronService)
         lifeCronService.startCronJobs()
