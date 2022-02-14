@@ -173,4 +173,26 @@ export class LifeProposalService {
         if (typeof filterFromCustomerId == "undefined") return { message: "Erro ao consultar a base de dados" }
         return filterFromCustomerId?.length >= 1 ? true : false
     }
+
+    async responseProposal(responseJson: any) {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(responseJson.insured_id)
+        if (verifyProposal?.length == 0 || typeof verifyProposal == "undefined") {
+            return {
+                message: "register not found",
+                status: 400,
+            }
+        }
+        const proposalInfoData = {
+            order: verifyProposal[0].order,
+            customerId: verifyProposal[0].customerId,
+            policyNumber: responseJson.policy_number,
+        }
+        const updateSoldProposal = await this.lifeProposalSoldRepository.update(proposalInfoData)
+        if (updateSoldProposal) {
+            return {
+                message: "Updated register",
+                status: 200,
+            }
+        }
+    }
 }
