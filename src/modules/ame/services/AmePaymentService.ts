@@ -34,6 +34,12 @@ export class AmePaymentService {
     async login() {
         const cfg = await this.getConfig()
 
+        logger.debug("VERIFICANDO OS DADOS DO BLIND GUARDIAN", {
+            client_id: cfg.client_id,
+            URL: cfg.blindGuardianUrl,
+            paymentApi: cfg.paymentApi,
+        })
+
         const loginParams = {
             client_id: cfg.client_id,
             client_secret: cfg.client_secret,
