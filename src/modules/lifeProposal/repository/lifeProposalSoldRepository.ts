@@ -48,4 +48,70 @@ export class lifeProposalSoldRepository {
             return []
         }
     }
+
+    async findAllFromInsuredId(insuredId: any) {
+        try {
+            const params = {
+                TableName: TABLE,
+                IndexName: "insuredIdIndex",
+                KeyConditionExpression: "insuredId = :insuredId",
+                ExpressionAttributeValues: {
+                    ":insuredId": insuredId,
+                },
+            }
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
+            log.debug(`Have found ${result.Items?.length} items`)
+            return result.Items
+        } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
+            return []
+        }
+    }
+
+    async update(proposal: any, status = "APROVED") {
+        try {
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            let params
+            if (typeof proposal.policyNumber != "undefined") {
+                params = {
+                    TableName: TABLE,
+                    Key: {
+                        order: proposal.order,
+                        customerId: proposal.customerId,
+                    },
+                    UpdateExpression: "set #variavelStatus = :y, #variavelPolicy = :policy",
+                    ExpressionAttributeNames: {
+                        "#variavelStatus": "status",
+                        "#variavelPolicy": "policy_number",
+                    },
+                    ExpressionAttributeValues: {
+                        ":y": status,
+                        ":policy": proposal?.policyNumber,
+                    },
+                }
+            } else {
+                params = {
+                    TableName: TABLE,
+                    Key: {
+                        order: proposal.order,
+                        customerId: proposal.customerId,
+                    },
+                    UpdateExpression: "set #variavelStatus = :y",
+                    ExpressionAttributeNames: {
+                        "#variavelStatus": "status",
+                    },
+                    ExpressionAttributeValues: {
+                        ":y": status,
+                    },
+                }
+            }
+            const updateData = await dynamoDocClient.update(params).promise()
+            log.info("Atualizando os registros Life na tabela soldProposal")
+            return updateData
+        } catch (e) {
+            log.error(e, "Erro ao atualizar os valores na soldProposal")
+        }
+    }
 }

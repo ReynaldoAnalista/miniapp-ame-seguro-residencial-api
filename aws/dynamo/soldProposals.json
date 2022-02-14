@@ -30,6 +30,10 @@
     {
       "AttributeName": "NSU",
       "AttributeType": "S"
+    },
+    {
+      "AttributeName": "insuredId",
+      "AttributeType": "S"
     }
   ],
   "ProvisionedThroughput": {
@@ -83,6 +87,22 @@
       "ProvisionedThroughput": {
         "ReadCapacityUnits": 1,
         "WriteCapacityUnits": 1
+      }
+    },
+    {
+      "IndexName": "insuredIdIndex",
+      "KeySchema": [
+        {
+          "AttributeName": "insuredId",
+          "KeyType": "HASH"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 5,
+        "WriteCapacityUnits": 5
       }
     },
     {
