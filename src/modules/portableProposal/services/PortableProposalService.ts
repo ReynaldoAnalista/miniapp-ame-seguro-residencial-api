@@ -418,7 +418,7 @@ export class PortableProposalService {
         const refundedPayment = await this.refundPaymentProcess(proposal)
         const refundContent = {
             paymentId: unsignedPayment.order, // id da ordem
-            walletToken: await this.parameterStore.getSecretValue("MINIAPP_KEY"),
+            walletToken: await this.parameterStore.getSecretValue("MINIAPP_SMARTPHONE_KEY"),
             amount: refundedPayment,
         }
         const refundToWallet = await this.amePaymentService.refund(refundContent)
