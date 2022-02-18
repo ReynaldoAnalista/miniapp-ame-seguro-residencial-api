@@ -783,22 +783,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"properties": {
-											"voce": {
-												"type": "string"
-											},
-											"familia": {
-												"type": "string"
-											}
+									"properties": {
+										"voce": {
+											"type": "number",
+											"format": "double"
 										},
-										"required": [
-											"familia",
-											"voce"
-										],
-										"type": "object"
+										"familia": {
+											"properties": {
+												"morte_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_pais": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_sogros": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"funeral_sogros",
+												"funeral_pais",
+												"funeral_conjuge",
+												"morte_conjuge"
+											],
+											"type": "object"
+										}
 									},
-									"type": "array"
+									"required": [
+										"familia",
+										"voce"
+									],
+									"type": "object"
 								}
 							}
 						},
@@ -824,13 +846,98 @@
 				}
 			}
 		},
-		"/v1/life/luck_number": {
-			"post": {
-				"operationId": "LuckNumber",
+		"/v1/life/validate_customer/{customerId}": {
+			"get": {
+				"operationId": "ValidateCustomer",
 				"responses": {
 					"200": {
 						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"type": "boolean"
+										},
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
+						},
+						"description": "Retrived"
+					},
+					"404": {
+						"content": {
 							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/life/response_proposal": {
+			"post": {
+				"operationId": "Response_proposal",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												},
+												"status": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"status",
+												"message"
+											],
+											"type": "object"
+										},
+										{
+											"properties": {
+												"authorization": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message",
+												"authorization"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
 						},
 						"description": "Retrieved"
 					},
@@ -842,7 +949,25 @@
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/v1/pet/planList": {
