@@ -419,6 +419,7 @@ export class SmartphoneProposalService {
             walletToken: await this.parameterStore.getSecretValue("MINIAPP_SMARTPHONE_KEY"),
             amount: refundedPayment,
         }
+        log.debug("REEFUND SMARTPHOONE CONTENT", refundContent)
         const refundToWallet = await this.amePaymentService.refund(refundContent)
         return refundToWallet
     }
