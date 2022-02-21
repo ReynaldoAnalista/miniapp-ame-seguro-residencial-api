@@ -146,6 +146,7 @@ export class SmartphoneProposalController {
     @Post("/cancelation_security")
     public async cancelationSecurity(@Body() signedPayment: any) {
         try {
+            // INICIO DO PROCESSO DE CANCELAMENTO
             logger.info("Iniciando o processo de cancelamento")
             return this.planService.cancelationProcess(signedPayment)
         } catch (e) {
