@@ -51,7 +51,7 @@ describe("ResidentialProposalService", () => {
             return {
                 id: x.id,
                 descricao: x.descricao,
-                premio: Number(x.premio.toString().replace(".", "")),
+                premio: Number(x.premio.toString().replace(/\./g, "")),
             }
         })
         const filterPlans = await Promise.all(
