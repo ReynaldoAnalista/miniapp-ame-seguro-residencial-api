@@ -8,3 +8,4 @@ yarn-*.log
 newrelic_agent.log
 src/routes.ts
 /coverage/
+.dccache
