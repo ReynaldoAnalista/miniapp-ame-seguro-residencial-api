@@ -102,7 +102,10 @@ export class HubService {
                     return {
                         id: x.order,
                         description: x.receivedPaymentNotification?.title,
-                        date: moment(x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia, "YYYY-MM-DD").format("DD/MM/YYYY"),
+                        date: moment(
+                            x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
+                            "YYYY-MM-DD"
+                        ).format("DD/MM/YYYY"),
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
@@ -229,7 +232,7 @@ export class HubService {
                 })
             }
         }
-        if (lifePlansFromDB) {            
+        if (lifePlansFromDB) {
             lifePlans = Object.assign(lifePlansFromDB).map((x) => {
                 return {
                     id: x?.order,
@@ -241,7 +244,7 @@ export class HubService {
                     coverage: x.receivedPaymentNotification.attributes.customPayload.proposal.coverage,
                     name: Tenants.LIFE,
                 }
-            })            
+            })
         }
         return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans, lifePlans }
     }
@@ -298,8 +301,8 @@ export class HubService {
 
     async faqInfo() {
         const TOKEN_CACHE = `TOKENCACHE_FAQ`
-        if(cache.get(TOKEN_CACHE)){
-           return cache.get(TOKEN_CACHE)
+        if (cache.get(TOKEN_CACHE)) {
+            return cache.get(TOKEN_CACHE)
         }
         const infoFaq = {
             agreement: await this.agreementPlanFaq(),
@@ -309,8 +312,9 @@ export class HubService {
             dental: await this.faqInfoJson("seguro-dental-ame"),
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
             devices: await this.faqInfoJson("seguro-portateis"),
+            life: await this.faqInfoJson("seguro-de-vida"),
         }
-        cache.put(TOKEN_CACHE, infoFaq, 1000 * 60 * 60 * 20)        
+        cache.put(TOKEN_CACHE, infoFaq, 1000 * 60 * 60 * 20)
         return infoFaq
     }
 
