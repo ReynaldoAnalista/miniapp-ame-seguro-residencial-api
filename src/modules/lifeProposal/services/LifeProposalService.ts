@@ -11,6 +11,8 @@ import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
 import axios from "axios"
+import { ParameterStore } from "../../../configs/ParameterStore"
+import EmailSender from "./EmailSender"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -22,7 +24,8 @@ export class LifeProposalService {
         @inject("RequestService") private requestService: RequestService,
         @inject("LifeProposalUtil") private lifeProposalUtil: LifeProposalUtil,
         @inject("lifeProposalSoldRepository") private lifeProposalSoldRepository: lifeProposalSoldRepository,
-        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository
+        @inject("LuckNumberRepository") private luckNumberRepository: LuckNumberRepository,
+        @inject("ParameterStore") private parameterStore: ParameterStore
     ) {}
 
     async healthCareCotationInfo() {
@@ -212,6 +215,40 @@ export class LifeProposalService {
                 message: "Updated register",
                 status: 200,
             }
+        }
+    }
+
+    async mailResponseDigibee(responseJson: any) {
+        // const email = emailPass
+        const email = await this.parameterStore.getSecretValue("LIFE_ERROR_MAIL_SENDER")
+        const formatedMail = email.split("$")
+        log.info("Preparando o layout do e-mail do Erro")
+        const emailTemplate = path.resolve(__dirname, "../../../../mail_template/life_error_mail.html")
+
+        const template = await readFile(emailTemplate, "utf-8")
+        const body = template
+            .replace(/@@code@@/g, `${responseJson.code}`)
+            .replace(/@@error@@/g, `${responseJson.error}`)
+            .replace(/@@message_erro@@/g, `${responseJson.message}`)
+            .replace(/@@date_error@@/g, `${responseJson.timestamp}`)
+            .replace(/@@pipeline_error@@/g, `${responseJson.pipeline}`)
+
+        const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
+        const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
+        const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
+        const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
+        const titleMail = "Erro de Acesso Seguro Vida (DigiBee)"
+        log.debug(`EmailFrom:${emailFrom}`)
+        try {
+            const sendResult = await EmailSender.sendEmail(emailFrom, formatedMail, body, accessKeyId, secretAccessKey, titleMail)
+            log.info("DigiBee Return Email Error Sent")
+            return {
+                success: true,
+                messageCode: sendResult.MessageId,
+            }
+        } catch (e) {
+            log.error("DigiBee Email Error not sent", e)
+            throw "Error during sending Return Mail"
         }
     }
 }
