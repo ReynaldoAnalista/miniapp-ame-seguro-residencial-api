@@ -79,4 +79,21 @@ export class LifeProposalController {
             throw new ApiError("Life Proposal Not sent", 500)
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/response_digibee_error")
+    public async response_digibee_error(@Body() responseJson: any, @Header("x-partner") partnerId: string) {
+        log.info("Life DigiBee Error Mail Send")
+        try {
+            if (partnerId === "6f8e4ca7-f5aa-4da2-9bdb-e856ec69f79b") {
+                return await this.lifeProposalService.mailResponseDigibee(responseJson)
+            } else {
+                return { authorization: false, message: "Partner not recognized" }
+            }
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("Life DigiBee Error Mail Not sent", 500)
+        }
+    }
 }
