@@ -96,12 +96,13 @@ export class PetProposalService {
     async requestProposal(contractId, formatProposal) {
         let result
         try {
+            const petEnrollURL = `seguro-pet/v2/enroll/${contractId}`
             const response = await this.requestService.makeRequest(
                 this.requestService.ENDPOINTS.PET_URL_BASE,
                 this.requestService.METHODS.POST,
                 formatProposal,
                 Tenants.PET,
-                `seguro-pet/v2/enroll/${contractId}`
+                petEnrollURL
             )
             result = response.data
             log.info(`Success proposal :${contractId}`)

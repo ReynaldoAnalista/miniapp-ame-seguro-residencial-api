@@ -46,7 +46,9 @@ export class AmePaymentService {
             grant_type: "client_credentials",
         }
         try {
-            const resAmeAuth = await Axios.post(`${cfg.blindGuardianUrl}/o/auth`, loginParams)
+            const axiosInstance = Axios.create({ method: "post" })
+            const blindGuardianUrl = cfg.blindGuardianUrl
+            const resAmeAuth = await axiosInstance.post(`${blindGuardianUrl}/o/auth`, loginParams)
             this.tokenCode = resAmeAuth.data.accessToken
 
             return this.tokenCode
