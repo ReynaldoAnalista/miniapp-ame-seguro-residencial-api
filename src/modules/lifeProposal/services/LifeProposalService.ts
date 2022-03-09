@@ -10,6 +10,7 @@ import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
+import axios from "axios"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -79,6 +80,24 @@ export class LifeProposalService {
                 sorteio_liquido: 0.48,
             },
         ]
+    }
+
+    async planInfo(request: any) {
+        const jsonPlanInfo = "https://s3.amazonaws.com/seguros.miniapp.ame/coberturas_vida.json"
+        const info = await axios.get(jsonPlanInfo).then((response) => {
+            return response.data
+        })
+        const dataInfo = info
+            .filter((x) => request.age >= x.min && request.age <= x.max && request.range * 2500000 == parseInt(x.valor))
+            .filter(
+                (x) =>
+                    request.basico == x.basico &&
+                    request.mc == x.mc &&
+                    request.funeral_familia == x.funeral_familia &&
+                    request.funeral_pais == x.funeral_pais &&
+                    request.funeral_sogros == x.funeral_sogros
+            )
+        return dataInfo[0]
     }
 
     async cotation(request: any) {

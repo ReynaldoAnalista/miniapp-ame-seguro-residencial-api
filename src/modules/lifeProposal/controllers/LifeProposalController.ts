@@ -27,6 +27,19 @@ export class LifeProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
+    @Post("/plan_info")
+    public async planInfo(@Body() request: any) {
+        log.info("Life Plan Info")
+        try {
+            return await this.lifeProposalService.planInfo(request)
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("Life Plan Info Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotation(@Body() request: any) {
         log.info("HealthCare Cotation")
