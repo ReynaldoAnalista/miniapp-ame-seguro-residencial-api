@@ -89,11 +89,12 @@ export class RequestService {
                 Authorization: `Bearer ${token}`,
             }
         }
+        const apikey = await this.parameterStore.getSecretValue("RENEW_PORTABLE_API_KEY")
         if (tenant === Tenants.RENEW_PORTABLE_DIGIBEE) {
             headers = {
                 "Content-Type": "application/json",
                 Authorization: token,
-                apikey: await this.parameterStore.getSecretValue("RENEW_PORTABLE_API_KEY"),
+                apikey,
             }
         }
 
@@ -101,10 +102,10 @@ export class RequestService {
             method: method,
             url: apiUrl + (queryString ? queryString : ""),
             headers,
-            data: body != null ? JSON.stringify(body) : null,
         }
 
-        const result = await axios(config)
+        const axiosInstance = axios.create(config)
+        const result = await axiosInstance.request({ data: body != null ? JSON.stringify(body) : null })
 
         log.debug("Request Successfully")
         if (result.headers && result.headers["x-b3-traceid"]) {
