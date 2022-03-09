@@ -190,4 +190,10 @@ export class LifeProposalService {
     async setUsedLuckNumber(proposal, luckNumberInfo) {
         return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
     }
+
+    async validateCustomerService(customerId: any) {
+        const filterFromCustomerId = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
+        if (typeof filterFromCustomerId == "undefined") return { message: "Erro ao consultar a base de dados" }
+        return filterFromCustomerId?.length >= 1 ? true : false
+    }
 }
