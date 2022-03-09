@@ -52,11 +52,17 @@ export class SmartphoneProposalUtils {
             const preNumber = process.env.DYNAMODB_ENV === "prod" ? "0" : "9"
             const contractNumber = `${unsignedProposal.nsu}`.padStart(17, preNumber)
             const proposal = Object.assign(unsignedProposal.attributes.customPayload.proposal)
-            proposal.policy_data = this.generatePolicyData(contractNumber, this.generateDateProposal(unsignedProposal.date))
-            proposal.policyholder_data = this.generatePolicyHolderData()
-            proposal.variable_policy_data = this.generateVariablePolicyData(contractNumber, unsignedProposal.amount)
-            proposal.charge_type_data = this.generateChargeData(unsignedProposal.amount)
-            return this.formatedProposalValues(proposal)
+            proposal.policy_data = SmartphoneProposalUtils.generatePolicyData(
+                contractNumber,
+                SmartphoneProposalUtils.generateDateProposal(unsignedProposal.date)
+            )
+            proposal.policyholder_data = SmartphoneProposalUtils.generatePolicyHolderData()
+            proposal.variable_policy_data = SmartphoneProposalUtils.generateVariablePolicyData(
+                contractNumber,
+                unsignedProposal.amount
+            )
+            proposal.charge_type_data = SmartphoneProposalUtils.generateChargeData(unsignedProposal.amount)
+            return SmartphoneProposalUtils.formatedProposalValues(proposal)
         }
         return null
     }
@@ -209,7 +215,7 @@ export class SmartphoneProposalUtils {
         const type = "round"
         value = +(value / 100)
         const exp = -2
-        if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+        if (Number.isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
             return NaN
         }
         value = value.toString().split("e")
@@ -220,8 +226,8 @@ export class SmartphoneProposalUtils {
 
     static getPaymentPlanCode = (code) => {
         switch (code) {
-            case 1:
-                return 301
+            // case 1:
+            // return 301
 
             case 2:
                 return 302

@@ -37,19 +37,21 @@ export class LifeProposalUtil {
     }
 
     async filterPlanNameFromDate(date) {
-        const idade = moment().diff(date, "years").toString().substr(1, 2)
-
-        switch (idade) {
-            case "0" || "5":
-                return "57208_0_1"
-            case "2" || "7":
-                return "57208_0_3"
-            case "3" || "8":
-                return "57208_0_4"
-            case "4" || "9":
-                return "57208_0_5"
-            case "1" || "6":
-                return "57208_0_2"
+        const idade = String(moment().diff(date, "years")).substr(1, 2)
+        if (idade === "0" || idade === "5") {
+            return "57208_0_1"
+        }
+        if (idade === "2" || idade === "7") {
+            return "57208_0_3"
+        }
+        if (idade === "3" || idade === "8") {
+            return "57208_0_4"
+        }
+        if (idade === "4" || idade === "9") {
+            return "57208_0_5"
+        }
+        if (idade === "1" || idade === "6") {
+            return "57208_0_2"
         }
     }
 

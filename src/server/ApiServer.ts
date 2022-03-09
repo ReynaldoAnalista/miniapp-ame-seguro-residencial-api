@@ -37,8 +37,6 @@ export class ApiServer {
                 .use(bodyParser.json())
                 .use(docPath, swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }))
                 .use((_req, res, next) => {
-                    res.header("Access-Control-Allow-Origin", "*")
-                    res.header("Access-Control-Allow-Headers", `Origin, X-Requested-With, Content-Type, Accept, Authorization`)
                     next()
                 })
 
