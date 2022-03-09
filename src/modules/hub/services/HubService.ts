@@ -76,6 +76,8 @@ export class HubService {
         let petPlans = []
         let healthCarePlans = []
         let portablePlans = []
+        const portableGePlans = []
+        let listPortablePlans = []
         let renewPortablePlans = []
         let lifePlans = []
         if (residentialPlansFromDB) {
@@ -186,7 +188,7 @@ export class HubService {
             if (raw) {
                 portablePlans = Object.assign(portablePlansPlansFromDB)
             } else {
-                portablePlans = Object.assign(portablePlansPlansFromDB).map((x) => {
+                listPortablePlans = Object.assign(portablePlansPlansFromDB).map((x) => {
                     const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
                     const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
                     const device = proposal?.portable_equipment_risk_data
@@ -207,9 +209,18 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: Tenants.PORTABLE,
+                        name: x.tenant,
                     }
                 })
+                // if (typeof listPortablePlans === "undefined" || listPortablePlans === null) {
+                //     return []
+                // }
+                // portablePlans = listPortablePlans.filter((y) => {
+                //     if (typeof y.name === "undefined" || y.name === null) {
+                //         return []
+                //     }
+                //     return y.name === Tenants.PORTABLE
+                // })
             }
         }
         if (renewPortablePlansPlansFromDB) {

@@ -775,6 +775,41 @@
 				}
 			}
 		},
+		"/v1/life/plan_info": {
+			"post": {
+				"operationId": "PlanInfo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/v1/life/cotation": {
 			"post": {
 				"operationId": "Cotation",
@@ -917,6 +952,81 @@
 											"required": [
 												"status",
 												"message"
+											],
+											"type": "object"
+										},
+										{
+											"properties": {
+												"authorization": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message",
+												"authorization"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/response_digibee_error": {
+			"post": {
+				"operationId": "Response_digibee_error",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"properties": {
+												"success": {
+													"type": "boolean"
+												},
+												"messageCode": {
+													"additionalProperties": true,
+													"type": "object"
+												}
+											},
+											"required": [
+												"messageCode",
+												"success"
 											],
 											"type": "object"
 										},

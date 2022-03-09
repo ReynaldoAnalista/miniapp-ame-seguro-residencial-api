@@ -99,8 +99,8 @@ export class PortableSoldProposalRepository {
         try {
             const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
             const result = await dynamoDocClient.query(params).promise()
-            log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items?.filter((x) => x.tenant === Tenants.PORTABLE)
+            log.debug(`Have found ${result} items`)
+            return result.Items?.filter((x) => x.tenant === Tenants.PORTABLE || x.tenant === Tenants.EXT_GE_AME)
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)
