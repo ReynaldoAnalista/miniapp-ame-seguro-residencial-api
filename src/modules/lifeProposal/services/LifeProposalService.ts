@@ -109,15 +109,16 @@ export class LifeProposalService {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
             const customerIdFromObject = unsignedPayment.attributes.customPayload.customerId
-            const firstLuckNumber = await this.findLuckNumber()
-            unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
+            // const firstLuckNumber = await this.findLuckNumber()
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = "9999"
             unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
                 .substring(customerIdFromObject.length, 20)
                 .replace(/-/g, "")
             unsignedPayment.attributes.customPayload.proposal.beneficiary = []
-            const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+            const proposalResponse = { message: "ordem enviada para processamento", success: true }
+            // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
             await this.saveSoldProposal(unsignedPayment, proposalResponse)
-            await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
             return proposalResponse
         } catch (e) {
             log.error("Erro ao realizar o pagamento do seguro vida", e)
