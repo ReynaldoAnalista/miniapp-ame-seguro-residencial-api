@@ -54,7 +54,7 @@ export class HealthController {
         return new Promise((resolve, reject) => {
             try {
                 const commitDateFile = path.join(__dirname, "../../../commit_date.txt")
-                fs.readFile(commitDateFile, "utf-8", (err, data) => {
+                fs.readFile(commitDateFile, "utf8", (err, data) => {
                     if (err) {
                         return resolve("2001-01-01")
                     }
