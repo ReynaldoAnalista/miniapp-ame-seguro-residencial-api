@@ -67,7 +67,8 @@ export class HubService {
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
         const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
         const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
-        const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomer(customerId)
+        const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomerParseTenant(customerId, Tenants.PORTABLE)
+        const portablePlansPlansGEFromDB = await this.portableSoldProposalRepository.findAllFromCustomerParseTenant(customerId, Tenants.EXT_GE_AME)
         const renewPortablePlansPlansFromDB = await this.renewPortableSoldProposal.findAllFromCustomer(customerId)
         const lifePlansFromDB = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
 
@@ -76,6 +77,7 @@ export class HubService {
         let petPlans = []
         let healthCarePlans = []
         let portablePlans = []
+        let portableGePlans = []
         let renewPortablePlans = []
         let lifePlans = []
         if (residentialPlansFromDB) {
@@ -141,7 +143,37 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: Tenants.SMARTPHONE,
+                        name: x.tenant
+                    }
+                })
+            }
+        }
+        if (portablePlansPlansGEFromDB) {
+            if (raw) {
+                portableGePlans = Object.assign(portablePlansPlansGEFromDB)
+            } else {
+                portableGePlans = Object.assign(portablePlansPlansGEFromDB).map((x) => {
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    const device = proposal?.portable_equipment_risk_data
+
+                    return {
+                        id: x.order,
+                        description: x.receivedPaymentNotification?.title,
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        diffDays: moment().diff(moment(x.createdAt), "days"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        device: device?.risk_description,
+                        deviceValue: device?.equipment_value ? device?.equipment_value * 100 : 0,
+                        imei: device?.device_serial_code,
+                        coverage: selectedPlan?.coverage,
+                        guarantee: selectedPlan?.guarantee,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
+                        stolenFranchise: selectedPlan?.stolenFranchise,
+                        brokenFranchise: selectedPlan?.brokenFranchise,
+                        screenFranchise: selectedPlan?.screenFranchise,
+                        name: x.tenant
                     }
                 })
             }
@@ -207,9 +239,9 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: Tenants.PORTABLE,
+                        name: x.tenant
                     }
-                })
+                })                
             }
         }
         if (renewPortablePlansPlansFromDB) {
@@ -246,7 +278,7 @@ export class HubService {
                 }
             })
         }
-        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans, lifePlans }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, portableGePlans, renewPortablePlans, lifePlans }
     }
 
     /**
