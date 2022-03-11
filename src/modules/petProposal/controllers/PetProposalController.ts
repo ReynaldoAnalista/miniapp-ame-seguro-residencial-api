@@ -22,11 +22,11 @@ export class PetProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Get(`/petDescPlan/{idPlan}`)
-    public async descPetList(@Path() idPlan: string) {
+    @Get("/petDescPlan/{planId}")
+    public async descPetList(@Path() planId: string) {
         logger.info("Get Desc Plan")
         try {
-            return await this.petService.descPlans(idPlan)
+            return await this.petService.descPlans(planId)
         } catch (e) {
             logger.error(e.message)
             throw new ApiError("Desc Plans Not sent", 500)
@@ -35,7 +35,7 @@ export class PetProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Post(`/sendProposal`)
+    @Post("/sendProposal")
     public async sendProposal(@Body() signedPayment: PetProposalNotification) {
         logger.info("Send Proposal Plan")
         try {
@@ -48,7 +48,7 @@ export class PetProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
-    @Post(`/quote/{idPlan}`)
+    @Post("/quote/{idPlan}")
     public async quotationPetPlans(@Path() idPlan: string, @Body() petQuotationPlan: any) {
         logger.info("Get Quotation Plan")
         try {

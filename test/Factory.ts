@@ -5,11 +5,15 @@ const formUrlEncoded = (x) => Object.keys(x).reduce((p, c) => p + `&${c}=${encod
 const log = getLogger("Factory")
 
 export default class Factory {
+    static getPassword() {
+        return "c@lindra123"
+    }
+
     static async getUserAmeToken() {
         const data = formUrlEncoded({
             grant_type: "password",
             username: "fabio.oshiro@gmail.com",
-            password: "c@lindra123",
+            password: Factory.getPassword(),
         })
         const userTokenPromise = Axios.post("https://api.dev.amedigital.com/api/auth/oauth/token", data, {
             headers: {
@@ -24,11 +28,19 @@ export default class Factory {
         return token
     }
 
+    static getClientId() {
+        return "dbd3e153-414f-4d56-b448-14add66e52ab"
+    }
+
+    static getClientSecret() {
+        return "0604ac09-ec84-43de-90bb-5e7b30ceef8f"
+    }
+
     static getBlindToken() {
         return Axios.post("https://miniapps.dev.amedigital.com/blind-guardian/v1/o/auth", {
             grant_type: "client_credentials",
-            client_id: "dbd3e153-414f-4d56-b448-14add66e52ab",
-            client_secret: "0604ac09-ec84-43de-90bb-5e7b30ceef8f",
+            client_id: Factory.getClientId(),
+            client_secret: Factory.getClientSecret(),
         }).then((res) => res.data.accessToken)
     }
 }

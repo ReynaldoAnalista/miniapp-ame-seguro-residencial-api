@@ -26,7 +26,7 @@ export class RenewPortableUtils {
             proposal.insured_data = unsignedProposal.customPayload.proposal.insured_data
             proposal.product_data = unsignedProposal.customPayload.proposal.product_data
             proposal.coverage_data = covarageData
-            proposal.charge_type_data = this.generateChargeData(covarageData.insured_amount)
+            proposal.charge_type_data = RenewPortableUtils.generateChargeData(covarageData.insured_amount)
 
             return proposal
         }
@@ -58,7 +58,7 @@ export class RenewPortableUtils {
         const type = "round"
         value = +(value / 100)
         const exp = -2
-        if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+        if (Number.isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
             return NaN
         }
         value = value.toString().split("e")
@@ -115,7 +115,7 @@ export class RenewPortableUtils {
         const type = "round"
         value = +(value / 100)
         const exp = -2
-        if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+        if (Number.isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
             return NaN
         }
         value = value.toString().split("e")
@@ -126,8 +126,8 @@ export class RenewPortableUtils {
 
     static getPaymentPlanCode = (code) => {
         switch (code) {
-            case 1:
-                return 301
+            // case 1:
+            // return 301
 
             case 2:
                 return 302

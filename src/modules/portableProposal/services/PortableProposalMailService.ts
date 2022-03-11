@@ -146,7 +146,7 @@ export class PortableProposalMailService {
             carencyThief: selectedPlan.id == 1 ? "Não há" : "-",
             prizeThieft:
                 selectedPlan.id == 1 && selectedPercent["thieft"] != 0
-                    ? "R$ " + this.setPercent(selectedPercent["thieft"], equipamentRiskData?.equipment_value).replace(".", ",")
+                    ? "R$ " + this.setPercent(selectedPercent["thieft"], equipamentRiskData?.equipment_value).replace(/\./g, ",")
                     : "-",
             lackThieft: "-",
 
@@ -158,7 +158,10 @@ export class PortableProposalMailService {
             prizeAcidental:
                 selectedPercent["acidental_broken"] != 0
                     ? "R$ " +
-                      this.setPercent(selectedPercent["acidental_broken"], equipamentRiskData?.equipment_value).replace(".", ",")
+                      this.setPercent(selectedPercent["acidental_broken"], equipamentRiskData?.equipment_value).replace(
+                          /\./g,
+                          ","
+                      )
                     : "-",
             lackAcidental: "-",
             carencyAcident: selectedPlan.id == 1 || selectedPlan.id == 2 ? "Não há" : "-",
@@ -171,7 +174,7 @@ export class PortableProposalMailService {
             glassProtectCoverPrize:
                 selectedPercent["broken_glass"] != 0
                     ? "R$ " +
-                      this.setPercent(selectedPercent["broken_glass"], equipamentRiskData?.equipment_value).replace(".", ",")
+                      this.setPercent(selectedPercent["broken_glass"], equipamentRiskData?.equipment_value).replace(/\./g, ",")
                     : "-",
             glassProtectCarency: "-",
             carencyBroken: selectedPlan.id == 3 || selectedPlan.id == 2 || selectedPlan.id == 1 ? "Não há" : "-",
@@ -181,7 +184,7 @@ export class PortableProposalMailService {
             mark: "-",
             paymentForm: MailInfo?.operationType,
             liquidPrice:
-                "R$ " + this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value).replace(".", ","),
+                "R$ " + this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value).replace(/\./g, ","),
             iof:
                 "R$" +
                 (
@@ -190,15 +193,15 @@ export class PortableProposalMailService {
                     ) - parseFloat(this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value))
                 )
                     .toFixed(2)
-                    .replace(".", ","),
+                    .replace(/\./g, ","),
             totalPrize:
                 "R$ " +
                 (parseFloat(this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value)) * 1.0738)
                     .toFixed()
-                    .replace(".", ","),
+                    .replace(/\./g, ","),
             securyDataRepresentation: (
                 (parseFloat(
-                    this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value).replace(",", ".")
+                    this.setPercent(selectedPercent["liquid_prize"], equipamentRiskData?.equipment_value).replace(/,/g, ".")
                 ) *
                     32) /
                 100

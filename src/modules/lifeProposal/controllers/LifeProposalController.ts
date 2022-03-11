@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify"
-import { Route, SuccessResponse, Response, Post, Body } from "tsoa"
+import { Route, SuccessResponse, Response, Post, Body, Path, Get } from "tsoa"
 import { getLogger } from "../../../server/Logger"
 import { ApiError } from "../../../errors/ApiError"
 import { LifeProposalService } from "../services/LifeProposalService"
@@ -27,6 +27,19 @@ export class LifeProposalController {
 
     @Response(404, "NotFound")
     @SuccessResponse("200", "Retrieved")
+    @Post("/plan_info")
+    public async planInfo(@Body() request: any) {
+        log.info("Life Plan Info")
+        try {
+            return await this.lifeProposalService.planInfo(request)
+        } catch (e) {
+            log.error(e.message)
+            throw new ApiError("Life Plan Info Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
     @Post("/cotation")
     public async cotation(@Body() request: any) {
         log.info("HealthCare Cotation")
@@ -35,6 +48,18 @@ export class LifeProposalController {
         } catch (e) {
             log.error(e.message)
             throw new ApiError("HealthCare Cotation Not sent", 500)
+        }
+    }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrived")
+    @Get("/validate_customer/{customerId}")
+    public async validateCustomer(@Path() customerId: any) {
+        try {
+            return await this.lifeProposalService.validateCustomerService(customerId)
+        } catch (e) {
+            log.error(e.message, "Register consult error")
+            throw new ApiError("Life Validate Customer Not sent", 500)
         }
     }
 }
