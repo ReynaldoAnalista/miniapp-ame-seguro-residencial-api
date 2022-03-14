@@ -86,7 +86,7 @@ export class SmartphoneProposalService {
 
     async updateManyProposal(proposal: any) {
         try {
-            if (typeof proposal.ordersToSend != undefined && proposal.ordersToSend.length > 0) {
+            if (typeof proposal.ordersToSend !== "undefined" && proposal.ordersToSend.length > 0) {
                 let successCount = 0
                 let missCount = 0
                 await proposal.ordersToSend.forEach(async (proposalId) => {

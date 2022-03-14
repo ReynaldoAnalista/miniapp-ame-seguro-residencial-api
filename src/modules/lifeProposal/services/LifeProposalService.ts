@@ -11,6 +11,7 @@ import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
 import { ApiError } from "../../../errors/ApiError"
+import axios from "axios"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -35,7 +36,7 @@ export class LifeProposalService {
                 morte_conjuge: 0.95,
                 diha: 0.65,
                 funeral: 0.46,
-                funeral_conjuge: 0.7,
+                funeral_conjuge: 0.62,
                 funeral_pais: 4.93,
                 funeral_sogros: 4.93,
                 sorteio_liquido: 0.48,
@@ -82,6 +83,24 @@ export class LifeProposalService {
         ]
     }
 
+    async planInfo(request: any) {
+        const jsonPlanInfo = "https://s3.amazonaws.com/seguros.miniapp.ame/coberturas_vida.json"
+        const info = await axios.get(jsonPlanInfo).then((response) => {
+            return response.data
+        })
+        const dataInfo = info
+            .filter((x) => request.age >= x.min && request.age <= x.max && request.range * 2500000 == parseInt(x.valor))
+            .filter(
+                (x) =>
+                    request.basico == x.basico &&
+                    request.mc == x.mc &&
+                    request.funeral_familia == x.funeral_familia &&
+                    request.funeral_pais == x.funeral_pais &&
+                    request.funeral_sogros == x.funeral_sogros
+            )
+        return dataInfo[0]
+    }
+
     async cotation(request: any) {
         try {
             const cotation = await this.healthCareCotationInfo()
@@ -110,15 +129,16 @@ export class LifeProposalService {
         try {
             const unsignedPayment = await this.authTokenService.unsignNotification(signedPayment)
             const customerIdFromObject = unsignedPayment.attributes.customPayload.customerId
-            const firstLuckNumber = await this.findLuckNumber()
-            unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
+            // const firstLuckNumber = await this.findLuckNumber()
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = "9999"
             unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
                 .substring(customerIdFromObject.length, 20)
                 .replace(/-/g, "")
             unsignedPayment.attributes.customPayload.proposal.beneficiary = []
-            const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
+            const proposalResponse = { message: "ordem enviada para processamento", success: true }
+            // const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
             await this.saveSoldProposal(unsignedPayment, proposalResponse)
-            await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            // await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
             return proposalResponse
         } catch (e) {
             throw Error("Erro de envio da Proposta")
@@ -174,5 +194,11 @@ export class LifeProposalService {
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
         return this.luckNumberRepository.setUsedLuckNumber(proposal, luckNumberInfo)
+    }
+
+    async validateCustomerService(customerId: any) {
+        const filterFromCustomerId = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
+        if (typeof filterFromCustomerId == "undefined") return { message: "Erro ao consultar a base de dados" }
+        return filterFromCustomerId?.length >= 1 ? true : false
     }
 }
