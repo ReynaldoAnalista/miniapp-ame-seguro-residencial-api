@@ -10,6 +10,7 @@ import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
+import { ApiError } from "../../../errors/ApiError"
 
 const readFile = util.promisify(fs.readFile)
 const log = getLogger("LifeProposalService")
@@ -120,7 +121,7 @@ export class LifeProposalService {
             await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
             return proposalResponse
         } catch (e) {
-            log.error("Erro ao realizar o pagamento do seguro vida", e)
+            throw Error("Erro de envio da Proposta")
         }
     }
 
@@ -146,25 +147,29 @@ export class LifeProposalService {
                 throw new Error("Life Proposal Error")
             }
         } catch (e) {
-            log.error("Erro no envio da proposta do vida para a Digibe", e)
+            throw Error("Erro no envio da proposta do vida para a Digibe")
         }
     }
 
     async saveSoldProposal(proposal: any, response) {
-        log.debug("Saving soldProposal")
-        const apiVersion = process.env.COMMIT_HASH || "unavailable"
-        await this.lifeProposalSoldRepository.create({
-            customerId: proposal.attributes.customPayload.customerId,
-            order: proposal.id,
-            tenant: Tenants.LIFE,
-            receivedPaymentNotification: proposal,
-            partnerResponse: response,
-            success: response?.success,
-            createdAt: new Date().toISOString(),
-            apiVersion,
-            status: "PROCESSED",
-        })
-        log.debug("saveSoldProposal:success")
+        try {
+            log.debug("Saving soldProposal")
+            const apiVersion = process.env.COMMIT_HASH || "unavailable"
+            await this.lifeProposalSoldRepository.create({
+                customerId: proposal.attributes.customPayload.customerId,
+                order: proposal.id,
+                tenant: Tenants.LIFE,
+                receivedPaymentNotification: proposal,
+                partnerResponse: response,
+                success: response?.success,
+                createdAt: new Date().toISOString(),
+                apiVersion,
+                status: "PROCESSED",
+            })
+            log.debug("saveSoldProposal:success")
+        } catch (e) {
+            throw new ApiError("Life Sold Proposal Not sent", 500)
+        }
     }
 
     async setUsedLuckNumber(proposal, luckNumberInfo) {
