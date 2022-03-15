@@ -24,17 +24,21 @@ export class LuckNumberRepository {
     }
 
     async findFirstLuckNumber() {
-        const params = {
-            TableName: TABLE,
-            IndexName: "keyRegisterIndex",
-            KeyConditionExpression: "keyRegister = :keyRegister",
-            ExpressionAttributeValues: {
-                ":keyRegister": "A01",
-            },
+        try {
+            const params = {
+                TableName: TABLE,
+                IndexName: "keyRegisterIndex",
+                KeyConditionExpression: "keyRegister = :keyRegister",
+                ExpressionAttributeValues: {
+                    ":keyRegister": "A01",
+                },
+            }
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
+            return result.Items?.filter((x) => x.used == false).shift()
+        } catch (e) {
+            throw Error("Erro para buscar o Numero da Sorte")
         }
-        const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-        const result = await dynamoDocClient.query(params).promise()
-        return result.Items?.filter((x) => x.used == false).shift()
     }
 
     async setUsedLuckNumber(proposal: any, luckNumberInfo: any) {
