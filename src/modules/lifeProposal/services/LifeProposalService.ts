@@ -35,7 +35,7 @@ export class LifeProposalService {
                 morte_conjuge: 0.95,
                 diha: 0.65,
                 funeral: 0.46,
-                funeral_conjuge: 0.7,
+                funeral_conjuge: 0.62,
                 funeral_pais: 4.93,
                 funeral_sogros: 4.93,
                 sorteio_liquido: 0.48,
