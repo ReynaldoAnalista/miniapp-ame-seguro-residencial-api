@@ -85,9 +85,14 @@ export class LifeProposalService {
 
     async planInfo(request: any) {
         const jsonPlanInfo = "https://s3.amazonaws.com/seguros.miniapp.ame/coberturas_vida.json"
-        const info = await axios.get(jsonPlanInfo).then((response) => {
-            return response.data
-        })
+        const info = await axios
+            .get(jsonPlanInfo)
+            .then((response) => {
+                return response.data
+            })
+            .catch(() => {
+                return {}
+            })
         const dataInfo = info
             .filter((x) => request.age >= x.min && request.age <= x.max && request.range * 2500000 == parseInt(x.valor))
             .filter(

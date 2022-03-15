@@ -82,6 +82,9 @@
         "winston-cloudwatch": "^3.1.1",
         "xlsx": "^0.18.3"
     },
+    "resolutions": {
+        "ansi-regex": "5.0.1"
+    },
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged"
