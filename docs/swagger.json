@@ -17,7 +17,20 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
+			},
+			"LifeProposalNotification": {
+				"properties": {
+					"signedPayment": {
+						"type": "string",
+						"description": "Pagamento assinado"
+					}
+				},
+				"required": [
+					"signedPayment"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"PetProposalNotification": {
 				"properties": {
@@ -30,7 +43,7 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"PortableProposalNotification": {
 				"properties": {
@@ -43,26 +56,16 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"PortableDigibeeConfirmation": {
 				"properties": {
 					"control_data": {
 						"properties": {
-							"key_contract_certificate_number": {
-								"type": "number",
-								"format": "double"
-							},
-							"customer_identifier_code": {
+							"rejection_description": {
 								"type": "string"
 							},
-							"processing_data": {
-								"type": "string"
-							},
-							"acceptance_type": {
-								"type": "string"
-							},
-							"shipping_file_number": {
+							"rejection_reason_code": {
 								"type": "number",
 								"format": "double"
 							},
@@ -70,12 +73,22 @@
 								"type": "number",
 								"format": "double"
 							},
-							"rejection_reason_code": {
+							"shipping_file_number": {
 								"type": "number",
 								"format": "double"
 							},
-							"rejection_description": {
+							"acceptance_type": {
 								"type": "string"
+							},
+							"processing_data": {
+								"type": "string"
+							},
+							"customer_identifier_code": {
+								"type": "string"
+							},
+							"key_contract_certificate_number": {
+								"type": "number",
+								"format": "double"
 							}
 						},
 						"required": [
@@ -95,7 +108,7 @@
 					"control_data"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"ResidentialProposalNotification": {
 				"properties": {
@@ -108,7 +121,7 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"SmartphoneProposalNotification": {
 				"properties": {
@@ -121,26 +134,16 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"DigibeeConfirmation": {
 				"properties": {
 					"control_data": {
 						"properties": {
-							"key_contract_certificate_number": {
-								"type": "number",
-								"format": "double"
-							},
-							"customer_identifier_code": {
+							"rejection_description": {
 								"type": "string"
 							},
-							"processing_data": {
-								"type": "string"
-							},
-							"acceptance_type": {
-								"type": "string"
-							},
-							"shipping_file_number": {
+							"rejection_reason_code": {
 								"type": "number",
 								"format": "double"
 							},
@@ -148,12 +151,22 @@
 								"type": "number",
 								"format": "double"
 							},
-							"rejection_reason_code": {
+							"shipping_file_number": {
 								"type": "number",
 								"format": "double"
 							},
-							"rejection_description": {
+							"acceptance_type": {
 								"type": "string"
+							},
+							"processing_data": {
+								"type": "string"
+							},
+							"customer_identifier_code": {
+								"type": "string"
+							},
+							"key_contract_certificate_number": {
+								"type": "number",
+								"format": "double"
 							}
 						},
 						"required": [
@@ -173,7 +186,7 @@
 					"control_data"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"RenewPortableProposalNotification": {
 				"properties": {
@@ -186,7 +199,7 @@
 					"signedPayment"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"MaintenanceUpdatePlanNotification": {
 				"properties": {
@@ -199,7 +212,7 @@
 					"signedUpdatePlanStatus"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"MaintenanceProposalNotification": {
 				"properties": {
@@ -212,7 +225,7 @@
 					"updatePlanStatus"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"MaintenanceSoldProposal": {
 				"properties": {
@@ -225,14 +238,8 @@
 					"tenant": {
 						"type": "string"
 					},
-					"receivedPaymentNotification": {
-						"additionalProperties": true,
-						"type": "object"
-					},
-					"partnerResponse": {
-						"additionalProperties": true,
-						"type": "object"
-					},
+					"receivedPaymentNotification": {},
+					"partnerResponse": {},
 					"success": {
 						"type": "boolean"
 					},
@@ -262,7 +269,7 @@
 					"NSU"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			},
 			"MaintenanceNotification": {
 				"properties": {
@@ -275,7 +282,7 @@
 					"signedInfo"
 				],
 				"type": "object",
-				"additionalProperties": true
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -285,7 +292,8 @@
 		"version": "1.1.0",
 		"license": {
 			"name": "MIT"
-		}
+		},
+		"contact": {}
 	},
 	"openapi": "3.0.0",
 	"paths": {
@@ -294,22 +302,20 @@
 				"operationId": "Health",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"message": {
+										"commitHash": {
 											"type": "string"
 										},
+										"commitDate": {},
 										"startup": {
 											"type": "string",
 											"format": "date-time"
 										},
-										"commitDate": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"commitHash": {
+										"message": {
 											"type": "string"
 										}
 									},
@@ -322,8 +328,7 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Ok"
+						}
 					}
 				},
 				"security": [],
@@ -335,58 +340,23 @@
 				"operationId": "Test",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"CLIENT_ID": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"CLIENT_SECRET": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"CLIENT_SCOPE": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"URL_AUTHORIZATION": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"URL_ZIPCODE": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"URL_PLANS": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"URL_SALE": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"CONTRACT_NUMBER": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"BROKER_NUMBER": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"AME_COMISSION": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"BROKER_COMISSION": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"CALINDRA_JWT_SECRET": {
-											"additionalProperties": true,
-											"type": "object"
-										}
+										"CALINDRA_JWT_SECRET": {},
+										"BROKER_COMISSION": {},
+										"AME_COMISSION": {},
+										"BROKER_NUMBER": {},
+										"CONTRACT_NUMBER": {},
+										"URL_SALE": {},
+										"URL_PLANS": {},
+										"URL_ZIPCODE": {},
+										"URL_AUTHORIZATION": {},
+										"CLIENT_SCOPE": {},
+										"CLIENT_SECRET": {},
+										"CLIENT_ID": {}
 									},
 									"required": [
 										"CALINDRA_JWT_SECRET",
@@ -405,8 +375,7 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Ok"
+						}
 					}
 				},
 				"security": [],
@@ -418,16 +387,14 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
+										"content": {},
 										"success": {
 											"type": "boolean"
-										},
-										"content": {
-											"additionalProperties": true,
-											"type": "object"
 										}
 									},
 									"required": [
@@ -437,19 +404,16 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -465,15 +429,16 @@
 				"operationId": "CancelProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"success": {
-											"type": "boolean"
-										},
 										"message": {
 											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
 										}
 									},
 									"required": [
@@ -483,24 +448,19 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -511,20 +471,14 @@
 				"operationId": "RetrievePlans",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -546,20 +500,14 @@
 				"operationId": "RetrieveRawPlans",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -581,20 +529,14 @@
 				"operationId": "RemovePlan",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -624,6 +566,7 @@
 				"operationId": "RetrieveConfigs",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -631,13 +574,9 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -659,6 +598,7 @@
 				"operationId": "CheckTables",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -666,13 +606,9 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -694,72 +630,14 @@
 				"operationId": "FaqInfo",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"properties": {
-										"agreement": {
-											"items": {
-												"properties": {
-													"title": {
-														"type": "string"
-													},
-													"content": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"content",
-													"title"
-												],
-												"type": "object"
-											},
-											"type": "array"
-										},
-										"pet": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"residencial": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"smartphone": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"dental": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"healthcare": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"devices": {
-											"additionalProperties": true,
-											"type": "object"
-										}
-									},
-									"required": [
-										"devices",
-										"healthcare",
-										"dental",
-										"smartphone",
-										"residencial",
-										"pet",
-										"agreement"
-									],
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -767,89 +645,173 @@
 				"parameters": []
 			}
 		},
-		"/v1/life/cotation": {
+		"/v1/life/sendProposal": {
 			"post": {
-				"operationId": "CotationPlan",
+				"operationId": "Proposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"content": {},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"content",
+										"success"
+									],
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object"
+								"$ref": "#/components/schemas/LifeProposalNotification"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/v1/pet/planList": {
-			"get": {
-				"operationId": "PlanList",
+		"/v1/life/plan_info": {
+			"post": {
+				"operationId": "PlanInfo",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"items": {
-										"additionalProperties": true,
-										"type": "object"
-									},
-									"type": "array"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
 			}
 		},
-		"/v1/pet/petDescPlan/{idPlan}": {
-			"get": {
-				"operationId": "DescPetList",
+		"/v1/life/cotation": {
+			"post": {
+				"operationId": "Cotation",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"additionalProperties": true,
+									"properties": {
+										"familia": {
+											"properties": {
+												"funeral_sogros": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_pais": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"morte_conjuge": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"funeral_sogros",
+												"funeral_pais",
+												"funeral_conjuge",
+												"morte_conjuge"
+											],
+											"type": "object"
+										},
+										"voce": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"familia",
+										"voce"
+									],
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/validate_customer/{customerId}": {
+			"get": {
+				"operationId": "ValidateCustomer",
+				"responses": {
+					"200": {
+						"description": "Retrived",
 						"content": {
-							"application/json": {}
-						},
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"type": "boolean"
+										},
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
+						}
+					},
+					"404": {
 						"description": "NotFound"
 					}
 				},
@@ -857,7 +819,59 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "idPlan",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/pet/planList": {
+			"get": {
+				"operationId": "PlanList",
+				"responses": {
+					"200": {
+						"description": "Retrieved",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/pet/petDescPlan/{planId}": {
+			"get": {
+				"operationId": "DescPetList",
+				"responses": {
+					"200": {
+						"description": "Retrieved",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "planId",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -871,26 +885,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -906,20 +915,14 @@
 				"operationId": "QuotationPetPlans",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -935,11 +938,10 @@
 					}
 				],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -950,26 +952,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -985,20 +982,14 @@
 				"operationId": "UpdateProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1020,16 +1011,17 @@
 				"operationId": "UpdateManyProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"message": {
-											"type": "string"
-										},
 										"status": {
 											"type": "number",
 											"format": "double"
+										},
+										"message": {
+											"type": "string"
 										}
 									},
 									"required": [
@@ -1039,24 +1031,19 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -1067,15 +1054,9 @@
 				"operationId": "SendMailProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1097,15 +1078,9 @@
 				"operationId": "SendMailProposalToMe",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1135,15 +1110,9 @@
 				"operationId": "StatusUpdateSoldProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1173,14 +1142,15 @@
 				"operationId": "ValidateMailProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"oneOf": [
+									"anyOf": [
 										{
 											"properties": {
-												"message": {
-													"type": "string"
+												"valid": {
+													"type": "boolean"
 												},
 												"invalid_fields": {
 													"items": {
@@ -1188,8 +1158,8 @@
 													},
 													"type": "array"
 												},
-												"valid": {
-													"type": "boolean"
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -1201,14 +1171,14 @@
 										},
 										{
 											"properties": {
-												"message": {
-													"type": "string"
+												"valid": {
+													"type": "boolean"
 												},
 												"invalid_fields": {
 													"type": "string"
 												},
-												"valid": {
-													"type": "boolean"
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -1221,13 +1191,9 @@
 									]
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1249,18 +1215,19 @@
 				"operationId": "ConfirmProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"oneOf": [
+									"anyOf": [
 										{
 											"properties": {
-												"message": {
-													"type": "string"
-												},
 												"status": {
 													"type": "number",
 													"format": "double"
+												},
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -1271,11 +1238,11 @@
 										},
 										{
 											"properties": {
-												"authorization": {
-													"type": "boolean"
-												},
 												"message": {
 													"type": "string"
+												},
+												"authorization": {
+													"type": "boolean"
 												}
 											},
 											"required": [
@@ -1287,13 +1254,9 @@
 									]
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1309,6 +1272,7 @@
 					}
 				],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -1324,20 +1288,14 @@
 				"operationId": "CustomerIdCode",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1359,31 +1317,24 @@
 				"operationId": "CancelationSecurity",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -1394,31 +1345,24 @@
 				"operationId": "CancelSoldProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -1429,22 +1373,17 @@
 				"operationId": "ProcessIOF",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"items": {
 										"properties": {
-											"id": {
-												"additionalProperties": true,
-												"type": "object"
-											},
+											"preco_liquido": {},
 											"preco_cobrado": {
 												"type": "string"
 											},
-											"preco_liquido": {
-												"additionalProperties": true,
-												"type": "object"
-											}
+											"id": {}
 										},
 										"required": [
 											"preco_liquido",
@@ -1456,26 +1395,20 @@
 									"type": "array"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"items": {
-									"additionalProperties": true,
-									"type": "object"
-								},
+								"items": {},
 								"type": "array"
 							}
 						}
@@ -1488,20 +1421,14 @@
 				"operationId": "FindByNsu",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1523,20 +1450,14 @@
 				"operationId": "FindFromOrdeCustomer",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1566,31 +1487,24 @@
 				"operationId": "UpdateNsuByCustumerAndOrder",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -1601,22 +1515,14 @@
 				"operationId": "ProposalReport",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"proposalData": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"successData": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"failData": {
-											"additionalProperties": true,
-											"type": "object"
-										}
+										"failData": {},
+										"successData": {},
+										"proposalData": {}
 									},
 									"required": [
 										"failData",
@@ -1626,13 +1532,9 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Ok"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1662,14 +1564,12 @@
 				"operationId": "SoldProposalReport",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"proposalData": {
-											"additionalProperties": true,
-											"type": "object"
-										}
+										"proposalData": {}
 									},
 									"required": [
 										"proposalData"
@@ -1677,13 +1577,9 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Ok"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1713,14 +1609,12 @@
 				"operationId": "GenSoldProposal",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"soldProposal": {
-											"additionalProperties": true,
-											"type": "object"
-										}
+										"soldProposal": {}
 									},
 									"required": [
 										"soldProposal"
@@ -1728,13 +1622,9 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Ok"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1788,15 +1678,9 @@
 				"operationId": "ProposalReport",
 				"responses": {
 					"204": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "No content"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1815,20 +1699,14 @@
 				"operationId": "RetrievePlans",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1858,26 +1736,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -1893,15 +1766,12 @@
 				"operationId": "ListProposal",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Ok"
+						}
 					}
 				},
 				"security": [
@@ -1919,15 +1789,9 @@
 				"operationId": "ProposalReport",
 				"responses": {
 					"204": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "No content"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1946,20 +1810,14 @@
 				"operationId": "RetrievePlans",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -1989,26 +1847,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -2024,15 +1877,12 @@
 				"operationId": "ListProposal",
 				"responses": {
 					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Ok"
+						}
 					}
 				},
 				"security": [
@@ -2050,25 +1900,21 @@
 				"operationId": "RenewProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -2079,20 +1925,14 @@
 				"operationId": "ConsultZipcode",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2114,26 +1954,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -2149,20 +1984,14 @@
 				"operationId": "UpdateProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2184,16 +2013,17 @@
 				"operationId": "UpdateManyProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"message": {
-											"type": "string"
-										},
 										"status": {
 											"type": "number",
 											"format": "double"
+										},
+										"message": {
+											"type": "string"
 										}
 									},
 									"required": [
@@ -2203,24 +2033,19 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -2231,15 +2056,9 @@
 				"operationId": "SendMailProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2261,15 +2080,9 @@
 				"operationId": "SendMailProposalToMe",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2299,15 +2112,9 @@
 				"operationId": "StatusUpdateSoldProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2337,14 +2144,15 @@
 				"operationId": "ValidateMailProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"oneOf": [
+									"anyOf": [
 										{
 											"properties": {
-												"message": {
-													"type": "string"
+												"valid": {
+													"type": "boolean"
 												},
 												"invalid_fields": {
 													"items": {
@@ -2352,8 +2160,8 @@
 													},
 													"type": "array"
 												},
-												"valid": {
-													"type": "boolean"
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -2365,14 +2173,14 @@
 										},
 										{
 											"properties": {
-												"message": {
-													"type": "string"
+												"valid": {
+													"type": "boolean"
 												},
 												"invalid_fields": {
 													"type": "string"
 												},
-												"valid": {
-													"type": "boolean"
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -2385,13 +2193,9 @@
 									]
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2413,18 +2217,19 @@
 				"operationId": "ConfirmProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
-									"oneOf": [
+									"anyOf": [
 										{
 											"properties": {
-												"message": {
-													"type": "string"
-												},
 												"status": {
 													"type": "number",
 													"format": "double"
+												},
+												"message": {
+													"type": "string"
 												}
 											},
 											"required": [
@@ -2435,11 +2240,11 @@
 										},
 										{
 											"properties": {
-												"authorization": {
-													"type": "boolean"
-												},
 												"message": {
 													"type": "string"
+												},
+												"authorization": {
+													"type": "boolean"
 												}
 											},
 											"required": [
@@ -2451,13 +2256,9 @@
 									]
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2473,6 +2274,7 @@
 					}
 				],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -2488,20 +2290,14 @@
 				"operationId": "CustomerIdCode",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2523,31 +2319,24 @@
 				"operationId": "CancelationSecurity",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -2558,31 +2347,24 @@
 				"operationId": "CancelSoldProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -2593,22 +2375,17 @@
 				"operationId": "ProcessIOF",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"items": {
 										"properties": {
-											"id": {
-												"additionalProperties": true,
-												"type": "object"
-											},
+											"preco_liquido": {},
 											"preco_cobrado": {
 												"type": "string"
 											},
-											"preco_liquido": {
-												"additionalProperties": true,
-												"type": "object"
-											}
+											"id": {}
 										},
 										"required": [
 											"preco_liquido",
@@ -2620,26 +2397,20 @@
 									"type": "array"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"items": {
-									"additionalProperties": true,
-									"type": "object"
-								},
+								"items": {},
 								"type": "array"
 							}
 						}
@@ -2652,20 +2423,14 @@
 				"operationId": "FindByNsu",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2687,20 +2452,14 @@
 				"operationId": "FindFromOrdeCustomer",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2730,31 +2489,24 @@
 				"operationId": "UpdateNsuByCustumerAndOrder",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -2765,15 +2517,9 @@
 				"operationId": "SendMailProposalWithParams",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2803,15 +2549,9 @@
 				"operationId": "UpdateProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2828,25 +2568,19 @@
 				]
 			}
 		},
-		"/v1/renew-portable/portable-info/{customerId}": {
+		"/v1/renew-portable/portable-info/{customerId}/{planType}": {
 			"get": {
 				"operationId": "PortableInfo",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2855,6 +2589,14 @@
 					{
 						"in": "path",
 						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "planType",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -2868,26 +2610,21 @@
 				"operationId": "SendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -2903,20 +2640,14 @@
 				"operationId": "SendMailProposalWithParams",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2946,15 +2677,9 @@
 				"operationId": "UpdateProposal",
 				"responses": {
 					"200": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "Retrieved"
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
@@ -2976,15 +2701,16 @@
 				"operationId": "UpdatePlanType",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"success": {
-											"type": "boolean"
-										},
 										"message": {
 											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
 										}
 									},
 									"required": [
@@ -2994,19 +2720,16 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -3022,21 +2745,16 @@
 				"operationId": "ResidentialResendProposal",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"result": {
-											"additionalProperties": true,
-											"type": "object"
-										},
-										"trace": {
-											"additionalProperties": true,
-											"type": "object"
-										},
 										"success": {
 											"type": "boolean"
-										}
+										},
+										"trace": {},
+										"result": {}
 									},
 									"required": [
 										"success",
@@ -3046,19 +2764,16 @@
 									"type": "object"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -3074,31 +2789,24 @@
 				"operationId": "CanceledOrders",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
+								"schema": {}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
-							"schema": {
-								"type": "object"
-							}
+							"schema": {}
 						}
 					}
 				}
@@ -3109,25 +2817,23 @@
 				"operationId": "InsertDynamo",
 				"responses": {
 					"200": {
+						"description": "Retrieved",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/MaintenanceSoldProposal"
 								}
 							}
-						},
-						"description": "Retrieved"
+						}
 					},
 					"404": {
-						"content": {
-							"application/json": {}
-						},
 						"description": "NotFound"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -3137,11 +2843,53 @@
 					}
 				}
 			}
+		},
+		"/v1/maintenance/insert_luck_number": {
+			"post": {
+				"operationId": "InsertLuckNumber",
+				"responses": {
+					"200": {
+						"description": "Retrieved",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"message",
+										"success"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {}
+						}
+					}
+				}
+			}
 		}
 	},
 	"servers": [
 		{
-			"url": "https://miniapps.dev.amedigital.com/ame-seguro-residencial"
+			"url": "/miniapp-ame-seguro-residencial-api"
 		}
 	]
 }
