@@ -21,7 +21,7 @@ export class LifeProposalController {
             return await this.lifeProposalService.proposal(signedPayment.signedPayment)
         } catch (e) {
             log.error(e.message)
-            throw new ApiError("HealthCare Cotation Not sent", 500)
+            throw new ApiError("Life Proposal Not sent", 500)
         }
     }
 
