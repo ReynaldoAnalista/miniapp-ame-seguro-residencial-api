@@ -937,6 +937,33 @@
 											"type": "number",
 											"format": "double"
 										},
+										"voce_desc": {
+											"properties": {
+												"morte": {
+													"type": "number",
+													"format": "double"
+												},
+												"ipa": {
+													"type": "number",
+													"format": "double"
+												},
+												"diha": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"funeral",
+												"diha",
+												"ipa",
+												"morte"
+											],
+											"type": "object"
+										},
 										"familia": {
 											"properties": {
 												"morte_conjuge": {
@@ -967,6 +994,7 @@
 									},
 									"required": [
 										"familia",
+										"voce_desc",
 										"voce"
 									],
 									"type": "object"

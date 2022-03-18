@@ -19,20 +19,25 @@
             table > tbody > tr > td {
                 padding: 5px 0;
             }
-            .tableCoberturas {
+            .tableCoberturas, .tableCoberturas_final {
+                text-align: center;
                 width: 100%;
+                border-collapse: collapse;
             }
             .tableCoberturas > thead > tr > th,
             .tableCoberturas > tbody > tr > td
-            {
-                padding: 7px 0;                
+            {           
                 font-size: 12px;
-                text-align: center;   
+                text-align: left;   
+                padding-left: 15px;
+                border: 1px solid black;
+                border-collapse: collapse;
             }
             .tableCoberturas > thead > tr {
                 background-color: #2a6099;
                 color: white;
-                border: none; 
+                border: 1px solid black;
+                border-collapse: collapse;
             }
         </style>
     </head>
@@ -65,8 +70,7 @@
                 <table style="width: 100%">
                     <tbody>
                         <tr style="font: bold 20px;" class="proposalInfo">
-                            <th>APÓLICE INDIVIDUAL</th>
-                            <th>SEGURO DE VIDA</th>
+                            <th>APÓLICE INDIVIDUAL - SEGURO DE VIDA</th>
                         </tr>
                     </tbody>
                 </table>
@@ -83,7 +87,7 @@
                             <td>Data de Emissão: <span class="proposalInfo">@@data_emissao@@</span>  </td>
                         </tr>
                         <tr>
-                            <td>Nº Apólice: <span class="proposalInfo">9.@@numero_apolice@@</span>  </td>
+                            <td>Nº Apólice: <span class="proposalInfo">91.@@numero_apolice@@</span>  </td>
                         </tr>
                         <tr>
                             <td>Segurado: <span class="proposalInfo">@@nome_segurado@@</span>  </td>
@@ -117,7 +121,7 @@
                         <tr style="background-color: #2a6099; color: white; border: none; ">
                             <th>Coberturas</th>
                             <th>Importância Segurada (R$)</th>
-                            <th>IOF (R$)</th>                            
+                            <th>Prêmio com IOF (R$)</th>                            
                             <th>Franquia</th>
                             <th>Carência</th>
                         </tr>
@@ -125,15 +129,22 @@
                     <tbody>
                         <tr>
                             <td>Morte</td>
-                            <td>@@importancia_segurada_morte@@,00</td>                            
+                            <td>@@importancia_segurada_morte@@</td>                            
                             <td>@@iof_morte@@</td>                                                        
                             <td>-</td>                            
                             <td>-</td>                            
                         </tr>
                         <tr>
                             <td>Invalidez por Acidente (até)</td>
-                            <td>@@importancia_segurada_invalidez@@,00</td>                            
+                            <td>@@importancia_segurada_invalidez@@</td>                            
                             <td>@@iof_invalidez@@</td>                                     
+                            <td>-</td>                            
+                            <td>-</td>                            
+                        </tr>
+                        <tr>
+                            <td>Morte Cônjuge</td>
+                            <td>@@morte_conjuge@@</td>                            
+                            <td>@@iof_morte_conjuge@@</td>                                     
                             <td>-</td>                            
                             <td>-</td>                            
                         </tr>
@@ -144,13 +155,6 @@
                             <td>12 horas</td>                            
                             <td>-</td>                            
                         </tr>
-                        <!-- <tr> // TODO: Fazer a parte do conjuge
-                            <td>Morte Conjuge</td>
-                            <td>@@total_morte_conjuge@@</td>
-                            <td>@@iof_morte_conjuge@@</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -160,25 +164,30 @@
                         <tr>
                             <th>Serviços</th>
                             <th>Limite</th>
+                            <th>Prêmio com IOF</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Assistência Funeral Individual</td>
                             <td>Até R$ 5.000,00 para você</td>
+                            <td>R$ @@assistencia_individual_iof@@</td>
                         </tr>
-                        <!-- <tr> // TODO: Terminar as dependencias
-                            <td>Assistência Funeral Cônjuge e Filhos</td>
-                            <td>Até 5.000,00</td>
+                        <tr>
+                            <td>Assistência Funeral Família</td>
+                            <td>Até R$ 5.000,00</td>
+                            <td>R$ @@assistencia_familia_iof@@</td>
                         </tr>
                         <tr>
                             <td>Assistência Funeral Pais</td>
-                            <td>Até 5.000,00</td>
+                            <td>Até R$ 5.000,00</td>
+                            <td>R$ @@assistencia_pais_iof@@</td>
                         </tr>
                         <tr>
                             <td>Assistência Funeral Sogros</td>
-                            <td>Até 5.000,00</td>
-                        </tr> -->
+                            <td>Até R$ 5.000,00</td>
+                            <td>R$ @@assistencia_sogros_iof@@</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -229,7 +238,7 @@
                 </table>
             </div>
             <div style="padding-top: 10px;">
-                <table class="tableCoberturas">
+                <table class="tableCoberturas_final">
                     <tbody>
                         <tr>
                             <td><b>Beneficiários:</b> Os Beneficiários do seguro são designados livremente, podendo ser modificados a qualquer momento diretamente no canal de atendimento da seguradora MetLife. Na falta de beneficiário designado ou se, por qualquer motivo, não prevalecer a indicação feita, a indenização será paga de acordo com a legislação em vigor. </td>
