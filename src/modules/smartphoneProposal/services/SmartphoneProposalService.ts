@@ -400,7 +400,7 @@ export class SmartphoneProposalService {
             log.info("Success proposal cancel")
             return result
         } catch (e) {
-            const result = { success: false, error: e.message }
+            const result = { success: false, error: e, message: e.message }
             log.error(`Error %j`, e.message)
             log.debug("Error when trying to cancel proposal")
             return result
