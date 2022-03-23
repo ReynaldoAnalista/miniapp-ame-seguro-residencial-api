@@ -54,6 +54,10 @@ export class MaintenanceService {
         return await this.maintenanceRepository.getCancelledOrder(customerId)
     }
 
+    async getProposal(proposalData) {
+        return await this.maintenanceRepository.getCustomerIdOrders(proposalData.customerId)
+    }
+
     async insertSoldProposal(signedProposal: string) {
         const unsignedInfo = await this.authTokenService.unsignNotification(signedProposal)
         const proposal = await this.maintenanceRepository.create({

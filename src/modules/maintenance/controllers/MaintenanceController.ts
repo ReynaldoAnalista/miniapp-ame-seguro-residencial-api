@@ -113,4 +113,23 @@ export class MaintenanceController {
             throw new ApiError("Update not sent", 500, `Update not sent`)
         }
     }
+
+    @Response(404, "NotFound")
+    @SuccessResponse("200", "Retrieved")
+    @Post("/get_client_proposal")
+    public async getClientProposal(@Body() proposalData: any, @Header("param-header") paramHeader: string) {
+        logger.info("Insert into DynamoDb Storage SoldProposal")
+        try {
+            if (paramHeader == "6e35a208-aaaf-11ec-b909-0242ac120002") {
+                return await this.maintenanceService.getProposal(proposalData)
+            }
+            return {
+                message: "Erro ao enviar a solicitação da proposta",
+                status: 404,
+            }
+        } catch (e) {
+            logger.error(e.message)
+            throw new ApiError("Update not sent", 500, `Update not sent`)
+        }
+    }
 }
