@@ -129,7 +129,7 @@ export class LifeProposalService {
     }
 
     async sendMail(response: any) {
-        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response)
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(response.insuredId)
         if (typeof verifyProposal == "undefined" || verifyProposal == []) return
         const sendMail = await this.sendSellingEmailByPaymentObject(verifyProposal[0]) // TODO: Preciso do layout do e-mail preenchido completo
         return {
@@ -232,6 +232,8 @@ export class LifeProposalService {
 
         const dataToSendMail = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal
 
+        const policyNumber = unsignedPayment.receivedPaymentNotification.attributes.customPayload.policy_number
+
         const coverageValue = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal.amount_insured
 
         const template = await readFile(emailTemplate, "utf-8")
@@ -244,14 +246,14 @@ export class LifeProposalService {
             .replace(/@@complemento_endereco@@/g, dataToSendMail.insured.address.complement)
             .replace(/@@cep_endereco@@/g, dataToSendMail.insured.address.zipcode)
             .replace(/@@uf_endereco@@/g, dataToSendMail.insured.address.state)
-            .replace(/@@inicio_vigencia@@/g, moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").format("DD/MM/YYYY"))
+            .replace(/@@inicio_vigencia@@/g, moment(dataToSendMail.operation_date, "YYYYMMDD").add(1, "day").format("DD/MM/YYYY"))
             .replace(
                 /@@fim_vigencia@@/g,
-                moment(dataToSendMail.operation_date, "MMDDYYYY").add(1, "day").add(1, "year").format("DD/MM/YYYY")
+                moment(dataToSendMail.operation_date, "YYYYMMDD").add(1, "day").add(1, "year").format("DD/MM/YYYY")
             )
             .replace(/@@importancia_segurada_morte@@/g, `${coverageValue}`)
             // .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
-            .replace(/@@numero_apolice@@/g, unsignedPayment.policy_number)
+            .replace(/@@numero_apolice@@/g, policyNumber)
             .replace(/@@numero_proposta@@/g, unsignedPayment.insuredId)
             .replace(/@@numero_sorte@@/g, dataToSendMail.lucky_number)
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
