@@ -1,15 +1,14 @@
 const AWS = require("aws-sdk")
 
 export default class EmailSender {
-    static async sendEmail(mailFrom, mailTo, HTMLContent, accessKeyId, secretAccessKey) {
+    static async sendEmail(mailFrom, mailTo, HTMLContent, accessKeyId, secretAccessKey, title) {
         AWS.config.update({
             region: "us-east-1",
             accessKeyId,
             secretAccessKey,
         })
-
         const params = {
-            Destination: { ToAddresses: [mailTo] },
+            Destination: { ToAddresses: mailTo },
             Message: {
                 Body: {
                     Html: {
@@ -19,7 +18,7 @@ export default class EmailSender {
                 },
                 Subject: {
                     Charset: "UTF-8",
-                    Data: "Bilhete do seguro",
+                    Data: title,
                 },
             },
             Source: mailFrom,

@@ -24,27 +24,6 @@ export class lifeProposalSoldRepository {
         return proposal
     }
 
-    async findAllFromInsuredId(insuredId: any) {
-        try {
-            const params = {
-                TableName: TABLE,
-                IndexName: "insuredIdIndex",
-                KeyConditionExpression: "insuredId = :insuredId",
-                ExpressionAttributeValues: {
-                    ":insuredId": insuredId,
-                },
-            }
-            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
-            const result = await dynamoDocClient.query(params).promise()
-            log.debug(`Have found ${result.Items?.length} items`)
-            return result.Items
-        } catch (e) {
-            log.error(`Error on searching results from ${TABLE}`)
-            log.error(e)
-            return []
-        }
-    }
-
     async findAllFromStatusApproved() {
         try {
             const params = {
@@ -82,6 +61,27 @@ export class lifeProposalSoldRepository {
             const result = await dynamoDocClient.query(params).promise()
             log.debug(`Have found ${result.Items?.length} items`)
             return result.Items?.filter((x) => x.tenant === Tenants.LIFE && x?.status != "CANCELED")
+        } catch (e) {
+            log.error(`Error on searching results from ${TABLE}`)
+            log.error(e)
+            return []
+        }
+    }
+
+    async findAllFromInsuredId(insuredId: any) {
+        try {
+            const params = {
+                TableName: TABLE,
+                IndexName: "insuredIdIndex",
+                KeyConditionExpression: "insuredId = :insuredId",
+                ExpressionAttributeValues: {
+                    ":insuredId": insuredId,
+                },
+            }
+            const dynamoDocClient = await this.dynamoHolder.getDynamoDocClient()
+            const result = await dynamoDocClient.query(params).promise()
+            log.debug(`Have found ${result.Items?.length} items`)
+            return result.Items
         } catch (e) {
             log.error(`Error on searching results from ${TABLE}`)
             log.error(e)

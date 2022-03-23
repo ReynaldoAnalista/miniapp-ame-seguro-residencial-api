@@ -775,6 +775,161 @@
 				}
 			}
 		},
+		"/v1/life/plan_info": {
+			"post": {
+				"operationId": "PlanInfo",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/cotation": {
+			"post": {
+				"operationId": "Cotation",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"voce": {
+											"type": "number",
+											"format": "double"
+										},
+										"familia": {
+											"properties": {
+												"morte_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_conjuge": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_pais": {
+													"type": "number",
+													"format": "double"
+												},
+												"funeral_sogros": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"funeral_sogros",
+												"funeral_pais",
+												"funeral_conjuge",
+												"morte_conjuge"
+											],
+											"type": "object"
+										}
+									},
+									"required": [
+										"familia",
+										"voce"
+									],
+									"type": "object"
+								}
+							}
+						},
+						"description": "Retrieved"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/life/validate_customer/{customerId}": {
+			"get": {
+				"operationId": "ValidateCustomer",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"oneOf": [
+										{
+											"type": "boolean"
+										},
+										{
+											"properties": {
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message"
+											],
+											"type": "object"
+										}
+									]
+								}
+							}
+						},
+						"description": "Retrived"
+					},
+					"404": {
+						"content": {
+							"application/json": {}
+						},
+						"description": "NotFound"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "customerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/v1/life/response_proposal": {
 			"post": {
 				"operationId": "Response_proposal",
@@ -850,29 +1005,47 @@
 				}
 			}
 		},
-		"/v1/life/sendProposalMail": {
+		"/v1/life/response_digibee_error": {
 			"post": {
-				"operationId": "SendProposalMail",
+				"operationId": "Response_digibee_error",
 				"responses": {
 					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"message": {
-											"additionalProperties": true,
+									"oneOf": [
+										{
+											"properties": {
+												"success": {
+													"type": "boolean"
+												},
+												"messageCode": {
+													"additionalProperties": true,
+													"type": "object"
+												}
+											},
+											"required": [
+												"messageCode",
+												"success"
+											],
 											"type": "object"
 										},
-										"status": {
-											"type": "number",
-											"format": "double"
+										{
+											"properties": {
+												"authorization": {
+													"type": "boolean"
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"message",
+												"authorization"
+											],
+											"type": "object"
 										}
-									},
-									"required": [
-										"status",
-										"message"
-									],
-									"type": "object"
+									]
 								}
 							}
 						},
@@ -886,7 +1059,16 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "x-partner",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -896,32 +1078,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/v1/life/sendProposalMultipleMail": {
-			"post": {
-				"operationId": "SendProposalMultipleMail",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"additionalProperties": true,
-									"type": "object"
-								}
-							}
-						},
-						"description": "Retrieved"
-					},
-					"404": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "NotFound"
-					}
-				},
-				"security": [],
-				"parameters": []
 			}
 		},
 		"/v1/life/cotation": {

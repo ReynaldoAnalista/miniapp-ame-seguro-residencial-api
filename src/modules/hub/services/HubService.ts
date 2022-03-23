@@ -67,7 +67,8 @@ export class HubService {
         const smartphonePlansFromDB = await this.smartphoneSoldProposalRepository.findAllFromCustomer(customerId)
         const petPlansPlansFromDB = await this.petSoldProposalRepository.findAllFromCustomer(customerId)
         const healthCarePlansPlansFromDB = await this.healthCareProposalSoldRepository.findByCustomerId(customerId)
-        const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomer(customerId)
+        const portablePlansPlansFromDB = await this.portableSoldProposalRepository.findAllFromCustomerParseTenant(customerId, Tenants.PORTABLE)
+        const portablePlansPlansGEFromDB = await this.portableSoldProposalRepository.findAllFromCustomerParseTenant(customerId, Tenants.EXT_GE_AME)
         const renewPortablePlansPlansFromDB = await this.renewPortableSoldProposal.findAllFromCustomer(customerId)
         const lifePlansFromDB = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
 
@@ -76,6 +77,7 @@ export class HubService {
         let petPlans = []
         let healthCarePlans = []
         let portablePlans = []
+        let portableGePlans = []
         let renewPortablePlans = []
         let lifePlans = []
         if (residentialPlansFromDB) {
@@ -102,7 +104,10 @@ export class HubService {
                     return {
                         id: x.order,
                         description: x.receivedPaymentNotification?.title,
-                        date: moment(x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia, "YYYY-MM-DD").format("DD/MM/YYYY"),
+                        date: moment(
+                            x.receivedPaymentNotification.attributes.customPayload.proposal.dataInicioVigencia,
+                            "YYYY-MM-DD"
+                        ).format("DD/MM/YYYY"),
                         value: x.receivedPaymentNotification?.amount,
                         protocol: x.receivedPaymentNotification?.nsu,
                         address: address?.imovel?.endereco,
@@ -138,7 +143,37 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: Tenants.SMARTPHONE,
+                        name: x.tenant
+                    }
+                })
+            }
+        }
+        if (portablePlansPlansGEFromDB) {
+            if (raw) {
+                portableGePlans = Object.assign(portablePlansPlansGEFromDB)
+            } else {
+                portableGePlans = Object.assign(portablePlansPlansGEFromDB).map((x) => {
+                    const proposal = x.receivedPaymentNotification?.attributes?.customPayload?.proposal
+                    const selectedPlan = x.receivedPaymentNotification?.attributes?.customPayload?.selectedPlan
+                    const device = proposal?.portable_equipment_risk_data
+
+                    return {
+                        id: x.order,
+                        description: x.receivedPaymentNotification?.title,
+                        date: moment(x.createdAt).format("DD/MM/YYYY"),
+                        diffDays: moment().diff(moment(x.createdAt), "days"),
+                        value: x.receivedPaymentNotification?.amount,
+                        protocol: x.receivedPaymentNotification?.nsu,
+                        device: device?.risk_description,
+                        deviceValue: device?.equipment_value ? device?.equipment_value * 100 : 0,
+                        imei: device?.device_serial_code,
+                        coverage: selectedPlan?.coverage,
+                        guarantee: selectedPlan?.guarantee,
+                        status: this.translateStatusPlan(x.status, moment(x.createdAt)),
+                        stolenFranchise: selectedPlan?.stolenFranchise,
+                        brokenFranchise: selectedPlan?.brokenFranchise,
+                        screenFranchise: selectedPlan?.screenFranchise,
+                        name: x.tenant
                     }
                 })
             }
@@ -204,9 +239,9 @@ export class HubService {
                         stolenFranchise: selectedPlan?.stolenFranchise,
                         brokenFranchise: selectedPlan?.brokenFranchise,
                         screenFranchise: selectedPlan?.screenFranchise,
-                        name: Tenants.PORTABLE,
+                        name: x.tenant
                     }
-                })
+                })                
             }
         }
         if (renewPortablePlansPlansFromDB) {
@@ -229,7 +264,7 @@ export class HubService {
                 })
             }
         }
-        if (lifePlansFromDB) {            
+        if (lifePlansFromDB) {
             lifePlans = Object.assign(lifePlansFromDB).map((x) => {
                 return {
                     id: x?.order,
@@ -241,9 +276,9 @@ export class HubService {
                     coverage: x.receivedPaymentNotification.attributes.customPayload.proposal.coverage,
                     name: Tenants.LIFE,
                 }
-            })            
+            })
         }
-        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, renewPortablePlans, lifePlans }
+        return { residentialPlans, smartphonePlans, petPlans, healthCarePlans, portablePlans, portableGePlans, renewPortablePlans, lifePlans }
     }
 
     /**
@@ -298,8 +333,8 @@ export class HubService {
 
     async faqInfo() {
         const TOKEN_CACHE = `TOKENCACHE_FAQ`
-        if(cache.get(TOKEN_CACHE)){
-           return cache.get(TOKEN_CACHE)
+        if (cache.get(TOKEN_CACHE)) {
+            return cache.get(TOKEN_CACHE)
         }
         const infoFaq = {
             agreement: await this.agreementPlanFaq(),
@@ -309,8 +344,9 @@ export class HubService {
             dental: await this.faqInfoJson("seguro-dental-ame"),
             healthcare: await this.faqInfoJson("assistencia-saude-ame"),
             devices: await this.faqInfoJson("seguro-portateis"),
+            life: await this.faqInfoJson("seguro-de-vida"),
         }
-        cache.put(TOKEN_CACHE, infoFaq, 1000 * 60 * 60 * 20)        
+        cache.put(TOKEN_CACHE, infoFaq, 1000 * 60 * 60 * 20)
         return infoFaq
     }
 

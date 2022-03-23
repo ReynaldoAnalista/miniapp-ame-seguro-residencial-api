@@ -9,6 +9,7 @@ import { RequestService } from "../../authToken/services/RequestService"
 import { Tenants } from "../../default/model/Tenants"
 import { lifeProposalSoldRepository } from "../repository/lifeProposalSoldRepository"
 import { LuckNumberRepository } from "../../maintenance/repository/LuckNumberRepository"
+import axios from "axios"
 import { ParameterStore } from "../../../configs/ParameterStore"
 import EmailSender from "./EmailSender"
 import moment from "moment"
@@ -36,7 +37,7 @@ export class LifeProposalService {
                 morte_conjuge: 0.95,
                 diha: 0.65,
                 funeral: 0.46,
-                funeral_conjuge: 0.95,
+                funeral_conjuge: 0.62,
                 funeral_pais: 4.93,
                 funeral_sogros: 4.93,
                 sorteio_liquido: 0.48,
@@ -81,6 +82,24 @@ export class LifeProposalService {
                 sorteio_liquido: 0.48,
             },
         ]
+    }
+
+    async planInfo(request: any) {
+        const jsonPlanInfo = "https://s3.amazonaws.com/seguros.miniapp.ame/coberturas_vida.json"
+        const info = await axios.get(jsonPlanInfo).then((response) => {
+            return response.data
+        })
+        const dataInfo = info
+            .filter((x) => request.age >= x.min && request.age <= x.max && request.range * 2500000 == parseInt(x.valor))
+            .filter(
+                (x) =>
+                    request.basico == x.basico &&
+                    request.mc == x.mc &&
+                    request.funeral_familia == x.funeral_familia &&
+                    request.funeral_pais == x.funeral_pais &&
+                    request.funeral_sogros == x.funeral_sogros
+            )
+        return dataInfo[0]
     }
 
     async cotation(request: any) {
@@ -152,28 +171,6 @@ export class LifeProposalService {
         return proposalInfo
     }
 
-    async responseProposal(responseJson: any) {
-        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(responseJson.insured_id)
-        if (verifyProposal?.length == 0 || typeof verifyProposal == "undefined") {
-            return {
-                message: "register not found",
-                status: 400,
-            }
-        }
-        const proposalInfoData = {
-            order: verifyProposal[0].order,
-            customerId: verifyProposal[0].customerId,
-            policyNumber: responseJson.policy_number,
-        }
-        const updateSoldProposal = await this.lifeProposalSoldRepository.update(proposalInfoData)
-        if (updateSoldProposal) {
-            return {
-                message: "Updated register",
-                status: 200,
-            }
-        }
-    }
-
     async findLuckNumber() {
         return await this.luckNumberRepository.findFirstLuckNumber()
     }
@@ -227,6 +224,7 @@ export class LifeProposalService {
 
     async sendSellingEmailByPaymentObject(unsignedPayment) {
         const email = unsignedPayment?.receivedPaymentNotification.attributes?.customPayload?.clientEmail
+        const formatedMail = email.split("$")
         log.info("Preparando o layout do e-mail")
         const emailTemplate = path.resolve(__dirname, "../../../../mail_template/life_mail.html")
 
@@ -281,14 +279,77 @@ export class LifeProposalService {
         const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
         const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
         const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
+        const titleMail = "Erro de Acesso Seguro Vida (DigiBee)"
         log.debug(`EmailFrom:${emailFrom}`)
         try {
-            const sendResult = await EmailSender.sendEmail(emailFrom, email, body, accessKeyId, secretAccessKey)
+            const sendResult = await EmailSender.sendEmail(emailFrom, formatedMail, body, accessKeyId, secretAccessKey, titleMail)
             log.info("Email Enviado")
             return sendResult.MessageId
         } catch (e) {
             log.error("Email not sent, error", e)
             throw "Error during sending email"
+        }
+    }
+
+    async validateCustomerService(customerId: any) {
+        const filterFromCustomerId = await this.lifeProposalSoldRepository.findAllFromCustomer(customerId)
+        if (typeof filterFromCustomerId == "undefined") return { message: "Erro ao consultar a base de dados" }
+        return filterFromCustomerId?.length >= 1 ? true : false
+    }
+
+    async responseProposal(responseJson: any) {
+        const verifyProposal = await this.lifeProposalSoldRepository.findAllFromInsuredId(responseJson.insured_id)
+        if (verifyProposal?.length == 0 || typeof verifyProposal == "undefined") {
+            return {
+                message: "register not found",
+                status: 400,
+            }
+        }
+        const proposalInfoData = {
+            order: verifyProposal[0].order,
+            customerId: verifyProposal[0].customerId,
+            policyNumber: responseJson.policy_number,
+        }
+        const updateSoldProposal = await this.lifeProposalSoldRepository.update(proposalInfoData)
+        if (updateSoldProposal) {
+            return {
+                message: "Updated register",
+                status: 200,
+            }
+        }
+    }
+
+    async mailResponseDigibee(responseJson: any) {
+        // const email = emailPass
+        const email = await this.parameterStore.getSecretValue("LIFE_ERROR_MAIL_SENDER")
+        const formatedMail = email.split("$")
+        log.info("Preparando o layout do e-mail do Erro")
+        const emailTemplate = path.resolve(__dirname, "../../../../mail_template/life_error_mail.html")
+
+        const template = await readFile(emailTemplate, "utf-8")
+        const body = template
+            .replace(/@@code@@/g, `${responseJson.code}`)
+            .replace(/@@error@@/g, `${responseJson.error}`)
+            .replace(/@@message_erro@@/g, `${responseJson.message}`)
+            .replace(/@@date_error@@/g, `${responseJson.timestamp}`)
+            .replace(/@@pipeline_error@@/g, `${responseJson.pipeline}`)
+
+        const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
+        const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
+        const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
+        const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
+        const titleMail = "Erro de Acesso Seguro Vida (DigiBee)"
+        log.debug(`EmailFrom:${emailFrom}`)
+        try {
+            const sendResult = await EmailSender.sendEmail(emailFrom, formatedMail, body, accessKeyId, secretAccessKey, titleMail)
+            log.info("DigiBee Return Email Error Sent")
+            return {
+                success: true,
+                messageCode: sendResult.MessageId,
+            }
+        } catch (e) {
+            log.error("DigiBee Email Error not sent", e)
+            throw "Error during sending Return Mail"
         }
     }
 }

@@ -59,7 +59,7 @@ export class RenewPortableService {
     }
 
     async prizeCalc(prizeInfo: any) {
-        const s3File = "https://s3.amazonaws.com/seguros.miniapp.ame/calc_prize_api.json"
+        const s3File = "https://s3.amazonaws.com/seguros.miniapp.ame/cotacao_ge.json"
         const prize = await axios.get(s3File).then((response) => {
             return response.data
         })
@@ -75,19 +75,44 @@ export class RenewPortableService {
                 }
             })
             .map((x) => {
+                if (typeof x.premio_liquido_36 != "undefined") {
+                    return [
+                        {
+                            id: 12,
+                            premio_liquido: x.premio_liquido_12,
+                            premio_bruto: x.premio_bruto_12,
+                            extended_warranty_code: x.codigo_g1,
+                        },
+                        {
+                            id: 24,
+                            premio_liquido: x.premio_liquido_24,
+                            premio_bruto: x.premio_bruto_24,
+                            extended_warranty_code: x.codigo_g2,
+                        },
+                        {
+                            id: 36,
+                            premio_liquido: x.premio_liquido_36,
+                            premio_bruto: x.premio_bruto_36,
+                            extended_warranty_code: x.codigo_g3,
+                        },
+                    ]
+                }
                 return [
                     {
                         id: 12,
                         premio_liquido: x.premio_liquido_12,
                         premio_bruto: x.premio_bruto_12,
+                        extended_warranty_code: x.codigo_g1,
                     },
                     {
                         id: 24,
                         premio_liquido: x.premio_liquido_24,
                         premio_bruto: x.premio_bruto_24,
+                        extended_warranty_code: x.codigo_g2,
                     },
                 ]
             })
+
         if (typeof prizeObject[0] == "undefined") {
             return {
                 success: false,
