@@ -149,7 +149,7 @@ export class SmartphoneProposalController {
             logger.info("Iniciando o processo de cancelamento")
             return this.planService.cancelationProcess(signedPayment)
         } catch (e) {
-            logger.error(e)
+            throw new ApiError("Erro ao realizar o cancelamento da proposta", 404, "Erro ao realizar o cancelamento da proposta")
         }
     }
 

@@ -237,8 +237,7 @@ export class SmartphoneProposalService {
     }
 
     async saveCancelProposal(proposal: any, response, tenant: string) {
-        log.debug("saveSoldProposal")
-
+        log.debug("Atualização da proposta do Smartphone para Cancelada")
         try {
             const apiVersion = process.env.COMMIT_HASH || "unavailable"
             await this.smartphoneSoldProposalRepository.update({
@@ -254,8 +253,7 @@ export class SmartphoneProposalService {
             } as SmartphoneSoldProposal)
             log.debug("saveSoldProposal:success")
         } catch (e) {
-            log.debug("saveSoldProposal:Fail")
-            log.error(e)
+            log.error("Erro na atualização do cancelamento do Smartphone", e)
         }
     }
 
@@ -384,7 +382,6 @@ export class SmartphoneProposalService {
                 error: "Não foi possível encontrar informações na base",
             }
         }
-
         let result
         try {
             const response = await this.requestService.makeRequest(
@@ -394,34 +391,40 @@ export class SmartphoneProposalService {
                 Tenants.SMARTPHONE
             )
             result = { proposal: formatedCancelProposal, response: response.data, success: true }
+        } catch (e) {
+            log.error("Erro no envio do cancelamento Smartphone para o parceiro", e)
+        }
+        try {
             log.debug("Salvando o cancelamento na soldProposal")
             await this.refundProcess(unsignedPayment)
             await this.saveCancelProposal(unsignedPayment, result, Tenants.SMARTPHONE)
             log.info("Success proposal cancel")
             return result
         } catch (e) {
-            const result = { success: false, error: e, message: e.message }
+            const result = { success: false, message: e.message }
             log.error(`Error %j`, e.message)
-            log.debug("Error when trying to cancel proposal")
             return result
         }
     }
 
     async refundProcess(unsignedPayment) {
-        const proposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(
-            unsignedPayment.customerId,
-            unsignedPayment.order
-        )
-        const refundedPayment = await this.refundPaymentProcess(proposal)
-
-        const refundContent = {
-            paymentId: unsignedPayment.order, // id da ordem
-            walletToken: await this.parameterStore.getSecretValue("MINIAPP_SMARTPHONE_KEY"),
-            amount: refundedPayment,
+        try {
+            const proposal = await this.smartphoneSoldProposalRepository.findAllFromCustomerAndOrder(
+                unsignedPayment.customerId,
+                unsignedPayment.order
+            )
+            const refundedPayment = await this.refundPaymentProcess(proposal)
+            const refundContent = {
+                paymentId: unsignedPayment.order, // id da ordem
+                walletToken: await this.parameterStore.getSecretValue("MINIAPP_SMARTPHONE_KEY"),
+                amount: refundedPayment,
+            }
+            log.debug("REEFUND SMARTPHOONE CONTENT", refundContent)
+            const refundToWallet = await this.amePaymentService.refund(refundContent)
+            return refundToWallet
+        } catch (e) {
+            log.debug("Erro de estorno do cancelamento do smartphone")
         }
-        log.debug("REEFUND SMARTPHOONE CONTENT", refundContent)
-        const refundToWallet = await this.amePaymentService.refund(refundContent)
-        return refundToWallet
     }
 
     async refundPaymentProcess(data) {
