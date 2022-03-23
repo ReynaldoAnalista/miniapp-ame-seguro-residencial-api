@@ -36,7 +36,7 @@ export class LifeProposalService {
                 morte_conjuge: 0.95,
                 diha: 0.65,
                 funeral: 0.46,
-                funeral_conjuge: 0.7,
+                funeral_conjuge: 0.95,
                 funeral_pais: 4.93,
                 funeral_sogros: 4.93,
                 sorteio_liquido: 0.48,
@@ -49,7 +49,7 @@ export class LifeProposalService {
                 morte_conjuge: 1.54,
                 diha: 0.65,
                 funeral: 0.7,
-                funeral_conjuge: 0.96,
+                funeral_conjuge: 1.54,
                 funeral_pais: 6.61,
                 funeral_sogros: 6.61,
                 sorteio_liquido: 0.48,
@@ -62,7 +62,7 @@ export class LifeProposalService {
                 morte_conjuge: 4.44,
                 diha: 0.65,
                 funeral: 1.87,
-                funeral_conjuge: 2.25,
+                funeral_conjuge: 4.44,
                 funeral_pais: 15.56,
                 funeral_sogros: 15.56,
                 sorteio_liquido: 0.48,
@@ -75,7 +75,7 @@ export class LifeProposalService {
                 morte_conjuge: 9.19,
                 diha: 0.65,
                 funeral: 3.78,
-                funeral_conjuge: 4.2,
+                funeral_conjuge: 9.19,
                 funeral_pais: 37.79,
                 funeral_sogros: 37.79,
                 sorteio_liquido: 0.48,
@@ -116,12 +116,12 @@ export class LifeProposalService {
                 .substring(unsignedPayment.attributes.customPayload.customerId.length, 20)
                 .replace(/-/g, "")
             const firstLuckNumber = await this.findLuckNumber()
-            unsignedPayment.attributes.customPayload.proposal.lucky_number = firstLuckNumber?.luck_number
+            unsignedPayment.attributes.customPayload.proposal.lucky_number = "9999"
             unsignedPayment.attributes.customPayload.proposal.insured.insured_id = customerIdFromObject
             unsignedPayment.attributes.customPayload.proposal.beneficiary = []
             const proposalResponse = await this.sendProposal(unsignedPayment.attributes.customPayload.proposal)
             await this.saveSoldProposal(unsignedPayment, proposalResponse)
-            await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
+            //await this.setUsedLuckNumber(unsignedPayment.attributes.customPayload.proposal, firstLuckNumber)
             return proposalResponse
         } catch (e) {
             log.error("Erro ao realizar o pagamento do seguro vida", e)
@@ -232,7 +232,28 @@ export class LifeProposalService {
 
         const dataToSendMail = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal
 
-        const policyNumber = unsignedPayment.receivedPaymentNotification.attributes.customPayload.policy_number
+        const infoCotation = {
+            age: moment().diff(dataToSendMail.insured.birth_date, "years"),
+            range: dataToSendMail.amount_insured / 25000,
+        }
+        const cotationInfo = await this.cotation(infoCotation)
+        const liquidSort = 0.48
+
+        const deathWithIof = (
+            cotationInfo?.voce_desc.morte * 12 * (dataToSendMail.amount_insured / 25000) +
+            liquidSort * 12
+        ).toFixed(2)
+
+        const accidentWithIof = (cotationInfo?.voce_desc.ipa * 12 * (dataToSendMail.amount_insured / 25000)).toFixed(2)
+
+        const conjugeDeathWithIof = cotationInfo?.familia.funeral_conjuge * 12 * (dataToSendMail.amount_insured / 25000)
+
+        const individualFuneralPrizeWithIof = (cotationInfo?.voce_desc.funeral * 12).toFixed(2)
+        const familyFuneralPrizeWithIof = (cotationInfo?.voce_desc.funeral * 12).toFixed(2)
+
+        //return prizeWithIof
+
+        const policyNumber = unsignedPayment.policy_number
 
         const coverageValue = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal.amount_insured
 
@@ -252,7 +273,7 @@ export class LifeProposalService {
                 moment(dataToSendMail.operation_date, "YYYYMMDD").add(1, "day").add(1, "year").format("DD/MM/YYYY")
             )
             .replace(/@@importancia_segurada_morte@@/g, `${coverageValue}`)
-            // .replace(/@@iof_morte@@/g, dataToSendMail.insured.state)
+            .replace(/@@iof_morte@@/g, deathWithIof)
             .replace(/@@numero_apolice@@/g, policyNumber)
             .replace(/@@numero_proposta@@/g, unsignedPayment.insuredId)
             .replace(/@@numero_sorte@@/g, dataToSendMail.lucky_number)
