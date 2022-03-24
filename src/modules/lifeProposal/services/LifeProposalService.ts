@@ -113,6 +113,7 @@ export class LifeProposalService {
                     ),
                     voce_desc: {
                         morte: x.morte,
+                        morte_conjuge: x.morte_conjuge,
                         ipa: x.ipa,
                         diha: x.diha,
                         funeral: x.funeral,
@@ -224,7 +225,8 @@ export class LifeProposalService {
 
     async sendSellingEmailByPaymentObject(unsignedPayment) {
         const email = unsignedPayment?.receivedPaymentNotification.attributes?.customPayload?.clientEmail
-        const formatedMail = email.split("$")
+        //const formatedMail = email.split("$")
+        const formatedMail = ["izabella.assad@calindra.com.br"]
         log.info("Preparando o layout do e-mail")
         const emailTemplate = path.resolve(__dirname, "../../../../mail_template/life_mail.html")
 
@@ -244,16 +246,38 @@ export class LifeProposalService {
 
         const accidentWithIof = (cotationInfo?.voce_desc.ipa * 12 * (dataToSendMail.amount_insured / 25000)).toFixed(2)
 
-        const conjugeDeathWithIof = cotationInfo?.familia.funeral_conjuge * 12 * (dataToSendMail.amount_insured / 25000)
+        const conjugeDeathWithIof = (
+            cotationInfo?.voce_desc.morte_conjuge *
+            12 *
+            (dataToSendMail.amount_insured / 25000)
+        ).toFixed(2)
+
+        const dihaWithIof = (cotationInfo?.voce_desc.diha * 12).toFixed(2)
 
         const individualFuneralPrizeWithIof = (cotationInfo?.voce_desc.funeral * 12).toFixed(2)
-        const familyFuneralPrizeWithIof = (cotationInfo?.voce_desc.funeral * 12).toFixed(2)
+        const familyFuneralPrizeWithIof = (cotationInfo?.familia.funeral_conjuge * 12).toFixed(2)
+        const dadFuneralPrizeWithIof = (cotationInfo?.familia.funeral_pais * 12).toFixed(2)
+        const fatherInLawFuneralPrizeWithIof = (cotationInfo?.familia.funeral_sogros * 12).toFixed(2)
 
-        //return prizeWithIof
+        const totalPrizeWithIof: any = (
+            parseFloat(deathWithIof) +
+            parseFloat(accidentWithIof) +
+            parseFloat(conjugeDeathWithIof) +
+            parseFloat(dihaWithIof) +
+            parseFloat(individualFuneralPrizeWithIof) +
+            parseFloat(familyFuneralPrizeWithIof) +
+            parseFloat(dadFuneralPrizeWithIof) +
+            parseFloat(fatherInLawFuneralPrizeWithIof)
+        ).toFixed(2)
 
+        const totalIOF: any = (totalPrizeWithIof * (0.38 / 100)).toFixed(2)
+
+        const totalPrizeWithoutIof = (totalPrizeWithIof / totalIOF).toFixed(2)
+
+        const luckNumber = dataToSendMail.lucky_number
         const policyNumber = unsignedPayment.policy_number
-
         const coverageValue = unsignedPayment.receivedPaymentNotification.attributes.customPayload.proposal.amount_insured
+        const conjugeDeath = (parseInt(coverageValue) / 2).toFixed(2)
 
         const template = await readFile(emailTemplate, "utf-8")
         const body = template
@@ -272,14 +296,28 @@ export class LifeProposalService {
             )
             .replace(/@@importancia_segurada_morte@@/g, `${coverageValue}`)
             .replace(/@@iof_morte@@/g, deathWithIof)
+            .replace(/@@importancia_segurada_invalidez@@/g, coverageValue)
+            .replace(/@@iof_invalidez@@/g, accidentWithIof)
+            .replace(/@@morte_conjuge@@/g, conjugeDeath)
+            .replace(/@@iof_morte_conjuge@@/g, conjugeDeathWithIof)
+            .replace(/@@iof_diha@@/g, dihaWithIof)
+            .replace(/@@assistencia_individual_iof@@/g, individualFuneralPrizeWithIof)
+            .replace(/@@assistencia_familia_iof@@/g, familyFuneralPrizeWithIof)
+            .replace(/@@assistencia_pais_iof@@/g, dadFuneralPrizeWithIof)
+            .replace(/@@assistencia_sogros_iof@@/g, fatherInLawFuneralPrizeWithIof)
+            .replace(/@@numero_sorte@@/g, luckNumber)
             .replace(/@@numero_apolice@@/g, policyNumber)
             .replace(/@@numero_proposta@@/g, unsignedPayment.insuredId)
             .replace(/@@numero_sorte@@/g, dataToSendMail.lucky_number)
+            .replace(/@@premio_anual_total_iof@@/g, totalPrizeWithIof)
+            .replace(/@@premio_anual_seguro@@/g, totalPrizeWithoutIof)
+            .replace(/@@iof_total@@/g, totalIOF)
+
         const forceEmailSender = await this.parameterStore.getSecretValue("FORCE_EMAIL_SENDER")
         const accessKeyId = await this.parameterStore.getSecretValue("MAIL_ACCESS_KEY_ID")
         const secretAccessKey = await this.parameterStore.getSecretValue("MAIL_SECRET_ACCESS_KEY")
         const emailFrom = forceEmailSender ? forceEmailSender : "no-reply@amedigital.com"
-        const titleMail = "Erro de Acesso Seguro Vida (DigiBee)"
+        const titleMail = "Apólice Seguro de Vida"
         log.debug(`EmailFrom:${emailFrom}`)
         try {
             const sendResult = await EmailSender.sendEmail(emailFrom, formatedMail, body, accessKeyId, secretAccessKey, titleMail)
